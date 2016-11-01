@@ -1,0 +1,15 @@
+
+Convert the SemEval dataset into arff format:
+
+> java -cp affective.jar:lib/weka.jar weka.core.converters.SemEvalToArff data/sema-eval-train-test.csv data/sem-eval.arff
+
+
+
+
+weka.filters.unsupervised.attribute.TweetToFeatureVector -M 0 -W -C -I 1 -P NGRAM- -Q CLUST- -L -H resources/50mpaths2.txt -T resources/stopwords.txt
+
+
+weka.filters.unsupervised.attribute.Reorder -R 3-last,2
+
+
+java -cp affective.jar:"lib/*"  weka.gui.GUIChooser
