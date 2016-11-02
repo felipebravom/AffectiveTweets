@@ -1,25 +1,23 @@
 package weka.filters.unsupervised.attribute;
 
 
-import java.io.IOException;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.Vector;
 
 import cmu.arktweetnlp.Tagger;
 import cmu.arktweetnlp.Twokenize;
-import cmu.arktweetnlp.impl.ModelSentence;
-import cmu.arktweetnlp.impl.Sentence;
-import affective.core.LexiconEvaluator;
-import affective.core.MyUtils;
 import weka.core.Attribute;
 import weka.core.Capabilities;
-import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
@@ -39,39 +37,33 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	/** for serialization */
 	private static final long serialVersionUID = 3635946466523698211L;
 
-	/** the vocabulary and the number of documents where the word appears */
-	protected Map<String, Integer> vocDocFreq; 
+	/** Counts the number of documents in which candidate attributes appear. This will help for discarding infrequent attributes */
+	protected Object2IntMap<String> attributeCount; 
 
-	/** List of word vectors with their corresponding frequencies per tweet */
-	protected List<Map<String, Integer>> wordVecs; 
+	/** List of tweets to process with their feature vectors*/
+	protected ObjectList<Object2IntMap<String>> procTweets; 
+
+	/** Contains a mapping of valid attribute with their indexes. */
+	protected Object2IntMap<String> m_Dictionary;
+
+	/** Brown Clusters Dictionary */
+	protected Object2ObjectMap<String,String> brownDict;
+
+	/** the minimum number of tweets for an attribute to be considered. */
+	protected int minAttDocs=0; 
 
 	/** the index of the string attribute to be processed */
 	protected int textIndex=1; 
 
 	/** the index of the string attribute to be processed */
-	protected String prefix="";
+	protected String ngramPrefix="NGRAM-";
 
 	/** True if all tokens should be downcased. */
 	protected boolean toLowerCase=true;
 
-	/** True if instances should be sparse */
-	protected boolean sparseInstances=true;
-
-
-	/** True if a part-of-speech prefix should be included to each word */
-	protected boolean posPrefix=false;
-
-
-	/** True if a Sentiment prefix calculatef from a Lexicon should be included to each word */
-	protected boolean sentPrefix=false;
-
 
 	/** TwitterNLP Tagger model */
 	protected Tagger tagger;
-	
-	
-	/** LexiconEvaluator for sentiment prefixes */
-	protected LexiconEvaluator lex;
 
 
 
@@ -112,24 +104,17 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	public Enumeration<Option> listOptions() {
 		Vector<Option> result = new Vector<Option>();
 
+		result.addElement(new Option("\t Minimum count of an attribute.\n"
+				+ "\t(default: " + this.minAttDocs + ")", "M", 1, "-M"));
+
 		result.addElement(new Option("\t Index of string attribute.\n"
 				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));		
 
-		result.addElement(new Option("\t Prefix of attributes.\n"
-				+ "\t(default: " + this.prefix + ")", "P", 1, "-P"));
+		result.addElement(new Option("\t Prefix of ngram features.\n"
+				+ "\t(default: " + this.ngramPrefix + ")", "P", 1, "-P"));
 
 		result.addElement(new Option("\t Lowercase content.\n"
 				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
-
-		result.addElement(new Option("\t Sparse instances.\n"
-				+ "\t(default: " + this.sparseInstances + ")", "S", 0, "-S"));
-
-		result.addElement(new Option("\t POS prefix.\n"
-				+ "\t(default: " + this.posPrefix + ")", "K", 0, "-K"));
-
-
-		result.addElement(new Option("\t Sent prefix.\n"
-				+ "\t(default: " + this.sentPrefix + ")", "H", 0, "-H"));
 
 
 		result.addAll(Collections.list(super.listOptions()));
@@ -148,23 +133,17 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 		Vector<String> result = new Vector<String>();
 
+		result.add("-M");
+		result.add("" + this.getMinAttDocs());
+
 		result.add("-I");
 		result.add("" + this.getTextIndex());
 
 		result.add("-P");
-		result.add("" + this.getPrefix());
+		result.add("" + this.getNgramPrefix());
 
 		if(this.toLowerCase)
 			result.add("-L");
-
-		if(this.sparseInstances)
-			result.add("-S");
-
-		if(this.posPrefix)
-			result.add("-K");
-
-		if(this.sentPrefix)
-			result.add("-H");
 
 
 		Collections.addAll(result, super.getOptions());
@@ -187,6 +166,20 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	@Override
 	public void setOptions(String[] options) throws Exception {
 
+		String textMinAttDocOption = Utils.getOption('M', options);
+		if (textMinAttDocOption.length() > 0) {
+			String[] textMinAttDocOptionSpec = Utils.splitOptions(textMinAttDocOption);
+			if (textMinAttDocOptionSpec.length == 0) {
+				throw new IllegalArgumentException(
+						"Invalid index");
+			}
+			int minDocAtt = Integer.parseInt(textMinAttDocOptionSpec[0]);
+			this.setMinAttDocs(minDocAtt);
+
+		}
+
+
+
 		String textIndexOption = Utils.getOption('I', options);
 		if (textIndexOption.length() > 0) {
 			String[] textIndexSpec = Utils.splitOptions(textIndexOption);
@@ -207,17 +200,11 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 						"Invalid prefix");
 			}
 			String pref = prefixSpec[0];
-			this.setPrefix(pref);
+			this.setNgramPrefix(pref);
 
 		}
 
 		this.toLowerCase=Utils.getFlag('L', options);
-
-		this.sparseInstances=Utils.getFlag('S', options);
-
-		this.posPrefix=Utils.getFlag('K', options);
-		
-		this.sentPrefix=Utils.getFlag('H', options);
 
 		super.setOptions(options);
 
@@ -236,46 +223,34 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 		return true;
 	}
 
-	/* Calculates the vocabulary and the word vectors from an Instances object
-	 * The vocabulary is only extracted the first time the filter is run.
+
+
+	public Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix) {
+		Object2IntMap<String> termFreq = new Object2IntOpenHashMap<String>();
+
+		// Traverse the strings and increments the counter when the token was
+		// already seen before
+		for (String token : tokens) {
+			termFreq.put(prefix+token, termFreq.getInt(prefix+token) + 1);			
+		}
+
+		return termFreq;
+	}
+
+	/* Processes a batch of tweets. Tweets are mapped into feature vectors.
+	 * The feature space is only determined the first time the filter is run.
 	 * 
 	 */	 
-	public void computeWordVecsAndVoc(Instances inputFormat) {
+	public void tweetsToVectors(Instances inputFormat) {
 
-		
-		
-		
-		
+
 		// The vocabulary is created only in the first execution
 		if (!this.isFirstBatchDone()){
-			this.vocDocFreq = new TreeMap<String, Integer>();
-			
-			// process the Tagger
-			if(this.posPrefix){
-				try {
-					this.tagger= new Tagger();
-					this.tagger.loadModel("models/model.20120919");
-				} catch (IOException e) {
-					this.posPrefix=false;
-					System.err.println("Warning: TwitterNLP model couldn't be read.");
-				}	
-
-			}
-			
-			// process the LexiconEvaluator
-			if(this.sentPrefix){	
-				try {
-					this.lex= new LexiconEvaluator("lexicons/AFINN-111.txt");
-					this.lex.processDict();
-				} catch (IOException e) {
-					this.sentPrefix=false;
-					System.err.println("Warning: Lexicon couldn't be read.");
-				}
-			}
+			this.attributeCount = new Object2IntOpenHashMap<String>();
 
 		}
 
-		this.wordVecs = new ArrayList<Map<String, Integer>>();
+		this.procTweets = new ObjectArrayList<Object2IntMap<String>>();
 
 		// reference to the content of the message, users index start from zero
 		Attribute attrCont = inputFormat.attribute(this.textIndex-1);
@@ -289,70 +264,26 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 			// tokenises the content 
 			List<String> tokens=Twokenize.tokenizeRawTweetText(content);; 
-			List<String> posTokens = null;
-			List<String> sentTokens = null;
-			
-			
-			if(this.posPrefix){
-				try{
-				posTokens=MyUtils.getPOStags(tokens, tagger);
-				}
-				catch(Exception E){
-					
-				}
-			}
 
-			
-			if(this.sentPrefix){
-				sentTokens=new ArrayList<String>();
-				for(String token:tokens){
-					String sentToken="";
-					if(this.lex.getDict().containsKey(token)){
-						Double value=Double.parseDouble(this.lex.getDict().get(token));
-						sentToken +=  (value>0)?"POSITIVE-":"NEGATIVE";
-						sentToken += "("+this.lex.getDict().get(token)+")-";						
-					}
-						
-					sentTokens.add(sentToken);
-				}
-				
-				
-			}
-			
-			if(this.posPrefix){
-				for(int i=0; i<tokens.size();i++){
-					tokens.set(i, posTokens.get(i)+"-"+tokens.get(i));
-				}
-			}
-			
-			if(this.sentPrefix){
-				for(int i=0; i<tokens.size();i++){
-					tokens.set(i, sentTokens.get(i)+tokens.get(i));
-				}
-			}
-
-
-
-
-
-			Map<String, Integer> wordFreqs = MyUtils.calculateTermFreq(tokens);
+			Object2IntMap<String> docVec=calculateTermFreq(tokens,"NGRAMS-");
 
 			// Add the frequencies of the different words
-			this.wordVecs.add(wordFreqs);
+			this.procTweets.add(docVec);
 
-			// The vocabulary is calculated only the first time we run the
-			// filter
+			// The attribute space is calculated only the first time we run the filter.
+			// This avoids adding new features for the test data
 			if (!this.isFirstBatchDone()) {
 
-				// if the word is new we add it to the vocabulary, otherwise we
-				// increment the document count
-				for (String word : wordFreqs.keySet()) {
-
-					if (this.vocDocFreq.containsKey(word)) {
-						this.vocDocFreq
-						.put(word, this.vocDocFreq.get(word) + 1);
-					} else
-						this.vocDocFreq.put(word, 1);
+				// if the attribute is new we add it to the attribute list, otherwise we
+				// increment the count
+				for(String docAtt:docVec.keySet()){
+					if(this.attributeCount.containsKey(docAtt)){
+						int prevFreq=this.attributeCount.getInt(docAtt);
+						this.attributeCount.put(docAtt,prevFreq+1);						
+					}
+					else{
+						this.attributeCount.put(docAtt,1);
+					}
 
 				}
 
@@ -367,23 +298,21 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
+
 		// Adds all attributes of the inputformat
-		for (int i = 0; i < inputFormat.numAttributes(); i++) {
+		for (int i=0; i < inputFormat.numAttributes(); i++) {
 			att.add(inputFormat.attribute(i));
 		}
 
 		// calculates the word frequency vectors and the vocabulary
-		this.computeWordVecsAndVoc(inputFormat);
+		this.tweetsToVectors(inputFormat);
 
-		for (String word : this.vocDocFreq.keySet()) {
 
-			Attribute a = new Attribute(this.prefix + word);
-
-			att.add(a); // adds an attribute for each word using a prefix
-
-			// pw.println("word: " + word + " bytes: "
-			// + Arrays.toString(word.getBytes()) + " attribute name: "
-			// + a.name() + " HashValue:" + this.vocDocFreq.get(word));
+		for (String attributeName : this.attributeCount.keySet()) {
+			if(this.attributeCount.get(attributeName)>=this.minAttDocs){
+				Attribute a = new Attribute(attributeName);
+				att.add(a); // adds an attribute for each word using a prefix
+			}
 
 		}
 
@@ -402,13 +331,13 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 		// if we are in the testing data we calculate the word vectors again
 		if (this.isFirstBatchDone()) {
-			this.computeWordVecsAndVoc(instances);
+			this.tweetsToVectors(instances);
 		}
 
 		// System.out.println("++++" + instances);
 
 		int i = 0;
-		for (Map<String, Integer> wordVec : this.wordVecs) {
+		for (Object2IntMap<String> vec : this.procTweets) {
 			double[] values = new double[result.numAttributes()];
 
 			// copy previous attributes values
@@ -416,21 +345,19 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 			// add words using the frequency as attribute value
-			for (String word : wordVec.keySet()) {
-				// we only add the value if the word was previously included
-				// into the vocabulary, otherwise we discard it
-				if (result.attribute(this.prefix + word) != null)
-					values[result.attribute(this.prefix + word).index()] = wordVec
-					.get(word);
+			for (String innerAtt : vec.keySet()) {
+				// we only add the value of valid attributes
+				if (result.attribute(innerAtt) != null){
+					int attIndex=result.attribute(innerAtt).index();					
+					values[attIndex]=(double)vec.getInt(innerAtt);
+
+				}
+
 
 			}
 
 
-			Instance inst;
-			if(this.sparseInstances)
-				inst=new SparseInstance(1, values);
-			else
-				inst=new DenseInstance(1, values);
+			Instance inst=new SparseInstance(1, values);
 
 
 			inst.setDataset(result);
@@ -446,25 +373,6 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	}
 
 
-	/** Adds the corresponding pos tags prefix to each token **/
-	protected List<String> addPOSprefix(List<String> tokens) {
-
-		Sentence sentence = new Sentence();
-		sentence.tokens = tokens;
-		ModelSentence ms = new ModelSentence(sentence.T());
-		this.tagger.featureExtractor.computeFeatures(sentence, ms);
-		this.tagger.model.greedyDecode(ms, false);
-
-		ArrayList<String> tags = new ArrayList<String>();
-
-		for (int t = 0; t < sentence.T(); t++) {
-			String tag = this.tagger.model.labelVocab.name(ms.labels[t]);
-			tags.add(tag+"-"+tokens.get(t));
-		}
-
-		return tags;
-	}
-
 
 	public int getTextIndex() {
 		return textIndex;
@@ -476,14 +384,26 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	}
 
 
-	public String getPrefix() {
-		return prefix;
+	public String getNgramPrefix() {
+		return ngramPrefix;
 	}
 
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
+	public void setNgramPrefix(String prefix) {
+		this.ngramPrefix = prefix;
 	}
+
+
+	public int getMinAttDocs() {
+		return minAttDocs;
+	}
+
+
+
+	public void setMinAttDocs(int minAttDocs) {
+		this.minAttDocs = minAttDocs;
+	}
+
 
 
 	public boolean isToLowerCase() {
@@ -493,41 +413,6 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
-
-
-
-	public boolean isSparseInstances() {
-		return sparseInstances;
-	}
-
-
-	public void setSparseInstances(boolean sparseInstances) {
-		this.sparseInstances = sparseInstances;
-	}
-
-
-
-	public boolean isPosPrefix() {
-		return posPrefix;
-	}
-
-
-
-	public void setPosPrefix(boolean posPrefix) {
-		this.posPrefix = posPrefix;
-	}
-
-	public boolean isSentPrefix() {
-		return sentPrefix;
-	}
-
-
-
-	public void setSentPrefix(boolean sentPrefix) {
-		this.sentPrefix = sentPrefix;
-	}
-
-
 
 
 	public static void main(String[] args) {

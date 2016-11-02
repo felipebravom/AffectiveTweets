@@ -13,3 +13,6 @@ weka.filters.unsupervised.attribute.Reorder -R 3-last,2
 
 
 java -cp affective.jar:"lib/*"  weka.gui.GUIChooser
+
+
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TwitterNlpWordToVector -M 0 -I 1 -P WORD- -L\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.01 -B 1.0

@@ -472,62 +472,7 @@ public class TweetToFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	// Maps a given instance with an attribute called content into a target instance with the same dimensions
-	public Instances mapTargetInstance(Instances inp){
-
-		// Creates instances with the same format
-		Instances result=getOutputFormat();
-
-		Attribute contentAtt=inp.attribute(this.textIndex-1);
-		Attribute attClassInp=inp.attribute("Class");
-
-		Attribute attClassOut=result.attribute("Class");
-
-
-		for(Instance inst:inp){
-			String content=inst.stringValue(contentAtt);
-
-			String classValue=attClassInp.value((int)inst.value(attClassInp));
-
-
-			List<String> tokens=this.tokenize(content); 
-
-			// Identifies the distinct terms
-			AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
-			terms.addAll(tokens);
-
-
-			Object2IntMap<String> docVec=this.calculateDocVec(tokens);
-
-			double[] values = new double[result.numAttributes()];
-
-
-			values[attClassOut.index()]= attClassOut.indexOfValue(classValue);
-
-			for(String att:docVec.keySet()){
-
-				if(this.m_Dictionary.containsKey(att)){
-					int attIndex=this.m_Dictionary.getInt(att);
-					// we normalise the value by the number of documents
-					values[attIndex]=docVec.getInt(att);					
-				}
-
-
-			}
-
-
-			Instance outInst=new SparseInstance(1, values);
-
-			inst.setDataset(result);
-
-			result.add(outInst);
-
-		}
-
-		return result;
-
-	}
-
+	
 
 	public Object2IntMap<String> calculateDocVec(List<String> tokens) {
 
