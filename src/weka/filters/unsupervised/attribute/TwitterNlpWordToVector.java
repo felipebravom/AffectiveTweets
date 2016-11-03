@@ -48,12 +48,18 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 	/** Brown Clusters Dictionary */
 	protected Object2ObjectMap<String,String> brownDict;
+	
+	/** True if url, users, and repeated letters are cleaned */
+	protected boolean cleanTokens=false;
 
 	/** the minimum number of tweets for an attribute to be considered. */
 	protected int minAttDocs=0; 
 
 	/** the index of the string attribute to be processed */
 	protected int textIndex=1; 
+	
+	/** The maxmium number of type of ngrams to calculate. If n=3 Unigrams, bigrams and trigrams will calculated */
+	protected int ngramMaxDim=1;
 
 	/** the index of the string attribute to be processed */
 	protected String ngramPrefix="NGRAM-";
@@ -113,8 +119,17 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 		result.addElement(new Option("\t Prefix of ngram features.\n"
 				+ "\t(default: " + this.ngramPrefix + ")", "P", 1, "-P"));
 
+		
+		result.addElement(new Option("\t Maximum number of n for ngram features. If n=3, unigrams, bigrams and trigrams will be extracted."
+				+ "\n"
+				+ "\t(default: " + this.ngramMaxDim + ")", "Q", 1, "-Q"));
+		
+		
 		result.addElement(new Option("\t Lowercase content.\n"
 				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
+		
+		result.addElement(new Option("\t Clean tokens (replace goood by good, standarise URLs and @users).\n"
+				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));
 
 
 		result.addAll(Collections.list(super.listOptions()));
@@ -141,9 +156,19 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 		result.add("-P");
 		result.add("" + this.getNgramPrefix());
+		
+		result.add("-Q");
+		result.add("" + this.getNgramMaxDim());
+		
+		
 
 		if(this.toLowerCase)
 			result.add("-L");
+		
+		if(this.cleanTokens)
+			result.add("-O");
+		
+		
 
 
 		Collections.addAll(result, super.getOptions());
@@ -203,8 +228,24 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 			this.setNgramPrefix(pref);
 
 		}
+		
+		String ngramMaxDimOption = Utils.getOption('Q', options);
+		if (ngramMaxDimOption.length() > 0) {
+			String[] ngramMaxDimOptionSpec = Utils.splitOptions(ngramMaxDimOption);
+			if (ngramMaxDimOptionSpec.length == 0) {
+				throw new IllegalArgumentException(
+						"Invalid prefix");
+			}
+			String ngramMaxDimOptionVal = ngramMaxDimOptionSpec[0];
+			this.setNgramPrefix(ngramMaxDimOptionVal);
+
+		}
+		
+				
 
 		this.toLowerCase=Utils.getFlag('L', options);
+		
+		this.cleanTokens=Utils.getFlag('O', options);
 
 		super.setOptions(options);
 
@@ -223,7 +264,66 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 		return true;
 	}
 
+	
+	
 
+	// tokenises and cleans the content 
+	public List<String> tokenize(String content) {
+
+		if(this.toLowerCase)
+			content=content.toLowerCase();
+
+
+		if(!this.cleanTokens)
+			return Twokenize.tokenizeRawTweetText(content);
+		else{
+			// if a letters appears two or more times it is replaced by only two
+			// occurrences of it
+			content = content.replaceAll("([a-z])\\1+", "$1$1");
+		}
+
+		List<String> tokens = new ArrayList<String>();
+
+		for (String word : Twokenize.tokenizeRawTweetText(content)) {
+			String cleanWord = word;
+
+
+			if(this.cleanTokens){
+				// Replace URLs to a generic URL
+				if (word.matches("http.*|ww\\..*")) {
+					cleanWord = "http://www.url.com";
+				}
+
+				// Replaces user mentions to a generic user
+				else if (word.matches("@.*")) {
+					cleanWord = "@user";
+				}
+
+	
+			}
+
+			tokens.add(cleanWord);
+		}
+		return tokens;
+	}
+
+	
+	
+	public static List<String> calculateTokenNgram(List<String> tokens,int n){
+		List<String> tokenNgram=new ArrayList<String>();
+		if(tokens.size()>=n){			
+			for(int i=0;i<=tokens.size()-n;i++){
+				String ngram="";
+				for(int j=i;j<i+n;j++){
+					ngram+=tokens.get(j);
+					if(j<i+n-1)
+						ngram+="-";
+				}				
+				tokenNgram.add(ngram);
+			}
+		}
+		return tokenNgram;		
+	}
 
 	public Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix) {
 		Object2IntMap<String> termFreq = new Object2IntOpenHashMap<String>();
@@ -236,6 +336,34 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 
 		return termFreq;
 	}
+	
+	
+	
+
+	public Object2IntMap<String> calculateDocVec(List<String> tokens) {
+
+		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
+		// add the ngram vectors
+		if(this.ngramMaxDim>0){
+			// add the unigrams
+			docVec.putAll(calculateTermFreq(tokens,this.ngramPrefix+"1-"));
+			// add ngrams where n > 1
+			if(this.ngramMaxDim>1){
+				for(int i=2;i<=this.ngramMaxDim;i++){
+					docVec.putAll(calculateTermFreq(calculateTokenNgram(tokens,i),this.ngramPrefix+i+"-"));					
+				}
+				
+			}
+
+			
+		}
+			
+
+		return docVec;
+
+	}
+	
+	
 
 	/* Processes a batch of tweets. Tweets are mapped into feature vectors.
 	 * The feature space is only determined the first time the filter is run.
@@ -262,10 +390,10 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 			if(this.toLowerCase)
 				content=content.toLowerCase();
 
-			// tokenises the content 
-			List<String> tokens=Twokenize.tokenizeRawTweetText(content);; 
+			// tokenizes the content 
+			List<String> tokens=this.tokenize(content); 
 
-			Object2IntMap<String> docVec=calculateTermFreq(tokens,"NGRAMS-");
+			Object2IntMap<String> docVec=calculateDocVec(tokens);
 
 			// Add the frequencies of the different words
 			this.procTweets.add(docVec);
@@ -405,6 +533,16 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 	}
 
 
+	public int getNgramMaxDim() {
+		return ngramMaxDim;
+	}
+
+
+
+	public void setNgramMaxDim(int ngramMaxDim) {
+		this.ngramMaxDim = ngramMaxDim;
+	}
+
 
 	public boolean isToLowerCase() {
 		return toLowerCase;
@@ -414,6 +552,16 @@ public class TwitterNlpWordToVector extends SimpleBatchFilter {
 		this.toLowerCase = toLowerCase;
 	}
 
+
+	public boolean isCleanTokens() {
+		return cleanTokens;
+	}
+
+
+
+	public void setCleanTokens(boolean cleanTokens) {
+		this.cleanTokens = cleanTokens;
+	}
 
 	public static void main(String[] args) {
 		runFilter(new TwitterNlpWordToVector(), args);

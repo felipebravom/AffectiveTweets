@@ -56,10 +56,6 @@ public class TweetToFeatureVector extends SimpleBatchFilter {
 	/** Counts the number of documents in which candidate attributes appear */
 	protected Object2IntMap<String> attributeCount;
 
-
-	/** Contains a mapping of valid attribute with their indexes. */
-	protected Object2IntMap<String> m_Dictionary;
-
 	/** Brown Clusters Dictionary */
 	protected Object2ObjectMap<String,String> brownDict;
 
@@ -604,28 +600,22 @@ public class TweetToFeatureVector extends SimpleBatchFilter {
 		// We start with processing the input tweets
 		this.processTweets(inputFormat);
 
-		// the dictionary of words and attribute indexes
-		this.m_Dictionary=new Object2IntOpenHashMap<String>();
-
 
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
 
 
-
-		int i=0;
+		
 
 		// Adds all other attributes from the input data
-		for (; i < inputFormat.numAttributes(); i++) {
+		for (int i=0; i < inputFormat.numAttributes(); i++) {
 			att.add(inputFormat.attribute(i));
 		}	
 
 		for(String attribute:this.attributeCount.keySet()){
 			if(this.attributeCount.get(attribute)>=this.minAttDocs){
 				Attribute a = new Attribute(attribute);
-				att.add(a);		
-				this.m_Dictionary.put(attribute, i);
-				i++;
+				att.add(a);	
 
 			}
 		}
@@ -664,13 +654,17 @@ public class TweetToFeatureVector extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 
-			for(String innerAtt:vec.keySet()){
-				if(this.m_Dictionary.containsKey(innerAtt)){
-					int attIndex=this.m_Dictionary.getInt(innerAtt);
-					// we normalise the value by the number of documents
+			// add words using the frequency as attribute value
+			for (String innerAtt : vec.keySet()) {
+				// we only add the value of valid attributes
+				if (result.attribute(innerAtt) != null){
+					int attIndex=result.attribute(innerAtt).index();					
 					values[attIndex]=(double)vec.getInt(innerAtt);
+
 				}
-			}				
+
+
+			}			
 
 
 			Instance inst=new SparseInstance(1, values);
