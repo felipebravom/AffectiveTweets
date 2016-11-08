@@ -115,7 +115,7 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	    	
 	    }
 	    		
-	    return Math.sqrt(Correlation.rankKendallTauBeta(instanceV, predictedV));
+	    return Correlation.rankKendallTauBeta(instanceV, predictedV);
 	  }
 
 	  /**
