@@ -21,6 +21,21 @@ public class Test {
 		return tokenNgram;		
 	}
 	
+	public static List<String> calculateCharNgram(String content,int n){
+		List<String> charNgram=new ArrayList<String>();
+		if(content.length()>=n){
+			for(int i=0;i<content.length()-n;i++){
+				String cgram="";
+				for(int j=i;j<i+n;j++){
+					cgram+=content.charAt(j);
+				}				
+				charNgram.add(cgram);
+				
+			}
+		}
+				
+		return charNgram;		
+	}
 	
 	public static void main(String[] args) {
 		String[] sent={"Hello","my","dear","love"};
@@ -29,12 +44,19 @@ public class Test {
 			sentList.add(a);
 		}
 		
-		List<String> ngrams=calculateTokenNgram(sentList,3);
-		for(String a:ngrams){
-			System.out.println(a);
-		}
+//		List<String> ngrams=calculateTokenNgram(sentList,4);
+//		for(String a:ngrams){
+//			System.out.println(a);
+//		}
 
 		
+		String hello="Hello world";
+		
+		
+		List<String> cgrams= calculateCharNgram(hello,2);
+		for(String a:cgrams){
+			System.out.println(a);
+		}
 		
 		
 		

@@ -24,6 +24,8 @@ import java.util.Vector;
 import affective.core.MyUtils;
 import cmu.arktweetnlp.Tagger;
 import cmu.arktweetnlp.Twokenize;
+import cmu.arktweetnlp.impl.ModelSentence;
+import cmu.arktweetnlp.impl.Sentence;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
@@ -494,6 +496,40 @@ public class TweetToFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	
+	// Returns POS tags from a List of tokens using TwitterNLP
+	public List<String> getPOStags(List<String> tokens) {
+
+		ArrayList<String> tags = new ArrayList<String>();
+
+		try{
+			Sentence sentence = new Sentence();
+			sentence.tokens = tokens;
+			ModelSentence ms = new ModelSentence(sentence.T());
+			this.tagger.featureExtractor.computeFeatures(sentence, ms);
+			this.tagger.model.greedyDecode(ms, false);
+
+
+
+			for (int t = 0; t < sentence.T(); t++) {
+				String tag = this.tagger.model.labelVocab.name(ms.labels[t]);
+				tags.add(tag);
+			}
+
+
+		}
+		catch(Exception e){
+			System.err.println("Tagging Problem");
+			for(int i=0;i<tokens.size();i++){
+				tags.add("?");
+				System.err.print(tokens.get(i));
+			}
+			
+			e.printStackTrace(System.err);
+		}
+
+		return tags;
+	}
 
 
 
