@@ -1,0 +1,44 @@
+# Description file for AffectiveTweets
+#
+# 
+
+# Package name (required)
+PackageName=AffectiveTweets
+
+# Version (required)
+Version=1.0
+
+#Date
+Date=2016-09-09
+
+# Title (required)
+Title=Text Filter for Sentiment Analysis of tweets
+
+Category=Text classification
+
+# Author (required)
+Author=felipebravom <fjb11@students.waikato.ac.nz>
+
+# Maintainer (required)
+Maintainer=felipebravom <fjb11@students.waikato.ac.nz>
+
+# License (required)
+License=GPL 3.0
+
+# Description (required)
+Description= Text filters for converting tweets into feature vectors.
+
+# Package URL for obtaining the package archive (required)
+PackageURL=https://github.com/felipebravom/AffectiveTweets
+
+# URL for further information
+URL=https://github.com/felipebravom/AffectiveTweets
+
+# Related to other packages?
+#Related=
+
+# Dependencies
+Depends=weka (>=3.7.1)
+
+# Evaluation Metrics
+weka.classifiers.evaluation.AbstractEvaluationMetric=weka.classifiers.evaluation.Kendall

@@ -12,7 +12,7 @@ weka.filters.unsupervised.attribute.TweetToFeatureVector -M 0 -W -C -I 1 -P NGRA
 weka.filters.unsupervised.attribute.Reorder -R 3-last,2
 
 
-java -cp affective.jar:"lib/*"  weka.gui.GUIChooser
+java -DWEKA_HOME=. -cp affective.jar:"lib/*"  weka.gui.GUIChooser
 
 
 
