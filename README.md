@@ -17,5 +17,5 @@ The package implements three WEKA filters for converting tweets from string form
  * Twitter-specfic lexicons
  
 3. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
- * Average word embedding.
+ * Average word embeddings.
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
