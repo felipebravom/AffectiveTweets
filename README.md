@@ -4,7 +4,7 @@ AffectiveTweets is an open source project based on [WEKA](http://www.cs.waikato.
 
 The package implements three WEKA filters for converting tweets from string format into feature vectors:
 
-1. __TweetToSparseFeatureVector__: calculates sparse feature from a tweet. There are options provides for filtering out infrequent features and setting the weighting approach of the sparse features (boolean or frequency based).
+1. __TweetToSparseFeatureVector__: calculates sparse feature from a tweet. There are options provides for filtering out infrequent features and setting the weighting approach  (boolean or frequency based).
  * Word N-grams
  * Character N-grams
  * POS tags (with N-Gram sequences)
@@ -16,6 +16,6 @@ The package implements three WEKA filters for converting tweets from string form
  * NRC Emotion
  * Twitter-specfic lexicons
  
-3. __TweetToEmbeddingsFeatureVector__: calculate a tweet-leve feature representation using pre-trained word embeddings as input. 
+3. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
  * Average word embedding.
- * Concatenation of first k embeddings (using dummy values if the tweet is shorter than k). 
+ * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
