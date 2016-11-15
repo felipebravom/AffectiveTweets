@@ -14,7 +14,7 @@
  */
 
 /*
- *    Kendall.java
+ *    Spearman.java
  *    Copyright (C) 2016 University of Waikato, Hamilton, New Zealand
  */
 
@@ -30,14 +30,15 @@ import weka.core.Instance;
 import weka.core.Utils;
 
 /**
- *  Provides Kendall's tau rank correlation coefficient for evaluating regression schemes. Implementation taken from Quan Sun's Fantail project.
- *  More info at: https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
+ *  Provides Spearmans's rho rank correlation coefficient for evaluating regression schemes. Implementation taken from Quan Sun's Fantail project.
+ *  More info at: https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
  * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class Kendall extends AbstractEvaluationMetric implements StandardEvaluationMetric {
+public class Spearman extends AbstractEvaluationMetric implements StandardEvaluationMetric {
 
-	
+
+
 	  /**
 	   * Whether metric applies to nominal class.
 	   * @return false
@@ -59,14 +60,14 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	   * @return the names of the metrics.
 	   */
 	  public String getMetricName() {
-	    return "kendall";
+	    return "spearman";
 	  }
 
 	  /**
 	   * A brief description of the metrics.
 	   * @return a brief description of the metrics.
 	   */
-	  public String getMetricDescription() { return "The kendall tau statistics."; }
+	  public String getMetricDescription() { return "The Spearman rho statistics."; }
 
 	  /**
 	   * Update stats for a nominal class. Does nothing because metrics are for regression only.
@@ -93,7 +94,7 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	  public List<String> getStatisticNames() {
 
 	    ArrayList<String> names = new ArrayList<String>();
-	    names.add("kendall");
+	    names.add("spearman");
 
 	    return names;
 	  }
@@ -104,7 +105,7 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	   */
 	  public String toSummaryString() {
 
-	    return       "Kendall's tau                      " + Utils.doubleToString(getStatistic("kendall"), 12, 4) + "\n";
+	    return       "Spearman's rho                     " + Utils.doubleToString(getStatistic("spearman"), 12, 4) + "\n";
 	  }
 
 	  /**
@@ -114,10 +115,11 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	   */
 	  public double getStatistic(String name) {
 
-	    if (!name.equals("kendall")) {
+	    if (!name.equals("spearman")) {
 	      throw new UnknownStatisticException("Statistic " + name + " is unknown.");
 	    }
-	    	    
+	    
+	    
 	    ArrayList<Prediction> pred=this.m_baseEvaluation.m_Predictions;
 	    double [] predictedVals=new double[pred.size()];
 	    double [] actualVals=new double[pred.size()];
@@ -126,8 +128,9 @@ public class Kendall extends AbstractEvaluationMetric implements StandardEvaluat
 	    		actualVals[i]=pred.get(i).actual();
 	    		predictedVals[i]=pred.get(i).predicted();
 	    }
-        		
-	    return Correlation.rankKendallTauBeta(actualVals, predictedVals);
+    
+    		
+	    return Correlation.spearman(actualVals, predictedVals);
 	  }
 
 	  /**

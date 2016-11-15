@@ -14,6 +14,7 @@ weka.filters.unsupervised.attribute.Reorder -R 3-last,2
 
 java -DWEKA_HOME=. -cp affective.jar:"lib/*"  weka.gui.GUIChooser
 
+java -cp affective.jar:"lib/*"  weka.gui.GUIChooser
 
 
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -M 2 -I 1 -P WNGRAM- -Q 2 -A -B CNGRAM- -D 3 -E 5 -L -F -G 1 -H POS- -I 2 -J resources/50mpaths2.txt -K CLUST-\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.01 -B 1.0
@@ -28,3 +29,13 @@ Train a classifier using LibLinear SVM
 
 java -Xmx10g -cp affective.jar:"lib/*" weka.classifiers.meta.FilteredClassifier -t data/sem-eval.arff -T data/sem-eval-short.arff   -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -M 2 -I 1 -P WNGRAM- -Q 2 -A -B CNGRAM- -D 3 -E 5 -L -F -G 1 -H POS- -I 2 -J resources/50mpaths2.txt -K CLUST-\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.01 -B 1.0
 
+
+Install a Package
+java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/RankCorrelation/raw/master/releases/download/1.0/RankCorrelation.zip
+
+Try LibLinear Regression
+java -cp weka.jar weka.Run .LibLINEAR -t data/cpu.arff  -S 11
+java weka.Run .LibLINEAR -t ~/datasets/numeric/fishcatch.arff -S 11
+
+
+ant -f build_package.xml

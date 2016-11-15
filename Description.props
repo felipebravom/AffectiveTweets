@@ -39,6 +39,3 @@ URL=https://github.com/felipebravom/AffectiveTweets
 
 # Dependencies
 Depends=weka (>=3.7.1)
-
-# Evaluation Metrics
-weka.classifiers.evaluation.AbstractEvaluationMetric=weka.classifiers.evaluation.Kendall
