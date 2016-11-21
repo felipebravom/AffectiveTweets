@@ -5,7 +5,5 @@
 	<classpathentry kind="lib" path="lib/fastutil-6.6.3.jar"/>
 	<classpathentry kind="lib" path="lib/weka.jar" sourcepath="/Users/admin/weka-3-8-0/weka-src.jar"/>
 	<classpathentry kind="lib" path="lib/ark-tweet-nlp-0.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/liblinear-1.92.jar"/>
-	<classpathentry kind="lib" path="lib/LibLINEAR.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

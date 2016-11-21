@@ -1,2 +1,0 @@
-# Evaluation Metrics
-weka.classifiers.evaluation.AbstractEvaluationMetric=weka.classifiers.evaluation.Kendall, weka.classifiers.evaluation.Spearman
