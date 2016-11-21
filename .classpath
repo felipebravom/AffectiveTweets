@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/fastutil-6.6.3.jar"/>
 	<classpathentry kind="lib" path="lib/weka.jar" sourcepath="/Users/admin/weka-3-8-0/weka-src.jar"/>
