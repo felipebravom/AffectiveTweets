@@ -7,7 +7,7 @@
 # Package Files #
 *.war
 *.ear
-
+resources/
 *.gz
 
 
