@@ -21,11 +21,17 @@
 package affective.core;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 
-public abstract class LexiconEvaluator {
+public abstract class LexiconEvaluator implements Serializable {
+
+	/** for serialization */
+	private static final long serialVersionUID = 1L;
+	
+	
 	protected String path;
 	protected String name; // The lexicon's name
 	protected List<String> featureNames; // list with all the features provided by the lexicon evaluator

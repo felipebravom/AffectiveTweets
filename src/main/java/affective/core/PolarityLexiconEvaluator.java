@@ -17,6 +17,9 @@ import java.util.zip.GZIPInputStream;
  */
 public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
+	/** for serialization */
+	private static final long serialVersionUID = 5921580335557644894L;
+	
 	protected Map<String, String> dict;
 
 	public PolarityLexiconEvaluator(String file,String name) {

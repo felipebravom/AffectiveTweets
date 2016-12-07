@@ -9,8 +9,10 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -18,9 +20,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Vector;
+import java.util.zip.GZIPInputStream;
 
 import cmu.arktweetnlp.Tagger;
-import cmu.arktweetnlp.Twokenize;
 import cmu.arktweetnlp.impl.ModelSentence;
 import cmu.arktweetnlp.impl.Sentence;
 import weka.core.Attribute;
@@ -43,6 +45,18 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	/** for serialization */
 	private static final long serialVersionUID = 3635946466523698211L;
+	
+	
+	/** Default path to where resources are stored */
+	public static String RESOURCES_FOLDER_NAME = weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
+
+	/** Default path of POS tagger model. */
+	public static String TAGGER_FILE_NAME=RESOURCES_FOLDER_NAME+File.separatorChar+"model.20120919";
+	
+	/** The path of the word clusters. */
+	public static String WORD_CLUSTERS_FILE_NAME=RESOURCES_FOLDER_NAME+File.separatorChar+"50mpaths2.txt.gz";
+
+	
 
 	/** Counts the number of documents in which candidate attributes appear. This will help for discarding infrequent attributes */
 	protected Object2IntMap<String> attributeCount; 
@@ -100,10 +114,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	/** The maximum dimension for cluster ngrams.  */
 	protected int clustNgramMaxDim=0;
-
-
-	/** The path of the word clusters. */
-	protected String clustPath="resources/50mpaths2.txt";
 
 
 	/** the prefix of the cluster-based attributes */
@@ -206,10 +216,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		
 		result.addElement(new Option("\t The maximum dimension for ngrams calculated with Brown word clusters.\n"
 				+ "\t(default: " + this.clustNgramMaxDim + ")", "I", 1, "-I"));
-			
-		
-		result.addElement(new Option("\t The path of the word clusters.\n"
-				+ "\t(default: " + this.clustPath + ")", "J", 1, "-J"));
+
 		
 		result.addElement(new Option("\t The prefix of the cluster-based attributes\n"
 				+ "\t(default: " + this.clustPrefix + ")", "K", 1, "-K"));
@@ -273,9 +280,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		
 		result.add("-I");
 		result.add("" + this.clustNgramMaxDim);
-		
-		result.add("-J");
-		result.add("" + this.clustPath);		
+
 		
 		result.add("-K");
 		result.add("" + this.clustPrefix);		
@@ -440,18 +445,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		}
 		
 		
-		String clustPathOption = Utils.getOption('J', options);
-		if (clustPathOption.length() > 0) {
-			String[] clustPathOptionSpec = Utils.splitOptions(clustPathOption);
-			if (clustPathOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String clustPathValue = clustPathOptionSpec[0];
-			this.setClustPath(clustPathValue);
-
-		}
-		
 		String clustPrefixOption = Utils.getOption('K', options);
 		if (clustPrefixOption.length() > 0) {
 			String[] clustPrefixOptionSpec = Utils.splitOptions(clustPrefixOption);
@@ -484,47 +477,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 	
-	
-
-	// tokenises and cleans the content 
-	public List<String> tokenize(String content) {
-
-		if(this.toLowerCase)
-			content=content.toLowerCase();
-
-
-		if(!this.cleanTokens)
-			return Twokenize.tokenizeRawTweetText(content);
-		else{
-			// if a letters appears two or more times it is replaced by only two
-			// occurrences of it
-			content = content.replaceAll("([a-z])\\1+", "$1$1");
-		}
-
-		List<String> tokens = new ArrayList<String>();
-
-		for (String word : Twokenize.tokenizeRawTweetText(content)) {
-			String cleanWord = word;
-
-
-			if(this.cleanTokens){
-				// Replace URLs to a generic URL
-				if (word.matches("http.*|ww\\..*")) {
-					cleanWord = "http://www.url.com";
-				}
-
-				// Replaces user mentions to a generic user
-				else if (word.matches("@.*")) {
-					cleanWord = "@user";
-				}
-
-	
-			}
-
-			tokens.add(cleanWord);
-		}
-		return tokens;
-	}
 
 	
 	// Calculates token ngrams from a sequence of tokens
@@ -599,7 +551,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public void initializeTagger(){
 		try {
 			this.tagger= new Tagger();
-			this.tagger.loadModel("models/model.20120919");
+			this.tagger.loadModel(TAGGER_FILE_NAME);
 		} catch (IOException e) {
 			this.posNgramMaxDim=0;
 		}
@@ -645,7 +597,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public Object2IntMap<String> calculateDocVec(String content) {
 		
 		// tokenizes the content 
-		List<String> tokens=this.tokenize(content); 
+		List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens); 
 
 		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
 		// add the ngram vectors
@@ -720,8 +672,11 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 			if(this.clustNgramMaxDim>0){
 				this.brownDict=new Object2ObjectOpenHashMap<String,String>();
 				try {
-					BufferedReader bf = new BufferedReader(new FileReader(
-							this.clustPath));
+					FileInputStream fin = new FileInputStream(WORD_CLUSTERS_FILE_NAME);
+					GZIPInputStream gzis = new GZIPInputStream(fin);
+					InputStreamReader xover = new InputStreamReader(gzis);
+					BufferedReader bf = new BufferedReader(xover);
+
 					String line;
 					while ((line = bf.readLine()) != null) {
 						String pair[] = line.split("\t");
@@ -730,6 +685,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 					}
 					bf.close();
+					xover.close();
+					gzis.close();
+					fin.close();
 
 				} catch (IOException e) {
 					// do not create clusters attributes
@@ -1034,19 +992,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.clustNgramMaxDim = clustNgramMaxDim;
 	}
 	
-	
-
-	public String getClustPath() {
-		return clustPath;
-	}
-
-
-
-	public void setClustPath(String clustPath) {
-		this.clustPath = clustPath;
-	}
-
-
 
 	public String getClustPrefix() {
 		return clustPrefix;

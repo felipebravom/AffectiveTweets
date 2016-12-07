@@ -16,6 +16,13 @@
   <property name="build" value="build"/>
   <property name="dist"  value="dist"/>
   <property name="doc"  value="doc"/>
+
+  <!-- set specfic properties for this build: lexicons, resources and datasets -->	
+  <property name="lexicons"  value="lexicons"/>	
+  <property name="resources"  value="resources"/>
+  <property name="data"  value="data"/>	
+  
+	
   <property name="javac_max_memory" value="256m"/>
   <property name="debug" value="on" />
   <property name="package" value="AffectiveTweets"/>	
@@ -176,9 +183,28 @@
     <copy todir="${dist}/${package}/lib" >
        <fileset dir="${lib}">
          <include name="*.jar"/>
+		 <exclude name="weka.jar"/>       	
          <include name="*.zip"/>
        </fileset>
+    </copy>  
+    <mkdir dir="${dist}/${package}/lexicons"/>
+    <copy todir="${dist}/${package}/lexicons" >
+       <fileset dir="${lexicons}">
+         <include name="**/*"/>
+       </fileset>
     </copy>
+    <mkdir dir="${dist}/${package}/data"/>
+    <copy todir="${dist}/${package}/data" >
+       <fileset dir="${data}">
+         <include name="**/*"/>
+       </fileset>
+    </copy>
+    <mkdir dir="${dist}/${package}/resources"/>
+    <copy todir="${dist}/${package}/resources" >
+       <fileset dir="${resources}">
+         <include name="**/*"/>
+       </fileset>
+    </copy>	
     <mkdir dir="${dist}/${package}/doc"/>
     <copy todir="${dist}/${package}/doc" >
        <fileset dir="${doc}">

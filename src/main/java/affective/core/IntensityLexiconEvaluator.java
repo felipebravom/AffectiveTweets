@@ -15,8 +15,12 @@ import java.util.zip.GZIPInputStream;
  * 
  * @author fbravo Evaluates a lexicon from a csv file
  */
-public class IntensityLexiconEvaluator extends LexiconEvaluator {
+public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 
+
+	/** for serialization */
+	private static final long serialVersionUID = -2094228012480778199L;
+	
 	protected Map<String, String> dict;
 
 	public IntensityLexiconEvaluator(String file,String name) {

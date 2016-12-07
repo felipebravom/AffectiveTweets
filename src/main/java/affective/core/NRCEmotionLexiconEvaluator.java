@@ -33,7 +33,11 @@ import java.util.zip.GZIPInputStream;
 
 
 
-public class NRCEmotionLexiconEvaluator extends LexiconEvaluator {
+public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
+	
+
+	/** for serialization */
+	private static final long serialVersionUID = 5020983098724465636L;
 	
 	protected Map<String, Map<String, Integer>> dict; // each word is mapped to
 	// different emotions
@@ -150,25 +154,6 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator {
 		return emoCount;
 	}
 
-	static public void main(String args[]) throws IOException{
-		
-		LexiconEvaluator eval = new NRCEmotionLexiconEvaluator(
-				"lexicons/NRC-emotion-lexicon-wordlevel-v0.92.txt.gz","NRC");
-	
-		eval.processDict();
-		
-		List<String> words=MyUtils.cleanTokenize("love love fear worry hate hurry up i am sad tears in heaven unexpected");
-
-		Map<String, Double> pal = eval.evaluateTweet(words);
-
-		if (pal != null) {
-			for (String emo : pal.keySet()) {
-				System.out.println(emo + " " + pal.get(emo));
-			}
-		}
-
-
-	}
 
 
 }
