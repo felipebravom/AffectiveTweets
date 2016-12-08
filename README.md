@@ -1,4 +1,5 @@
-# AffectiveTweets
+<img src="logofinal.png" alt="alt text" width="250px" height="200px">
+
 AffectiveTweets is an open source project based on [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) for analysing emotion and sentiment from  tweets. 
 
 
