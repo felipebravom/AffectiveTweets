@@ -39,16 +39,38 @@ import weka.core.Option;
 import weka.core.SelectedTag;
 import weka.core.SparseInstance;
 import weka.core.Tag;
+import weka.core.TechnicalInformation;
 import weka.core.Utils;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
+import weka.core.TechnicalInformation.Type;
 import weka.filters.SimpleBatchFilter;
 
 /**
- *  <!-- globalinfo-start --> An attribute filter that calculates features for a string attribute 
- *  from given list of word vectors (embeddings). The embeddings format is a csv.gz file with format: emb1<tab>emb2<tab>..word. 
+ *  <!-- globalinfo-start --> An attribute filter that calculates word embedding (word vectros) features 
+ *  for a tweet represented as a string attribute. 
+ *  The embeddings format is a csv.gz file with format: emb1<tab>emb2<tab>..word. 
  * <p/>
  * <!-- globalinfo-end -->
+ * 
+ * <!-- technical-bibtex-start -->
+ * BibTeX:
+ * <pre>
+ * &#64;inproceedings{bravo-marquez16:_deter_word_emotion_assoc_from,
+ * author = {Felipe Bravo-Marquez and Eibe Frank and Saif M. Mohammad and Bernhard Pfahringer},
+ * title = {Determining Word-Emotion Associations from Tweets by Multi-Label Classification},
+ * booktitle = {Proc 15th IEEE/WIC/ACM International Conference on Web Intelligence},
+ * year = 2016,
+ * series = {Omaha, Nebraska},
+ * publisher = {IEEE Computer Society},
+ * pdf = {http://www.cs.waikato.ac.nz/~eibe/pubs/emo_lex_wi.pdf}
+ * }
+ * </pre>
+ * <p/>
+ <!-- technical-bibtex-end -->
+ * 
+ * 
+ * 
  * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
  * @version $Revision: 1 $
  */
@@ -110,7 +132,27 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	public String globalInfo() {
 		return "An attribute filter that calculates features for a string attribute  from "
 				+ "given list of word vectors (embeddings). The embeddings format is a csv.gz "
-				+ "file with format: emb1<tab>emb2<tab>..word. .";
+				+ "file with format: value1<tab>value2<tab>...<tab>word .\n Pretrained word embeddings are provided in"
+				+ RESOURCES_FOLDER_NAME+".\n"+getTechnicalInformation().toString();
+	}
+
+	/**
+	 * Returns an instance of a TechnicalInformation object, containing
+	 * detailed information about the technical background of this class,
+	 * e.g., paper reference or book this class is based on.
+	 *
+	 * @return the technical information about this class
+	 */
+	public TechnicalInformation getTechnicalInformation() {
+		TechnicalInformation result;
+		result = new TechnicalInformation(Type.INPROCEEDINGS);
+		result.setValue(TechnicalInformation.Field.AUTHOR, "Felipe Bravo-Marquez, Eibe Frank, and Bernhard Pfahringer");
+		result.setValue(TechnicalInformation.Field.TITLE, " Determining Word--Emotion Associations from Tweets by Multi-Label Classification");
+		result.setValue(TechnicalInformation.Field.YEAR, "2016");
+		result.setValue(TechnicalInformation.Field.BOOKTITLE, "Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA");
+		result.setValue(TechnicalInformation.Field.URL, "http://researchcommons.waikato.ac.nz/handle/10289/10783");
+
+		return result;
 	}
 
 
@@ -123,8 +165,14 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	public Enumeration<Option> listOptions() {
 		Vector<Option> result = new Vector<Option>();
 
-		result.addElement(new Option("\t Index of string attribute.\n"
+		result.addElement(new Option("\t The index (starting from 1) of the target string attribute.\n"
 				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));
+
+		result.addElement(new Option("\t The file containing the word embeddings. \n"
+				+ "\t It has to be a gzip compressed csv file with the following structure:\n"
+				+ "\t value1<tab>value2<tab>...<tab>word  "
+				+ "\n"
+				+ "\t(default: " + this.embeddingFileName + ")", "B", 1, "-B"));
 
 
 
@@ -141,7 +189,7 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 		result.addElement(new Option("\t Lowercase content.\n"
 				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
 
-		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
+		result.addElement(new Option("\t Normalize tokens (replace goood by good, normalize URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
 
 		result.addAll(Collections.list(super.listOptions()));
@@ -162,6 +210,9 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 
 		result.add("-I");
 		result.add("" + this.getTextIndex());
+
+		result.add("-B");
+		result.add("" + this.getEmbeddingFileName());		
 
 		result.add("-S");
 		result.add("" + this.m_action);
@@ -188,19 +239,19 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	 * <!-- options-start --> 
 	 * 
 	 * <pre>
-	 *		-I
+	 * -I
 	 *	 Index of string attribute.
 	 *	(default: 1)
 	 * </pre>
 	 * 
 	 * <pre>
-	 * -S <int>
+	 * -S &lt;col&gt;
 	 *	Set type of action (default: 0)
-	 *		 0 -- Average embeddings		 1 -- Add embeddings		 2 -- Concatenate * embeddings
+	 *		 0 -- Average embeddings		 1 -- Add embeddings		 2 -- Concatenate embeddings
 	 * </pre>
 	 * 
 	 * <pre>
-	 * -K
+	 * -K &lt;col&gt;
 	 *	 Number of words to concatenate.
 	 *	(default: 15)
 	 * </pre>
@@ -213,7 +264,7 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	 * 
 	 * <pre>
 	 * -O
-	 *	 Normalize tokens (replace goood by good, standarise URLs and \@users).
+	 *	 Normalize tokens (replace goood by good, standarise URLs and @users).
 	 *	(default: false)
 	 * </pre>
 	 * <!-- options-end -->
@@ -238,6 +289,12 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 			this.setTextIndex(index);
 
 		}
+
+		String embeddingFileNameOption = Utils.getOption('B', options);
+		if (embeddingFileNameOption.length() > 0) 
+			this.setEmbeddingFileName(embeddingFileNameOption);
+
+
 
 
 		String tmpStr = Utils.getOption('S', options);
@@ -300,6 +357,18 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Determines the output format based on the input format and returns this. In
+	 * case the output format cannot be returned immediately, i.e.,
+	 * immediateOutputFormat() returns false, then this method will be called from
+	 * batchFinished().
+	 * 
+	 * @param inputFormat the input format to base the output format on
+	 * @return the output format
+	 * @throws Exception in case the determination goes wrong
+	 * @see #hasImmediateOutputFormat()
+	 * @see #batchFinished()
+	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat)
 			throws Exception {
@@ -334,21 +403,23 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 
 		}
 
-
-
-
 		Instances result = new Instances(inputFormat.relationName(), att, 0);
-
 		// set the class index
 		result.setClassIndex(inputFormat.classIndex());
-
 		return result;
-
-
-
 
 	}
 
+
+	/**
+	 * Processes the given data (may change the provided dataset) and returns the
+	 * modified version. This method is called in batchFinished().
+	 * 
+	 * @param instances the data to process
+	 * @return the modified data
+	 * @throws Exception in case the processing goes wrong
+	 * @see #batchFinished()
+	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
@@ -409,10 +480,22 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 
 	}
 
+
+	/**
+	 * Get the position of the target string.
+	 * 
+	 * @return the index of the target string
+	 */	
 	public int getTextIndex() {
 		return textIndex;
 	}
 
+
+	/**
+	 * Set the attribute's index with the string to process.
+	 * 
+	 * @param textIndex the index value name
+	 */
 	public void setTextIndex(int textIndex) {
 		this.textIndex = textIndex;
 	}
@@ -425,72 +508,170 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	 */
 	public String textIndexTipText() {
 
-		return "Index of string attribute." ;
+		return "The index (starting from 1) of the target string attribute." ;
 	}
 
 
-
+	/**
+	 * Get the file name containing the word vectors.
+	 * 
+	 * @return the embeddings file name
+	 */	
 	public String getEmbeddingFileName() {
 		return embeddingFileName;
 	}
 
+	/**
+	 * Set the embeddings's file name.
+	 * 
+	 * @param embeddingFileName the embeddings file name
+	 */
 	public void setEmbeddingFileName(String embeddingFileName) {
 		this.embeddingFileName = embeddingFileName;
 	}
 
 
 	/**
-	 * Sets the type of attribute to generate.
+	 * Returns the tip text for this property.
 	 * 
-	 * @param value the attribute type
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
 	 */
+	public String embeddingFileNameTipText() {
 
+		return "The file name containing the word vectors. It has to be a gzip compressed csv file with the following structure:\n"
+				+ "value1<tab>value2<tab>..word" ;
+	}	
+
+
+
+
+	/**
+	 * Gets the action for aggregating the embeddings.
+	 * 
+	 * @return the current action.
+	 */
+	public SelectedTag getAction() {
+		return new SelectedTag(m_action, TAGS_ACTION);
+	}
+
+
+	/**
+	 * Sets the aggregation action.
+	 * 
+	 * @param value the action type
+	 * 
+	 */
 	public void setAction(SelectedTag value) {
 		if (value.getTags() == TAGS_ACTION) {
 			this.m_action=value.getSelectedTag().getID();
 		}
 	}
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String actionTipText() {
+
+		return "The action for aggregating the word embeddings: 1) Average embeddings, "
+				+ "2) Add embeddings, 3) Concatenate embeddings";
+	}	
 
 
 	/**
-	 * Gets the type of attribute to generate.
+	 * Gets the number of embeddings to concatenate.
 	 * 
-	 * @return the current attribute type.
+	 * @return the number of embeddings.
 	 */
-	public SelectedTag getAction() {
-		return new SelectedTag(m_action, TAGS_ACTION);
-	}
-
 	public int getK() {
 		return k;
-	}
+	}	
 
-
-
-
+	/**
+	 * Sets the number of embeddings to concatenate.
+	 * 
+	 * @param k the number of embeddings.
+	 * 
+	 */
 	public void setK(int k) {
 		this.k = k;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String kTipText() {
+		return "Number of words (from left to right) of the tweet whose embeddings will be concatenated.";
+	}	
+
+	/**
+	 * Gets the value of the lowercase flag.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isToLowerCase() {
 		return toLowerCase;
 	}
 
-
+	/**
+	 * Sets the value of the lowercase flag.
+	 * 
+	 * @param toLowerCase the value of the flag.
+	 * 
+	 */
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String lowerCaseTipText() {
+		return "Lowercase the tweet's content.";
+	}
+
+
+	/**
+	 * Gets the value of the cleanTokens option.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isCleanTokens() {
 		return cleanTokens;
 	}
 
-
+	/**
+	 * Sets the value of the cleanTokens flag.
+	 * 
+	 * @param cleanTokens the value of the flag.
+	 * 
+	 */
 	public void setCleanTokens(boolean cleanTokens) {
 		this.cleanTokens = cleanTokens;
+	}
+
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String cleanTokensTipText() {
+		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
+				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
+				+ "and replacing 	user mentions and URLs with generic tokens..";		
 	}
 
 

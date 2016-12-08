@@ -1,3 +1,24 @@
+/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ *    TweetToEmbeddingsFeatureVector.java
+ *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
 package weka.filters.unsupervised.attribute;
 
 import java.io.File;
@@ -22,19 +43,49 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
 import weka.core.SparseInstance;
+import weka.core.TechnicalInformation;
 import weka.core.Utils;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
+import weka.core.TechnicalInformation.Type;
 import weka.filters.SimpleBatchFilter;
+
+/**
+ *  <!-- globalinfo-start --> An attribute filter that calculates lexicon-based features 
+ *  for a tweet represented as a string attribute. Different lexicons are used. 
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * <!-- technical-bibtex-start -->
+ * BibTeX:
+ * <pre>
+ * &#64;Article{BravoMarquez2014,
+ * Title                    = {Meta-level sentiment models for big social data analysis },
+ * Author                   = {Felipe Bravo-Marquez and Marcelo Mendoza and Barbara Poblete},
+ * Journal                  = {Knowledge-Based Systems },
+ * Year                     = {2014},
+ * Number                   = {0},
+ * Pages                    = {86 - 99},
+ * Volume                   = {69},
+ * Doi                      = {http://dx.doi.org/10.1016/j.knosys.2014.05.016},
+ * ISSN                     = {0950-7051},
+ * Keywords                 = {Sentiment classification},
+ * Url                      = {http://www.sciencedirect.com/science/article/pii/S0950705114002068}
+ * }
+ * </pre>
+ * <p/>
+ <!-- technical-bibtex-end -->
+ *  
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
+
 
 public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
-	/**
-	 * 
-	 */
+	/** For serialization  */
 	private static final long serialVersionUID = 4983739424598292130L;
-
-
 
 	/** Default path to where lexicons are stored */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons";
@@ -63,7 +114,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	/** The path of the NRC Hashtag Emotion lexicon */
 	public static String NRC_HASH_EMO_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz";
-
 
 
 	/** The path of the emoticon list */
@@ -119,40 +169,46 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	/** True if url, users, and repeated letters are cleaned */
 	protected boolean cleanTokens=false;
 
-
+	/** List of Lexicons to use */
 	private List<LexiconEvaluator> lexicons=new ArrayList<LexiconEvaluator>();
 
+
+	/**
+	 * Returns a string describing this filter.
+	 * 
+	 * @return a description of the filter suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes from different lexical resources for Sentiment Analysis ";
-
+		return "A batch filter that calcuates attributes for a tweet using different lexical resources for sentiment analysis.\n"+getTechnicalInformation().toString();
 	}
 
-
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
+	/**
+	 * Returns an instance of a TechnicalInformation object, containing
+	 * detailed information about the technical background of this class,
+	 * e.g., paper reference or book this class is based on.
+	 *
+	 * @return the technical information about this class
+	 */
+	public TechnicalInformation getTechnicalInformation() {
+		TechnicalInformation result;
+		result = new TechnicalInformation(Type.ARTICLE);
+		result.setValue(TechnicalInformation.Field.AUTHOR, "Felipe Bravo-Marquez and Marcelo Mendoza and Barbara Poblete");
+		result.setValue(TechnicalInformation.Field.TITLE, "Meta-level sentiment models for big social data analysis");
+		result.setValue(TechnicalInformation.Field.YEAR, "2014");
+		result.setValue(TechnicalInformation.Field.JOURNAL, "Knowledge-Based Systems");
+		result.setValue(TechnicalInformation.Field.URL, "http://www.sciencedirect.com/science/article/pii/S0950705114002068");
 
 		return result;
 	}
 
-	
 
+	/**
+	 * Returns an enumeration describing the available options.
+	 * 
+	 * @return an enumeration of all the available options.
+	 */
 	@Override
 	public Enumeration<Option> listOptions() {
 		Vector<Option> result = new Vector<Option>();
@@ -292,7 +348,61 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 * Parses the options for this object.
 	 * <p/>
 	 * 
-	 * <!-- options-start --> <!-- options-end -->
+	 * <!-- options-start --> 
+	 * <pre> 
+	 *-I &lt;col&gt;
+	 *  Index of string attribute (default: 1)
+	 * </pre>
+	 * <pre>
+	 *-A 
+	 *  use MPQA Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-D 
+	 *	 use Bing Liu Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-F 
+	 *	 use AFINN Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-H 
+	 *	 use S140 Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-J 
+	 *	 use NRC-Hash-Sent Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-L 
+	 *	 use NRC-10 Emotion Lexicon	(default:false)
+	 * </pre>
+	 * <pre>
+	 *-N 
+	 *	 use NRC-10-Expanded Emotion Lexicon	(default:false)
+	 * </pre>
+	 * <pre>
+	 *-P 
+	 *	 use NRC Hashtag Emotion Lexicon (default:false)
+	 * </pre>
+	 * <pre>
+	 *-R 
+	 *	 use Emoticon List (default:false)
+	 * </pre>
+	 * <pre>
+	 *-T  
+	 *	 use Negation List (default:false)
+	 * </pre>
+	 * <pre>
+	 *-U 
+	 *	 Lowercase content	(default: false)
+	 * </pre>
+	 * <pre>
+	 *-O 
+	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
+	 *</pre> 
+	 *  
+	 * <!-- options-end -->
 	 * 
 	 * @param options
 	 *            the options to use
@@ -354,7 +464,40 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	}
 
-	// Initialize the dictionaries in the first Batch
+	/**
+	 * Returns the Capabilities of this filter.
+	 * 
+	 * @return the capabilities of this object
+	 * @see Capabilities
+	 */
+	@Override
+	public Capabilities getCapabilities() {
+
+		Capabilities result = new Capabilities(this);
+		result.disableAll();
+
+
+
+		// attributes
+		result.enableAllAttributes();
+		result.enable(Capability.MISSING_VALUES);
+
+		// class
+		result.enableAllClasses();
+		result.enable(Capability.MISSING_CLASS_VALUES);
+		result.enable(Capability.NO_CLASS);
+
+		result.setMinimumNumberInstances(0);
+
+		return result;
+	}
+
+
+
+
+	/**
+	 * Initializes the dictionaries of all the lexicons to use. 
+	 */
 	protected void initializeDicts() {
 
 		if(this.useMpqa){
@@ -492,7 +635,18 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	}
 
-
+	/**
+	 * Determines the output format based on the input format and returns this. In
+	 * case the output format cannot be returned immediately, i.e.,
+	 * immediateOutputFormat() returns false, then this method will be called from
+	 * batchFinished().
+	 * 
+	 * @param inputFormat the input format to base the output format on
+	 * @return the output format
+	 * @throws Exception in case the determination goes wrong
+	 * @see #hasImmediateOutputFormat()
+	 * @see #batchFinished()
+	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat)
 			throws Exception {
@@ -524,6 +678,16 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
+
+	/**
+	 * Processes the given data (may change the provided dataset) and returns the
+	 * modified version. This method is called in batchFinished().
+	 * 
+	 * @param instances the data to process
+	 * @return the modified data
+	 * @throws Exception in case the processing goes wrong
+	 * @see #batchFinished()
+	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 		// Instances result = new Instances(determineOutputFormat(instances),
@@ -567,140 +731,426 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Get the position of the target string.
+	 * 
+	 * @return the index of the target string
+	 */	
 	public int getTextIndex() {
 		return textIndex;
 	}
 
+
+	/**
+	 * Set the attribute's index with the string to process.
+	 * 
+	 * @param textIndex the index value name
+	 */
 	public void setTextIndex(int textIndex) {
 		this.textIndex = textIndex;
 	}
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String textIndexTipText() {
 
+		return "The index (starting from 1) of the target string attribute." ;
+	}
+
+
+	/**
+	 * Get the isUseMpqa value.
+	 *
+	 * @return the isUseMpqa  value.
+	 */	
 	public boolean isUseMpqa() {
 		return useMpqa;
 	}
 
 
+	/**
+	 * Set the useMpqa value.
+	 *
+	 * @param useMpqa The useMpqa value.
+	 */	
 	public void setUseMpqa(boolean useMpqa) {
 		this.useMpqa = useMpqa;
 	}
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useMpqaIndexTipText() {
 
+		return "Counts the number of positive and negative words from the MPQA subjectivity lexicon.\n"
+				+ "More info at: http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/ \n"
+				+ "Publication: Theresa Wilson, Janyce Wiebe, and Paul Hoffmann, Recognizing Contextual Polarity in Phrase-Level Sentiment Analysis." ;
+	}
+
+	/**
+	 * Get the isUseBingLiu value.
+	 *
+	 * @return the isUseBingLiu  value.
+	 */	
 	public boolean isUseBingLiu() {
 		return useBingLiu;
 	}
 
-
+	/**
+	 * Set the useBingLiu value.
+	 *
+	 * @param useBingLiu The useBingLiu value.
+	 */	
 	public void setUseBingLiu(boolean useBingLiu) {
 		this.useBingLiu = useBingLiu;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useBingLiuTipText() {
 
+		return "Counts the number of positive and negative words from the Bing Liu lexicon.\n"
+				+ "More info at: https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon \n"
+				+ "Publication: Minqing Hu and Bing Liu, Mining and summarizing customer reviews.";
+	}	
+
+
+	/**
+	 * Get the isUseAfinn value.
+	 *
+	 * @return the isUseAfinn  value.
+	 */	
 	public boolean isUseAfinn() {
 		return useAfinn;
 	}
 
-
+	/**
+	 * Set the useAfinn value.
+	 *
+	 * @param useAfinn The useAfinn value.
+	 */	
 	public void setUseAfinn(boolean useAfinn) {
 		this.useAfinn = useAfinn;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useAfinnTipText() {
 
+		return "Calculates a positive and negative score by aggregating the word associations provided by the AFINN lexicon.\n"
+				+ "More info at: http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010 \n"
+				+ "Publication: Finn Arup Nielsen, A new ANEW: Evaluation of a word list for sentiment analysis in microblogs";
+	}	
+
+
+	/**
+	 * Get the isUseS140 value.
+	 *
+	 * @return the isUseS140  value.
+	 */	
 	public boolean isUseS140() {
 		return useS140;
 	}
 
-
+	/**
+	 * Set the useS140 value.
+	 *
+	 * @param useS140 The useS140 value.
+	 */	
 	public void setUseS140(boolean useS140) {
 		this.useS140 = useS140;
 	}
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useS140TipText() {
 
+		return "Calculates a positive and negative score by aggregating the word associations provided by the S140 lexicon.\n"
+				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
+				+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts." ;
+	}
 
-
+	/**
+	 * Get the isUseNrcHashSent value.
+	 *
+	 * @return the isUseNrcHashSent  value.
+	 */	
 	public boolean isUseNrcHashSent() {
 		return useNrcHashSent;
 	}
 
-
+	/**
+	 * Set the useNrcHashSent value.
+	 *
+	 * @param useNrcHashSent The useNrcHashSent value.
+	 */	
 	public void setUseNrcHashSent(boolean useNrcHashSent) {
 		this.useNrcHashSent = useNrcHashSent;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useNrcHashSentTipText() {
 
+		return "Calculates a positive and negative score by aggregating the word associations provided by the NRC Hashtag Sentiment lexicon.\n"
+				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
+				+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts." ;
+	}	
+
+
+	/**
+	 * Get the isUseNrc10 value.
+	 *
+	 * @return the isUseNrc10  value.
+	 */	
 	public boolean isUseNrc10() {
 		return useNrc10;
 	}
 
-
+	/**
+	 * Set the useNrc10 value.
+	 *
+	 * @param useNrc10 The useNrc10 value.
+	 */	
 	public void setUseNrc10(boolean useNrc10) {
 		this.useNrc10 = useNrc10;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useNrc10TipText() {
+
+		return "Counts the number of words matching each emotion from the NRC Word-Emotion Association Lexicon.\n"
+				+ "More info at: http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm\n"
+				+ "Publication: Saif Mohammad and Peter Turney, Crowdsourcing a Word-Emotion Association Lexicon." ;
+	}	
 
 
+	/**
+	 * Get the isUseNrc10Expanded value.
+	 *
+	 * @return the isUseNrc10Expanded value.
+	 */	
 	public boolean isUseNrc10Expanded() {
 		return useNrc10Expanded;
 	}
 
-
+	/**
+	 * Set the useNrc10Expanded value.
+	 *
+	 * @param useNrc10Expanded The useNrc10Expanded value.
+	 */	
 	public void setUseNrc10Expanded(boolean useNrc10Expanded) {
 		this.useNrc10Expanded = useNrc10Expanded;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useNrc10ExpandedTipText() {
+
+		return "Sums the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.\n"
+				+ "More info at: http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter\n"
+				+ "Publication: F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer, Determining Word--Emotion Associations from Tweets by Multi-Label Classification.";
+	}	
+
+
+	/**
+	 * Get the isUseNrcHashEmo value.
+	 *
+	 * @return the isUseNrcHashEmo value.
+	 */		
 	public boolean isUseNrcHashEmo() {
 		return useNrcHashEmo;
 	}
 
-
+	/**
+	 * Set the useNrcHashEmo value.
+	 *
+	 * @param useNrcHashEmo The useNrcHashEmo value.
+	 */	
 	public void setUseNrcHashEmo(boolean useNrcHashEmo) {
 		this.useNrcHashEmo = useNrcHashEmo;
 	}
 
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useNrcHashEmoTipText() {
+		return "Sums the emotion associations of the words matching the NRC Hashtag Emotion Association Lexicon.\n"
+				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html\n"
+				+ "Publication: Saif M. Mohammad, Svetlana Kiritchenko, Using Hashtags to Capture Fine Emotion Categories from Tweets.";
+	}		
+
+
+	/**
+	 * Get the isUseEmoticons value.
+	 *
+	 * @return the isUseEmoticons  value.
+	 */		
 	public boolean isUseEmoticons() {
 		return useEmoticons;
 	}
 
-
+	/**
+	 * Set the useEmoticons value.
+	 *
+	 * @param useEmoticons The useEmoticons value.
+	 */	
 	public void setUseEmoticons(boolean useEmoticons) {
 		this.useEmoticons = useEmoticons;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useEmoticonsTipText() {
 
+		return "Calculates a positive and negative score by aggregating the word associations provided by a list of emoticons.\n"
+				+ "The list is taken from the AFINN project.\n"
+				+ "More info at: https://github.com/fnielsen/afinn \n";
+	}
+
+
+
+	/**
+	 * Get the isUseNegation value.
+	 *
+	 * @return the isUseNegation  value.
+	 */		
 	public boolean isUseNegation() {
 		return useNegation;
 	}
 
-
+	/**
+	 * Set the useNegation value.
+	 *
+	 * @param useNegation The useNegation value.
+	 */	
 	public void setUseNegation(boolean useNegation) {
 		this.useNegation = useNegation;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useNegationTipText() {
+
+		return "Counts the number of negating words in the tweet." ;
+	}
+
+
+
+	/**
+	 * Gets the value of the lowercase flag.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isToLowerCase() {
 		return toLowerCase;
 	}
 
-
+	/**
+	 * Sets the value of the lowercase flag.
+	 * 
+	 * @param toLowerCase the value of the flag.
+	 * 
+	 */
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String lowerCaseTipText() {
+		return "Lowercase the tweet's content.";
+	}
+
+
+	/**
+	 * Gets the value of the cleanTokens option.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isCleanTokens() {
 		return cleanTokens;
 	}
 
-
+	/**
+	 * Sets the value of the cleanTokens flag.
+	 * 
+	 * @param cleanTokens the value of the flag.
+	 * 
+	 */
 	public void setCleanTokens(boolean cleanTokens) {
 		this.cleanTokens = cleanTokens;
 	}
+
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String cleanTokensTipText() {
+		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
+				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
+				+ "and replacing 	user mentions and URLs with generic tokens..";		
+	}
+
 
 
 
