@@ -94,8 +94,8 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	public static int CONCATENATE_ACTION = 2;
 
 	/** The action type. */
-	public static final Tag[]      TAGS_ACTION           = {new Tag(AVERAGE_ACTION, "Add Embeddings"),
-		new Tag(ADD_ACTION, "Average Embeddings"),
+	public static final Tag[]      TAGS_ACTION           = {new Tag(AVERAGE_ACTION, "Average Embeddings"),
+		new Tag(ADD_ACTION, "Add Embeddings"),
 		new Tag(CONCATENATE_ACTION, "Concatenate first k embeddings")};
 
 
@@ -132,7 +132,7 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	public String globalInfo() {
 		return "An attribute filter that calculates features for a string attribute  from "
 				+ "given list of word vectors (embeddings). The embeddings format is a csv.gz "
-				+ "file with format: value1<tab>value2<tab>...<tab>word .\n Pretrained word embeddings are provided in"
+				+ "file with format: value1<tab>value2<tab>...<tab>word .\n Pretrained word embeddings are provided in: "
 				+ RESOURCES_FOLDER_NAME+".\n"+getTechnicalInformation().toString();
 	}
 

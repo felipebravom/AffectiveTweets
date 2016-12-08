@@ -827,13 +827,34 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
+	/**
+	 * Get the position of the target string.
+	 * 
+	 * @return the index of the target string
+	 */	
 	public int getTextIndex() {
 		return textIndex;
 	}
 
 
+	/**
+	 * Set the attribute's index with the string to process.
+	 * 
+	 * @param textIndex the index value name
+	 */
 	public void setTextIndex(int textIndex) {
 		this.textIndex = textIndex;
+	}
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String textIndexTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
 	}
 
 
@@ -849,18 +870,49 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.minAttDocs = minAttDocs;
 	}
 
+	
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String minAttDocsTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}
 
 
 
-
+	/**
+	 * Gets the value of the lowercase flag.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isToLowerCase() {
 		return toLowerCase;
 	}
 
+	/**
+	 * Sets the value of the lowercase flag.
+	 * 
+	 * @param toLowerCase the value of the flag.
+	 * 
+	 */
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
 
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String lowerCaseTipText() {
+		return "Lowercase the tweet's content.";
+	}
 	
 	
 	public boolean isFreqWeights() {
@@ -873,17 +925,50 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.freqWeights = freqWeights;
 	}
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String freqWeightsTipText() {
 
+		return "The index (starting from 1) of the target string attribute." ;
+	}
+	
+	
+
+	/**
+	 * Gets the value of the cleanTokens option.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isCleanTokens() {
 		return cleanTokens;
 	}
 
-
-
+	/**
+	 * Sets the value of the cleanTokens flag.
+	 * 
+	 * @param cleanTokens the value of the flag.
+	 * 
+	 */
 	public void setCleanTokens(boolean cleanTokens) {
 		this.cleanTokens = cleanTokens;
 	}
-	
+
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String cleanTokensTipText() {
+		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
+				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
+				+ "and replacing 	user mentions and URLs with generic tokens..";		
+	}
 	
 
 	public int getWordNgramMaxDim() {
@@ -897,6 +982,18 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String wordNgramMaxDimTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}
+		
+	
 
 	public String getWordNgramPrefix() {
 		return wordNgramPrefix;
@@ -909,6 +1006,16 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String wordNgramPrefixTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}
 	
 
 	public boolean isCalculateCharNgram() {
@@ -921,6 +1028,17 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.calculateCharNgram = calculateCharNgram;
 	}
 
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String calculateCharNgramTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}	
 
 
 	public int getCharNgramMinDim() {

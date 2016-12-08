@@ -6,7 +6,7 @@
 PackageName=AffectiveTweets
 
 # Version (required)
-Version=1.0
+Version=1.0.0
 
 #Date
 Date=2016-09-09
@@ -26,7 +26,7 @@ Maintainer=felipebravom <fjb11@students.waikato.ac.nz>
 License=GPL 3.0
 
 # Description (required)
-Description= Text filters for converting tweets into feature vectors.
+Description= Text filters for converting tweets into feature vectors for sentiment analysis. Sample tweets annotated by sentiment and emotions can be found in ${WEKA_HOME}/packages/AffectiveTweets/data.
 
 # Package URL for obtaining the package archive (required)
 PackageURL=https://github.com/felipebravom/AffectiveTweets

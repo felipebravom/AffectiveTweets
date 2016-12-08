@@ -1,4 +1,4 @@
-@relation '6HumanCoded Dataset'
+@relation '6HumanCoded Dataset. Positive and negative scores correspond to the average judgement of at least 3 annotators. More info at: http://sentistrength.wlv.ac.uk/ '
 
 @attribute content string
 @attribute pos numeric
