@@ -1,0 +1,890 @@
+abandon*	-2	liwc uness specified otherwise
+abuse*	-4
+abusi*	-4	removed accept	1	accepta*	2	accepted	2	accepting	2	accepts	2
+ache*	-2
+aching	-2	removed active*	2
+admir*	3
+ador*	4	advantag*	2
+adventur*	1
+advers*	-2
+affection*	3
+afraid	-4
+aggravat*	-3
+aggress*	-3
+agitat*	-2
+agoniz*	-4
+agony	-4	removed agree	2
+agreeab*	1	removed agreed	2	agreeing	2	agreement*	2	agrees	2
+alarm*	-3
+alol	2	actually laughing out loud
+alone	-1	removed alright*	2
+amaz*	3
+amor*	2
+amus*	2
+anger*	-4
+angr*	-4
+anguish*	-4
+annoy*	-3
+antagoni*	-2
+anxi*	-2
+aok	2
+apath*	-2
+appall*	-4
+appreciat*	2
+apprehens*	-3
+argh*	-2
+argu*	-2
+arrogan*	-3
+asham*	-4
+assault*	-3
+asshole*	-3	remvoed assur*	2	
+attachment*	1
+attack*	-3
+attract*	2
+aversi*	-3	remvoed avoid*	-1
+award*	1
+awesome	3
+awful	-4
+awkward*	-2
+baby	2	27 July 2009 (assumes positive context -e.g. hey baby)
+bad	-2
+bashful*	-3
+bastard*	-3	removed battl*	-2
+beaten	-1
+beaut*	3
+beloved	3	removed benefic*	2	benefit	2	benefits	2	benefitt*	2	benevolen*	2	benign*	2
+best	2	removed	better	2
+bff	4	best friends forever
+bg	2	big grin
+bitch*	-2	auto check 4 aug 2009
+bitter*	-2
+blam*	-2
+bless*	2	removed bold*	2
+bonus*	1
+bore*	-2	29 July 2009 - changed from -3
+boring	-2
+bother*	-1
+brave*	3	removed bright*	2
+brillian*	2
+broke	-1
+brutal*	-3
+bum	-2
+bumhole	-2
+burden*	-1
+calm*	2
+care	2
+cared	2
+carefree	2	removed careful*	3
+careless*	-2
+cares	2
+caring	3	removed casual	2	casually	2	certain*	2	challeng*	2	champ*	2	charit*	2
+charm*	2
+cheat*	-3
+cheer*	2
+cherish*	3
+chuckl*	3
+clever*	1
+comed*	1
+comfort*	1	removed	commitment*	2
+compassion*	2
+complain*	-2
+compliment*	2
+confidence	2
+confident	2
+confidently	2
+confront*	-3
+confus*	-2
+considerate	2
+contempt*	-4
+contented*	2
+contentment	1
+contradic*	-2	removed	convinc*	2
+cool	2
+coolest	3	ur da coolest mom ever!!
+courag*	2
+crap	-3
+crappy	-3
+craz*	-1	removed create*	2	creati*	2	credit*	2
+cried	-4
+cries	-3
+critical	-2
+critici*	-2
+crude*	-2
+cruel*	-4
+crushed	-1
+cry	-4
+crye*	-4	misspelling
+crying	-4
+cunt*	-4	removed	cut	-2
+cute*	2
+cutie*	2
+cynic*	-2
+damag*	-1
+damn*	-1	auto check 4 aug 2009
+danger*	-1
+daring	1
+darlin*	3
+daze*	-2
+dear*	2
+decay*	-1
+defeat*	-1
+defect*	-1
+defenc*	-1	removed	defens*	-1	definite	2	definitely	2
+degrad*	-2
+delectabl*	3	removed	delicate*	2
+delicious*	3
+deligh*	3
+depress*	-4
+depriv*	-1
+despair*	-4
+desperat*	-3
+despis*	-4
+destroy*	-3
+destruct*	-1
+determina*	1
+determined	1
+devastat*	-3
+devil*	-1
+devot*	3
+difficult*	-1
+digni*	2	removed	disadvantage*	-2	disagree*	-2
+disappoint*	-2
+disaster*	-1
+discomfort*	-2
+discourag*	-1
+disgust*	-4
+dishearten*	-2
+disillusion*	-2
+dislike	-3
+disliked	-3
+dislikes	-3
+disliking	-3
+dismay*	-3
+dissatisf*	-2
+distract*	-1
+distraught	-4
+distress*	-3
+distrust*	-2
+disturb*	-1
+divin*	2	removed	domina*	-2
+doom*	-2
+dork*	-3
+doubt*	-2
+dread*	-4
+dull*	-2
+dumb*	-1
+dump*	-1
+dwell*	-1
+dynam*	1
+eager*	1
+ease*	1
+easie*	1
+easily	1
+easiness	1
+easing	1
+easy*	1
+ecsta*	4	removed	efficien*	2
+egotis*	-3
+elegan*	2
+embarrass*	-3
+emotional	-2
+empt*	-1
+encourag*	2
+enemie*	-2
+enemy*	-2
+energ*	1
+engag*	1
+enjoy*	3
+enrag*	-4	removed	entertain*	2
+enthus*	3
+envie*	-3
+envious	-3
+envy*	-3
+evil*	-3
+excel*	2
+excit*	3
+excruciat*	-5
+exhaust*	-2
+fab	3
+fabulous*	3
+fail*	-2
+faith*	2
+fake	-2
+fantastic*	3
+fatal*	-3
+fatigu*	-3
+fault*	-2
+favor*	2
+favour*	2
+fear	-4
+feared	-3
+fearful*	-3
+fearing	-3
+fearless*	2
+fears	-3
+feroc*	-2
+festiv*	1
+feud*	-2
+fiery	-2
+fiesta*	1
+fight*	-3
+fine	3	auto check 4 aug 2009
+fired	-3	removed	flatter*	1
+flame	-3
+flamed	-3
+flawless*	2
+flexib*	1
+flirt*	2
+flunk*	-3
+foe*	-3
+fond	3
+fondly	3
+fondness	3
+fool*	-2
+forbid*	-1
+forgave	2
+forgiv*	2
+fought	-3
+frantic*	-1
+freak*	-2	removed	free	2	free*	2	freeb*	2	freed*	2	freeing	2	freely	2	freeness	2	freer	2	frees*	2	friend*	2
+fright*	-4
+frustrat*	-3
+fuck	-3
+fucked*	-3
+fucker*	-3
+fuckin*	-1	'changed from -3 - a booster word more than a negative word
+fucks	-3
+fud	-3	fear, uncertainty and doubt
+fume*	-3
+fuming	-4
+fun	2
+funn*	2
+furious*	-4
+fury	-4
+gay	-2	common in US as term of abuse
+geek*	-1
+genero*	2
+gentle	2
+gentler	3
+gentlest	3
+gently	2
+giggl*	3	removed	giver*	2	giving	2
+glad	2
+gladly	2
+glamor*	2
+glamour*	2
+gloom*	-3
+glori*	2
+glory	2
+gmbo	3	giggling my butt off
+goddam*	-3
+good	2	Could also be 1?
+goodness	2
+gorgeous*	3
+gossip*	-1
+grace	3
+graced	2
+graceful*	3
+graces	2
+graci*	2
+grand	2
+grande*	2
+gratef*	2
+grati*	2
+grave*	-3
+great	3	auto check 4 aug 2009
+greed*	-3
+grief	-4
+griev*	-4
+grim*	-3
+grin	2
+grinn*	2
+grins	2
+gross*	-2
+grouch*	-2
+grr*	-3
+guilt*	-4
+h8	-4	hate
+ha	2
+hack	-2
+haha*	2
+handsom*	2
+happi*	3
+happy	2	27 July 2009 down from +3
+harass*	-3
+harm	-3
+harmed	-3
+harmful*	-2
+harming	-3
+harmless*	2
+harmon*	2
+harms	-3
+hate	-4
+hated	-4
+hateful*	-4
+hater*	-4
+hates	-4
+hating	-4
+hatred	-4
+heartbreak*	-4
+heartbroke*	-4
+heartfelt	2
+heartless*	-3
+heartwarm*	3
+heaven*	2
+hectic	-2	this year has been hectic
+hehe*	2
+hell	-2	29 July 2009 - changed from -3
+hellish	-3	removed	helper*	2	helpful*	2	helping	2
+helpless*	-2	removed	helps	2
+hero*	3
+hesita*	-1
+hey	2	27 July 2009
+hilarious	3
+hoho*	3
+homesick*	-3
+homie	2	27 July 2009
+honest*	1
+honor*	1
+honour*	1
+hope	3	auto check 4 aug 2009
+hoped	2
+hopeful	2
+hopefully	1
+hopefulness	2
+hopeless*	-4
+hopes	2
+hoping	2
+horr*	-4
+hostil*	-3
+hug	3
+hugg*	3
+hugs	3
+humiliat*	-4
+humor*	3
+humour*	3
+hungr*	-2	new - hungry
+hurra*	3
+hurt*	-3	removed	ideal*	2
+idiot	-2
+ignor*	-3
+immoral*	-3
+impatien*	-2
+impersonal	-1
+impolite*	-3
+importan*	1
+impress*	2
+improve*	2
+improving	2
+inadequa*	-2
+incentive*	1
+indecis*	-2
+ineffect*	-2
+inferior* 	-2
+inhib*	-2
+innocen*	2
+insecur*	-2
+insincer*	-2
+inspir*	3
+insult*	-3
+intell*	2
+interest*	2
+interrup*	-2
+intimidat*	-4
+invigor*	2
+irrational*	-3
+irrita*	-3
+isolat*	-2
+jaded	-3
+jealous*	-3
+jerk	-3
+jerked	-1
+jerks	-3
+joke*	2
+joking	3
+joll*	3
+joy*	3
+keen*	1
+kidding	1
+killed	-4
+killer	-2
+killing	-2
+kind	2	was 3 - 2 aug 2009 could be "kind of"=neutral
+kindly	2
+kindn*	2
+kiss*	3
+laidback	2
+lame*	-3
+laugh*	2	27 July 2009 change from 2
+lazie*	-2
+lazy	-2
+liabilit*	-3
+liar*	-3	removed	libert*	2
+lied	-3
+lies	-3	2
+like	2	Note - could be comparator - A is like B but gives better results with 2 than 1 Aug 2, 2009
+likeab*	3
+liked	3
+likes	3
+liking	3
+livel*	2
+lmao	3	
+lol	2	27 July 2009 (from 3)
+lolol*	2	27 July 2009
+lone*	-2
+longing*	-3
+lose	-2
+loser*	-3
+loses	-2
+losing	-3
+loss*	-3
+lost	-1
+lous*	-3
+love	3	(2 Aug 2009) fairly mild in myspace, often used formally, when should be 2
+loved	4
+lovely	2	27 July 2009
+lover*	4
+loves	3
+lovin	3	slang
+loving	4
+low*	-2
+loyal*	2
+luck	3	wasn't Changed 2 Aug 2009 -although often used as neutral or negative
+lucked	3
+lucki*	3
+luckless*	-3
+lucks	3
+lucky	2	3->2 Changed 2 Aug 2009 -as often used as neutral or negative
+ludicrous*	-3
+luv	3	love
+lying	-4
+mad	-2	29 July 2009 - changed from -3
+maddening	-3
+madder	-3
+maddest	-3
+madly	2
+magnific*	4
+maniac*	-3
+masochis*	-3
+mate	2
+melanchol*	-4
+merit*	2
+merr*	2
+mess	-1
+messy	-1
+miser*	-3
+miss	-2
+missed	-2
+misses	-3
+missing	-2
+mistak*	-2
+mock	-3
+mocked	-3
+mocker*	-3
+mocking	-3
+mocks	-3
+molest*	-4
+mooch*	-2
+moodi*	-3
+moody	-3
+moron*	-3
+mourn*	-3
+muah	3	auto check 4 aug 2009
+murder*	-4
+nag*	-2
+nast*	-3
+neat*	1
+needy	-2
+neglect*	-1
+nerd*	-3
+nervous*	-3
+neurotic*	-3
+nice*	2
+numb*	-2
+nurtur*	1
+nutter	-2	new
+obnoxious*	-3
+obsess*	-3
+offence*	-2
+offend*	-3
+offens*	-3
+ok	1
+okay	1
+okays	1
+oks	1
+omfg	2
+omg	2
+openminded*	1
+openness	1
+opportun*	1
+optimal*	1
+optimi*	1
+original	1
+outgoing	1
+outrag*	-3
+overwhelm*	-3
+pain	-4
+pained	-2
+painf*	-4
+paining	-4
+painl*	2
+pains	-4
+palatabl*	2
+panic*	-3
+paradise	4
+paranoi*	-3
+partie*	1
+party*	1
+passion*	3
+pathetic*	-3
+peace*	1
+peculiar*	-1
+perfect*	2
+perver*	-2
+pessimis*	-3
+petrif*	-4
+pettie*	-1
+petty*	-1
+phobi*	-3
+piss*	-3
+piti*	-3
+pity* 	-2
+play	1
+played	1
+playful*	2
+playing	2
+plays	2
+pleasant*	3
+please*	2
+pleasing	3
+pleasur*	3
+poison*	-3
+poor	-2
+popular*	3
+positiv*	3
+prais*	3
+precious*	3
+prejudic*	-3
+pressur*	-2
+prettie*	3
+pretty	3
+prick*	-3
+pride	2
+privileg*	2
+prize*	3
+problem*	-2
+profit*	3
+promis*	2
+protest	-2
+protested	-2
+protesting	-2
+proud*	2
+puk*	-3
+punish*	-2
+radian*	3
+rage*	-4
+raging	-4
+rancid*	-3
+rape*	-4
+raping	-4
+rapist*	-4
+rat	-2
+readiness	1
+ready	1
+reassur*	2
+rebel*	-2
+reek*	-3
+regret*	-2
+reject*	-2
+relax*	3
+relief	2
+reliev*	2
+reluctan*	-2
+remorse*	-3
+repress*	-2
+resent*	-3
+resign*	-2
+resolv*	2
+respect 	3
+restless*	-2
+revenge*	-2
+revigor*	2
+reward*	2
+rich*	1
+ridicul*	-2
+rigid*	-2
+risk*	-2
+rock	2	As in You rock! but not as in rock, stone, can also be rock music, listen to rock
+rofl	3
+romanc*	4
+romantic*	4
+rotten	-3
+rude*	-3
+ruin*	-2
+sad	-4
+sadde*	-4
+sadly	-2	27 July 2009 - casual use= sadly, I have lost it.
+sadness	-4
+safe*	2
+sarcas*	-3
+satisf*	2
+savage*	-3
+save	2
+scare*	-4
+scariest	-4
+scaring	-4
+scary	-4
+sceptic*	-2
+scream*	-4
+screw*	-3
+scrumptious*	4
+scum	-3	new
+scummy	-2	new
+secur*	2
+selfish*	-4
+sentimental*	3
+serious	-2
+seriously	-1	auto check 4 aug 2009
+seriousness	-2
+severe*	-2
+sexy	3	27 July 2009 auto check 4 aug 2009
+shake*	-2
+shaki*	-2
+shaky	-2
+shame*	-3
+share	1
+shared	1
+shares	1
+sharing	1
+shit*	-2	auto check 4 aug 2009
+shock*	-3
+shook	-2
+shy*	-3
+sicken*	-4
+silli*	2
+silly	2
+sin	-2
+sincer*	1
+sinister	-4
+sins	-3
+skeptic*	-2
+slut*	-3
+smart*	2
+smil*	3
+smother*	-2
+smug*	-2
+sneak*	-2	new
+snob*	-3
+sob	-4
+sobbed	-4
+sobbing	-4
+sobs	-4
+sociab*	2
+solemn*	-3
+sorrow*	-3
+sorry	-2	29 July 2009: Changed from -3
+soulmate*	3
+spam*	-2
+special	2
+spite*	-4
+splend*	3
+squirm*	-3	29 June 2010: added
+stammer*	-2
+stank	-3
+startl*	-2
+steal*	-3
+stench*	-3
+stink*	-3
+strain*	-2
+strange	-1
+strength*	1
+stress*	-2
+strong*	1
+struggl*	-2
+stubborn*	-3
+stunk	-3
+stunned	-2
+stuns	-2
+stupid*	-2
+stutter*	-2
+submissive*	-2
+succeed*	3
+success*	3
+suck	-2
+sucked	-2
+sucker*	-2
+sucks	-2
+sucky	-2
+suffer	-4
+suffered	-4
+sufferer*	-4
+suffering	-4
+suffers	-4
+suk	-2
+sunnier	2
+sunniest	2
+sunny	2
+sunshin*	2
+sup	2	27 July 2009 (slang= what's up) assumes sup as in eat/drink isn't used) 
+super	3
+superior*	3
+support	2
+supported	2
+supporter*	2
+supporting	2
+supportive*	2
+supports	2
+suprem*	3
+sure*	1
+surpris*	1
+suspicio*	-2
+sweet	2
+sweetheart*	3
+sweetie*	3
+sweetly	2
+sweetness*	3
+sweets	2
+talent*	2
+tantrum*	-3
+tears	-4
+teas*	-3
+tehe	3
+temper	-3
+tempers	-1
+tender*	3
+tense*	-3
+tensing	-3
+tension*	-3
+terribl*	-4
+terrific*	4
+terrified	-4
+terrifies	-4
+terrify	-4
+terrifying	-4
+terror*	-3
+thank	2	27 July 2009
+thanked	1
+thankf*	2
+thanks	2	27 July 2009
+thanx	2	27 July 2009
+thief	-2
+thieve*	-2
+thirsty	-2	new, thirsty
+thnx	2	27 July 2009
+thoughtful*	2
+threat*	-3
+thrill*	4
+ticked	-1
+timid*	-2
+toleran*	2
+tortur*	-4
+tough*	-2
+traged*	-3
+tragic* 	-3
+tranquil*	2
+trauma*	-4
+treasur*	2
+treat	2
+trembl*	-3
+trick*	-2
+trite	-3
+triumph*	3
+trivi*	-2
+troubl*	-1	auto check 4 aug 2009
+true 	2
+trueness	2
+truer	2
+truest	2
+truly	2
+trust*	2
+truth*	2
+turmoil	-3
+ugh	-3
+ugl*	-3
+unattractive	-3
+uncertain*	-1
+uncomfortabl*	-3
+uncontrol*	-2
+uneas*	-2
+unfortunate*	-2
+unfriendly	-3
+ungrateful*	-3
+unhapp*	-3
+unimportant	-2
+unimpress*	-2
+unkind	-3
+unlov*	-3
+unpleasant	-3
+unprotected	-3
+unsavo*	-3
+unsuccessful*	-3
+unsure*	-1
+unwelcom*	-3
+upset*	-3
+uptight*	-3
+useful*	2
+useless* 	-3
+vain	-3
+valuabl*	2
+value	2
+valued	2
+values	2
+valuing	2
+vanity	-2
+vicious*	-4
+victim*	-3
+vigor*	1
+vigour*	1
+vile	-4
+villain*	-3
+violat*	-4
+violent*	-3
+virtue*	3
+virtuo*	3
+vital*	1
+vulnerab*	-3
+vulture*	-3
+war	-3
+warfare*	-3
+warm*	1
+warred	-3
+warring	-3
+wars	-3
+weak*	-2
+wealth*	1
+weapon*	-1
+weep*	-3
+weird*	-2
+welcom*	2
+well*	2
+wept	-4
+whine*	-3
+whining	-3
+whore*	-3
+wicked	3	27 July 2009 (was wicked* is -3)
+wickedn*	-3
+wimp*	-3
+win	1
+winn*	1
+wins	1
+wisdom	1
+wise*	1
+witch	-1
+woe*	-2
+won	1
+wonderf*	3
+worr*	-4
+worse*	-3
+worship*	2
+worst	-3
+worthless* 	-3
+worthwhile	2
+wow*	3
+wrong*	-2
+wtf	-3	what the fuck?
+x	2	27 July 2009
+xox*	2
+xx*	2
+yay	2	auto check 4 aug 2009
+yays	3
+yearn*	-2

@@ -114,8 +114,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	/** The path of the NRC Hashtag Emotion lexicon */
 	public static String NRC_HASH_EMO_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz";
-
-
+	
 	/** The path of the emoticon list */
 	public static String EMOTICON_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"AFINN-emoticon-8.txt.gz";
 
@@ -181,7 +180,8 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes for a tweet using different lexical resources for sentiment analysis.\n"+getTechnicalInformation().toString();
+		return "A batch filter that calcuates attributes for a tweet using different lexical resources for sentiment analysis.\n"
+				+ getTechnicalInformation().toString();
 	}
 
 	/**
@@ -257,6 +257,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 				"\t use NRC Hashtag Emotion Lexicon\n"
 						+ "\t(default:"+this.useNrcHashEmo+")", "P", 0, "-P"));
 
+
 		result.addElement(new Option(
 				"\t use Emoticon List\n"
 						+ "\t(default:"+this.useEmoticons+")", "R", 0, "-R"));
@@ -322,7 +323,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 		if(this.isUseNrcHashEmo())
 			result.add("-P");
-
 
 		if(this.isUseEmoticons())
 			result.add("-R");
@@ -445,7 +445,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 
 		this.useNrcHashEmo=Utils.getFlag('P', options);
-
 
 		this.useEmoticons=Utils.getFlag('R', options);
 
@@ -633,6 +632,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 
 
+
+
+
 	}
 
 	/**
@@ -662,6 +664,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 		// The dictionaries of the lexicons are intialized only in the first batch
 		if(!this.isFirstBatchDone())
 			this.initializeDicts();
+		
 
 
 		for(LexiconEvaluator le:this.lexicons){
@@ -991,9 +994,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 
 	/**
-	 * Get the isUseNrcHashEmo value.
+	 * Get the useNrcHashEmo value.
 	 *
-	 * @return the isUseNrcHashEmo value.
+	 * @return the useNrcHashEmo value.
 	 */		
 	public boolean isUseNrcHashEmo() {
 		return useNrcHashEmo;
@@ -1021,6 +1024,8 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 				+ "Publication: Saif M. Mohammad, Svetlana Kiritchenko, Using Hashtags to Capture Fine Emotion Categories from Tweets.";
 	}		
 
+
+	
 
 	/**
 	 * Get the isUseEmoticons value.

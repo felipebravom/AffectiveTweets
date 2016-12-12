@@ -1,0 +1,28 @@
+absolutely	1
+complete	1	9 June 2010
+completely	1	9 June 2010
+could	-1	9 June 2010
+definitely	1
+did	-1	9 June 2010 [past is less strong]
+especially	1	9 June 2010
+extremely	2
+fuckin	2
+fucking	2
+hugely	2
+incredibly	2
+just	-1
+may	-1	9 June 2010
+might	-1	9 June 2010
+ought	-1	9 June 2010
+overwhelmingly	2
+really	1	9 June 2010
+should	-1	9 June 2010
+slightly	-1	9 June 2010
+so	0	Was 1 but sometimes used as neutral or mild term
+some	-1
+sometimes	-1	9 June 2010
+sum	-1
+total	1	9 June 2010
+totally	1	9 June 2010
+very	1
+would	-1	9 June 2010

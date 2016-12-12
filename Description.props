@@ -29,7 +29,7 @@ License=GPL 3.0
 Description= Text filters for converting tweets into feature vectors for sentiment analysis. Sample tweets annotated by sentiment and emotions can be found in ${WEKA_HOME}/packages/AffectiveTweets/data.
 
 # Package URL for obtaining the package archive (required)
-PackageURL=https://github.com/felipebravom/AffectiveTweets
+PackageURL=https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
 
 # URL for further information
 URL=https://github.com/felipebravom/AffectiveTweets

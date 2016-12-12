@@ -16,7 +16,9 @@ The package implements three WEKA filters for converting tweets from string form
  * Bing Liu
  * NRC Emotion
  * Twitter-specfic lexicons
+
+3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative scores for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: SentiStrength can only be used for academic purposes from whitin this package.
  
-3. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
+4. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 

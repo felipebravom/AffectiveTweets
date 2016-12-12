@@ -1052,6 +1052,17 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String charNgramTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}		
+	
 
 	public int getCharNgramMaxDim() {
 		return charNgramMaxDim;
@@ -1062,6 +1073,19 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public void setCharNgramMaxDim(int charNgramMaxDim) {
 		this.charNgramMaxDim = charNgramMaxDim;
 	}
+	
+
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String charNgramMaxDimTipText() {
+
+		return "The index (starting from 1) of the target string attribute." ;
+	}		
+	
 	
 	public String getCharNgramPrefix() {
 		return charNgramPrefix;
