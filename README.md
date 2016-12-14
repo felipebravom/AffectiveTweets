@@ -1,5 +1,7 @@
 <img src="logofinal.png" alt="alt text" width="250px" height="200px">
 
+## 1. About
+
 AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets. 
 
 
@@ -25,3 +27,46 @@ The package implements WEKA filters for converting tweets contained in string at
 4. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
+
+## 2. Installation
+
+1. Intall and build the newest version of WEKA from the SVN repository: 
+
+```bash
+svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
+ant -f weka/build.xml exejar
+```
+
+2. Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
+
+```bash
+java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
+```
+
+3. Install other useful packages for classification, regression and evaluation
+
+```bash
+java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
+java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibSVM
+java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
+```
+
+
+## 3. Use
+
+You can try training a polarity classifier from the command line that uses word embeddigns as features with the following command:
+
+```bash
+java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+```
+
+If you are going to use large training datasets or calculate large dimensional features e.g, ngrams, s
+More info at: http://weka.wikispaces.com/OutOfMemoryException
+
+The same can be done using the Weka GUI by running WEKA:
+
+```bash
+java -Xmx4G -jar weka/dist/weka.jar 
+```
+
+
