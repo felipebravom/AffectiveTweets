@@ -56,14 +56,13 @@ java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCo
 
 You can use AffectiveTweets from the command line or the GUI.
 
-In the following example we will train an SVM from LibLinear on the Sent140test dataset using pretrained word embeddings as features. We use the FilteredClassfier that allows passing a filter to classifier.
-We use the MultiFilter filter to nest multiple filters. In this we will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter that will discard useless String attributes and put the class label as the last attribute.
-Moreover, we recommend incrementing the the memory available for the Java virtual machine using the -Xmx parameter:
+In the following example we will train an SVM from LibLinear on the Sent140test dataset using pretrained word embeddings as features. We use the FilteredClassfier that allows directly  passing a filter to the classifier.
+We use the MultiFilter filter to nest multiple filters. We will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter that will discard useless String attributes and put the class label as the last attribute:
 
 ```bash
 java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
-Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or for  calculate large dimensional features, such as word  ngrams. More info at: http://weka.wikispaces.com/OutOfMemoryException
+Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word  ngrams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
 The same can be done using the Weka GUI by running WEKA:
 
