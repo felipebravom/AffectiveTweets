@@ -54,13 +54,16 @@ java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCo
 
 ## 3. Use
 
-You can try training a polarity classifier from the command line that uses word embeddigns as features with the following command:
+You can use AffectiveTweets from the command line or the GUI.
+
+In the following example we will train an SVM from LibLinear on the Sent140test dataset using pretrained word embeddings as features. We use the FilteredClassfier that allows passing a filter to classifier.
+We use the MultiFilter filter to nest multiple filters. In this we will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter that will discard useless String attributes and put the class label as the last attribute.
+Moreover, we recommend incrementing the the memory available for the Java virtual machine using the -Xmx parameter:
 
 ```bash
 java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
-
-If you are going to use large training datasets or calculate large dimensional features e.g, ngrams, s
+Note: If you are going to use large training datasets or calculate large dimensional features e.g, ngrams, s
 More info at: http://weka.wikispaces.com/OutOfMemoryException
 
 The same can be done using the Weka GUI by running WEKA:
