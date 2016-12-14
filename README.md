@@ -1,6 +1,6 @@
 <img src="logofinal.png" alt="alt text" width="250px" height="200px">
 
-## 1. About
+## About
 
 AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets. 
 
@@ -28,22 +28,22 @@ The package implements WEKA filters for converting tweets contained in string at
  * Average word embeddings.
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
 
-## 2. Installation
+## Installation
 
-1. Intall and build the newest version of WEKA from the SVN repository: 
+* Intall and build the newest version of WEKA from the SVN repository: 
 
 ```bash
 svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
 ant -f weka/build.xml exejar
 ```
 
-2. Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
+* Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
 
 ```bash
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
 ```
 
-3.  Install other useful packages for classification, regression and evaluation
+* Install other useful packages for classification, regression and evaluation
 
 ```bash
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
@@ -52,7 +52,7 @@ java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCo
 ```
 
 
-## 3. Use
+## Use
 
 You can use AffectiveTweets from the command line or the GUI.
 
