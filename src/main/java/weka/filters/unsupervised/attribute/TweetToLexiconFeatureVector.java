@@ -37,6 +37,7 @@ import affective.core.NRCExpandedEmotionLexiconEvaluator;
 import affective.core.NRCHashtagEmotionLexiconEvaluator;
 import affective.core.NegationEvaluator;
 import affective.core.PolarityLexiconEvaluator;
+import affective.core.SWN3LexiconEvaluator;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
@@ -115,6 +116,12 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	/** The path of the NRC Hashtag Emotion lexicon */
 	public static String NRC_HASH_EMO_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz";
 	
+	
+	/** The path of SentiWordnet */
+	public static String SENTIWORDNET_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"SentiWordNet_3.0.0.txt.gz";
+	
+	
+	
 	/** The path of the emoticon list */
 	public static String EMOTICON_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"AFINN-emoticon-8.txt.gz";
 
@@ -154,6 +161,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	/** True for calculating features from the NRC Hashtag Emotion Lexicon */
 	protected boolean useNrcHashEmo=true;
 
+
+	/** True for calculating features from SentiWordnet */
+	protected boolean useSentiWordnet=true;
 
 	/** True for calculating features from the Emoticon list */
 	protected boolean useEmoticons=true;
@@ -256,6 +266,10 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 		result.addElement(new Option(
 				"\t use NRC Hashtag Emotion Lexicon\n"
 						+ "\t(default:"+this.useNrcHashEmo+")", "P", 0, "-P"));
+		
+		result.addElement(new Option(
+				"\t use SentiWordnet\n"
+						+ "\t(default:"+this.useSentiWordnet+")", "Q", 0, "-Q"));
 
 
 		result.addElement(new Option(
@@ -323,6 +337,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 		if(this.isUseNrcHashEmo())
 			result.add("-P");
+		
+		if(this.isUseSentiWordnet())
+			result.add("-Q");
 
 		if(this.isUseEmoticons())
 			result.add("-R");
@@ -385,6 +402,10 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 *-P 
 	 *	 use NRC Hashtag Emotion Lexicon (default:false)
 	 * </pre>
+	 *<pre>
+	 *-Q 
+	 *	 use SentiWordNet (default:false)
+	 * </pre>
 	 * <pre>
 	 *-R 
 	 *	 use Emoticon List (default:false)
@@ -445,6 +466,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 
 		this.useNrcHashEmo=Utils.getFlag('P', options);
+		
+		this.useSentiWordnet=Utils.getFlag('Q', options);
+
 
 		this.useEmoticons=Utils.getFlag('R', options);
 
@@ -597,6 +621,22 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 				this.lexicons.add(nrcHashtagEmoLex);
 			} catch (IOException e) {
 				this.useNrcHashEmo=false;
+
+			}		
+
+
+		}
+		
+		
+
+		if(this.useSentiWordnet){
+			LexiconEvaluator sentiWordEvaluator = new SWN3LexiconEvaluator(
+					SENTIWORDNET_FILE_NAME,"SentiWordnet");
+			try {
+				sentiWordEvaluator.processDict();
+				this.lexicons.add(sentiWordEvaluator);
+			} catch (IOException e) {
+				this.useSentiWordnet=false;
 
 			}		
 
@@ -1025,6 +1065,42 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	}		
 
 
+	/**
+	 * Get the useSentiWordnet value.
+	 *
+	 * @return the useSentiWordnet value.
+	 */		
+	public boolean isUseSentiWordnet() {
+		return useSentiWordnet;
+	}
+
+	
+	/**
+	 * Set the uuseSentiWordnet value.
+	 *
+	 * @param useSentiWordnet The useNrcHashEmo value.
+	 */		
+	public void setUseSentiWordnet(boolean useSentiWordnet) {
+		this.useSentiWordnet = useSentiWordnet;
+	}
+	
+	
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String useSentiWordnetTipText() {
+		return "Calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets in which a "
+				+ "word occurs in order to obtain a single sentiment distribution for it.  The weights correspond to the reciprocal ranks of the senses in order to give "
+				+ "higher weights to the most popular senses of a word. \n"
+				+ "More info at: http://sentiwordnet.isti.cnr.it/\n"
+				+ "Publication: Stefano Baccianella, Andrea Esuli, and Fabrizio Sebastiani, SENTIWORDNET 3.0: An Enhanced Lexical Resource for Sentiment Analysis"
+				+ " and Opinion Mining.";
+	}	
+	
+	
 	
 
 	/**

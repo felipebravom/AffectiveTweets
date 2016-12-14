@@ -1,12 +1,13 @@
 <img src="logofinal.png" alt="alt text" width="250px" height="200px">
 
-AffectiveTweets is an open source project based on [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) for analysing emotion and sentiment from  tweets. 
+AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets. 
 
 
-The package implements three WEKA filters for converting tweets from string format into feature vectors:
+The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms:
 
 1. __TweetToSparseFeatureVector__: calculates sparse features from tweets. There are options provides for filtering out infrequent features and setting the weighting approach  (boolean or frequency based).
  * Word N-grams
+ * Negations
  * Character N-grams
  * POS tags (with N-Gram sequences)
  * Brown clusters (with N-gram sequences). 
@@ -14,7 +15,9 @@ The package implements three WEKA filters for converting tweets from string form
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
  * MPQA
  * Bing Liu
- * NRC Emotion
+ * AFINN
+ * NRC word emotion association lexicon
+ * SentiWordNet
  * Twitter-specfic lexicons
 
 3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative scores for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: SentiStrength can only be used for academic purposes from whitin this package.

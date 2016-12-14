@@ -21,6 +21,7 @@ public class NegationEvaluator extends LexiconEvaluator {
 
 	protected Set<String> wordList;
 
+
 	public NegationEvaluator(String path, String name) {
 		super(path, name);
 		this.wordList=new HashSet<String>();
@@ -69,5 +70,16 @@ public class NegationEvaluator extends LexiconEvaluator {
 		return negCountsFeat;
 
 	}
+	
+	public Set<String> getWordList() {
+		return wordList;
+	}
+
+
+
+	public void setWordList(Set<String> wordList) {
+		this.wordList = wordList;
+	}
+
 
 }

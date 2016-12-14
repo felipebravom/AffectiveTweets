@@ -179,14 +179,11 @@
     </delete>
     <copy file="Description.props"
           todir="${dist}/${package}"/>
-    <copy file="lib/fastutil-7.0.13.jar"
-          todir="${dist}/${package}"/>  	
     <mkdir dir="${dist}/${package}/lib"/>
     <copy todir="${dist}/${package}/lib" >
        <fileset dir="${lib}">
          <include name="*.jar"/>
 		 <exclude name="weka.jar"/>
-		 <exclude name="fastutil-7.0.13.jar"/>  
          <include name="*.zip"/>
        </fileset>
     </copy>  
