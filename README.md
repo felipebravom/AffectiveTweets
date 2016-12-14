@@ -30,20 +30,20 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ## 2. Installation
 
-1. Intall and build the newest version of WEKA from the SVN repository: 
+### Intall and build the newest version of WEKA from the SVN repository: 
 
 ```bash
 svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
 ant -f weka/build.xml exejar
 ```
 
-2. Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
+### Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
 
 ```bash
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
 ```
 
-3. Install other useful packages for classification, regression and evaluation
+### Install other useful packages for classification, regression and evaluation
 
 ```bash
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
