@@ -30,7 +30,7 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ## Installation
 
-* Install and build the newest version of WEKA from the SVN repository: 
+* Download the latest developer branch of Weka from http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html or install and build it from the SVN repository: 
 
 ```bash
 svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
