@@ -42,10 +42,10 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ### Other Resources
 
-1. __Datasets__: The package provides some sentiment-annotated tweets in [ARFF](http://weka.wikispaces.com/ARFF) format located in $HOME/wekafiles/packages/AffectiveTweets/data/
-2. __Pre-trained Word-Embeddings__: The package provides two pre-trained word vectors trained with [Word2Vec](https://code.google.com/archive/p/word2vec/) located in $HOME/wekafiles/packages/AffectiveTweets/resources/
+1. __Datasets__: The package provides some sentiment-annotated tweets in [ARFF](http://weka.wikispaces.com/ARFF) format located in $HOME/wekafiles/packages/AffectiveTweets/data/ .
+2. __Pre-trained Word-Embeddings__: The package provides two pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) package. They are located in $HOME/wekafiles/packages/AffectiveTweets/resources/
  * __w2v.twitter.edinburgh.100d.csv.gz__: a toy example trained with a small collection of tweets.
- * __w2v.twitter.edinburgh10M.400d.csv.gz__: embeddings trained from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf) and calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
+ * __w2v.twitter.edinburgh10M.400d.csv.gz__: embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
  
 ## Installation
 
