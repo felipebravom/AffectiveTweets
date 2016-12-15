@@ -8,11 +8,11 @@ AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for a
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms:
 
 1. __TweetToSparseFeatureVector__: calculates sparse features from tweets. There are options provides for filtering out infrequent features and setting the weighting approach  (boolean or frequency based).
- * Word n-grams: extracts word n-grams from n=1 to __wordNgramMaxDim__ .
- * Negations: add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark.
- * Character n-grams: calculates character n-grams.
- * POS tags (with n-Gram sequences)
- * Brown clusters (with n-gram sequences). 
+ * __Word n-grams__: extracts word n-grams from n=1 to maximum value. 
+ * __Negations__: add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark.
+ * __Character n-grams__: calculates character n-grams.
+ * __POS tags__: tags tweets using the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/). It creates a vector space model based on the sequence of POS tags allowing to set the maximum POS n-gram size.
+ * __Brown clusters__: maps the words to Brown word clusters and creates a vector space model of lower dimensionality. It can be used with n-grams of word clusters.
 
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
  * MPQA
@@ -31,7 +31,7 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ## Installation
 
-* Download the latest developer branch of Weka from http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html or install and build it from the SVN repository: 
+* Download the latest developer branch of [Weka](http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html) or build it from the SVN repository: 
 
 ```bash
 svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
