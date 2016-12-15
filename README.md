@@ -12,12 +12,12 @@ The package implements WEKA filters for converting tweets contained in string at
  * __Negations__: add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark.
  * __Character n-grams__: calculates character n-grams.
  * __POS tags__: tags tweets using the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/). It creates a vector space model based on the sequence of POS tags allowing to set the maximum POS n-gram size.
- * __Brown clusters__: maps the words to Brown word clusters and creates a vector space model of lower dimensionality. It can be used with n-grams of word clusters.
+ * __Brown clusters__: maps the words to Brown word clusters and creates a vector space model of lower dimensionality. It can be used with n-grams of word clusters. The word clusters are also taken from the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/).
 
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
- * MPQA
+ * [MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon): counts the number of positive and negative words from the MPQA subjectivity lexicon.
  * Bing Liu
- * AFINN
+ * [AFINN]( https://github.com/fnielsen/afinn): calculates a positive and negative score by aggregating the word associations provided by this lexicon.
  * NRC word emotion association lexicon
  * SentiWordNet
  * Twitter-specfic lexicons
@@ -44,7 +44,7 @@ ant -f weka/build.xml exejar
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
 ```
 
-* Install other useful packages for classification, regression and evaluation
+* (Optional) Install other useful packages for classification, regression and evaluation
 
 ```bash
 java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
@@ -53,19 +53,19 @@ java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCo
 ```
 
 
-## Use
+## Examples
 
-You can use AffectiveTweets from the command line or the GUI.
+1. You can use AffectiveTweets from the command line or the GUI.
 
-In the following example we will train an SVM from LibLinear on the Sent140test dataset using pretrained word embeddings as features. We use the FilteredClassfier that allows directly  passing a filter to the classifier.
-We use the MultiFilter filter to nest multiple filters. We will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter that will discard useless String attributes and put the class label as the last attribute:
+ In the following example we will train an SVM from LibLinear on the Sent140test dataset using pretrained word embeddings as features. We use the FilteredClassfier that allows directly  passing a filter to the classifier.
+ We use the MultiFilter filter to nest multiple filters. We will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter  that will discard useless String attributes and put the class label as the last attribute:
 
-```bash
+ ```bash
 java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
 Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word  ngrams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
-The same can be done using the Weka GUI by running WEKA:
+2. The same can be done using the Weka GUI by running WEKA:
 
 ```bash
 java -Xmx4G -jar weka/dist/weka.jar 
