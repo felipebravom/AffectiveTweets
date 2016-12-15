@@ -2,10 +2,12 @@
 
 ## About
 
-AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets. 
+AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
 
 
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms:
+
+### Filters
 
 1. __TweetToSparseFeatureVector__: calculates sparse features from tweets. There are options provides for filtering out infrequent features and setting the weighting approach  (boolean or frequency based).
  * __Word n-grams__: extracts word n-grams from n=1 to a maximum value. 
@@ -33,6 +35,11 @@ The package implements WEKA filters for converting tweets contained in string at
  * Average word embeddings.
  * Add word embeddings. 
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
+
+### Tokenizers
+
+1. __TweetNLPTokenizer__: a Weka tokenizer 
+
 
 ## Installation
 
