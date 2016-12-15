@@ -14,7 +14,7 @@
  */
 
 /*
- *    EmotionEvaluator.java
+ *    NRCEmotionLexiconEvaluator.java
  *    Copyright (C) 2016 University of Waikato, Hamilton, New Zealand
  */
 

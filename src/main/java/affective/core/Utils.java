@@ -1,3 +1,25 @@
+/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ *    Utils.java
+ *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
+
 package affective.core;
 
 
@@ -52,11 +74,7 @@ public class Utils {
 	}
 
 
-	/** The scope of negation is often assumed to begin from
-	the word following the negation word until the next punctuation mark or the end of the
-	sentence. we de ne a negated context as a segment of a tweet that starts with a negation word (e.g.,
-	no,  shouldn't) and ends with one of the punctuation  marks:  `,',  `.',  `:',  `;',  `!',  `?'. 	 **/
-
+	
 	/** Adds a negation prefix to the tokens that follow a negation word until the next punctuation mark.
 	 * @param tokens the list of tokens to negate
 	 * @param set the set with the negated words to use

@@ -186,7 +186,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		return "An attribute filter that calculates different types of sparse features for a tweet"
 				+ " represented as a string attribute. The type of features include: word n-grams, "
 				+ "character n-grams, POS tags and Brown word clusters. The tokenization and POS tagging"
-				+ "is done with the CMU Twitter NLP tool. The size of the attribute space"
+				+ " is done with the CMU Twitter NLP tool. The size of the attribute space"
 				+ " would depend on the training dataset.\n"+getTechnicalInformation().toString();
 	}
 
@@ -227,26 +227,28 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));		
 
 
-		result.addElement(new Option("\t Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. "
-				+ "The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark. \n"
+		result.addElement(new Option("\t Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you.\n "
+				+ "\t The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. \n"
 				+ "\t(default: " + this.negateTokens + ")", "R", 0, "-R"));
 
-		result.addElement(new Option("\t Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted."
+		result.addElement(new Option("\t Maximum size for the word n-gram features. \n"
+				+ "\t Set this variable to zero for no word n-gram attributes."
+				+ " All word n-grams from i=1 to this value will be extracted."
 				+ "\n"
 				+ "\t(default: " + this.wordNgramMaxDim + ")", "Q", 1, "-Q"));
 
 
-		result.addElement(new Option("\t Calculate character ngram features."
+		result.addElement(new Option("\t Calculate character n-gram features."
 				+ "\n"
 				+ "\t(default: " + this.calculateCharNgram + ")", "A", 0, "-A"));
 
 
-		result.addElement(new Option("\t The minimum size for character ngrams."
+		result.addElement(new Option("\t The minimum size for character n-grams."
 				+ "\n"
 				+ "\t(default: " + this.charNgramMinDim + ")", "D", 1, "-D"));
 
 
-		result.addElement(new Option("\t The maximum size for character ngrams."
+		result.addElement(new Option("\t The maximum size for character n-grams."
 				+ "\n"
 				+ "\t(default: " + this.charNgramMaxDim + ")", "E", 1, "-E"));
 
@@ -256,18 +258,22 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
 
 
-		result.addElement(new Option("\t Clean tokens (replace goood by good, standarise URLs and @users).\n"
+		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));		
 
 		result.addElement(new Option("\t True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.\n"
 				+ "\t(default: " + this.freqWeights + ")", "F", 0, "-F"));
 
 
-		result.addElement(new Option("\t The maximum dimension for POS ngrams.\n"
+		result.addElement(new Option("\t The maximum size for POS n-grams."
+				+ " Set this variable to zero for no POS attributes. \n"
+				+ "\t The tweets are POS-tagged using the CMU TweetNLP tool.\n"
 				+ "\t(default: " + this.posNgramMaxDim + ")", "G", 1, "-G"));
 
 
-		result.addElement(new Option("\t The maximum dimension for ngrams calculated with Brown word clusters.\n"
+		result.addElement(new Option("\t The maximum dimension for n-grams calculated with Brown word clusters.\n"
+				+ "\t Set this variable to zero for no word-clusters attributes. \n"
+				+ "\t The word clusters are taken from the CMU Tweet NLP tool.\n"
 				+ "\t(default: " + this.clustNgramMaxDim + ")", "I", 1, "-I"));
 
 
@@ -337,7 +343,69 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 * Parses the options for this object.
 	 * <p/>
 	 * 
-	 * <!-- options-start --> <!-- options-end -->
+	 * <!-- options-start -->
+	 *<pre>  
+	 *-M
+	 *	 Minimum number of tweets for an attribute to be considered.
+	 *	(default: 0)
+	 *</pre> 
+	 *<pre> 
+	 *-I
+	 *	 The index (starting from 1) of the target string attribute.
+	 *	(default: 1)
+	 *</pre>
+	 *<pre>  
+	 *-R
+	 *	 Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. 
+	 *	(default: false)
+	 *</pre>
+	 *<pre>  
+	 *-Q
+	 *	 Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted.
+	 *	(default: 1)
+	 *</pre>
+	 *<pre>  
+	 *-A
+	 *	 Calculate character n-gram features.
+	 *	(default: false)
+	 *</pre> 
+	 *<pre> 
+	 *-D
+	 *	 The minimum size for character n-grams.
+	 *	(default: 3)
+	 *</pre> 
+	 *<pre> 
+	 *-E
+	 *	 The maximum size for character n-grams.
+	 *	(default: 5)
+	 *</pre> 
+	 *<pre> 
+	 *-L
+	 *	 Lowercase content.
+	 *	(default: false)
+	 *</pre> 
+	 *<pre> 
+	 *-O
+	 *	 Normarlize tokens (replace goood by good, standarise URLs and @users).
+	 *	(default: false)
+	 *</pre> 
+	 *<pre> 
+	 *-F
+	 *	 True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.
+	 *	(default: false)
+	 *</pre> 
+	 *<pre> 
+	 *-G
+	 *	 The maximum size for POS n-grams. The tweets are POS-tagges using the CMU TweetNLP tool.
+	 *	(default: 0)
+	 *</pre> 
+	 *<pre> 
+	 *-I
+	 *	 The maximum dimension for n-grams calculated with Brown word clusters. The word clusters are taken from the CMU Tweet NLP tool.
+	 *	(default: 0)
+	 *</pre>  
+	 *  
+	 *  <!-- options-end -->
 	 * 
 	 * @param options
 	 *            the options to use
@@ -456,7 +524,12 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	}
 
-
+	/**
+	 * Returns the Capabilities of this filter.
+	 * 
+	 * @return the capabilities of this object
+	 * @see Capabilities
+	 */
 	@Override
 	public Capabilities getCapabilities() {
 
@@ -492,8 +565,13 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
-
-	// Calculates token ngrams from a sequence of tokens
+	/**
+	 * Calculates token n-grams from a sequence of tokens.
+	 * 
+	 * @param tokens the input tokens from which the word n-grams will be calculated
+	 * @param n the size of the word n-gram
+	 * @return a list with the word n-grams
+	 */
 	public static List<String> calculateTokenNgram(List<String> tokens,int n){
 		List<String> tokenNgram=new ArrayList<String>();
 		if(tokens.size()>=n){			
@@ -511,7 +589,13 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	// Calculates Character Ngrams
+	/**
+	 * Calculates character n-grams from a sequence of tokens.
+	 * 
+	 * @param tokens the input tokens from which the character n-grams will be calculated
+	 * @param n the size of the character n-gram
+	 * @return a list with the character n-grams
+	 */
 	public static List<String> extractCharNgram(String content,int n){
 		List<String> charNgram=new ArrayList<String>();
 		if(content.length()>=n){
@@ -529,7 +613,13 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/* Converts a sequence of words into a sequence of word-clusters 	 */	 	
+	/**
+	 * Calculates a sequence of word-clusters from a list of tokens and a dictionary.
+	 * 
+	 * @param tokens the input tokens 
+	 * @param dict the dictionary with the word clusters
+	 * @return a list of word-clusters
+	 */	
 	public List<String> clustList(List<String> tokens, Map<String,String> dict){
 		List<String> clusters=new ArrayList<String>();
 		for(String token:tokens){
@@ -542,6 +632,13 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Calculates a vector of attributes from a list of tokens
+	 * 
+	 * @param tokens the input tokens 
+	 * @param prefix the prefix of each vector attribute
+	 * @return an Object2IntMap object mapping the attributes to their values
+	 */		
 	public Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix) {
 		Object2IntMap<String> termFreq = new Object2IntOpenHashMap<String>();
 
@@ -561,7 +658,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		return termFreq;
 	}
 
-	// Initializes the POS tagger
+	/**
+	 * Initializes the POS tagger
+	 */	
 	public void initializeTagger(){
 		try {
 			this.tagger= new Tagger();
@@ -571,6 +670,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		}
 	}
 
+	/**
+	 * Initializes the NegationEvaluator object
+	 */	
 	public void initiliazeNegationEvaluator(){
 		this.negEval=new NegationEvaluator(TweetToLexiconFeatureVector.NEGATION_LIST_FILE_NAME,"Negation");
 		try {
@@ -582,7 +684,12 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	// Returns POS tags from a List of tokens using TwitterNLP
+	/**
+	 * Returns POS tags from a List of tokens using the CMU TweetNLP tool
+	 * 
+	 * @param tokens the input tokens 
+	 * @return the list of POS tags
+	 */	
 	public List<String> getPOStags(List<String> tokens) {
 
 		ArrayList<String> tags = new ArrayList<String>();
@@ -618,6 +725,12 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
+	/**
+	 * Calculates a vector of attributes from a String
+	 * 
+	 * @param content the input 
+	 * @return an Object2IntMap object mapping the attributes to their values
+	 */		
 	public Object2IntMap<String> calculateDocVec(String content) {
 
 		// tokenizes the content 
@@ -674,11 +787,12 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/* Processes a batch of tweets. Tweets are mapped into feature vectors.
-	 * The feature space is only determined the first time the filter is run.
+	/**
+	 * Processes a batch of tweets.
 	 * 
-	 */	 
-	public void tweetsToVectors(Instances inputFormat) {
+	 * @param tweetInstances the input tweets 
+	 */		
+	public void tweetsToVectors(Instances tweetInstances) {
 
 
 		// The vocabulary is created only in the first execution
@@ -729,9 +843,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.procTweets = new ObjectArrayList<Object2IntMap<String>>();
 
 		// reference to the content of the message, users index start from zero
-		Attribute attrCont = inputFormat.attribute(this.textIndex-1);
+		Attribute attrCont = tweetInstances.attribute(this.textIndex-1);
 
-		for (ListIterator<Instance> it = inputFormat.listIterator(); it
+		for (ListIterator<Instance> it = tweetInstances.listIterator(); it
 				.hasNext();) {
 			Instance inst = it.next();
 			String content = inst.stringValue(attrCont);
@@ -768,6 +882,19 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	}
 
+
+	/**
+	 * Determines the output format based on the input format and returns this. In
+	 * case the output format cannot be returned immediately, i.e.,
+	 * immediateOutputFormat() returns false, then this method will be called from
+	 * batchFinished().
+	 * 
+	 * @param inputFormat the input format to base the output format on
+	 * @return the output format
+	 * @throws Exception in case the determination goes wrong
+	 * @see #hasImmediateOutputFormat()
+	 * @see #batchFinished()
+	 */	
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
@@ -799,6 +926,16 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
+
+	/**
+	 * Processes the given data (may change the provided dataset) and returns the
+	 * modified version. This method is called in batchFinished().
+	 * 
+	 * @param instances the data to process
+	 * @return the modified data
+	 * @throws Exception in case the processing goes wrong
+	 * @see #batchFinished()
+	 */	
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
@@ -880,13 +1017,22 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
-
+	/**
+	 * Get the minAttDocs value.
+	 *
+	 * @return the minAttDocs value.
+	 */		
 	public int getMinAttDocs() {
 		return minAttDocs;
 	}
 
 
-
+	/**
+	 * Sets the value of minAttDocs.
+	 * 
+	 * @param minAttDocs the value of minAttDocs.
+	 * 
+	 */
 	public void setMinAttDocs(int minAttDocs) {
 		this.minAttDocs = minAttDocs;
 	}
@@ -900,7 +1046,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String minAttDocsTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "Minimum number of tweets for an attribute to be considered." ;
 	}
 
 
@@ -936,12 +1082,23 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Get the value of.
+	 *
+	 * @return the freqWeights value.
+	 */			
 	public boolean isFreqWeights() {
 		return freqWeights;
 	}
 
 
 
+	/**
+	 * Sets the value of the freqWeights flag.
+	 * 
+	 * @param freqWeights the value of the flag.
+	 * 
+	 */	
 	public void setFreqWeights(boolean freqWeights) {
 		this.freqWeights = freqWeights;
 	}
@@ -954,9 +1111,8 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String freqWeightsTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise." ;
 	}
-
 
 
 	/**
@@ -992,12 +1148,22 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	/**
+	 * Get the wordNgramMaxDim value.
+	 *
+	 * @return the wordNgramMaxDim value.
+	 */		
 	public int getWordNgramMaxDim() {
 		return wordNgramMaxDim;
 	}
 
 
-
+	/**
+	 * Sets the value of wordNgramMaxDim.
+	 * 
+	 * @param wordNgramMaxDim the value of the variable.
+	 * 
+	 */
 	public void setWordNgramMaxDim(int wordNgramMaxDim) {
 		this.wordNgramMaxDim = wordNgramMaxDim;
 	}
@@ -1011,15 +1177,26 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String wordNgramMaxDimTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted."
+				+ " Set this variable to zero for no word n-gram attributes." ;
 	}
 
-
+	/**
+	 * Get the negateTokens value.
+	 *
+	 * @return the negateTokens value.
+	 */		
 	public boolean isNegateTokens() {
 		return negateTokens;
 	}
 
 
+	/**
+	 * Sets the value of the negateTokens flag.
+	 * 
+	 * @param negateTokens the value of the flag.
+	 * 
+	 */	
 	public void setNegateTokens(boolean negateTokens) {
 		this.negateTokens = negateTokens;
 	}
@@ -1032,17 +1209,28 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String negateTokensTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. \n "
+				+ "The prefixes only affect word n-gram features. \n"
+				+ "The scope of negation finishes with the next punctuation mark. \n" ;
 	}
 
-
-
+	/**
+	 * Get the calculateCharNgram value.
+	 *
+	 * @return the calculateCharNgram value.
+	 */			
 	public boolean isCalculateCharNgram() {
 		return calculateCharNgram;
 	}
 
 
 
+	/**
+	 * Sets the value of calculateCharNgram.
+	 * 
+	 * @param calculateCharNgram the value of the variable.
+	 * 
+	 */	
 	public void setCalculateCharNgram(boolean calculateCharNgram) {
 		this.calculateCharNgram = calculateCharNgram;
 	}
@@ -1056,16 +1244,27 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String calculateCharNgramTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "Calculate character n-gram features." ;
 	}	
 
 
+	/**
+	 * Get the charNgramMinDim value.
+	 *
+	 * @return the charNgramMinDim value.
+	 */			
 	public int getCharNgramMinDim() {
 		return charNgramMinDim;
 	}
 
 
 
+	/**
+	 * Sets the value of charNgramMinDim .
+	 * 
+	 * @param charNgramMinDim the value of the variable.
+	 * 
+	 */	
 	public void setCharNgramMinDim(int charNgramMinDim) {
 		this.charNgramMinDim = charNgramMinDim;
 	}
@@ -1077,18 +1276,29 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 * @return tip text for this property suitable for displaying in the
 	 *         explorer/experimenter gui
 	 */
-	public String charNgramTipText() {
+	public String charNgramMinDimTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "The minimum size for character n-grams." ;
 	}		
 
 
+	/**
+	 * Get the charNgramMaxDim value.
+	 *
+	 * @return the charNgramMaxDim value.
+	 */			
 	public int getCharNgramMaxDim() {
 		return charNgramMaxDim;
 	}
 
 
 
+	/**
+	 * Sets the value of the charNgramMaxDim variable.
+	 * 
+	 * @param charNgramMaxDim the value of the variable.
+	 * 
+	 */	
 	public void setCharNgramMaxDim(int charNgramMaxDim) {
 		this.charNgramMaxDim = charNgramMaxDim;
 	}
@@ -1102,35 +1312,76 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	public String charNgramMaxDimTipText() {
 
-		return "The index (starting from 1) of the target string attribute." ;
+		return "The maximum size for character n-grams." ;
 	}		
 
 
-
-
+	/**
+	 * Get the posNgramMaxDim value.
+	 *
+	 * @return the posNgramMaxDim value.
+	 */		
 	public int getPosNgramMaxDim() {
 		return posNgramMaxDim;
 	}
 
 
 
+	/**
+	 * Sets the value of the posNgramMaxDim value.
+	 * 
+	 * @param posNgramMaxDim the value of the variable.
+	 * 
+	 */	
 	public void setPosNgramMaxDim(int posNgramMaxDim) {
 		this.posNgramMaxDim = posNgramMaxDim;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String posNgramMaxDimTipText() {
+		return "The maximum size for POS n-grams. Set this variable to zero for no POS attributes. "
+				+ "The tweets are POS-tagged using the CMU TweetNLP tool." ;
+	}	
 
+
+	/**
+	 * Get the clustNgramMaxDim value.
+	 *
+	 * @return the clustNgramMaxDim value.
+	 */		
 	public int getClustNgramMaxDim() {
 		return clustNgramMaxDim;
 	}
 
 
-
+	/**
+	 * Sets the value of the clustNgramMaxDim variable.
+	 * 
+	 * @param clustNgramMaxDim the value of the variable.
+	 * 
+	 */
 	public void setClustNgramMaxDim(int clustNgramMaxDim) {
 		this.clustNgramMaxDim = clustNgramMaxDim;
 	}
 
 
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String clustNgramMaxDimTipText() {
+		return "	 The maximum dimension for n-grams calculated with Brown word clusters."
+				+ " Set this variable to zero for no word-clusters attributes. "
+				+ "	The word clusters are taken from the CMU Tweet NLP tool." ;
+	}		
 
 
 

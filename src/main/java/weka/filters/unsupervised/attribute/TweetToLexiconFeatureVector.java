@@ -1027,7 +1027,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 */
 	public String useNrc10ExpandedTipText() {
 
-		return "Sums the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.\n"
+		return "Adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.\n"
 				+ "More info at: http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter\n"
 				+ "Publication: F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer, Determining Word--Emotion Associations from Tweets by Multi-Label Classification.";
 	}	
@@ -1059,7 +1059,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 *         explorer/experimenter gui
 	 */
 	public String useNrcHashEmoTipText() {
-		return "Sums the emotion associations of the words matching the NRC Hashtag Emotion Association Lexicon.\n"
+		return "Adds the emotion associations of the words matching the NRC Hashtag Emotion Association Lexicon.\n"
 				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html\n"
 				+ "Publication: Saif M. Mohammad, Svetlana Kiritchenko, Using Hashtags to Capture Fine Emotion Categories from Tweets.";
 	}		
@@ -1076,7 +1076,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	
 	/**
-	 * Set the uuseSentiWordnet value.
+	 * Set the useSentiWordnet value.
 	 *
 	 * @param useSentiWordnet The useNrcHashEmo value.
 	 */		
@@ -1092,9 +1092,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 *         explorer/experimenter gui
 	 */
 	public String useSentiWordnetTipText() {
-		return "Calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets in which a "
-				+ "word occurs in order to obtain a single sentiment distribution for it.  The weights correspond to the reciprocal ranks of the senses in order to give "
-				+ "higher weights to the most popular senses of a word. \n"
+		return "Calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for "
+				+ "word occuring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give "
+				+ "higher weights to most popular senses. \n"
 				+ "More info at: http://sentiwordnet.isti.cnr.it/\n"
 				+ "Publication: Stefano Baccianella, Andrea Esuli, and Fabrizio Sebastiani, SENTIWORDNET 3.0: An Enhanced Lexical Resource for Sentiment Analysis"
 				+ " and Opinion Mining.";
@@ -1130,7 +1130,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 */
 	public String useEmoticonsTipText() {
 
-		return "Calculates a positive and negative score by aggregating the word associations provided by a list of emoticons.\n"
+		return "Calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons.\n"
 				+ "The list is taken from the AFINN project.\n"
 				+ "More info at: https://github.com/fnielsen/afinn \n";
 	}
