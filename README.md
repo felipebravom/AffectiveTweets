@@ -5,7 +5,7 @@
 AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment  of English written tweets developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
 
 
-The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms:
+The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms.
 
 ### Filters
 
@@ -38,9 +38,15 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ### Tokenizers
 
-1. __TweetNLPTokenizer__: a Weka tokenizer 
+1. __TweetNLPTokenizer__: a Twitter-specific Sring tokenizer based on the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/) that can be used with the existing [StringWordToVector](http://weka.sourceforge.net/doc.dev/weka/filters/unsupervised/attribute/StringToWordVector.html) Weka filter. 
 
+### Other Resources
 
+1. __Datasets__: The package provides some sentiment-annotated tweets in [ARFF](http://weka.wikispaces.com/ARFF) format located in $HOME/wekafiles/packages/AffectiveTweets/data/
+2. __Pre-trained Word-Embeddings__: The package provides two pre-trained word vectors trained with [Word2Vec](https://code.google.com/archive/p/word2vec/) located in $HOME/wekafiles/packages/AffectiveTweets/resources/
+ * __w2v.twitter.edinburgh.100d.csv.gz__: a toy example trained with a small collection of tweets.
+ * __w2v.twitter.edinburgh10M.400d.csv.gz__: embeddings trained from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf) and calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
+ 
 ## Installation
 
 * Download the latest developer branch of [Weka](http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html) or build it from the SVN repository: 
@@ -83,3 +89,7 @@ java -Xmx4G -jar weka/dist/weka.jar
 ```
 
 
+## Citation
+There is no official publication related to this project yet. In the meanwhile please cite the following paper if using this package in an academic publication:
+
+F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer __Determining Word--Emotion Associations from Tweets by Multi-Label Classification__, In WI '16: Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA 2016. Pages 536-539. DOI:10.1109/WI.2016.90
