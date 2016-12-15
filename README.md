@@ -8,11 +8,11 @@ AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for a
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms:
 
 1. __TweetToSparseFeatureVector__: calculates sparse features from tweets. There are options provides for filtering out infrequent features and setting the weighting approach  (boolean or frequency based).
- * Word N-grams
- * Negations
- * Character N-grams
- * POS tags (with N-Gram sequences)
- * Brown clusters (with N-gram sequences). 
+ * Word n-grams: extracts word n-grams from n=1 to __wordNgramMaxDim__ .
+ * Negations: add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark.
+ * Character n-grams: calculates character n-grams.
+ * POS tags (with n-Gram sequences)
+ * Brown clusters (with n-gram sequences). 
 
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
  * MPQA
@@ -26,6 +26,7 @@ The package implements WEKA filters for converting tweets contained in string at
  
 4. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
+ * Add word embeddings. 
  * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
 
 ## Installation
