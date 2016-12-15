@@ -42,8 +42,8 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ### Other Resources
 
-1. __Datasets__: The package provides some tweets annotated by affective values in [ARFF](http://weka.wikispaces.com/ARFF) format in $HOME/wekafiles/packages/AffectiveTweets/data/ .
-2. __Pre-trained Word-Embeddings__: The package provides two pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool. They are located in $HOME/wekafiles/packages/AffectiveTweets/resources/
+1. __Datasets__: The package provides some tweets annotated by affective values in [ARFF](http://weka.wikispaces.com/ARFF) format in $HOME/wekafiles/packages/AffectiveTweets/data/. The datasets are compressed in gzip format.
+2. __Pre-trained Word-Embeddings__: The package provides two pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. They are tab separated files with the word in the first column. They are located in $HOME/wekafiles/packages/AffectiveTweets/resources/. 
  * __w2v.twitter.edinburgh.100d.csv.gz__: a toy example trained with a small collection of tweets.
  * __w2v.twitter.edinburgh10M.400d.csv.gz__: embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
  
@@ -78,7 +78,7 @@ The package can be used from the command line or the Weka GUI.
  We use the MultiFilter filter to nest multiple filters. We will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter  that will discard useless String attributes and put the class label as the last attribute:
 
  ```bash
-java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
 Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 

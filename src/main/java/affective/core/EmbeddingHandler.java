@@ -34,25 +34,49 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.zip.GZIPInputStream;
 
-/** Embeddings files must have following format dim1<tab>dim2....<tab>word **/
 
+/**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for handling word vector or embeddings stored in zgipped files with format:
+ *  emb1<tab>emb2<tab>..word. 
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class EmbeddingHandler implements Serializable {
 	
 	/** For serialization **/ 
 	private static final long serialVersionUID = -2458037798910799631L;
 	
+	/** File where word vectors are stored. */
 	private String filePath;
+	
+	/** Mapping between words and their vectors. */
 	private Object2ObjectMap<String, AbstractDoubleList> wordMap;
+	
+	/** Number of dimensions of the embeddings. */ 
 	private int dimensions;
 
 
-
+    /**
+     * initializes the EmbeddingHandler
+     * 
+     * @param filePath the file with the embeddings
+     */
 	public EmbeddingHandler(String filePath){
 		this.filePath=filePath;
 		this.wordMap=new Object2ObjectOpenHashMap<String, AbstractDoubleList>() ;
 	}
 
-
+	 /**
+     * initializes the dictionary
+     * 
+     * @param filePath the file with the embeddings
+     * @throws Exception in case of wrong file
+     */
 	public void createDict() throws Exception{
 		
 		FileInputStream fin = new FileInputStream(this.filePath);
