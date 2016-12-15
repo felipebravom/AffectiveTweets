@@ -52,23 +52,50 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
 import weka.core.SparseInstance;
+import weka.core.TechnicalInformation;
 import weka.core.Utils;
 import weka.core.Capabilities.Capability;
+import weka.core.TechnicalInformation.Type;
 import weka.filters.SimpleBatchFilter;
 
-public class TweetToSparseFeatureVector extends SimpleBatchFilter {
+/**
+ *  <!-- globalinfo-start --> An attribute filter that calculates different types of sparse features 
+ *  for a tweet represented as a string attribute. The type of features include: word n-grams, character n-grams,
+ *  POS tags and Brown word clusters. The size of the attribute space would depend on the training dataset.
+ *   
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * <!-- technical-bibtex-start -->
+ * BibTeX:
+ * <pre>
+ * &#64;Article{NRCJAIR14,
+ * Title                    = {Sentiment analysis of short informal texts},
+ * Author                   = {Kiritchenko, Svetlana and Zhu, Xiaodan and Mohammad, Saif M},
+ * Journal                  = {Journal of Artificial Intelligence Research},
+ * Year                     = {2014},
+ * Pages                    = {723--762},
+ * Volume                   = {50}
+ *}
+ * </pre>
+ * <p/>
+ <!-- technical-bibtex-end -->
+ * 
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 
-	/**  Converts one String attribute into a set of attributes
-	 * representing word occurrence based on the TwitterNLP tokenizer.
-	 * 
-	 */
+
+public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 	/** for serialization */
 	private static final long serialVersionUID = 3635946466523698211L;
 
 
-	/** Default path to where resources are stored */
+	/** Default path to where resources are stored. */
 	public static String RESOURCES_FOLDER_NAME = weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
 
 	/** Default path of POS tagger model. */
@@ -78,11 +105,10 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public static String WORD_CLUSTERS_FILE_NAME=RESOURCES_FOLDER_NAME+File.separatorChar+"50mpaths2.txt.gz";
 
 
-
-	/** Counts the number of documents in which candidate attributes appear. This will help for discarding infrequent attributes */
+	/** Counts the number of tweets in which candidate attributes appear. This will help for discarding infrequent attributes. */
 	protected Object2IntMap<String> attributeCount; 
 
-	/** List of tweets to process with their feature vectors*/
+	/** List of tweets to process with their feature vectors. */
 	protected ObjectList<Object2IntMap<String>> procTweets; 
 
 	/** Brown Clusters Dictionary */
@@ -91,11 +117,10 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	/** True if url, users, and repeated letters are cleaned */
 	protected boolean cleanTokens=false;
 
-
-	/** True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise */
+	/** True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise. */
 	protected boolean freqWeights=true;
 
-	/** the minimum number of tweets for an attribute to be considered. */
+	/** The minimum number of tweets for an attribute to be considered in the attribute space. */
 	protected int minAttDocs=0; 
 
 	/** the index of the string attribute to be processed */
@@ -150,78 +175,78 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	protected NegationEvaluator negEval;
 
 
-
+	/**
+	 * Returns a string describing this filter.
+	 * 
+	 * @return a description of the filter suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
 	@Override
 	public String globalInfo() {
-		return "A simple batch filter that adds attributes for all the "
-				+ "Twitter-oriented POS tags of the TwitterNLP library.  ";
+		return "An attribute filter that calculates different types of sparse features for a tweet"
+				+ " represented as a string attribute. The type of features include: word n-grams, "
+				+ "character n-grams, POS tags and Brown word clusters. The tokenization and POS tagging"
+				+ "is done with the CMU Twitter NLP tool. The size of the attribute space"
+				+ " would depend on the training dataset.\n"+getTechnicalInformation().toString();
 	}
 
-
-
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
+	/**
+	 * Returns an instance of a TechnicalInformation object, containing
+	 * detailed information about the technical background of this class,
+	 * e.g., paper reference or book this class is based on.
+	 *
+	 * @return the technical information about this class
+	 */
+	public TechnicalInformation getTechnicalInformation() {
+		TechnicalInformation result;
+		result = new TechnicalInformation(Type.ARTICLE);
+		result.setValue(TechnicalInformation.Field.AUTHOR, "Kiritchenko, Svetlana and Zhu, Xiaodan and Mohammad, Saif M");
+		result.setValue(TechnicalInformation.Field.TITLE, " Sentiment analysis of short informal texts");
+		result.setValue(TechnicalInformation.Field.YEAR, "2014");
+		result.setValue(TechnicalInformation.Field.BOOKTITLE, "Journal of Artificial Intelligence Research");
 		return result;
 	}
 
 
 
 
+
+	/**
+	 * Returns an enumeration describing the available options.
+	 * 
+	 * @return an enumeration of all the available options.
+	 */
 	@Override
 	public Enumeration<Option> listOptions() {
 		Vector<Option> result = new Vector<Option>();
 
-		result.addElement(new Option("\t Minimum count of an attribute.\n"
+		result.addElement(new Option("\t Minimum number of tweets for an attribute to be considered.\n"
 				+ "\t(default: " + this.minAttDocs + ")", "M", 1, "-M"));
 
-		result.addElement(new Option("\t Index of string attribute.\n"
+		result.addElement(new Option("\t The index (starting from 1) of the target string attribute.\n"
 				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));		
 
-		result.addElement(new Option("\t Prefix of word ngram features.\n"
-				+ "\t(default: " + this.wordNgramPrefix + ")", "P", 1, "-P"));
 
-		result.addElement(new Option("\t Add a prefix to words occurring in negated contexts for word ngram features.\n"
+		result.addElement(new Option("\t Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. "
+				+ "The prefixes only affect the word ngram features. The scope of negation finishes with the next punctuation mark. \n"
 				+ "\t(default: " + this.negateTokens + ")", "R", 0, "-R"));
 
-
-		result.addElement(new Option("\t Maximum number of n for ngram features. If n=3, unigrams, bigrams and trigrams will be extracted."
+		result.addElement(new Option("\t Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted."
 				+ "\n"
 				+ "\t(default: " + this.wordNgramMaxDim + ")", "Q", 1, "-Q"));
 
 
-		result.addElement(new Option("\t Calculate character ngram featues."
+		result.addElement(new Option("\t Calculate character ngram features."
 				+ "\n"
 				+ "\t(default: " + this.calculateCharNgram + ")", "A", 0, "-A"));
 
 
-		result.addElement(new Option("\t Prefix of character ngram featues."
-				+ "\n"
-				+ "\t(default: " + this.charNgramPrefix + ")", "B", 1, "-B"));
-
-
-		result.addElement(new Option("\t The minimum dimension for character ngrams.."
+		result.addElement(new Option("\t The minimum size for character ngrams."
 				+ "\n"
 				+ "\t(default: " + this.charNgramMinDim + ")", "D", 1, "-D"));
 
 
-		result.addElement(new Option("\t The maximum dimension for character ngrams.."
+		result.addElement(new Option("\t The maximum size for character ngrams."
 				+ "\n"
 				+ "\t(default: " + this.charNgramMaxDim + ")", "E", 1, "-E"));
 
@@ -241,15 +266,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		result.addElement(new Option("\t The maximum dimension for POS ngrams.\n"
 				+ "\t(default: " + this.posNgramMaxDim + ")", "G", 1, "-G"));
 
-		result.addElement(new Option("\t The prefix of POS-based attributes.\n"
-				+ "\t(default: " + this.posPrefix + ")", "H", 1, "-H"));
 
 		result.addElement(new Option("\t The maximum dimension for ngrams calculated with Brown word clusters.\n"
 				+ "\t(default: " + this.clustNgramMaxDim + ")", "I", 1, "-I"));
-
-
-		result.addElement(new Option("\t The prefix of the cluster-based attributes\n"
-				+ "\t(default: " + this.clustPrefix + ")", "K", 1, "-K"));
 
 
 		result.addAll(Collections.list(super.listOptions()));
@@ -274,8 +293,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		result.add("-I");
 		result.add("" + this.getTextIndex());
 
-		result.add("-P");
-		result.add("" + this.getWordNgramPrefix());
 
 		if(this.negateTokens)
 			result.add("-R");
@@ -286,9 +303,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		if(this.calculateCharNgram)
 			result.add("-A");
 
-
-		result.add("-B");
-		result.add("" + this.getCharNgramPrefix());
 
 		result.add("-D");
 		result.add("" + this.getCharNgramMinDim());
@@ -308,16 +322,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		result.add("-G");
 		result.add("" + this.posNgramMaxDim);
 
-		result.add("-H");
-		result.add("" + this.posPrefix);
 
 		result.add("-I");
 		result.add("" + this.clustNgramMaxDim);
-
-
-		result.add("-K");
-		result.add("" + this.clustPrefix);		
-
 
 
 		Collections.addAll(result, super.getOptions());
@@ -345,7 +352,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 			String[] textMinAttDocOptionSpec = Utils.splitOptions(textMinAttDocOption);
 			if (textMinAttDocOptionSpec.length == 0) {
 				throw new IllegalArgumentException(
-						"Invalid index");
+						"Invalid value");
 			}
 			int minDocAtt = Integer.parseInt(textMinAttDocOptionSpec[0]);
 			this.setMinAttDocs(minDocAtt);
@@ -366,18 +373,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 		}
 
-		String wordNgramPrefixOption = Utils.getOption('P', options);
-		if (wordNgramPrefixOption.length() > 0) {
-			String[] wordNgramPrefixOptionSpec = Utils.splitOptions(wordNgramPrefixOption);
-			if (wordNgramPrefixOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String wordNgramPrefixValue = wordNgramPrefixOptionSpec[0];
-			this.setWordNgramPrefix(wordNgramPrefixValue);
-
-		}
-
 		this.negateTokens=Utils.getFlag('R', options);	
 
 		String wordNgramMaxDimOption = Utils.getOption('Q', options);
@@ -385,7 +380,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 			String[] wordNgramMaxDimOptionSpec = Utils.splitOptions(wordNgramMaxDimOption);
 			if (wordNgramMaxDimOptionSpec.length == 0) {
 				throw new IllegalArgumentException(
-						"Invalid prefix");
+						"Invalid value");
 			}			
 			int ngramMaxDimOptionVal = Integer.parseInt( wordNgramMaxDimOptionSpec[0]);
 			this.setWordNgramMaxDim(ngramMaxDimOptionVal);
@@ -396,26 +391,12 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.calculateCharNgram=Utils.getFlag('A', options);		
 
 
-		String charNgramPrefixOption = Utils.getOption('B', options);
-		if (charNgramPrefixOption.length() > 0) {
-			String[] charNgramPrefixOptionSpec = Utils.splitOptions(charNgramPrefixOption);
-			if (charNgramPrefixOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String charNgramPrefixValue = charNgramPrefixOptionSpec[0];
-			this.setCharNgramPrefix(charNgramPrefixValue);
-
-		}
-
-
-
 		String charNgramMinDimOption = Utils.getOption('D', options);
 		if (charNgramMinDimOption.length() > 0) {
 			String[] charNgramMinDimOptionSpec = Utils.splitOptions(charNgramMinDimOption);
 			if (charNgramMinDimOptionSpec.length == 0) {
 				throw new IllegalArgumentException(
-						"Invalid prefix");
+						"Invalid value");
 			}			
 			int charNgramMinDimOptionVal = Integer.parseInt( charNgramMinDimOptionSpec[0]);
 			this.setCharNgramMinDim(charNgramMinDimOptionVal);
@@ -454,18 +435,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 		}
 
-		String posPrefixOption = Utils.getOption('H', options);
-		if (posPrefixOption.length() > 0) {
-			String[] posPrefixOptionSpec = Utils.splitOptions(posPrefixOption);
-			if (posPrefixOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String posPrefixValue = posPrefixOptionSpec[0];
-			this.setPosPrefix(posPrefixValue);
-
-		}
-
 
 		String clustNgramMaxDimOption = Utils.getOption('I', options);
 		if (clustNgramMaxDimOption.length() > 0) {
@@ -480,26 +449,36 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		}
 
 
-		String clustPrefixOption = Utils.getOption('K', options);
-		if (clustPrefixOption.length() > 0) {
-			String[] clustPrefixOptionSpec = Utils.splitOptions(clustPrefixOption);
-			if (clustPrefixOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String clustPrefixValue = clustPrefixOptionSpec[0];
-			this.setClustPrefix(clustPrefixValue);
-
-		}
-
-
-
 		super.setOptions(options);
 
 		Utils.checkForRemainingOptions(options);
 
 
 	}
+
+
+	@Override
+	public Capabilities getCapabilities() {
+
+		Capabilities result = new Capabilities(this);
+		result.disableAll();
+
+
+		// attributes
+		result.enableAllAttributes();
+		result.enable(Capability.MISSING_VALUES);
+
+		// class
+		result.enableAllClasses();
+		result.enable(Capability.MISSING_CLASS_VALUES);
+		result.enable(Capability.NO_CLASS);
+
+		result.setMinimumNumberInstances(0);
+
+		return result;
+	}
+
+
 
 
 
@@ -674,7 +653,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 				}
 			}
 		}
-		
+
 		// use negated tokens for word ngrams features if option is set
 		if(this.negateTokens)
 			tokens=affective.core.Utils.negateTokens(tokens, this.negEval.getWordList());
@@ -1009,7 +988,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public String cleanTokensTipText() {
 		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
 				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing 	user mentions and URLs with generic tokens..";		
+				+ "and replacing user mentions and URLs with generic tokens.";		
 	}
 
 
@@ -1031,30 +1010,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 *         explorer/experimenter gui
 	 */
 	public String wordNgramMaxDimTipText() {
-
-		return "The index (starting from 1) of the target string attribute." ;
-	}
-
-
-
-	public String getWordNgramPrefix() {
-		return wordNgramPrefix;
-	}
-
-
-
-	public void setWordNgramPrefix(String wordNgramPrefix) {
-		this.wordNgramPrefix = wordNgramPrefix;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String wordNgramPrefixTipText() {
 
 		return "The index (starting from 1) of the target string attribute." ;
 	}
@@ -1151,29 +1106,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}		
 
 
-	public String getCharNgramPrefix() {
-		return charNgramPrefix;
-	}
-
-
-
-	public void setCharNgramPrefix(String charNgramPrefix) {
-		this.charNgramPrefix = charNgramPrefix;
-	}
-
-
-
-	public String getPosPrefix() {
-		return posPrefix;
-	}
-
-
-
-	public void setPosPrefix(String posPrefix) {
-		this.posPrefix = posPrefix;
-	}
-
-
 
 
 	public int getPosNgramMaxDim() {
@@ -1199,15 +1131,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	public String getClustPrefix() {
-		return clustPrefix;
-	}
 
-
-
-	public void setClustPrefix(String clustPrefix) {
-		this.clustPrefix = clustPrefix;
-	}
 
 
 	public static void main(String[] args) {

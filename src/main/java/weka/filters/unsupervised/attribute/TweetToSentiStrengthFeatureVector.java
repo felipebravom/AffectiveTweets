@@ -146,7 +146,7 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 		result.addElement(new Option("\t Lowercase content.\n"
 				+ "\t(default: " + this.toLowerCase + ")", "U", 0, "-U"));
 
-		result.addElement(new Option("\t Clean tokens (replace goood by good, standarise URLs and @users).\n"
+		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
 
 
@@ -448,7 +448,7 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	public String cleanTokensTipText() {
 		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
 				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing 	user mentions and URLs with generic tokens..";		
+				+ "and replacing user mentions and URLs with generic tokens.";		
 	}
 
 

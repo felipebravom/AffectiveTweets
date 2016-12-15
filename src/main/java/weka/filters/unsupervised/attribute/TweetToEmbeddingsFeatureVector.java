@@ -671,7 +671,7 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	public String cleanTokensTipText() {
 		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
 				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing 	user mentions and URLs with generic tokens..";		
+				+ "and replacing user mentions and URLs with generic tokens.";		
 	}
 
 
