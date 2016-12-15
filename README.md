@@ -25,15 +25,17 @@ The package implements WEKA filters for converting tweets contained in string at
  * [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.
  * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html): adds the emotion associations of the words matching this lexicon.  
  * [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. 
- * [Emoticons](
- * Twitter-specific lexicons
-
-3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative scores for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: SentiStrength can only be used for academic purposes from within this package.
+ * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the AFINN project.
+ * Negations: counts the number of negating words in the tweet.
+ 
+3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative scores for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package.
  
 4. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
  * Add word embeddings. 
- * Concatenation of first k embeddings (using dummy values if the tweet has less than k words). 
+ * Concatenation of first k embeddings. Dummy values are added if the tweet has less than k words. 
+Note: A dummy word-embedding formed by zeroes is used if a word hat no embedding associated. 
+
 
 ### Tokenizers
 
@@ -91,4 +93,4 @@ java -Xmx4G -jar weka/dist/weka.jar
 ## Citation
 There is no official publication related to this project yet. In the meanwhile please cite the following paper if using this package in an academic publication:
 
-F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer __Determining Word--Emotion Associations from Tweets by Multi-Label Classification__, In WI '16: Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA 2016. Pages 536-539. DOI:10.1109/WI.2016.90
+* F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer __Determining Word--Emotion Associations from Tweets by Multi-Label Classification__, In WI '16: Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA 2016. Pages 536-539. DOI:10.1109/WI.2016.90
