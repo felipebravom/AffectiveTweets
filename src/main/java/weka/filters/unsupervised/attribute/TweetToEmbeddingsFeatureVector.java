@@ -81,7 +81,7 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	/** For serialization.    **/
 	private static final long serialVersionUID = -823728822240437493L;
 
-	/** Default path to where resources are stored, */
+	/** Default path to where resources are stored. */
 	public static String RESOURCES_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
 
 	/** Average Action Value. */
@@ -156,10 +156,8 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * Returns an enumeration describing the available options.
-	 * 
-	 * @return an enumeration of all the available options.
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#listOptions()
 	 */
 	@Override
 	public Enumeration<Option> listOptions() {
@@ -198,10 +196,8 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * returns the options of the current setup
-	 * 
-	 * @return the current options
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getOptions()
 	 */
 	@Override
 	public String[] getOptions() {
@@ -330,11 +326,9 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 
 	}
 
-	/**
-	 * Returns the Capabilities of this filter.
-	 * 
-	 * @return the capabilities of this object
-	 * @see Capabilities
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getCapabilities()
 	 */
 	@Override
 	public Capabilities getCapabilities() {
@@ -357,17 +351,9 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * Determines the output format based on the input format and returns this. In
-	 * case the output format cannot be returned immediately, i.e.,
-	 * immediateOutputFormat() returns false, then this method will be called from
-	 * batchFinished().
-	 * 
-	 * @param inputFormat the input format to base the output format on
-	 * @return the output format
-	 * @throws Exception in case the determination goes wrong
-	 * @see #hasImmediateOutputFormat()
-	 * @see #batchFinished()
+
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
 	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat)
@@ -411,14 +397,9 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * Processes the given data (may change the provided dataset) and returns the
-	 * modified version. This method is called in batchFinished().
-	 * 
-	 * @param instances the data to process
-	 * @return the modified data
-	 * @throws Exception in case the processing goes wrong
-	 * @see #batchFinished()
+
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#process(weka.core.Instances)
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {

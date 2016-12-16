@@ -20,16 +20,8 @@
  */
 
 
-
 package affective.core;
 
-/**
- *
- * 
- * 
- * Based on the following example:
- * https://code.google.com/p/lukejia-svn/source/browse/trunk/sfe-fyp/src/ie/dit/comp/lukejia/fyp/swn/SWN3.java?r=96&spec=svn96
- */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -40,15 +32,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
+/**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating SentiWordnet
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class SWN3LexiconEvaluator extends LexiconEvaluator{
 
-
-	/**
-	 * 
-	 */
+	/** for serialization */
 	private static final long serialVersionUID = 1576067300486821206L;
+
+	/** the dictionary */
 	protected Map<String, Double> dict;
 
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */
 	public SWN3LexiconEvaluator(String path, String name) {
 		super(path,name);
 
@@ -60,9 +67,13 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
+	@Override
 	public void processDict() throws IOException {
 
-		
+
 		FileInputStream fin = new FileInputStream(this.path);
 		GZIPInputStream gzis = new GZIPInputStream(fin);
 		InputStreamReader xover = new InputStreamReader(gzis);
@@ -78,11 +89,11 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 			}
 
 			String[] data = line.split("\t");
-			
+
 			// Difference between positive and negative score for one particular Synset
 			Double polScore = Double.parseDouble(data[2])
 					- Double.parseDouble(data[3]);
-			
+
 			// extract all the synset terms
 			String[] sysSetTerms = data[4].split(" ");
 			for (String w : sysSetTerms) {
@@ -109,14 +120,16 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 	}
 
 
-	// counts positive and negative words from an intensity-oriented lexicon
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
 	@Override
 	public Map<String, Double> evaluateTweet(List<String> tokens) {
 		Map<String, Double> strengthScores = new HashMap<String, Double>();
 		double posScore = 0;
 		double negScore = 0;
 		for (String w : tokens) {
-		
+
 			if (this.dict.containsKey(w)) {
 				double value = this.dict.get(w);
 				if (value > 0) {
@@ -125,12 +138,12 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 					negScore += value;
 				}
 			}
-			
+
 		}
 		strengthScores.put(name+"-posScore", posScore);
 		strengthScores.put(name+"-negScore", negScore);
 
 		return strengthScores;
 	}
-	
+
 }

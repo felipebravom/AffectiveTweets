@@ -35,27 +35,45 @@ import java.util.zip.GZIPInputStream;
 
 
 /**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating lexicons with numerical sentiment scores: 
+ * <p/>
+ * <!-- globalinfo-end -->
  * 
- * @author fbravo Evaluates a lexicon from a csv file
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
  */
 public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 
 
 	/** for serialization */
 	private static final long serialVersionUID = -2094228012480778199L;
-	
+
+	/** the dictionary */
 	protected Map<String, String> dict;
 
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */
 	public IntensityLexiconEvaluator(String file,String name) {
 		super(file,name);
 		this.dict = new HashMap<String, String>();	
-		
+
 		this.featureNames=new ArrayList<String>();
 		this.featureNames.add(name+"-posScore");
 		this.featureNames.add(name+"-negScore");
 
 	}
 
+
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
+	@Override
 	public void processDict() throws IOException  {
 		// first, we open the file
 		FileInputStream fin = new FileInputStream(this.path);
@@ -76,7 +94,12 @@ public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 
 	}
 
-	// returns the score associated to a word
+	/**
+	 * returns the score associated with a word
+	 * 
+	 * @param word the input word
+	 * @return the value for the word 
+	 */
 	public String retrieveValue(String word) {
 		if (!this.dict.containsKey(word)) {
 			return "not_found";
@@ -85,12 +108,11 @@ public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 		}
 
 	}
+	
 
-	public Map<String, String> getDict() {
-		return this.dict;
-	}
-
-	// counts positive and negative words from a polarity-oriented lexicon
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
 	@Override
 	public Map<String, Double> evaluateTweet(List<String> tokens) {
 		Map<String, Double> strengthScores = new HashMap<String, Double>();
@@ -112,4 +134,15 @@ public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 
 		return strengthScores;
 	}
+
+	/**
+	 * Gets the dictionary mapping the words to their vectors
+	 * 
+	 * @return the dictionary.
+	 */
+	public Map<String, String> getDict() {
+		return this.dict;
+	}
+
+
 }

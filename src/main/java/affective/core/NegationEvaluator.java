@@ -35,16 +35,30 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.GZIPInputStream;
 
-// counts the number of negation words in a tweet
-
+/**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for counting the number of negation words in a tweet.
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class NegationEvaluator extends LexiconEvaluator {
 
 	/** for serialization */
 	private static final long serialVersionUID = 1331150082874408516L;
 
+	/** the negating words */
 	protected Set<String> wordList;
 
-
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */
 	public NegationEvaluator(String path, String name) {
 		super(path, name);
 		this.wordList=new HashSet<String>();
@@ -55,7 +69,9 @@ public class NegationEvaluator extends LexiconEvaluator {
 	}
 
 
-
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
 	@Override
 	public void processDict() throws IOException {
 		FileInputStream fin = new FileInputStream(this.path);
@@ -74,6 +90,10 @@ public class NegationEvaluator extends LexiconEvaluator {
 
 	}
 
+
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
 	@Override
 	public Map<String, Double> evaluateTweet(List<String> tokens) {
 		Map<String, Double> negCountsFeat = new HashMap<String, Double>();
@@ -94,15 +114,15 @@ public class NegationEvaluator extends LexiconEvaluator {
 
 	}
 	
+	/**
+	 * Gets the negating words
+	 * 
+	 * @return the word list
+	 */	
 	public Set<String> getWordList() {
 		return wordList;
 	}
 
-
-
-	public void setWordList(Set<String> wordList) {
-		this.wordList = wordList;
-	}
 
 
 }

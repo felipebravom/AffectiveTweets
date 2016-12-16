@@ -110,29 +110,25 @@ public class EmbeddingHandler implements Serializable {
 		fin.close();
 
 	}
-	
+
+	/**
+	 * Gets the dictionary mapping the words to their vectors
+	 * 
+	 * @return the dictionary.
+	 */
 	public Object2ObjectMap<String, AbstractDoubleList> getWordMap() {
 		return wordMap;
 	}
 
 
-
-
+	/**
+	 * Gets the dimensions variable
+	 * 
+	 * @return the value of the variable.
+	 */	
 	public int getDimensions() {
 		return dimensions;
 	}
 
-
-	static public void main(String args[]) throws Exception{
-		String file="resources/edim_lab_word2Vec.csv";
-		EmbeddingHandler word2VecDict=new EmbeddingHandler(file);
-		word2VecDict.createDict();
-		System.out.println(word2VecDict.getDimensions());
-		
-		System.out.println(word2VecDict.getWordMap().get("you").toString());
-		
-		
-
-	}
 
 }

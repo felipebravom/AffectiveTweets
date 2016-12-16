@@ -34,26 +34,45 @@ import java.util.zip.GZIPInputStream;
 
 
 /**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating the polarity lexicons with positive and negative
+ *  nominal entries.
+ * <p/>
+ * <!-- globalinfo-end -->
  * 
- * @author fbravo Evaluates a lexicon from a csv file
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
  */
 public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
 	/** for serialization */
 	private static final long serialVersionUID = 5921580335557644894L;
-	
+
+	/** a mapping between words and the sentiment label */	
 	protected Map<String, String> dict;
 
+
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */	
 	public PolarityLexiconEvaluator(String file,String name) {
 		super(file,name);
 		this.dict = new HashMap<String, String>();	
-		
+
 		this.featureNames=new ArrayList<String>();
 		this.featureNames.add(name+"-posCount");
 		this.featureNames.add(name+"-negCount");
 
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
 	public void processDict() throws IOException  {
 		// first, we open the file
 		FileInputStream fin = new FileInputStream(this.path);
@@ -74,7 +93,12 @@ public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
 	}
 
-	// returns the score associated to a word
+	/**
+	 * returns the sentiment associated with a word
+	 * 
+	 * @param word the input word
+	 * @return the value for the word 
+	 */
 	public String retrieveValue(String word) {
 		if (!this.dict.containsKey(word)) {
 			return "not_found";
@@ -84,11 +108,10 @@ public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
 	}
 
-	public Map<String, String> getDict() {
-		return this.dict;
-	}
 
-	// counts positive and negative words from a polarity-oriented lexicon
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
 	@Override
 	public Map<String, Double> evaluateTweet(List<String> tokens) {
 		Map<String, Double> sentCount = new HashMap<String, Double>();
@@ -110,4 +133,15 @@ public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
 		return sentCount;
 	}
+	
+	
+	/**
+	 * Gets the dictionary mapping the words to their sentiment
+	 * 
+	 * @return the dictionary.
+	 */	
+	public Map<String, String> getDict() {
+		return this.dict;
+	}	
+	
 }

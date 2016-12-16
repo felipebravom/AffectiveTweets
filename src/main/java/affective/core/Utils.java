@@ -22,7 +22,6 @@
 
 package affective.core;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -30,10 +29,27 @@ import java.util.Set;
 import cmu.arktweetnlp.Twokenize;
 
 
+/**
+ *  <!-- globalinfo-start --> 
+ *  Provides static functions for String processing.
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
+
 public class Utils {
 
 
-	// tokenizes and cleans the content 
+	/**
+	 * tokenizes and normalizes the content of a tweet
+	 * @param content the input String
+	 * @param toLowerCase to lowercase the content
+	 * @param cleanTokens normalize URLs, user mentions, and reduce repetitions of letters
+	 * @return a list of tokens
+	 */
 	static public List<String> tokenize(String content,boolean toLowerCase, boolean cleanTokens) {
 
 		if(toLowerCase)
@@ -74,7 +90,7 @@ public class Utils {
 	}
 
 
-	
+
 	/** Adds a negation prefix to the tokens that follow a negation word until the next punctuation mark.
 	 * @param tokens the list of tokens to negate
 	 * @param set the set with the negated words to use

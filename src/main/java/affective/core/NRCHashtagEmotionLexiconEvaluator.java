@@ -32,18 +32,31 @@ import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 
 
-
+/**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating the NRC Hashtag Emotion Lexicon
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
-	
+
 
 	/** for serialization */
 	private static final long serialVersionUID = -8764066806491555596L;
-	
-	protected Map<String, Map<String, Double>> dict; // each word is mapped to
-	// different emotions
-	// and their
-	// corresponding values
 
+	/** a mapping between words and the affective scores */
+	protected Map<String, Map<String, Double>> dict; // each word is mapped to
+
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */
 	public NRCHashtagEmotionLexiconEvaluator(String path,String name) {
 		super(path,name);
 		this.dict = new HashMap<String, Map<String, Double>>();
@@ -63,10 +76,20 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 
 	}
 
+	/**
+	 * Gets the dictionary mapping the words to their emotion associations
+	 * 
+	 * @return the dictionary.
+	 */		
 	public Map<String, Map<String, Double>> getDict() {
 		return this.dict;
 	}
 
+	/**
+	 * Gets the emotions for a word
+	 * 
+	 * @return the emotions
+	 */		
 	public Map<String, Double> getWord(String word) {
 		if (this.dict.containsKey(word))
 			return dict.get(word);
@@ -74,6 +97,11 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 			return null;
 	}
 
+		
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
+	@Override
 	public void processDict() throws IOException {
 
 		FileInputStream fin = new FileInputStream(this.path);
@@ -85,14 +113,14 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 		for(int i=0;i<=33;i++){
 			bf.readLine();
 		}
-	
-		
+
+
 		String line;
 		while ((line = bf.readLine()) != null) {
 			//entries have the format: emotion<tab>word<tab>score
-			
+
 			String triple[] = line.split("\t");
-			
+
 			String word=triple[1];
 
 			Map<String,Double> entry;
@@ -103,17 +131,20 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 				entry=new HashMap<String,Double>();
 				this.dict.put(word, entry);
 			}
-			
-			
+
+
 			entry.put(triple[0],Double.parseDouble(triple[2]));
-			
+
 
 		}
 		bf.close();
-		
+
 	}
 
-	// Calculate emotion-oriented features using NRC
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
+	@Override
 	public Map<String, Double> evaluateTweet(List<String> words) {
 
 		Map<String, Double> emoCount = new HashMap<String, Double>();
@@ -134,25 +165,25 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 				Map<String, Double> emotions = this.getDict().get(word);
 				if(emotions.containsKey("anger"))
 					anger += emotions.get("anger");
-				
+
 				if(emotions.containsKey("anticipation"))
 					anticipation += emotions.get("anticipation");
-				
+
 				if(emotions.containsKey("disgust"))
 					disgust += emotions.get("disgust");
-				
+
 				if(emotions.containsKey("fear"))
 					fear += emotions.get("fear");
-				
+
 				if(emotions.containsKey("joy"))
 					joy += emotions.get("joy");
-				
+
 				if(emotions.containsKey("sadness"))
 					sadness += emotions.get("sadness");
-				
+
 				if(emotions.containsKey("surprise"))
 					surprise += emotions.get("surprise");
-				
+
 				if(emotions.containsKey("trust"))
 					trust += emotions.get("trust");
 

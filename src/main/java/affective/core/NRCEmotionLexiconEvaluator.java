@@ -32,18 +32,32 @@ import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 
 
-
+/**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating the NRC-10 Emotion Lexicon
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
-	
+
 
 	/** for serialization */
 	private static final long serialVersionUID = 5020983098724465636L;
-	
-	protected Map<String, Map<String, Integer>> dict; // each word is mapped to
-	// different emotions
-	// and their
-	// corresponding values
 
+	/** a mapping between words and the affective scores */
+	protected Map<String, Map<String, Integer>> dict; // each word is mapped to
+
+
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */
 	public NRCEmotionLexiconEvaluator(String path,String name) {
 		super(path,name);
 		this.dict = new HashMap<String, Map<String, Integer>>();
@@ -64,10 +78,21 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 
 	}
 
+	/**
+	 * Gets the dictionary mapping the words to their emotion associations
+	 * 
+	 * @return the dictionary.
+	 */	
 	public Map<String, Map<String, Integer>> getDict() {
 		return this.dict;
 	}
 
+	
+	/**
+	 * Gets the emotions for a word
+	 * 
+	 * @return the emotions
+	 */	
 	public Map<String, Integer> getWord(String word) {
 		if (this.dict.containsKey(word))
 			return dict.get(word);
@@ -75,6 +100,11 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 			return null;
 	}
 
+
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
+	@Override
 	public void processDict() throws IOException {
 
 		FileInputStream fin = new FileInputStream(this.path);
@@ -102,10 +132,14 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 		}
 
 		bf.close();
-		
+
 	}
 
-	// Calculate emotion-oriented features using NRC
+	
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
+	@Override
 	public Map<String, Double> evaluateTweet(List<String> words) {
 
 		Map<String, Double> emoCount = new HashMap<String, Double>();

@@ -34,8 +34,14 @@ import uk.ac.wlv.sentistrength.SentiStrength;
 
 
 /**
+ *  <!-- globalinfo-start --> 
+ *  This class is used for evaluating a tweet with SentiStrength.
+ * <p/>
+ * <!-- globalinfo-end -->
  * 
- * @author fbravo Evaluates a lexicon from a csv file
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
  */
 public class SentiStrengthEvaluator extends LexiconEvaluator  {
 
@@ -43,9 +49,16 @@ public class SentiStrengthEvaluator extends LexiconEvaluator  {
 	/** for serialization */
 	private static final long serialVersionUID = -2094228012480778199L;
 	
+	/** The SentiStrengh object */
 	protected transient SentiStrength sentiStrength;
 	
 
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */	
 	public SentiStrengthEvaluator(String file,String name) {
 		super(file,name);
 		
@@ -57,6 +70,11 @@ public class SentiStrengthEvaluator extends LexiconEvaluator  {
 
 	}
 
+
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#processDict()
+	 */
+	@Override
 	public void processDict() throws IOException  {
 		this.sentiStrength = new SentiStrength();
 		String sentiParams[] = {"sentidata", this.path, "trinary"};
@@ -65,7 +83,9 @@ public class SentiStrengthEvaluator extends LexiconEvaluator  {
 
 
 
-	// counts positive and negative words from a polarity-oriented lexicon
+	/* (non-Javadoc)
+	 * @see affective.core.LexiconEvaluator#evaluateTweet(java.util.List)
+	 */
 	@Override
 	public Map<String, Double> evaluateTweet(List<String> tokens) {
 	

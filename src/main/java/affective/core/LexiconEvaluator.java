@@ -25,35 +25,65 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ *  <!-- globalinfo-start --> 
+ *  This abstract class provides the structure for all classes calculating attributes from lexicons.
+ * <p/>
+ * <!-- globalinfo-end -->
+ * 
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public abstract class LexiconEvaluator implements Serializable {
 
 	/** for serialization */
 	private static final long serialVersionUID = 1L;
 	
-	
+	/** The lexicon file */
 	protected String path;
-	protected String name; // The lexicon's name
-	protected List<String> featureNames; // list with all the features provided by the lexicon evaluator
 	
+	/** The name of the lexicon */
+	protected String name; 
+	
+	/** A list with all the features provided by the lexicon evaluator */
+	protected List<String> featureNames; 
+	
+	
+	/**
+	 * initializes the Object
+	 * 
+	 * @param file the file with the lexicon
+	 * @param name the prefix for all the attributes calculated from this lexicon
+	 */	
 	public LexiconEvaluator(String path,String name){
 		this.path=path;
 		this.name=name;
 	}
 	
-	/* Process the dictionary */
+	/**
+	 * initializes the dictionary
+	 * @throws Exception in case of wrong file
+	 */	
 	public abstract void processDict()  throws IOException;
 	
-	/* Calculates lexicon-based feature values from a string of tokens */
+
+	/**
+	 * Calculates lexicon-based feature values from a list of tokens
+	 * @param tokens a tokenized tweet
+	 * @return a mapping between attribute names and their scores
+	 */	
 	public abstract Map<String,Double> evaluateTweet(List<String> tokens);
 
+	/**
+	 * Gets the feature names
+	 * 
+	 * @return the feature names.
+	 */	
 	public List<String> getFeatureNames() {
 		return featureNames;
 	}
 
-	public void setFeatureNames(List<String> featureNames) {
-		this.featureNames = featureNames;
-	}
 	
 	
 }
