@@ -79,7 +79,11 @@ The package can be used from the Weka GUI or the command line.
 ```
  Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
-2. Open in the preprocss panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. 
+2. Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the Files of Type option. 
+
+3. Choose the TweetToSparseFeatureVector and configure it as in the image below:
+
+<img src="img/tweetToSparseOptions.png" alt="alt text" width="450px" height="400px"> 
 
 
 ### Command-line Examples
