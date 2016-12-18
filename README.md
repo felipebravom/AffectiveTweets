@@ -83,8 +83,9 @@ The package can be used from the Weka GUI or the command line.
 
 3. Choose the TweetToSparseFeatureVector and configure it as in the image below:
 
-<img src="img/tweetToSparseOptions.png" alt="alt text" width="450px" height="400px"> 
-
+<p align="center">
+<img src="img/tweetToSparseOptions.png" alt="alt text" width="40%" height="40%"> 
+</p>
 
 ### Command-line Examples
 
