@@ -81,11 +81,22 @@ The package can be used from the Weka GUI or the command line.
 
 2. Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the Files of Type option. 
 
-3. Choose the TweetToSparseFeatureVector and configure it as in the image below:
+3. Choose the TweetToSparseFeatureVector and configure it for calculating word n-grams, character n-grams, Brown word clusters, and POS tags as in the image below:
 
 <p align="center">
 <img src="img/tweetToSparseOptions.png" alt="alt text" width="40%" height="40%"> 
 </p>
+
+4. Go to the classify panel and select the target class as the variable (Nom) class. Next, righ click on the panel right to the Choose button and click on the Edit Configuration option. Paste the following snippet there:
+```
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+```
+ This
+
+5. Select the Percentage split option and start training the classifier. 
+
+
+
 
 ### Command-line Examples
 
