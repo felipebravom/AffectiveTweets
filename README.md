@@ -113,7 +113,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 * We are using the MultiFilter filter to nest multiple filters.  The Reorder filter is used to discard the first two String attributes and moving the class label to the last position.
 
-* Now you can train a classifier by pressing the *Start* button. 
+* Now you can train the classifier by pressing the *Start* button. 
 
 
 ### Command-line Examples
