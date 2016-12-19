@@ -1,4 +1,4 @@
-<img src="img/logo.png" alt="alt text" width="250px" height="200px"> 
+<img src="img/logo.png" alt="alt text" width="40%" height="40%"> 
 
 ## About
 
@@ -91,9 +91,11 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 * Train an SVM using LibLinear. Go to the classify panel and select the target class as the variable (Nom) class. 
  
 * Right click on the panel right to the Choose button and click on the Edit Configuration option. Paste the following snippet:
+ 
  ```
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
  ``` 
+
  Note: Weka allows copying and pasting the configuration of their objets. This is very convenient when training complicated schemes.   The FilteredClassfier allows directly  passing a filter to the classifier. In this example we are removing the attributes of type string.
  
 * Select the Percentage split option and start training the classifier. 
