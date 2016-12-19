@@ -2,15 +2,15 @@
 
 ## About
 
-AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analysing emotion and sentiment of English written tweets developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
+AffectiveTweets is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
 
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms.
 
 ### Filters
 
-1. __TweetToSparseFeatureVector__: calculates sparse features, such as word and character n-grams from tweets. There are parameters for filtering out infrequent features e.g., (n-grams ocurring in less than m tweets) and for setting the weighting approach of the features (boolean or frequency based).
- * __Word n-grams__: extracts word n-grams from n=1 to a maximum value. 
- * __Negations__: add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation expression ("[\\.|,|:|;|!|\\?]+").
+1. __TweetToSparseFeatureVector__: calculates sparse features, such as word and character n-grams from tweets. There are parameters for filtering out infrequent features e.g., (n-grams occurring in less than *m* tweets) and for setting the weighting approach  (boolean or frequency based).
+ * __Word n-grams__: extracts word n-grams from *n*=1 to a maximum value. 
+ * __Negations__: add a prefix to words occurring in negated contexts, e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation expression *([\\.|,|:|;|!|\\?]+)* .
  * __Character n-grams__: calculates character n-grams.
  * __POS tags__: tags tweets using the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/), and creates a vector space model based on the sequence of POS tags. 
  * __Brown clusters__: maps the words in a tweet to Brown word clusters and creates a low-dimensional vector space model. It can be used with n-grams of word clusters. The word clusters are also taken from the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/).
@@ -18,9 +18,9 @@ The package implements WEKA filters for converting tweets contained in string at
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
  * [MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon): counts the number of positive and negative words from the MPQA subjectivity lexicon.
  * [Bing Liu](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon): counts the number of positive and negative words from the Bing Liu lexicon.
- * [AFINN](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the positive and negative word scores provided by this lexicon.
- * [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html): calculates a positive and a negative score by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. 
- * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html): calculates a positive and a negative score by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. 
+ * [AFINN](https://github.com/fnielsen/afinn): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon.
+ * [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. 
+ * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. 
  * [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon.
  * [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.
  * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html): adds the emotion associations of the words matching this lexicon.  
@@ -28,12 +28,12 @@ The package implements WEKA filters for converting tweets contained in string at
  * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
  * Negations: counts the number of negating words in the tweet.
  
-3. __TweetToSentiStrengthFeatureVector__: calculates a positive and a negative score for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package.
+3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative variables for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package.
  
-4. __TweetToEmbeddingsFeatureVector__: calculate a tweet-level feature representation using pre-trained word embeddings. A dummy word-embedding formed by zeroes is used if a word has no embedding associated. The tweet vectors can be calculated using the following schemes: 
+4. __TweetToEmbeddingsFeatureVector__: calculates a tweet-level feature representation using pre-trained word embeddings. A dummy word-embedding formed by zeroes is used for word with no corresponding embedding. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
  * Add word embeddings. 
- * Concatenation of first k embeddings. Dummy values are added if the tweet has less than k words. 
+ * Concatenation of first *k* embeddings. Dummy values are added if the tweet has less than *k* words. 
 
 
 ### Tokenizers
@@ -42,8 +42,8 @@ The package implements WEKA filters for converting tweets contained in string at
 
 ### Other Resources
 
-1. __Datasets__: The package provides some tweets annotated by affective values in [ARFF](http://weka.wikispaces.com/ARFF) format in $HOME/wekafiles/packages/AffectiveTweets/data/. The datasets are compressed in gzip format.
-2. __Pre-trained Word-Embeddings__: The package provides a file with pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. It is a tab separated file with the word in the first column, located in $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading [w2v.twitter.edinburgh10M.400d.csv.gz](https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz), which provides  embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
+1. __Datasets__: The package provides some tweets annotated by affective values in gzipped [ARFF](http://weka.wikispaces.com/ARFF) format in $HOME/wekafiles/packages/AffectiveTweets/data/. 
+2. __Pre-trained Word-Embeddings__: The package provides a file with pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. It is a tab separated file with the word in last column located in $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading [w2v.twitter.edinburgh10M.400d.csv.gz](https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz), which provides  embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
  
 ## Installation
 
@@ -99,7 +99,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
  ``` 
 
- Note: Weka allows copying and pasting the configuration of their objets. This is very convenient when training complicated schemes.   The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
+ Note: Weka allows copying and pasting the configuration of their objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
  
 * Select the Percentage split option and start training the classifier. 
 
