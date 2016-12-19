@@ -101,7 +101,8 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 #### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset.
 * Go to the *Classify* panel and paste the following snippet for the classifier's configuration:
- ```weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -I 1 -U -O\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+ ```
+ weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -I 1 -U -O\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
 
 
