@@ -75,10 +75,10 @@ The package can be used from the Weka GUI or the command line.
 ### GUI Examples
 1. Train an SVM using sparse features:
  * Run WEKA and open the Explorer:  
- ```bash
+```bash
  java -Xmx4G -jar weka/dist/weka.jar 
-```
-Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
+   ```
+  Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
  * Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the *Files of Type* option. 
 
@@ -91,12 +91,12 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
  * Train an SVM using LibLinear. Go to the classify panel and select the target class as the variable (Nom) class. 
  
  * Right click on the panel right to the Choose button and click on the Edit Configuration option. Paste the following snippet:
- ```
+```
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
  ``` 
  Note: Weka allows copying and pasting the configuration of their objets. This is very convenient when training complicated schemes.   The FilteredClassfier allows directly  passing a filter to the classifier. In this example we are removing the attributes of type string.
  
-* Select the Percentage split option and start training the classifier. 
+ * Select the Percentage split option and start training the classifier. 
 
 2. Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
  * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset.
@@ -113,7 +113,6 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
  ```bash
 java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
-
 
 
 
