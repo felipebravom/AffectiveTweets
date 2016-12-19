@@ -105,20 +105,18 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 #### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset.
-* Go to the *Classify* panel and paste the following snippet in the classifier's configuration:
+* Go to the *Classify* panel and paste the following snippet in the classifier's configuration (make sure that the word embeddings file is correctly specified):
  ```
- weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -I 1 -U -O\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+ weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -I 1 -U -O\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
-* We are using the MultiFilter filter to nest multiple filters.  The Reorder filter of the end is used to discard the first two String attributes and moving the class label to the last position.
+* We are using the MultiFilter filter to nest multiple filters.  The Reorder filter is used to discard the first two String attributes and moving the class label to the last position.
 
-* Now you can train a classifier bu pressing the *Start* button. 
-
+* Now you can train a classifier by pressing the *Start* button. 
 
 
 ### Command-line Examples
 
-1.In the following example we will train an SVM from LibLinear on the Sent140test dataset using pre-trained word embeddings as features. We use the FilteredClassfier that allows directly  passing a filter to the classifier.
- We use the MultiFilter filter to nest multiple filters. We will nest the TweetToEmbeddingsFeatureVector filter with the Reorder filter  that will discard useless String attributes and put the class label as the last attribute:
+The same classification schemes can be run from the command line. An example using word embeddings is given below:
 
  ```bash
 java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
