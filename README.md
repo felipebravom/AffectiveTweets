@@ -1,4 +1,4 @@
-<img src="img/logo.png" alt="alt text" width="40%" height="40%"> 
+<img src="img/logo.png" alt="alt text" width="30%" height="30%"> 
 
 ## About
 
