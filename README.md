@@ -57,15 +57,15 @@ ant -f weka/build.xml exejar
 * Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
 
 ```bash
-java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.0.zip
+java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 ```
 
 * (Optional) Install other useful packages for classification, regression and evaluation:
 
 ```bash
-java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
-java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package LibSVM
-java -cp weka/dist/weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
+java -cp weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
+java -cp weka.jar weka.core.WekaPackageManager -install-package LibSVM
+java -cp weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
 ```
 
 
@@ -76,7 +76,7 @@ The package can be used from the Weka GUI or the command line.
 
 Run WEKA and open the Explorer:  
  ```
- java -Xmx4G -jar weka/dist/weka.jar 
+ java -Xmx4G -jar weka.jar 
 ```
 
 Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
@@ -121,7 +121,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 The same classification schemes can be run from the command line. An example using word embeddings is given below:
 
  ```bash
-java -Xmx4G -cp weka/dist/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
 
 
