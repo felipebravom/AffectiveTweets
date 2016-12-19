@@ -96,7 +96,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
  ``` 
  Note: Weka allows copying and pasting the configuration of their objets. This is very convenient when training complicated schemes.   The FilteredClassfier allows directly  passing a filter to the classifier. In this example we are removing the attributes of type string.
  
- * Select the Percentage split option and start training the classifier. 
+* Select the Percentage split option and start training the classifier. 
 
 #### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset.
