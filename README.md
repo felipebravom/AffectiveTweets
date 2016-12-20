@@ -54,7 +54,7 @@ svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
 ant -f weka/build.xml exejar
 ```
 
-* Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F) 
+* Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F): 
 
 ```bash
 java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
@@ -72,7 +72,7 @@ java -cp weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
 ## Examples
 The package can be used from the Weka GUI or the command line.
 
-### GUI Examples
+### GUI 
 
 Run WEKA and open the Explorer:  
  ```
@@ -117,7 +117,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 * Now you can train the classifier by pressing the *Start* button. 
 
 
-### Command-line Examples
+### Command-line 
 
 The same classification schemes can be run from the command line. An example using word embeddings is given below:
 
