@@ -118,7 +118,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 
 #### Train a Convolution Neural Network using sequence of embeddings:
-In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, wich is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
+In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
 * First, install the package:
 
