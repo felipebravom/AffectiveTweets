@@ -117,7 +117,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 * Now you can train the classifier by pressing the *Start* button. 
 
 
-#### Train a Convolution Neural Network using sequence of embeddings:
+#### Train a Convolution Neural Network on the concatenation of word embeddings:
 In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
 * First, install the package:
