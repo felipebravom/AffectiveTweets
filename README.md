@@ -118,8 +118,9 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 
 #### Train a Convolution Neural Network using sequence of embeddings:
-In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package. This package is a wrapper of the [DeepLearning4j]() library. 
+In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, wich is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
+* First, install the *WekaDeepLearning4j* package:
 
 ```bash
 # For CPU
@@ -135,7 +136,7 @@ java -cp weka.jar weka.core.WekaPackageManager -install-package WekaDeepLearning
 weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 2 -K 15 -L -O
 ```
 
-* Discard useless features and move class label to the last position:
+* Discard the string content and move the class label to the last position:
 
 ```bash
 weka.filters.unsupervised.attribute.Reorder -R 4-last,3
@@ -147,7 +148,7 @@ weka.filters.unsupervised.attribute.Reorder -R 4-last,3
 weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator "weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500" -layers "weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \"Convolution layer\" -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER" -layers "weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \"Output layer\" -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER" -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
 ```
 
-The network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (3-grams, since each word has 100 dimensions). The stride is 100x1. The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
+This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 i.e, each filter maps a word trigram, since each word has 100 dimensions. The stride is 100x1, which is the number of dimensions for a word. The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
 
 
 
