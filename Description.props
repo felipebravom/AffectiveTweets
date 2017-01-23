@@ -38,6 +38,6 @@ URL=https://github.com/felipebravom/AffectiveTweets
 #Related=
 
 # Dependencies
-Depends=weka (>=3.9.1)
+Depends=weka (>=3.8.1)
 
 
