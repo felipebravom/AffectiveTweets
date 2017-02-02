@@ -38,8 +38,8 @@ import java.util.zip.GZIPInputStream;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for handling word vector or embeddings stored in zgipped files with format:
- *  emb1<tab>emb2<tab>..word. 
- * <p/>
+ *  emb1 tab emb2 tab ..word. 
+ * 
  * <!-- globalinfo-end -->
  * 
  * 
@@ -74,7 +74,6 @@ public class EmbeddingHandler implements Serializable {
 	 /**
      * initializes the dictionary
      * 
-     * @param filePath the file with the embeddings
      * @throws Exception in case of wrong file
      */
 	public void createDict() throws Exception{

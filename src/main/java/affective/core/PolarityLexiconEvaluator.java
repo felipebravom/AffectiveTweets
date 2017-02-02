@@ -37,7 +37,6 @@ import java.util.zip.GZIPInputStream;
  *  <!-- globalinfo-start --> 
  *  This class is used for evaluating the polarity lexicons with positive and negative
  *  nominal entries.
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 

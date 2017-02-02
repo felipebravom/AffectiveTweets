@@ -32,7 +32,6 @@ import cmu.arktweetnlp.Twokenize;
 /**
  *  <!-- globalinfo-start --> 
  *  Provides static functions for String processing.
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 

@@ -28,7 +28,6 @@ import java.util.Map;
 /**
  *  <!-- globalinfo-start --> 
  *  This abstract class provides the structure for all classes calculating attributes from lexicons.
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 
@@ -53,7 +52,7 @@ public abstract class LexiconEvaluator implements Serializable {
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 */	
 	public LexiconEvaluator(String path,String name){
@@ -63,7 +62,7 @@ public abstract class LexiconEvaluator implements Serializable {
 	
 	/**
 	 * initializes the dictionary
-	 * @throws Exception in case of wrong file
+	 * @throws IOException in case of wrong file
 	 */	
 	public abstract void processDict()  throws IOException;
 	

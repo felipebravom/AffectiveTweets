@@ -35,7 +35,6 @@ import java.util.zip.GZIPInputStream;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for evaluating SentiWordnet
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 
@@ -53,7 +52,7 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 */
 	public SWN3LexiconEvaluator(String path, String name) {

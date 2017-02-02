@@ -34,8 +34,7 @@ import java.util.zip.GZIPInputStream;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for evaluating the NRC Hashtag Emotion Lexicon
- * <p/>
+ *  This class is used for evaluating the NRC Hashtag Emotion Lexicon.
  * <!-- globalinfo-end -->
  * 
  * 
@@ -54,7 +53,7 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 */
 	public NRCHashtagEmotionLexiconEvaluator(String path,String name) {
@@ -88,6 +87,7 @@ public class NRCHashtagEmotionLexiconEvaluator extends LexiconEvaluator {
 	/**
 	 * Gets the emotions for a word
 	 * 
+	 * @param word the word
 	 * @return the emotions
 	 */		
 	public Map<String, Double> getWord(String word) {

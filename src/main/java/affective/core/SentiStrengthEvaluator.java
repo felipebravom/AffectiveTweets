@@ -36,7 +36,6 @@ import uk.ac.wlv.sentistrength.SentiStrength;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for evaluating a tweet with SentiStrength.
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 

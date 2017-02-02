@@ -38,8 +38,7 @@ import java.util.zip.GZIPInputStream;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for counting the number of negation words in a tweet.
- * <p/>
- * <!-- globalinfo-end -->
+ *  <!-- globalinfo-end -->
  * 
  * 
  * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
@@ -56,7 +55,7 @@ public class NegationEvaluator extends LexiconEvaluator {
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 */
 	public NegationEvaluator(String path, String name) {

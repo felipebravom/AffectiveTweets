@@ -37,8 +37,7 @@ import java.util.zip.GZIPInputStream;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for evaluating lexicons with numerical sentiment scores: 
- * <p/>
- * <!-- globalinfo-end -->
+ *  <!-- globalinfo-end -->
  * 
  * 
  * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)

@@ -63,7 +63,6 @@ import weka.filters.SimpleBatchFilter;
  *  for a tweet represented as a string attribute. The type of features include: word n-grams, character n-grams,
  *  POS tags and Brown word clusters. The size of the attribute space would depend on the training dataset.
  *   
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -78,7 +77,6 @@ import weka.filters.SimpleBatchFilter;
  * Volume                   = {50}
  *}
  * </pre>
- * <p/>
  <!-- technical-bibtex-end -->
  * 
  * 
@@ -334,7 +332,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	/**
 	 * Parses the options for this object.
-	 * <p/>
 	 * 
 	 * <!-- options-start -->
 	 *<pre>  
@@ -349,7 +346,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 *</pre>
 	 *<pre>  
 	 *-R
-	 *	 Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. 
+	 *	 Add a prefix to words occurring in negated contexts e.g., I don't like you {@literal =>} I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. 
 	 *	(default: false)
 	 *</pre>
 	 *<pre>  
@@ -581,9 +578,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 	/**
-	 * Calculates character n-grams from a sequence of tokens.
+	 * Calculates character n-grams from a String.
 	 * 
-	 * @param tokens the input tokens from which the character n-grams will be calculated
+	 * @param content the input String
 	 * @param n the size of the character n-gram
 	 * @return a list with the character n-grams
 	 */

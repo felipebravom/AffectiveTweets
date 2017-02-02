@@ -96,9 +96,9 @@ public class HumanCodedToArff extends TweetCollectionToArff {
 	/**
 	 * Main method for testing this class.
 	 * 
-	 * @param argv
-	 *            should contain the path of input dataset and the name of
+	 * should contain the path of input dataset and the name of
 	 *            target file scheme (see Evaluation)
+	 * @param args arguments           
 	 */
 	static public void main(String args[]) {
 

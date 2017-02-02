@@ -46,7 +46,6 @@ import weka.filters.SimpleBatchFilter;
 /**
  *  <!-- globalinfo-start --> An attribute filter that calculates lexicon-based features 
  *  for a tweet represented as a string attribute. Different lexicons are used. 
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -62,7 +61,6 @@ import weka.filters.SimpleBatchFilter;
  *  Volume                   = {63}
  * }
  * </pre>
- * <p/>
  <!-- technical-bibtex-end -->
  *  
  * 
@@ -176,7 +174,6 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 
 	/**
 	 * Parses the options for this object.
-	 * <p/>
 	 * 
 	 * <!-- options-start --> 
 	 * <pre> 

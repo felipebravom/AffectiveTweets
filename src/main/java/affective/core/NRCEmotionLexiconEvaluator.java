@@ -35,7 +35,6 @@ import java.util.zip.GZIPInputStream;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for evaluating the NRC-10 Emotion Lexicon
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * 
@@ -55,7 +54,7 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 */
 	public NRCEmotionLexiconEvaluator(String path,String name) {
@@ -90,7 +89,7 @@ public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 	
 	/**
 	 * Gets the emotions for a word
-	 * 
+	 * @param word the emotion key name
 	 * @return the emotions
 	 */	
 	public Map<String, Integer> getWord(String word) {

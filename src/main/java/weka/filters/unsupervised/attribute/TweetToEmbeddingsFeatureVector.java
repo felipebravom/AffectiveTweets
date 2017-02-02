@@ -49,8 +49,7 @@ import weka.filters.SimpleBatchFilter;
 /**
  *  <!-- globalinfo-start --> An attribute filter that calculates word embedding (word vectros) features 
  *  for a tweet represented as a string attribute. 
- *  The embeddings format is a csv.gz file with format: emb1<tab>emb2<tab>..word. 
- * <p/>
+ *  The embeddings format is a csv.gz file with format: emb1 tab emb2 tab..word. 
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -66,7 +65,6 @@ import weka.filters.SimpleBatchFilter;
  * pdf = {http://www.cs.waikato.ac.nz/~eibe/pubs/emo_lex_wi.pdf}
  * }
  * </pre>
- * <p/>
  <!-- technical-bibtex-end -->
  * 
  * 
@@ -230,7 +228,6 @@ public class TweetToEmbeddingsFeatureVector extends SimpleBatchFilter {
 
 	/**
 	 * Parses the options for this object.
-	 * <p/>
 	 * 
 	 * <!-- options-start --> 
 	 * 

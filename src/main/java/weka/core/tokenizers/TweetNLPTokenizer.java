@@ -38,7 +38,6 @@ import weka.core.Utils;
 
 /**
  *  <!-- globalinfo-start --> A Twitter-specific tokenizer based on the CMU TwitterNLP library: http://www.cs.cmu.edu/~ark/TweetNLP/
- * <p/>
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -53,7 +52,6 @@ import weka.core.Utils;
  * 	Pages                    = {42--47}
  *	}
  * </pre>
- * <p/>
  <!-- technical-bibtex-end -->
  * 
  * 
@@ -169,7 +167,7 @@ public class TweetNLPTokenizer extends Tokenizer {
 
 	/**
 	 * Parses the options for this object.
-	 * <p/>
+	 * 
 	 * 
 	 * @param options
 	 *            the options to use
