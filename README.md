@@ -175,9 +175,9 @@ There is no official publication related to this project yet. In the meanwhile p
 
 
 ## Contact
-This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
-Email: fjb11 at students.waikato.ac.nz
-If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
+* This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
+* Email: fjb11 at students.waikato.ac.nz
+* If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
 
 
 
