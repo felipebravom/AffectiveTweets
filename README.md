@@ -2,11 +2,9 @@
 
 ## About
 
-[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. The package is the official baseline system for the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).
+[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. The package is the official baseline system for the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).  Instructions for using the system withe the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
 
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms. Description about the filters, installation instructions, and sentiment classification examples are given below.
-
-Instructions for using the system with the *EmoInt* task data are provided [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
 
 
 
