@@ -2,9 +2,13 @@
 
 ## About
 
-[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
+[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. The package is the official baseline system of the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [EmoInt](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).
 
-The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms.
+The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms. Description about the filters, installation instructions, and sentiment classification examples are given below.
+
+Instructions for using the system with the *EmoInt* task data are provided [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
+
+
 
 ### Filters
 
@@ -168,3 +172,12 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 There is no official publication related to this project yet. In the meanwhile please cite the following paper if using this package in an academic publication:
 
 * F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer __Determining Word--Emotion Associations from Tweets by Multi-Label Classification__, In WI '16: Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA 2016. Pages 536-539. DOI:10.1109/WI.2016.90
+
+
+## Contact
+This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
+Email: fjb11 at students.waikato.ac.nz
+If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
+
+
+
