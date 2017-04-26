@@ -167,9 +167,9 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 
 ## Citation
-There is no official publication related to this project yet. In the meanwhile please cite the following paper if using this package in an academic publication:
+Please cite the following paper if using this package in an academic publication:
 
-* F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer __Determining Word--Emotion Associations from Tweets by Multi-Label Classification__, In WI '16: Proceedings of the 2016 IEEE/WIC/ACM International Conference on Web Intelligence, Omaha, Nebraska, USA 2016. Pages 536-539. DOI:10.1109/WI.2016.90
+* Emotion Intensities in Tweets. Saif M. Mohammad and Felipe Bravo-Marquez. Submitted.
 
 
 ## Contact
