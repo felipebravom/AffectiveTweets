@@ -57,7 +57,7 @@ public class ArffLexiconEvaluator extends LexiconEvaluator {
 	/**
 	 * initializes the Object
 	 * 
-	 * @param file the file with the lexicon
+	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon
 	 * @param index the attribute index (starting from 1) of the word 
 	 */
