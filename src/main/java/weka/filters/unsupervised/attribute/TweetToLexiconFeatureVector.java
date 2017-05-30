@@ -14,7 +14,7 @@
  */
 
 /*
- *    TweetToEmbeddingsFeatureVector.java
+ *    TweetToLexiconFeatureVector.java
  *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
  *
  */
