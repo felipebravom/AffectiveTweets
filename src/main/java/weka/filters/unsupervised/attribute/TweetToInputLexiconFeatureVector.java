@@ -37,15 +37,12 @@ import weka.core.Instances;
 import weka.core.Option;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
-import weka.core.TechnicalInformation;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
-import weka.core.TechnicalInformation.Type;
 import weka.filters.SimpleBatchFilter;
 
 /**
- *  <!-- globalinfo-start --> An attribute filter that calculates features 
- *  for a tweet represented as a string attribute. Different lexicons are used. 
+ *  <!-- globalinfo-start --> A batch filter that calcuates attributes for a tweet using a given affective lexicon in arff format. 
  * <!-- globalinfo-end -->
  * 
  *  
@@ -105,8 +102,8 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	@Override
 	public String globalInfo() {
 		return "A batch filter that calcuates attributes for a tweet using a given affective lexicon in arff format."
-				+ "The features are calculated by adding the affective associations of the words matching the lexicon."
-				+ "All numeric attributes from the given lexicon are considered. The NRC-Affect-Intensity is used by deault. \n";
+				+ " The features are calculated by adding the affective associations of the words matching the lexicon."
+				+ " All numeric attributes from the given lexicon are considered. The NRC-Affect-Intensity is used by deault. \n";
 	}
 
 
