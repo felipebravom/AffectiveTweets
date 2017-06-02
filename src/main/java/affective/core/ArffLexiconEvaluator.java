@@ -36,7 +36,8 @@ import weka.core.Instances;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for evaluating lexicons in arff format.  
+ *  This class is used for calculating scores for a tweet using a lexicons in arff format. 
+ *  Numeric associations are added  and nominal ones are countes.
  *  <!-- globalinfo-end -->
  * 
  * 
@@ -48,8 +49,12 @@ public class ArffLexiconEvaluator extends LexiconEvaluator {
 	/** for serialization */
 	private static final long serialVersionUID = 8291541753405292438L;
 
-	/** a mapping between words and the affective scores */	
-	protected Map<String, Map<String, Double>> dict; 	
+	/** a mapping between words and the affective numeric scores */	
+	protected Map<String, Map<String, Double>> numDict; 	
+
+	/** a mapping between words and the affective nominal categories */	
+	protected Map<String, Map<String, String>> nomDict; 	
+
 
 	/** the word attribute index (starting from 1) */
 	protected int wordIndex;
@@ -64,7 +69,9 @@ public class ArffLexiconEvaluator extends LexiconEvaluator {
 	public ArffLexiconEvaluator(String path, String name, int index) {
 		super(path, name);
 		this.wordIndex=index;
-		this.dict = new HashMap<String, Map<String, Double>>();
+		this.numDict = new HashMap<String, Map<String, Double>>();
+		this.nomDict = new HashMap<String, Map<String,String>>();
+
 		this.featureNames=new ArrayList<String>();
 	}
 
@@ -78,33 +85,71 @@ public class ArffLexiconEvaluator extends LexiconEvaluator {
 		Instances lex=new Instances(reader);
 
 		List<Attribute> numericAttributes=new ArrayList<Attribute>();
-		// checks all numeric attributes and discards the word attribute
-		for(int i=0;i<lex.numAttributes();i++){
-			if(lex.attribute(i).isNumeric() && i!=this.wordIndex-1){
-				numericAttributes.add(lex.attribute(i));	
+		List<Attribute> nominalAttributes=new ArrayList<Attribute>();
 
-				// adds the attribute name to the message-level features to be calculated
-				this.featureNames.add(name+"-"+lex.attribute(i).name());
+
+
+		// checks all numeric and nominal attributes and discards the word attribute
+		for(int i=0;i<lex.numAttributes();i++){
+			
+			if(i!=this.wordIndex-1){
+				if(lex.attribute(i).isNumeric() ){
+					numericAttributes.add(lex.attribute(i));	
+					// adds the attribute name to the message-level features to be calculated
+					this.featureNames.add(name+"-"+lex.attribute(i).name());
+				}
+
+				else if(lex.attribute(i).isNominal() ){
+					nominalAttributes.add(lex.attribute(i));	
+					// adds the attribute name together with the nominal value to the message-level features to be calculated
+					int numValues=lex.attribute(i).numValues();
+					for(int j=0;j<numValues;j++)
+						this.featureNames.add(name+"-"+lex.attribute(i).name()+"-"+lex.attribute(i).value(j));
+
+				}
 
 			}
 
 		}
+
+	
 
 
 		// Maps all words with their affective scores discarding missing values
 		for(Instance inst:lex){
 			if(inst.attribute(this.wordIndex-1).isString()){
 				String word=inst.stringValue(this.wordIndex-1);
-				Map<String,Double> wordVals=new HashMap<String,Double>();
-				for(Attribute na:numericAttributes){
-					if(!weka.core.Utils.isMissingValue(inst.value(na)))
-						wordVals.put(na.name(),inst.value(na));
+
+				// map numeric scores
+				if(!numericAttributes.isEmpty()){
+					Map<String,Double> wordVals=new HashMap<String,Double>();
+					for(Attribute na:numericAttributes){
+						if(!weka.core.Utils.isMissingValue(inst.value(na)))
+							wordVals.put(na.name(),inst.value(na));
+					}
+					this.numDict.put(word, wordVals);					
 				}
-				this.dict.put(word, wordVals);
+
+				// map nominal associations
+				if(!nominalAttributes.isEmpty()){
+					Map<String,String> wordCounts=new HashMap<String,String>();
+					for(Attribute no:nominalAttributes){
+						if(!weka.core.Utils.isMissingValue(inst.value(no))){	
+							wordCounts.put(no.name(),no.value((int) inst.value(no)));
+						}
+						
+						this.nomDict.put(word, wordCounts);
+
+					}
+
+				}				
 
 			}
 
 		}
+
+
+
 
 	}
 
@@ -120,11 +165,20 @@ public class ArffLexiconEvaluator extends LexiconEvaluator {
 		}
 
 		for (String word : tokens) {
-			// I retrieve the EmotionMap if the word match the lexicon
-			if (this.dict.containsKey(word)) {
-				Map<String,Double> mapper=this.dict.get(word);
+			// Add numeric scores
+			if (this.numDict.containsKey(word)) {
+				Map<String,Double> mapper=this.numDict.get(word);
 				for(String emo:mapper.keySet())
 					scores.put(name+"-"+emo, scores.get(name+"-"+emo)+mapper.get(emo));
+			}
+
+
+			// count nominal associations
+			if (this.nomDict.containsKey(word)) {
+				Map<String,String> mapper=this.nomDict.get(word);
+				for(String emo:mapper.keySet())
+					scores.put(name+"-"+emo+"-"+mapper.get(emo), scores.get(name+"-"+emo+"-"+mapper.get(emo))+1);
+
 			}
 
 		}

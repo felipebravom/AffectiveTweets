@@ -42,7 +42,8 @@ import weka.core.Capabilities.Capability;
 import weka.filters.SimpleBatchFilter;
 
 /**
- *  <!-- globalinfo-start --> A batch filter that calcuates attributes for a tweet using a given affective lexicon in arff format. 
+ *  <!-- globalinfo-start --> A batch filter that calculates attributes for a tweet using a given affective lexicon in arff format.
+ *   
  * <!-- globalinfo-end -->
  * 
  *  
@@ -60,13 +61,12 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 
 	/** Default path to where lexicons are stored */
-	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons";
+	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
 	/** The path of the MPQA lexicon */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
 	
-	
-	
+		
 	
 
 	/** the index of the string attribute to be processed */
@@ -102,8 +102,9 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	@Override
 	public String globalInfo() {
 		return "A batch filter that calcuates attributes for a tweet using a given affective lexicon in arff format."
-				+ " The features are calculated by adding the affective associations of the words matching the lexicon."
-				+ " All numeric attributes from the given lexicon are considered. The NRC-Affect-Intensity is used by deault. \n";
+				+ " The features are calculated by adding or counting the affective associations of the words matching the lexicon."
+				+ " All numeric and nominal attributes from the given lexicon are considered. Numeric scores are added and nominal are counted. "
+				+ "The NRC-Affect-Intensity is used by deault. \n";
 	}
 
 
@@ -369,7 +370,7 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
     
     @OptionMetadata(displayName = "lexiconName",
-            description = "The lexicon name to be prefixed in all features.",
+            description = "The lexicon name to be prefixed in all features calculated from this lexicon.",
             commandLineParamName = "B", commandLineParamSynopsis = "-B",
             displayOrder = 1)   
 	public String getLexiconName() {
