@@ -169,7 +169,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 ## Citation
 Please cite the following paper if using this package in an academic publication:
 
-* *Emotion Intensities in Tweets*. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
+* __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
 
 
 ## Contact
