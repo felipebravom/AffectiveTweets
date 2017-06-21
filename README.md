@@ -7,6 +7,12 @@
 The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms. Description about the filters, installation instructions, and sentiment classification examples are given below.
 
 
+## Citation
+Please cite the following paper if using this package in an academic publication:
+
+* __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
+
+Please cite the papers describing any of the lexicons or resources implemented in this package. You can find the reference for the lexicons and resources in the corrsponding links.
 
 ### Filters
 
@@ -165,11 +171,6 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 
 
-
-## Citation
-Please cite the following paper if using this package in an academic publication:
-
-* __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
 
 
 ## Contact
