@@ -12,7 +12,7 @@ Please cite the following paper if using this package in an academic publication
 
 * __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
 
-You should also cite the papers describing any of the lexicons or resources you are using with this package. The corresponding references can be found on the links provided along with each feature description.
+You should also cite the papers describing any of the lexicons or resources you are using with this package. The corresponding references can be found through the links provided below.
 
 ### Filters
 
@@ -27,11 +27,11 @@ You should also cite the papers describing any of the lexicons or resources you 
  * [MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon): counts the number of positive and negative words from the MPQA subjectivity lexicon.
  * [Bing Liu](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon): counts the number of positive and negative words from the Bing Liu lexicon.
  * [AFINN](https://github.com/fnielsen/afinn): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon.
- * [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. 
- * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. 
+ * [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. 
+ * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. 
  * [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon.
  * [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.
- * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html): adds the emotion associations of the words matching this lexicon.  
+ * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon.  
  * [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. 
  * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
  * Negations: counts the number of negating words in the tweet.
