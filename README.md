@@ -2,9 +2,20 @@
 
 ## About
 
-[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. The package is the official baseline system for the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).  Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
+[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. 
 
-The package implements WEKA filters for converting tweets contained in string attributes into feature vectors that can be fed into machine learning algorithms. Description about the filters, installation instructions, and sentiment classification examples are given below.
+The package implements WEKA filters for calculating state-of-the-art features from tweets that can be fed into machine learning algorithms. The most relevant papers on which this package is based are:
+
+The package implements and wraps state-of-art Twitter sentiment analysis features and tools including the ones from:
+*Sentiment Analysis of Short Informal Texts. Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad. Journal of Artificial Intelligence Research, volume 50, pages 723-762, August 2014.
+BibTeX
+*Meta-Level Sentiment Models for Big Social Data Analysis. F. Bravo-Marquez, M. Mendoza and B. Poblete. Knowledge-Based Systems Volume 69, October 2014, Pages 86–99. 
+
+The package is the official baseline system for the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).  Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
+
+Description about the filters, installation instructions, and sentiment classification examples are given below.
+
+
 
 
 ## Citation
