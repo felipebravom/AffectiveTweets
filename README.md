@@ -188,7 +188,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 ## Contact
 * This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
-* Email: fjb11 at students.waikato.ac.nz
+* Email: fbravoma at waikato.ac.nz
 * If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
 
 
