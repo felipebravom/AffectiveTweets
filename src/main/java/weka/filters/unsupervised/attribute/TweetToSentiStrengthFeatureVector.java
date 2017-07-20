@@ -84,6 +84,12 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	protected int textIndex=1; 
 
 
+	/** The folder with the language files. */
+	protected String langFolder=SENTISTRENGTH_FOLDER_NAME+"english"+java.io.File.separator;
+	
+
+
+
 	/** True if all tokens should be downcased. */
 	protected boolean toLowerCase=true;
 
@@ -140,6 +146,10 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 
 		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
+		
+		
+		result.addElement(new Option("\t SentiStrength files folder).\n"
+				+ "\t(default: " + this.langFolder + ")", "L", 0, "-L"));	
 
 
 		result.addAll(Collections.list(super.listOptions()));
@@ -164,6 +174,9 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 
 		if(this.cleanTokens)
 			result.add("-O");
+		
+		result.add("-L");
+		result.add("" + this.getLangFolder());
 
 
 		Collections.addAll(result, super.getOptions());
@@ -216,6 +229,21 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 		this.toLowerCase=Utils.getFlag('U', options);
 
 		this.cleanTokens=Utils.getFlag('O', options);
+		
+		
+		String langFolderOption = Utils.getOption('L', options);
+		if (langFolderOption.length() > 0) {
+			String[] langFolderSpec = Utils.splitOptions(langFolderOption);
+			if (langFolderSpec.length == 0) {
+				throw new IllegalArgumentException(
+						"Invalid index");
+			}
+			
+			this.setLangFolder(langFolderSpec[0]);
+
+		}
+		
+		
 
 		super.setOptions(options);
 
@@ -296,7 +324,7 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 
 		// SentiStrength is re-intialized in each batch as it is not serializable
 		SentiStrengthEvaluator sentiStrengthEvaluator=new SentiStrengthEvaluator(
-				SENTISTRENGTH_FOLDER_NAME,"SentiStrength");
+				this.langFolder,"SentiStrength");
 		sentiStrengthEvaluator.processDict();
 
 		for (int i = 0; i < instances.numInstances(); i++) {
@@ -426,6 +454,32 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	}
 
 
+	
+	/**
+	 * Returns the folder with the SentiStrength files.
+	 * @return the folder with the SentiStrength files.
+	 */
+	public String getLangFolder() {
+		return langFolder;
+	}
+
+	/**
+	 * Sets the folder with the SentiStrength files.
+	 * @param langFolder the folder with the SentiStrength files.
+	 */
+	public void setLangFolder(String langFolder) {
+		this.langFolder = langFolder;
+	}
+	
+	/**
+	 * Returns the tip text for this property.
+	 * 
+	 * @return tip text for this property suitable for displaying in the
+	 *         explorer/experimenter gui
+	 */
+	public String langFolderTipText() {
+		return "The folder containing SentiStrength Files. Change it for using a language different than English.";		
+	}
 
 
 }
