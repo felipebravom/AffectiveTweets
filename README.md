@@ -4,14 +4,16 @@
 
 [AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. 
 
-The package implements WEKA filters for calculating state-of-the-art sentiment analysis features from tweets that can be fed into machine learning algorithms. The most relevant papers on which this package is based are:
+The package implements WEKA filters for calculating state-of-the-art sentiment analysis features from tweets that can be fed into machine learning algorithms. (Many of the features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm).) The most relevant papers on which this package is based are:
+
 
  * [Sentiment Analysis of Short Informal Texts](http://saifmohammad.com/WebDocs/NRC-Sentiment-JAIR-2014.pdf). Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad. Journal of Artificial Intelligence Research, volume 50, pages 723-762, August 2014. [BibTeX](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt)
- * [Meta-Level Sentiment Models for Big Social Data Analysis](http://www.sciencedirect.com/science/article/pii/S0950705114002068). F. Bravo-Marquez, M. Mendoza and B. Poblete. Knowledge-Based Systems Volume 69, October 2014, Pages 86–99. [BibTex](https://scholar.googleusercontent.com/scholar.bib?q=info:Ubh9e5qm8NUJ:scholar.google.com/&output=citation&scisig=AAGBfm0AAAAAWVHRExnLXQqI0PMepUWfbHlnh5L_f0qE&scisf=4&ct=citation&cd=-1&hl=en)
+ * [Meta-Level Sentiment Models for Big Social Data Analysis](http://www.sciencedirect.com/science/article/pii/S0950705114002068). F. Bravo-Marquez, M. Mendoza and B. Poblete. Knowledge-Based Systems Volume 69, October 2014, Pages 86–99. 
  * [Stance and sentiment in tweets](http://saifmohammad.com/WebDocs/1605.01655v1.pdf). Saif M. Mohammad, Parinaz Sobhani, and Svetlana Kiritchenko. 2017. Special Section of the ACM Transactions on Internet Technology on Argumentation in Social Media 17(3). [BibTeX](http://saifmohammad.com/WebPages/Abstracts/stance-toit.bib.txt)
- * [Sentiment strength detection for the social Web](http://dl.acm.org/citation.cfm?id=2336261). Thelwall, M., Buckley, K., & Paltoglou, G. (2012). Journal of the American Society for Information Science and Technology, 63(1), 163-173. [BibTex](https://scholar.googleusercontent.com/citations?view_op=export_citations&user=8jCKL1sAAAAJ&s=8jCKL1sAAAAJ:HoB7MX3m0LUC&citsig=AMstHGQAAAAAWVHSK0CMjrR_On57yXVC5qzQb9fWffli&hl=en&cit_fmt=0)
+ * [Sentiment strength detection for the social Web](http://dl.acm.org/citation.cfm?id=2336261). Thelwall, M., Buckley, K., & Paltoglou, G. (2012). Journal of the American Society for Information Science and Technology, 63(1), 163-173. 
 
-The package was also the official baseline system for the  [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html).  Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).
+
+The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 Description about the filters, installation instructions, and sentiment classification examples are given below.
 
@@ -186,7 +188,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 ## Contact
 * This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
-* Email: fjb11 at students.waikato.ac.nz
+* Email: fbravoma at waikato.ac.nz
 * If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
 
 
