@@ -28,8 +28,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
+
 import affective.core.ArffLexiconEvaluator;
-import affective.core.LexiconEvaluator;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
@@ -55,7 +55,7 @@ import weka.filters.SimpleBatchFilter;
 
 public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
-	
+
 	/** For serialization  */
 	private static final long serialVersionUID = -530731678800460897L;
 
@@ -65,22 +65,13 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 	/** The path of the MPQA lexicon */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
-	
-		
-	
+
+
+
 
 	/** the index of the string attribute to be processed */
 	protected int textIndex=1; 
-	
 
-	/** the index of the word attribute in the given arff lexicon */
-	protected int lexiconWordIndex=1;
-	
-    /** The input lexicon in arff format  */
-	protected File m_lexiconFile = new File(NRC_AFFECT_INTENSITY_FILE_NAME);
-    
-	/** The lexicon name to be prefixed in all features */
-	protected String lexiconName="NRC-Affect-Intensity";
 
 	/** True if all tokens should be downcased. */
 	protected boolean toLowerCase=true;
@@ -90,7 +81,11 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	protected boolean cleanTokens=false;
 
 	/** List of Lexicons to use */
-	private LexiconEvaluator lexiconEval;
+	protected ArffLexiconEvaluator[] lexiconEval=new ArffLexiconEvaluator[]{new ArffLexiconEvaluator()};
+
+
+
+
 
 
 	/**
@@ -101,7 +96,7 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes for a tweet using a given affective lexicon in arff format."
+		return "A batch filter that calcuates attributes for a tweet using a given list of affective lexicon in arff format."
 				+ " The features are calculated by adding or counting the affective associations of the words matching the lexicon."
 				+ " All numeric and nominal attributes from the given lexicon are considered. Numeric scores are added and nominal are counted. "
 				+ "The NRC-Affect-Intensity is used by deault. \n";
@@ -189,9 +184,9 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	 * Initializes the dictionaries of all the lexicons to use. 
 	 */
 	protected void initializeDicts() {
-		this.lexiconEval=new ArffLexiconEvaluator(this.m_lexiconFile.getAbsolutePath(),this.lexiconName,this.lexiconWordIndex);
 		try {
-			this.lexiconEval.processDict();
+			for(ArffLexiconEvaluator lexEval:this.lexiconEval)
+				lexEval.processDict();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -219,12 +214,16 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 		// The dictionaries of the lexicons are intialized only in the first batch
 		if(!this.isFirstBatchDone())
 			this.initializeDicts();
-		
 
 
-			for(String attName:this.lexiconEval.getFeatureNames())
-				att.add(new Attribute(attName));			
-		
+
+		for(ArffLexiconEvaluator lexEval:this.lexiconEval){
+			for(String attName:lexEval.getFeatureNames())
+				att.add(new Attribute(attName));				
+		}
+
+
+
 
 		Instances result = new Instances(inputFormat.relationName(), att, 0);
 
@@ -259,12 +258,18 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 			String content = instances.instance(i).stringValue(attrCont);
 			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.cleanTokens);
 
-			
-				Map<String,Double> featuresForLex=this.lexiconEval.evaluateTweet(words);
+
+
+			for(ArffLexiconEvaluator lexEval:this.lexiconEval){
+				Map<String,Double> featuresForLex=lexEval.evaluateTweet(words);
 				for(String featName:featuresForLex.keySet()){
 					values[result.attribute(featName).index()] = featuresForLex.get(featName);
-				}
-			
+				}			
+			}
+
+
+
+
 
 
 			Instance inst = new SparseInstance(1, values);
@@ -281,10 +286,10 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
-    @OptionMetadata(displayName = "textIndex",
-            description = "The index (starting from 1) of the target string attribute.",
-            commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-            displayOrder = 0)
+	@OptionMetadata(displayName = "textIndex",
+			description = "The index (starting from 1) of the target string attribute.",
+			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
+			displayOrder = 0)
 	/**
 	 * Get the position of the target string.
 	 * 
@@ -306,11 +311,11 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 
 
-	
-    @OptionMetadata(displayName = "lowercase",
-            description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
-            commandLineParamName = "U", commandLineParamSynopsis = "-U",
-            displayOrder = 1)
+
+	@OptionMetadata(displayName = "lowercase",
+			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
+			commandLineParamName = "U", commandLineParamSynopsis = "-U",
+			displayOrder = 1)
 	/**
 	 * Gets the value of the lowercase flag.
 	 * 
@@ -332,13 +337,13 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 
 
-    @OptionMetadata(displayName = "cleanTokens",
-            description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
-				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing user mentions and URLs with generic tokens.", 
-				commandLineParamIsFlag = true, commandLineParamName = "O", 
-				commandLineParamSynopsis = "-O",
-				displayOrder = 2)	
+	@OptionMetadata(displayName = "cleanTokens",
+			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
+					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
+					+ "and replacing user mentions and URLs with generic tokens.", 
+					commandLineParamIsFlag = true, commandLineParamName = "O", 
+					commandLineParamSynopsis = "-O",
+					displayOrder = 2)	
 	/**
 	 * Gets the value of the cleanTokens option.
 	 * 
@@ -359,39 +364,17 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	}
 
 
-    @OptionMetadata(
-            displayName = "lexicon file",
-            description = "The arff file with the input lexicon.",
-            commandLineParamName = "lexiconFile", commandLineParamSynopsis = "-lexiconFile <string>",
-            displayOrder = 1)
-    public File getLexiconFile() { return m_lexiconFile; }
-    public void setLexiconFile(File lexiconFile) { m_lexiconFile = lexiconFile; }
-	
-
-    
-    @OptionMetadata(displayName = "lexiconName",
-            description = "The lexicon name to be prefixed in all features calculated from this lexicon.",
-            commandLineParamName = "B", commandLineParamSynopsis = "-B",
-            displayOrder = 1)   
-	public String getLexiconName() {
-		return lexiconName;
+	@OptionMetadata(displayName = "ArffLexiconEvaluator",
+			description = "The specification of a lexicon evaluator. This option can be used multiple times.",
+			commandLineParamName = "lexicon_evaluator",
+			commandLineParamSynopsis = "-lexicon_evaluator <string>", displayOrder = 3)		
+	public ArffLexiconEvaluator[] getLexiconEval() {
+		return lexiconEval;
 	}
-	public void setLexiconName(String lexiconName) {
-		this.lexiconName = lexiconName;
+	public void setLexiconEval(ArffLexiconEvaluator[] lexiconEval) {
+		this.lexiconEval = lexiconEval;
 	}
 	
-	
-
-    @OptionMetadata(displayName = "lexiconWordIndex",
-            description = "The index of the word attribute in the given arff lexicon (starting from 1).", 
-            commandLineParamName = "A", commandLineParamSynopsis = "-A",
-            displayOrder = 1)	
-	public int getLexiconWordIndex() {
-		return lexiconWordIndex;
-	}
-	public void setLexiconWordIndex(int lexiconWordIndex) {
-		this.lexiconWordIndex = lexiconWordIndex;
-	}
 
 
 }

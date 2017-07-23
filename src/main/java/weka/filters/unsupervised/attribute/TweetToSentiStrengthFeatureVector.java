@@ -478,7 +478,7 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	 *         explorer/experimenter gui
 	 */
 	public String langFolderTipText() {
-		return "The folder containing SentiStrength Files. Change it for using a language different than English.";		
+		return "The folder containing SentiStrength Files. Change it for using a language different from English.";		
 	}
 
 

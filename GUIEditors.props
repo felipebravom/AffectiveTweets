@@ -1,0 +1,3 @@
+affective.core.ArffLexiconEvaluator=weka.gui.GenericObjectEditor
+affective.core.ArffLexiconEvaluator[]=weka.gui.GenericArrayEditor
+
