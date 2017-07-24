@@ -33,7 +33,7 @@ You should also cite the papers describing any of the lexicons or resources you 
  * __Word n-grams__: extracts word n-grams from *n*=1 to a maximum value. 
  * __Negations__: add a prefix to words occurring in negated contexts, e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation expression *([\\.|,|:|;|!|\\?]+)* .
  * __Character n-grams__: calculates character n-grams.
- * __POS tags__: tags tweets using the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/), and creates a vector space model based on the sequence of POS tags. 
+ * __POS tags__: tags tweets using the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/), and creates a vector space model based on the sequence of POS tags. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/acl/GimpelSODMEHYFS11.bib)
  * __Brown clusters__: maps the words in a tweet to Brown word clusters and creates a low-dimensional vector space model. It can be used with n-grams of word clusters. The word clusters are also taken from the [CMU Tweet NLP tool](http://www.cs.cmu.edu/~ark/TweetNLP/).
 
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
@@ -44,8 +44,8 @@ You should also cite the papers describing any of the lexicons or resources you 
  * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt) 
  * [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon. [BibTex](http://saifmohammad.com/WebPages/Abstracts/crowdemo.bib.txt)
  * [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFM16.bib)
- * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon.[BibTex](http://saifmohammad.com/WebPages/hashtagPersonality-bib.html)  
- * [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. 
+ * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon. [BibTex](http://saifmohammad.com/WebPages/hashtagPersonality-bib.html)  
+ * [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/lrec/BaccianellaES10.bib) 
  * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
  * Negations: counts the number of negating words in the tweet.
  
