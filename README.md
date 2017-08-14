@@ -49,9 +49,11 @@ You should also cite the papers describing any of the lexicons or resources you 
  * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
  * Negations: counts the number of negating words in the tweet.
  
-3. __TweetToSentiStrengthFeatureVector__: calculates positive and negative sentiment strengths for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
+ 3. __TweetToInputLexiconFeatureVector__ (new): calculates features from a tweet using several lexicons a given list of affective lexicons in [ARFF](https://weka.wikispaces.com/ARFF) format.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault. (This is filter is only available with the new version of the package).  [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
  
-4. __TweetToEmbeddingsFeatureVector__: calculates a tweet-level feature representation using pre-trained word embeddings. A dummy word-embedding formed by zeroes is used for word with no corresponding embedding. The tweet vectors can be calculated using the following schemes: 
+4. __TweetToSentiStrengthFeatureVector__: calculates positive and negative sentiment strengths for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
+ 
+5. __TweetToEmbeddingsFeatureVector__: calculates a tweet-level feature representation using pre-trained word embeddings. A dummy word-embedding formed by zeroes is used for word with no corresponding embedding. The tweet vectors can be calculated using the following schemes: 
  * Average word embeddings.
  * Add word embeddings. 
  * Concatenation of first *k* embeddings. Dummy values are added if the tweet has less than *k* words. 
@@ -80,6 +82,14 @@ ant -f weka/build.xml exejar
 
 ```bash
 java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
+```
+
+* You can also install the newest version of the package (not officially released yet as follows): 
+
+```bash
+# uninstall the previous version of AffectiveTweets
+java -cp weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
+java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.1.zip
 ```
 
 * (Optional) Install other useful packages for classification, regression and evaluation:
@@ -187,7 +197,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 
 ## Contact
-* This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fjb11/). 
+* This package was developed by [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fbravoma/). 
 * Email: fbravoma at waikato.ac.nz
 * If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
 
