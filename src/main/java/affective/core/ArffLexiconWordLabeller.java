@@ -14,7 +14,7 @@
  */
 
 /*
- *    ArffLexiconEvaluator.java
+ *    ArffLexiconWordLabeller.java
  *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
  *
  */
@@ -51,37 +51,36 @@ import weka.core.WekaPackageManager;
  * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class ArffLexiconEvaluator implements Serializable, OptionHandler {
+public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 	/** for serialization */
 	private static final long serialVersionUID = 8291541753405292438L;
 
 
 	/** A list with all the features provided by the lexicon evaluator */
-	protected List<String> featureNames=new ArrayList<String>(); 
+	protected List<Attribute> attributes=new ArrayList<Attribute>();
 
-	/** a mapping between words and the affective numeric scores */	
-	protected Map<String, Map<String, Double>> numDict = new HashMap<String, Map<String, Double>>(); 	
+	/** a mapping between words and Attribute-value pairs */	
+	protected Map<String, Map<Attribute, Double>> attValMap = new HashMap<String, Map<Attribute, Double>>(); 	
 
-	/** a mapping between words and the affective nominal categories */	
-	protected Map<String, Map<String, String>> nomDict = new HashMap<String, Map<String,String>>(); 	
+
 
 
 	/** Default path to where lexicons are stored */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
-	/** The path of the MPQA lexicon */
-	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
+	/** The path of the MetaLexLexicon lexicon */
+	public static String METALEX_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"metaLexEmo.arff";
 
 
 	/** the index of the word attribute in the given arff lexicon */
 	protected int lexiconWordIndex=1;
 
 	/** The input lexicon in arff format  */
-	protected File m_lexiconFile = new File(NRC_AFFECT_INTENSITY_FILE_NAME);
+	protected File m_lexiconFile = new File(METALEX_FILE_NAME);
 
 	/** The lexicon name to be prefixed in all features */
-	protected String lexiconName="NRC-Affect-Intensity";
+	protected String lexiconName="MetaLexEmo";
 
 
 
@@ -94,28 +93,13 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 		BufferedReader reader = new BufferedReader(new FileReader(this.m_lexiconFile));
 		Instances lex=new Instances(reader);
 
-		List<Attribute> numericAttributes=new ArrayList<Attribute>();
-		List<Attribute> nominalAttributes=new ArrayList<Attribute>();
-
-
 
 		// checks all numeric and nominal attributes and discards the word attribute
 		for(int i=0;i<lex.numAttributes();i++){
 
 			if(i!=this.lexiconWordIndex-1){
-				if(lex.attribute(i).isNumeric() ){
-					numericAttributes.add(lex.attribute(i));	
-					// adds the attribute name to the message-level features to be calculated
-					this.featureNames.add(this.lexiconName+"-"+lex.attribute(i).name());
-				}
-
-				else if(lex.attribute(i).isNominal() ){
-					nominalAttributes.add(lex.attribute(i));	
-					// adds the attribute name together with the nominal value to the message-level features to be calculated
-					int numValues=lex.attribute(i).numValues();
-					for(int j=0;j<numValues;j++)
-						this.featureNames.add(this.lexiconName+"-"+lex.attribute(i).name()+"-"+lex.attribute(i).value(j));
-
+				if(lex.attribute(i).isNumeric() || lex.attribute(i).isNominal()  ){
+					this.attributes.add(lex.attribute(i));
 				}
 
 			}
@@ -129,28 +113,15 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 				String word=inst.stringValue(this.lexiconWordIndex-1);
 
 				// map numeric scores
-				if(!numericAttributes.isEmpty()){
-					Map<String,Double> wordVals=new HashMap<String,Double>();
-					for(Attribute na:numericAttributes){
-						if(!weka.core.Utils.isMissingValue(inst.value(na)))
-							wordVals.put(na.name(),inst.value(na));
+				if(!attributes.isEmpty()){
+					Map<Attribute,Double> wordVals=new HashMap<Attribute,Double>();
+					for(Attribute na:attributes){
+						wordVals.put(na,inst.value(na));
 					}
-					this.numDict.put(word, wordVals);					
+					this.attValMap.put(word, wordVals);					
 				}
 
-				// map nominal associations
-				if(!nominalAttributes.isEmpty()){
-					Map<String,String> wordCounts=new HashMap<String,String>();
-					for(Attribute no:nominalAttributes){
-						if(!weka.core.Utils.isMissingValue(inst.value(no))){	
-							wordCounts.put(no.name(),no.value((int) inst.value(no)));
-						}
 
-						this.nomDict.put(word, wordCounts);
-
-					}
-
-				}				
 
 			}
 
@@ -167,35 +138,30 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	 * @param tokens a tokenized tweet
 	 * @return a mapping between attribute names and their scores
 	 */	
-	public Map<String, Double> evaluateTweet(List<String> tokens) {
-		Map<String, Double> scores = new HashMap<String, Double>();
-		for(String feat:this.featureNames){
-			scores.put(feat, 0.0);
+	public Map<Attribute, Double> evaluateWord(String word) {
+
+
+		// Add numeric scores
+		if (this.attValMap.containsKey(word)) {
+			return this.attValMap.get(word);
 		}
-
-		for (String word : tokens) {
-			// Add numeric scores
-			if (this.numDict.containsKey(word)) {
-				Map<String,Double> mapper=this.numDict.get(word);
-				for(String emo:mapper.keySet())
-					scores.put(this.lexiconName+"-"+emo, scores.get(this.lexiconName+"-"+emo)+mapper.get(emo));
+		else{
+			Map<Attribute, Double> scores = new HashMap<Attribute, Double>();
+			for(Attribute at:attributes){
+				scores.put(at,weka.core.Utils.missingValue());					
 			}
+			return scores;
 
-
-			// count nominal associations
-			if (this.nomDict.containsKey(word)) {
-				Map<String,String> mapper=this.nomDict.get(word);
-				for(String emo:mapper.keySet())
-					scores.put(this.lexiconName+"-"+emo+"-"+mapper.get(emo), scores.get(this.lexiconName+"-"+emo+"-"+mapper.get(emo))+1);
-
-			}
 
 		}
 
 
 
-		return scores;
+
 	}
+
+
+
 
 
 	/**
@@ -203,8 +169,8 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	 * 
 	 * @return the feature names.
 	 */	
-	public List<String> getFeatureNames() {
-		return featureNames;
+	public List<Attribute> getAttributes() {
+		return attributes;
 	}
 
 
