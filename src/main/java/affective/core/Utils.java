@@ -19,7 +19,6 @@
  *
  */
 
-
 package affective.core;
 
 import java.util.ArrayList;
@@ -28,10 +27,8 @@ import java.util.Set;
 
 import cmu.arktweetnlp.Twokenize;
 
-
 /**
- *  <!-- globalinfo-start --> 
- *  Provides static functions for String processing.
+ * <!-- globalinfo-start --> Provides static functions for String processing.
  * <!-- globalinfo-end -->
  * 
  * 
@@ -41,23 +38,27 @@ import cmu.arktweetnlp.Twokenize;
 
 public class Utils {
 
-
 	/**
 	 * tokenizes and normalizes the content of a tweet
-	 * @param content the input String
-	 * @param toLowerCase to lowercase the content
-	 * @param cleanTokens normalize URLs, user mentions, and reduce repetitions of letters
+	 * 
+	 * @param content
+	 *            the input String
+	 * @param toLowerCase
+	 *            to lowercase the content
+	 * @param cleanTokens
+	 *            normalize URLs, user mentions, and reduce repetitions of
+	 *            letters
 	 * @return a list of tokens
 	 */
-	static public List<String> tokenize(String content,boolean toLowerCase, boolean cleanTokens) {
+	static public List<String> tokenize(String content, boolean toLowerCase,
+			boolean cleanTokens) {
 
-		if(toLowerCase)
-			content=content.toLowerCase();
+		if (toLowerCase)
+			content = content.toLowerCase();
 
-
-		if(!cleanTokens)
+		if (!cleanTokens)
 			return Twokenize.tokenizeRawTweetText(content);
-		else{
+		else {
 			// if a letters appears two or more times it is replaced by only two
 			// occurrences of it
 			content = content.replaceAll("([a-z])\\1+", "$1$1");
@@ -68,8 +69,7 @@ public class Utils {
 		for (String word : Twokenize.tokenizeRawTweetText(content)) {
 			String cleanWord = word;
 
-
-			if(cleanTokens){
+			if (cleanTokens) {
 				// Replace URLs to a generic URL
 				if (word.matches("http.*|ww\\..*")) {
 					cleanWord = "http://www.url.com";
@@ -80,7 +80,6 @@ public class Utils {
 					cleanWord = "@user";
 				}
 
-
 			}
 
 			tokens.add(cleanWord);
@@ -88,38 +87,40 @@ public class Utils {
 		return tokens;
 	}
 
-
-
-	/** Adds a negation prefix to the tokens that follow a negation word until the next punctuation mark.
-	 * @param tokens the list of tokens to negate
-	 * @param set the set with the negated words to use
-	 * @return the negated tokens 
-	 */  
-	static public List<String> negateTokens(List<String> tokens,Set<String> set) {
+	/**
+	 * Adds a negation prefix to the tokens that follow a negation word until
+	 * the next punctuation mark.
+	 * 
+	 * @param tokens
+	 *            the list of tokens to negate
+	 * @param set
+	 *            the set with the negated words to use
+	 * @return the negated tokens
+	 */
+	static public List<String> negateTokens(List<String> tokens, Set<String> set) {
 		List<String> negTokens = new ArrayList<String>();
 
 		// flag indicating negation state
-		boolean inNegation=false;
+		boolean inNegation = false;
 
-		for(String token:tokens){
+		for (String token : tokens) {
 
 			// when we find a negation word for the first time
-			if(set.contains(token) && !inNegation){
-				inNegation=true;		
+			if (set.contains(token) && !inNegation) {
+				inNegation = true;
 				negTokens.add(token);
 				continue;
 			}
 
 			// if we are in a negation context with add a prefix
-			if(inNegation){
-				negTokens.add("NEGTOKEN-"+token);
+			if (inNegation) {
+				negTokens.add("NEGTOKEN-" + token);
 				// the negation context ends whend finding a punctuation match
-				if(token.matches("[\\.|,|:|;|!|\\?]+"))
-					inNegation=false;
-			}
-			else{
+				if (token.matches("[\\.|,|:|;|!|\\?]+"))
+					inNegation = false;
+			} else {
 				negTokens.add(token);
-			}						
+			}
 		}
 		return negTokens;
 
@@ -128,12 +129,3 @@ public class Utils {
 
 
 }
-
-
-
-
-
-
-
-
-

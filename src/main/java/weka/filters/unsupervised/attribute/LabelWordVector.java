@@ -35,6 +35,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
 import weka.core.OptionMetadata;
+import weka.core.SingleIndex;
 import weka.core.SparseInstance;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
@@ -66,10 +67,10 @@ public class LabelWordVector extends SimpleBatchFilter {
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"metaLexEmo.arff";
 
 
+	
+	/** the index of the string attribute with the target word */
+	protected SingleIndex m_WordIndex = new SingleIndex("last");
 
-
-	/** the index of the string attribute to be processed */
-	protected int wordIndex=1; 
 
 
 	/** True if all tokens should be downcased. */
@@ -234,6 +235,8 @@ public class LabelWordVector extends SimpleBatchFilter {
 
 		// set the class index
 		result.setClassIndex(inputFormat.classIndex());
+		
+		
 
 		return result;
 	}
@@ -245,15 +248,20 @@ public class LabelWordVector extends SimpleBatchFilter {
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		// Instances result = new Instances(determineOutputFormat(instances),
-		// 0);
 
+
+		// set upper value for word index
+		m_WordIndex.setUpper(instances.numAttributes() - 1);
+
+		
 		Instances result = getOutputFormat();
+		
+
+		// reference to the words attribute
+		Attribute attrCont = instances.attribute(m_WordIndex.getIndex());
 
 
-		// reference to the content of the message, users index start from zero
-		Attribute attrCont = instances.attribute(this.wordIndex-1);
-
+		
 
 		for (int i = 0; i < instances.numInstances(); i++) {
 			double[] values = new double[result.numAttributes()];
@@ -290,28 +298,21 @@ public class LabelWordVector extends SimpleBatchFilter {
 		return result;
 	}
 
+	
+	
 	@OptionMetadata(displayName = "wordIndex",
-			description = "The word index (starting from 1) of the target string attribute.",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-			displayOrder = 0)
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getWordIndex() {
-		return wordIndex;
+			description = "The word index (starting from 1) of the target string attribute. Start and last are valid values."
+					+ "\t(default last).",
+			commandLineParamName = "I", commandLineParamSynopsis = "-I <col>",
+			displayOrder = 0)	
+	public String getWordIndex() {
+		return m_WordIndex.getSingleIndex();
 	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setWordIndex(int wordIndex) {
-		this.wordIndex = wordIndex;
+	public void setWordIndex(String wordIndex) {		
+		this.m_WordIndex.setSingleIndex(wordIndex);
 	}
+	
+	
 
 
 
@@ -351,6 +352,10 @@ public class LabelWordVector extends SimpleBatchFilter {
 	public void setLexiconLabs(ArffLexiconWordLabeller[] lexiconLabs) {
 		this.lexiconLabs = lexiconLabs;
 	}
+	
+	
+	
+
 	
 
 

@@ -33,7 +33,6 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
-import cmu.arktweetnlp.Twokenize;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
@@ -133,13 +131,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 	protected boolean reportWord=true;
 
 
-	/** True is stopwords are discarded */
-	protected boolean removeStopWords=false;
-
-	/** The stopwords file */
-	protected String stopWordsPath=RESOURCES_FOLDER_NAME+File.separator+"stopwords.txt";
-
-
 	/** True if url, users, and repeated letters are cleaned */
 	protected boolean cleanTokens=false;
 
@@ -185,13 +176,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 		return "True if the word name is included as an attribute.";
 	}
 	
-	public String removeStopWordsTipText() {
-		return "True is stopwords are discarded.";
-	}
-	
-	public String stopWordsPathTipText() {
-		return "The stopwords file.";
-	}
 	
 	public String cleanTokensTipText() {
 		return "True if url, users, and repeated letters are cleaned.";
@@ -325,12 +309,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 		result.addElement(new Option("\t Include the word name as a string attribute.\n"
 				+ "\t(default: " + this.reportWord + ")", "R", 0, "-R"));
 
-		result.addElement(new Option("\t Discard stopwords.\n"
-				+ "\t(default: " + this.removeStopWords + ")", "S", 0, "-S"));
-
-		result.addElement(new Option("\t The path of the stopwords file.\n"
-				+ "\t(default: " + this.stopWordsPath + ")", "T", 1, "-T"));
-
 		result.addElement(new Option("\t  Clean tokens (replace 3 or more repetitions of a letter to 2 repetitions of it e.g, gooood to good, standarise URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));
 
@@ -383,11 +361,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 		if(this.isReportWord())
 			result.add("-R");
 
-		if(this.isRemoveStopWords())
-			result.add("-S");
-
-		result.add("-T");
-		result.add("" + this.getStopWordsPath());
 
 		if(this.isCleanTokens())
 			result.add("-O");
@@ -499,20 +472,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 		this.reportWord=Utils.getFlag('R', options);
 
-		this.removeStopWords=Utils.getFlag('S', options);
-
-
-		String stopWordsPathOption = Utils.getOption('T', options);
-		if (stopWordsPath.length() > 0) {
-			String[] stopWordsPathSpec = Utils.splitOptions(stopWordsPathOption);
-			if (stopWordsPathSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String stopWordsPathVal = stopWordsPathSpec[0];
-			this.setStopWordsPath(stopWordsPathVal);
-
-		}
 
 		this.cleanTokens=Utils.getFlag('O', options);
 
@@ -535,75 +494,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 		return true;
 	}
 
-
-	// tokenises and cleans the content 
-	public List<String> tokenize(String content) {
-
-		if(this.toLowerCase)
-			content=content.toLowerCase();
-
-
-		if(!this.cleanTokens&&!this.removeStopWords)
-			return Twokenize.tokenizeRawTweetText(content);
-
-
-		AbstractObjectSet<String> stopWords=null;
-
-		if(this.removeStopWords){
-			stopWords=new  ObjectOpenHashSet<String>(); 
-			// we add the stop-words from the file
-			try {
-				BufferedReader bf=new BufferedReader(new FileReader(this.stopWordsPath));
-				String line;
-				while((line=bf.readLine())!=null){
-					stopWords.add(line);
-				}
-				bf.close();				
-
-			} catch (IOException e) {
-				this.removeStopWords=false;
-
-			}
-
-
-		}
-
-
-		// if a letters appears two or more times it is replaced by only two
-		// occurrences of it
-		if(this.cleanTokens)
-			content = content.replaceAll("([a-z])\\1+", "$1$1");
-
-		List<String> tokens = new ArrayList<String>();
-
-		for (String word : Twokenize.tokenizeRawTweetText(content)) {
-			String cleanWord = word;
-
-
-			if(this.cleanTokens){
-				// Replace URLs to a generic URL
-				if (word.matches("http.*|ww\\..*")) {
-					cleanWord = "http://www.url.com";
-				}
-
-				// Replaces user mentions to a generic user
-				else if (word.matches("@.*")) {
-					cleanWord = "@user";
-				}
-
-				// check stopWord
-				if(this.removeStopWords){
-					if(stopWords.contains(cleanWord))
-						continue;
-
-				}
-
-			}
-
-			tokens.add(cleanWord);
-		}
-		return tokens;
-	}
 
 
 	public Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix) {
@@ -715,8 +605,8 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 				// tokenises the content 
-				List<String> tokens=this.tokenize(content); 
-
+				List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens);
+						
 				// Identifies the distinct terms
 				AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
 				terms.addAll(tokens);
@@ -976,29 +866,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 		this.reportWord = reportWord;
 	}
 
-
-
-	public boolean isRemoveStopWords() {
-		return removeStopWords;
-	}
-
-
-
-	public void setRemoveStopWords(boolean removeStopWords) {
-		this.removeStopWords = removeStopWords;
-	}
-
-
-
-	public String getStopWordsPath() {
-		return stopWordsPath;
-	}
-
-
-
-	public void setStopWordsPath(String stopWordsPath) {
-		this.stopWordsPath = stopWordsPath;
-	}
 
 
 
