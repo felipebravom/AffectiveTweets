@@ -24,10 +24,14 @@ package weka.filters.unsupervised.attribute;
 
 
 import it.unimi.dsi.fastutil.objects.AbstractObjectSet;
+import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 import java.io.BufferedReader;
@@ -75,17 +79,23 @@ public class TweetCentroid extends SimpleBatchFilter {
 	/** For serialization.    **/
 	private static final long serialVersionUID = 7553647795494402690L;
 
-	
+
 	/** Default path to where resources are stored. */
 	public static String RESOURCES_FOLDER_NAME = weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
 
 	/** Default path to where lexicons are stored */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons";
 
-	
+
+
+
 
 	/** the vocabulary and the WordRep */
 	protected Object2ObjectMap<String, WordRep> wordInfo; 
+
+	/** MetaData of Numerical attributes to be transferred to the word-level */
+	protected ObjectList<Attribute> metaData;
+
 
 	/** Counts the number of documents in which candidate attributes appears */
 	protected Object2IntMap<String> attributeCount;
@@ -135,6 +145,11 @@ public class TweetCentroid extends SimpleBatchFilter {
 	protected boolean cleanTokens=false;
 
 
+	/** True if additional numerical attributes should be included to the centroid */
+	protected boolean includeMetaData=true;
+
+
+
 	/** The path of the word clusters. */
 	protected String clustPath=RESOURCES_FOLDER_NAME+File.separator+"50mpaths2.txt.gz";
 
@@ -142,11 +157,11 @@ public class TweetCentroid extends SimpleBatchFilter {
 	public String minAttDocsTipText() {
 		return "The minimum number of documents for an attribute to be considered.";
 	}
-	
+
 	public String minInstDocsTipText() {
 		return "The minimum number of documents for a word to be included. ";
 	}
-	
+
 	public String textIndexTipText() {
 		return "The index of the string attribute to be processed.";
 	}
@@ -154,15 +169,15 @@ public class TweetCentroid extends SimpleBatchFilter {
 	public String wordPrefixTipText() {
 		return "The prefix of the word attributes.";
 	}
-	
+
 	public String clustPrefixTipText() {
 		return "The prefix of the cluster-based attributes.";
 	}
-	
+
 	public String toLowerCaseTipText() {
 		return "True if all tokens should be downcased.";
 	}
-	
+
 	public String createWordAttsTipText() {
 		return "True for calculating word-based attributes.";
 	}
@@ -170,38 +185,43 @@ public class TweetCentroid extends SimpleBatchFilter {
 	public String createClustAttsTipText() {
 		return "True for calculating cluster-based attributes.";
 	}
-			
+
 
 	public String reportWordTipText() {
 		return "True if the word name is included as an attribute.";
 	}
-	
-	
+
+
 	public String cleanTokensTipText() {
 		return "True if url, users, and repeated letters are cleaned.";
 	}
-	
+
 	public String lexPathTipText() {
 		return "The path of the seed lexicon.";
 	}
-	
+
 	public String clustPathTipText() {
 		return "The path of the word clusters.";
 	}
-	
-	
+
+
+
+
 	// This class contains all the information of the word to compute the centroid
 	class WordRep{
 		String word; // the word
 		int numDoc; // number of documents where the word occurs
 		Object2IntMap<String> wordSpace; // the vector space model of the word
 
+		// additional numeric attributes
+		Object2DoubleMap<String> metaData; //
 
 
 		public WordRep(String word){
 			this.word=word;
 			this.numDoc=0;
 			this.wordSpace=new Object2IntOpenHashMap<String>();
+			this.metaData=new Object2DoubleOpenHashMap<String>();
 		}
 
 		public void addDoc(Object2IntMap<String> docVector){
@@ -213,6 +233,14 @@ public class TweetCentroid extends SimpleBatchFilter {
 			}	
 
 		}
+
+		public void addMetaData(Object2DoubleMap<String> metaVector){
+			for(String metaName:metaVector.keySet()){
+				double metaVal=metaVector.getDouble(metaName);
+				this.metaData.put(metaName, metaVal+this.metaData.getDouble(metaName));
+			}
+		}
+
 
 	}
 
@@ -312,6 +340,9 @@ public class TweetCentroid extends SimpleBatchFilter {
 		result.addElement(new Option("\t  Clean tokens (replace 3 or more repetitions of a letter to 2 repetitions of it e.g, gooood to good, standarise URLs and @users).\n"
 				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));
 
+		result.addElement(new Option("\t Include metadata. All numerical attributes will be averaged at the word level. \n"
+				+ "\t(default: " + this.includeMetaData + ")", "B", 0, "-B"));
+
 
 		result.addAll(Collections.list(super.listOptions()));
 
@@ -364,6 +395,9 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 		if(this.isCleanTokens())
 			result.add("-O");
+
+		if(this.isIncludeMetaData())
+			result.add("-B");
 
 		Collections.addAll(result, super.getOptions());
 
@@ -475,6 +509,8 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 		this.cleanTokens=Utils.getFlag('O', options);
 
+		this.includeMetaData=Utils.getFlag('B', options);
+
 
 
 		super.setOptions(options);
@@ -572,7 +608,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 					GZIPInputStream gzis = new GZIPInputStream(fin);
 					InputStreamReader xover = new InputStreamReader(gzis);
 					BufferedReader bf = new BufferedReader(xover);
-		
+
 					String line;
 					while ((line = bf.readLine()) != null) {
 						String pair[] = line.split("\t");
@@ -594,6 +630,18 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 
+			// if MetaData is set to true we will include additional features in the centroids
+			if(this.includeMetaData){
+				this.metaData=new  ObjectArrayList<Attribute>();
+				for(int i=0;i<inputFormat.numAttributes();i++){
+					if(i!=this.textIndex && inputFormat.attribute(i).type()==Attribute.NUMERIC){
+						this.metaData.add(inputFormat.attribute(i));						
+					}
+
+				}
+			}
+
+
 
 			// reference to the content of the message, users index start from zero
 			Attribute attrCont = inputFormat.attribute(this.textIndex-1);
@@ -606,7 +654,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 				// tokenises the content 
 				List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens);
-						
+
 				// Identifies the distinct terms
 				AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
 				terms.addAll(tokens);
@@ -630,20 +678,30 @@ public class TweetCentroid extends SimpleBatchFilter {
 				}
 
 
-
 				// if the word is new we add it to the vocabulary, otherwise we
 				// add the document to the vector
 				for (String word : terms) {
 
+
+					WordRep wordRep;
+
 					if (this.wordInfo.containsKey(word)) {
-						WordRep wordRep=this.wordInfo.get(word);
+						wordRep=this.wordInfo.get(word);
 						wordRep.addDoc(docVec); // add the document
 
 					} else{
-						WordRep wordRep=new WordRep(word);
+						wordRep=new WordRep(word);
 						wordRep.addDoc(docVec); // add the document
 						this.wordInfo.put(word, wordRep);						
 					}
+
+					if(this.includeMetaData){
+						Object2DoubleMap<String> metaValues=new Object2DoubleOpenHashMap<String>();
+						for(Attribute att:this.metaData){
+							metaValues.put(att.name(),inst.value(att));
+						}
+						wordRep.addMetaData(metaValues);						
+					}					
 
 
 				}
@@ -671,6 +729,15 @@ public class TweetCentroid extends SimpleBatchFilter {
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
 		int i=0;
+
+
+		if(this.includeMetaData){
+			for(Attribute metaAtt:this.metaData){
+				att.add(metaAtt);
+				i++;
+			}
+		}
+
 
 		for(String attribute:this.attributeCount.keySet()){
 			if(this.attributeCount.get(attribute)>=this.minAttDocs){
@@ -709,14 +776,25 @@ public class TweetCentroid extends SimpleBatchFilter {
 				double[] values = new double[result.numAttributes()];
 
 
-				for(String innerWord:wordRep.wordSpace.keySet()){
+				for(String wordFeat:wordRep.wordSpace.keySet()){
 					// only include valid words
-					if(this.m_Dictionary.containsKey(innerWord)){
-						int attIndex=this.m_Dictionary.getInt(innerWord);
+					if(this.m_Dictionary.containsKey(wordFeat)){
+						int attIndex=this.m_Dictionary.getInt(wordFeat);
 						// we normalise the value by the number of documents
-						values[attIndex]=((double)wordRep.wordSpace.getInt(innerWord))/wordRep.numDoc;					
+						values[attIndex]=((double)wordRep.wordSpace.getInt(wordFeat))/wordRep.numDoc;					
 					}
 				}
+				
+				
+				if(this.includeMetaData){
+					for(Attribute metaAtt:this.metaData){
+						String metaAttName=metaAtt.name();
+						values[result.attribute(metaAttName).index()]= wordRep.metaData.getDouble(metaAtt.name())/wordRep.numDoc;
+					}
+
+
+				}
+				
 
 
 				if(this.reportWord){
@@ -879,6 +957,19 @@ public class TweetCentroid extends SimpleBatchFilter {
 		this.cleanTokens = cleanTokens;
 	}
 
+
+
+
+
+	public boolean isIncludeMetaData() {
+		return includeMetaData;
+	}
+
+
+
+	public void setIncludeMetaData(boolean includeMetaData) {
+		this.includeMetaData = includeMetaData;
+	}
 
 
 	public static void main(String[] args) {
