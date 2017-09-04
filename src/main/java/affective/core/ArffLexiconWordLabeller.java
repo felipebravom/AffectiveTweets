@@ -189,7 +189,6 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#listOptions()
 	 */
-	@Override
 	public Enumeration<Option> listOptions() {
 		return Option.listOptionsForClass(this.getClass()).elements();
 	}
@@ -198,7 +197,6 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#getOptions()
 	 */
-	@Override
 	public String[] getOptions() {		
 		return Option.getOptions(this, this.getClass());
 	}
@@ -208,7 +206,6 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.core.OptionHandler#setOptions(java.lang.String[])
 	 */
-	@Override
 	public void setOptions(String[] options) throws Exception {
 		Option.setOptions(options, this, this.getClass());
 	}

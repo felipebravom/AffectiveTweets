@@ -38,7 +38,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
@@ -553,98 +552,10 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
-	/**
-	 * Calculates token n-grams from a sequence of tokens.
-	 * 
-	 * @param tokens the input tokens from which the word n-grams will be calculated
-	 * @param n the size of the word n-gram
-	 * @return a list with the word n-grams
-	 */
-	public static List<String> calculateTokenNgram(List<String> tokens,int n){
-		List<String> tokenNgram=new ArrayList<String>();
-		if(tokens.size()>=n){			
-			for(int i=0;i<=tokens.size()-n;i++){
-				String ngram="";
-				for(int j=i;j<i+n;j++){
-					ngram+=tokens.get(j);
-					if(j<i+n-1)
-						ngram+="-";
-				}				
-				tokenNgram.add(ngram);
-			}
-		}
-		return tokenNgram;		
-	}
 
 
-	/**
-	 * Calculates character n-grams from a String.
-	 * 
-	 * @param content the input String
-	 * @param n the size of the character n-gram
-	 * @return a list with the character n-grams
-	 */
-	public static List<String> extractCharNgram(String content,int n){
-		List<String> charNgram=new ArrayList<String>();
-		if(content.length()>=n){
-			for(int i=0;i<content.length()-n;i++){
-				String cgram="";
-				for(int j=i;j<i+n;j++){
-					cgram+=content.charAt(j);
-				}				
-				charNgram.add(cgram);
-
-			}
-		}
-
-		return charNgram;		
-	}
 
 
-	/**
-	 * Calculates a sequence of word-clusters from a list of tokens and a dictionary.
-	 * 
-	 * @param tokens the input tokens 
-	 * @param dict the dictionary with the word clusters
-	 * @return a list of word-clusters
-	 */	
-	public List<String> clustList(List<String> tokens, Map<String,String> dict){
-		List<String> clusters=new ArrayList<String>();
-		for(String token:tokens){
-			if(dict.containsKey(token)){
-				clusters.add(dict.get(token));
-			}
-
-		}	
-		return clusters;
-	}
-
-
-	/**
-	 * Calculates a vector of attributes from a list of tokens
-	 * 
-	 * @param tokens the input tokens 
-	 * @param prefix the prefix of each vector attribute
-	 * @return an Object2IntMap object mapping the attributes to their values
-	 */		
-	public Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix) {
-		Object2IntMap<String> termFreq = new Object2IntOpenHashMap<String>();
-
-		// Traverse the strings and increments the counter when the token was
-		// already seen before
-		for (String token : tokens) {
-			// add frequency weights if the flat is set
-			if(this.freqWeights)
-				termFreq.put(prefix+token, termFreq.getInt(prefix+token) + 1);
-			// otherwise, just consider boolean weights
-			else{
-				if(!termFreq.containsKey(token))
-					termFreq.put(prefix+token, 1);
-			}
-		}
-
-		return termFreq;
-	}
 
 	/**
 	 * Initializes the POS tagger
@@ -727,18 +638,18 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 		if(this.calculateCharNgram){
 			for(int i=this.getCharNgramMinDim();i<=this.getCharNgramMaxDim();i++){
-				docVec.putAll(calculateTermFreq(extractCharNgram(content,i),"CHAR-"+i+"-"));	
+				docVec.putAll(affective.core.Utils.calculateTermFreq(affective.core.Utils.extractCharNgram(content,i),"CHAR-"+i+"-",this.freqWeights));	
 			}
 		}
 
 		if(this.clustNgramMaxDim>0){
 			// calcultates the vector of clusters
-			List<String> brownClust=clustList(tokens,brownDict);
-			docVec.putAll(calculateTermFreq(brownClust,this.clustPrefix+"1-"));		
+			List<String> brownClust=affective.core.Utils.clustList(tokens,brownDict);
+			docVec.putAll(affective.core.Utils.calculateTermFreq(brownClust,this.clustPrefix+"1-",this.freqWeights));		
 			// add ngrams where n > 1
 			if(this.clustNgramMaxDim>1){
 				for(int i=2;i<=this.clustNgramMaxDim;i++){
-					docVec.putAll(calculateTermFreq(calculateTokenNgram(brownClust,i),this.clustPrefix+i+"-"));					
+					docVec.putAll(affective.core.Utils.calculateTermFreq(affective.core.Utils.calculateTokenNgram(brownClust,i),this.clustPrefix+i+"-",this.freqWeights));					
 				}
 
 			}
@@ -746,11 +657,11 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 		if(this.posNgramMaxDim>0){
 			List<String> posTags=this.getPOStags(tokens);
-			docVec.putAll(calculateTermFreq(posTags,this.posPrefix+"1-"));
+			docVec.putAll(affective.core.Utils.calculateTermFreq(posTags,this.posPrefix+"1-",this.freqWeights));
 			// add ngrams where n > 1
 			if(this.posNgramMaxDim>1){
 				for(int i=2;i<=this.posNgramMaxDim;i++){
-					docVec.putAll(calculateTermFreq(calculateTokenNgram(posTags,i),this.posPrefix+i+"-"));					
+					docVec.putAll(affective.core.Utils.calculateTermFreq(affective.core.Utils.calculateTokenNgram(posTags,i),this.posPrefix+i+"-",this.freqWeights));					
 				}
 			}
 		}
@@ -762,11 +673,11 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		// add the ngram vectors
 		if(this.wordNgramMaxDim>0){
 			// add the unigrams
-			docVec.putAll(calculateTermFreq(tokens,this.wordNgramPrefix+"1-"));
+			docVec.putAll(affective.core.Utils.calculateTermFreq(tokens,this.wordNgramPrefix+"1-",this.freqWeights));
 			// add ngrams where n > 1
 			if(this.wordNgramMaxDim>1){
 				for(int i=2;i<=this.wordNgramMaxDim;i++){
-					docVec.putAll(calculateTermFreq(calculateTokenNgram(tokens,i),this.wordNgramPrefix+i+"-"));					
+					docVec.putAll(affective.core.Utils.calculateTermFreq(affective.core.Utils.calculateTokenNgram(tokens,i),this.wordNgramPrefix+i+"-",this.freqWeights));					
 				}				
 			}			
 		}

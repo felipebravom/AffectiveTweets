@@ -109,16 +109,16 @@ public class TweetNLPTokenizer extends Tokenizer {
 }
 	
 	
-	
-	/**
-	 * Returns the revision string.
-	 * 
-	 * @return the revision
-	 */
-	@Override
-	public String getRevision() {
-		return RevisionUtils.extract("$Revision: 1 $");
-	}
+//	
+//	/**
+//	 * Returns the revision string.
+//	 * 
+//	 * @return the revision
+//	 */
+//	@Override
+//	public String getRevision() {
+//		return RevisionUtils.extract("$Revision: 1 $");
+//	}
 
 
 
@@ -291,6 +291,17 @@ public class TweetNLPTokenizer extends Tokenizer {
 	}
 
 
+	
+	  /**
+	   * Returns the revision string.
+	   * 
+	   * @return the revision
+	   */
+	  public String getRevision() {
+	    return RevisionUtils.extract("$Revision: 1 $");
+	  }
+	
+	
 	/**
 	 * Runs the tokenizer with the given options and strings to tokenize. The
 	 * tokens are printed to stdout.

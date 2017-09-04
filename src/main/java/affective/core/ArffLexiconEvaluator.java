@@ -67,10 +67,11 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	protected Map<String, Map<String, String>> nomDict = new HashMap<String, Map<String,String>>(); 	
 
 
+
 	/** Default path to where lexicons are stored */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
-	/** The path of the MPQA lexicon */
+	/** The path of the default lexicon */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
 
 
@@ -206,7 +207,15 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	public List<String> getFeatureNames() {
 		return featureNames;
 	}
-
+	
+	
+	/**
+	 * Gets the dictionary with nominal attributes
+	 * @return the dictionary with nominal attributes
+	 */
+	public Map<String, Map<String, String>> getNomDict() {
+		return nomDict;
+	}
 
 	/**
 	 * Returns a string describing this filter.
@@ -223,7 +232,6 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#listOptions()
 	 */
-	@Override
 	public Enumeration<Option> listOptions() {
 		return Option.listOptionsForClass(this.getClass()).elements();
 	}
@@ -232,7 +240,6 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#getOptions()
 	 */
-	@Override
 	public String[] getOptions() {		
 		return Option.getOptions(this, this.getClass());
 	}
@@ -242,7 +249,6 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.core.OptionHandler#setOptions(java.lang.String[])
 	 */
-	@Override
 	public void setOptions(String[] options) throws Exception {
 		Option.setOptions(options, this, this.getClass());
 	}
