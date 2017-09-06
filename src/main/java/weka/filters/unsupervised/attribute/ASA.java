@@ -16,12 +16,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import affective.core.ArffLexiconEvaluator;
@@ -33,23 +31,34 @@ import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.Option;
+import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
-import weka.core.Utils;
+import weka.core.TechnicalInformation;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
+import weka.core.TechnicalInformation.Type;
 import weka.filters.SimpleBatchFilter;
 
 
+/**
+ *  <!-- globalinfo-start --> 
+ *  
+ *  A batch filter that creates polarity labeled instances from unlabeled tweets and a seed polarity lexicon using the Annotate-Sample-Average Algorithm.
+ *  
+ *  
+ * <!-- globalinfo-end -->
+ * 
+ *  
+ * 
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
 public class ASA  extends SimpleBatchFilter {
 
-	/**
-	 * 	 Samples labelled tweets from labelled words
-	 * 
-	 */
 
 
-
-	private static final long serialVersionUID = 7553647795494402690L;
+	/** For serialization.    **/
+	private static final long serialVersionUID = 1616693021695150782L;
 
 
 	/** Default path to where resources are stored. */
@@ -60,13 +69,20 @@ public class ASA  extends SimpleBatchFilter {
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
 
+	/** the prefix of the word attributes */
+	static public String UNIPREFIX="WORD-";
+
+	/** the prefix of the cluster-based attributes */
+	static public String CLUSTPREFIX="CLUST-";
+
+
+
 
 	/** List of tweets having at least one positive word and no negative words*/
 	protected ObjectList<Object2IntMap<String>> posTweets;
 
 	/** List of tweets having at least one negative word and no positive words*/
 	protected ObjectList<Object2IntMap<String>> negTweets;
-
 
 
 	/** Counts the number of documents in which candidate attributes appear */
@@ -93,19 +109,15 @@ public class ASA  extends SimpleBatchFilter {
 	/** The number of tweets sampled in each centroid */
 	protected int tweetsPerCentroid=10;	
 
-	/** The number of centroids to sample per class */
-	protected double instFrac=1000.0;
+	/** The number of positive instances to generate */
+	protected int numPosInstances=1000;
 
+
+	/** The number of negative instances to generate */
+	protected int numNegInstances=1000;
 
 	/** the index of the string attribute to be processed */
 	protected int textIndex=1; 
-
-	/** the prefix of the word attributes */
-	protected String wordPrefix="WORD-";
-
-	/** the prefix of the cluster-based attributes */
-	protected String clustPrefix="CLUST-";
-
 
 
 	/** True if all tokens should be downcased. */
@@ -130,28 +142,49 @@ public class ASA  extends SimpleBatchFilter {
 	protected File lexicon=new File(LEXICON_FOLDER_NAME+File.separator+"BingLiu.arff");
 
 	/** The path of the word clusters. */
-	protected String clustPath=RESOURCES_FOLDER_NAME+File.separator+"50mpaths2.txt.gz";
+	protected File wordClustFile=new File(RESOURCES_FOLDER_NAME+File.separator+"50mpaths2.txt.gz");
 
 	/** Create Exclusive Sets */
-	protected boolean exclusiveSets=true;
+	protected boolean exclusiveSets=false;
 
 
 
+	/** The target lexicon attribute */
 	protected String polarityAttName="polarity";
 
 
-
+	/** The positive attribute value name in the lexicon */
 	protected String polarityAttPosValName="positive";
 
 
+	/** The negative attribute value name in the lexicon */
 	protected String polarityAttNegValName="negative";
 
 
 	/** LexiconEvaluator for sentiment prefixes */
 	protected ArffLexiconEvaluator lex=new ArffLexiconEvaluator();
-	
 
 
+
+
+
+
+	/**
+	 * Returns an instance of a TechnicalInformation object, containing
+	 * detailed information about the technical background of this class,
+	 * e.g., paper reference or book this class is based on.
+	 *
+	 * @return the technical information about this class
+	 */
+	public TechnicalInformation getTechnicalInformation() {
+		TechnicalInformation result;
+		result = new TechnicalInformation(Type.INPROCEEDINGS);
+		result.setValue(TechnicalInformation.Field.AUTHOR, "Felipe Bravo-Marquez, Eibe Frank, and Bernhard Pfahringer");
+		result.setValue(TechnicalInformation.Field.TITLE, "Annotate-Sample-Average (ASA): A New Distant Supervision Approach for Twitter Sentiment Analysis");
+		result.setValue(TechnicalInformation.Field.YEAR, "2016");
+		result.setValue(TechnicalInformation.Field.BOOKTITLE, "22nd European Conference on Artificial Intelligence (ECAI)");
+		return result;
+	}
 
 
 
@@ -159,7 +192,9 @@ public class ASA  extends SimpleBatchFilter {
 
 	@Override
 	public String globalInfo() {
-		return "A batch filter that creates polarity labeled instances from unlabeled tweets and a seed polarity lexicon. ";
+		return "A batch filter that creates polarity labeled instances from unlabeled tweets and a seed polarity lexicon using " +
+				"the Annotate-Sample-Average Algorithm." +
+				"\n"+getTechnicalInformation().toString();
 	}
 
 
@@ -188,126 +223,42 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
-
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#listOptions()
+	 */
 	@Override
 	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
-
-		result.addElement(new Option("\t Minimum count of an attribute.\n"
-				+ "\t(default: " + this.minAttDocs + ")", "M", 1, "-M"));
-
-
-		result.addElement(new Option("\t Create word-based attributes.\n"
-				+ "\t(default: " + this.createWordAtts + ")", "W", 0, "-W"));
-
-		result.addElement(new Option("\t Create cluster-based attributes.\n"
-				+ "\t(default: " + this.createClustAtts + ")", "C", 0, "-C"));
-
-
-		result.addElement(new Option("\t Index of string attribute.\n"
-				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));		
-
-		result.addElement(new Option("\t Prefix of word attributes.\n"
-				+ "\t(default: " + this.wordPrefix + ")", "P", 1, "-P"));
-
-
-		result.addElement(new Option("\t Prefix of cluster attributes.\n"
-				+ "\t(default: " + this.clustPrefix + ")", "Q", 1, "-Q"));
-
-
-		result.addElement(new Option("\t Lowercase content.\n"
-				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
-
-
-		result.addElement(new Option("\t The path of the file with the word clusters.\n"
-				+ "\t(default: " + this.clustPath + ")", "H", 1, "-H"));
-
-
-		result.addElement(new Option("\t Clean tokens (replace goood by good, standarise URLs and @users).\n"
-				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));
-
-		result.addElement(new Option("\t Number of tweets per centroid.\n"
-				+ "\t(default: " + this.tweetsPerCentroid + ")", "A", 1, "-A"));
-
-		result.addElement(new Option("\t Number of tweets to generate as a fraction of input corpus.\n"
-				+ "\t(default: " + this.instFrac + ")", "B", 1, "-B"));
-
-
-		result.addElement(new Option("\t Create Exclusive Sets.\n"
-				+ "\t(default: " + this.exclusiveSets + ")", "E", 0, "-E"));
-
-
-
-
-
-		result.addAll(Collections.list(super.listOptions()));
-
-		return result.elements();
+		return Option.listOptionsForClass(this.getClass()).elements();
 	}
 
 
-	/**
-	 * returns the options of the current setup
-	 * 
-	 * @return the current options
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getOptions()
 	 */
 	@Override
-	public String[] getOptions() {
-
-		Vector<String> result = new Vector<String>();
-
-		result.add("-M");
-		result.add("" + this.getMinAttDocs());
-
-		if(this.createWordAtts)
-			result.add("-W");
-
-		if(this.createClustAtts)
-			result.add("-C");
-
-		result.add("-I");
-		result.add("" + this.getTextIndex());
-
-		result.add("-P");
-		result.add("" + this.getWordPrefix());
-
-		result.add("-Q");
-		result.add("" + this.getClustPrefix());
-
-
-		if(this.toLowerCase)
-			result.add("-L");
-
-
-		result.add("-H");
-		result.add("" + this.getClustPath());
-
-
-		if(this.isCleanTokens())
-			result.add("-O");
-
-		result.add("-A");
-		result.add("" + this.getTweetsPerCentroid());
-
-		result.add("-B");
-		result.add("" + this.getInstFrac());
-
-		if(this.isExclusiveSets())
-			result.add("-E");
-
-
-
-		Collections.addAll(result, super.getOptions());
-
-		return result.toArray(new String[result.size()]);
+	public String[] getOptions() {		
+		return Option.getOptions(this, this.getClass());
 	}
 
 
 	/**
 	 * Parses the options for this object.
-	 * <p/>
 	 * 
-	 * <!-- options-start --> <!-- options-end -->
+	 * <!-- options-start --> 
+	 * <pre> 
+	 *-I &lt;col&gt;
+	 *  Index of string attribute (default: 1)
+	 * </pre>
+	 * <pre>
+	 *-U 
+	 *	 Lowercase content	(default: false)
+	 * </pre>
+	 * <pre>
+	 *-O 
+	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
+	 *</pre> 
+	 *  
+	 * <!-- options-end -->
 	 * 
 	 * @param options
 	 *            the options to use
@@ -316,120 +267,7 @@ public class ASA  extends SimpleBatchFilter {
 	 */
 	@Override
 	public void setOptions(String[] options) throws Exception {
-
-
-		String textMinAttDocOption = Utils.getOption('M', options);
-		if (textMinAttDocOption.length() > 0) {
-			String[] textMinAttDocOptionSpec = Utils.splitOptions(textMinAttDocOption);
-			if (textMinAttDocOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int minDocAtt = Integer.parseInt(textMinAttDocOptionSpec[0]);
-			this.setMinAttDocs(minDocAtt);
-
-		}
-
-
-		this.createWordAtts=Utils.getFlag('W', options);
-
-		this.createClustAtts=Utils.getFlag('C', options);
-
-
-
-
-		String textIndexOption = Utils.getOption('I', options);
-		if (textIndexOption.length() > 0) {
-			String[] textIndexSpec = Utils.splitOptions(textIndexOption);
-			if (textIndexSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int index = Integer.parseInt(textIndexSpec[0]);
-			this.setTextIndex(index);
-
-		}
-
-		String wordPrefixOption = Utils.getOption('P', options);
-		if (wordPrefixOption.length() > 0) {
-			String[] wordPrefixSpec = Utils.splitOptions(wordPrefixOption);
-			if (wordPrefixSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String wordPref = wordPrefixSpec[0];
-			this.setWordPrefix(wordPref);
-
-		}
-
-		String clustPrefixOption = Utils.getOption('Q', options);
-		if (clustPrefixOption.length() > 0) {
-			String[] clustPrefixOptionSpec = Utils.splitOptions(clustPrefixOption);
-			if (clustPrefixOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String clustPref = clustPrefixOptionSpec[0];
-			this.setClustPrefix(clustPref);
-
-		}
-
-
-		this.toLowerCase=Utils.getFlag('L', options);
-
-
-
-
-		String clustPathOption = Utils.getOption('H', options);
-		if (clustPathOption.length() > 0) {
-			String[] clustPathOptionSpec = Utils.splitOptions(clustPathOption);
-			if (clustPathOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}
-			String clustPathVal = clustPathOptionSpec[0];
-			this.setClustPath(clustPathVal);
-
-		}
-
-
-		this.cleanTokens=Utils.getFlag('O', options);
-
-
-		String tweetsPerCentroidOption = Utils.getOption('A', options);
-		if (tweetsPerCentroidOption.length() > 0) {
-			String[] tweetsPerCentroidOptionSpec = Utils.splitOptions(tweetsPerCentroidOption);
-			if (tweetsPerCentroidOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int tweetsPerCentroidOptionValue = Integer.parseInt(tweetsPerCentroidOptionSpec[0]);
-			this.setTweetsPerCentroid(tweetsPerCentroidOptionValue);
-
-		}
-
-
-		String centNumOption = Utils.getOption('B', options);
-		if (centNumOption.length() > 0) {
-			String[] centNumOptionSpec = Utils.splitOptions(centNumOption);
-			if (centNumOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			double centNumOptionValue = Double.parseDouble(centNumOptionSpec[0]);
-			this.setInstFrac(centNumOptionValue);
-
-		}
-
-
-		this.exclusiveSets=Utils.getFlag('E', options);
-
-
-		super.setOptions(options);
-
-		Utils.checkForRemainingOptions(options);
-
-
+		Option.setOptions(options, this, this.getClass());
 	}
 
 
@@ -508,12 +346,12 @@ public class ASA  extends SimpleBatchFilter {
 		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
 		// add the word-based vector
 		if(this.createWordAtts)
-			docVec.putAll(affective.core.Utils.calculateTermFreq(tokens,this.wordPrefix,this.freqWeights));
+			docVec.putAll(affective.core.Utils.calculateTermFreq(tokens,UNIPREFIX,this.freqWeights));
 
 		if(this.createClustAtts){
 			// calcultates the vector of clusters
 			List<String> brownClust=affective.core.Utils.clustList(tokens,brownDict);
-			docVec.putAll(affective.core.Utils.calculateTermFreq(brownClust,this.clustPrefix,this.freqWeights));			
+			docVec.putAll(affective.core.Utils.calculateTermFreq(brownClust,CLUSTPREFIX,this.freqWeights));			
 		}	
 
 
@@ -530,7 +368,7 @@ public class ASA  extends SimpleBatchFilter {
 	 * 
 	 */	 
 	public void annotatePhase(Instances inputFormat) {
-		
+
 		this.lex.setLexiconFile(this.lexicon);
 
 
@@ -552,7 +390,7 @@ public class ASA  extends SimpleBatchFilter {
 		if(this.createClustAtts){
 			this.brownDict=new Object2ObjectOpenHashMap<String,String>();
 			try {
-				FileInputStream fin = new FileInputStream(this.clustPath);
+				FileInputStream fin = new FileInputStream(this.wordClustFile);
 				GZIPInputStream gzis = new GZIPInputStream(fin);
 				InputStreamReader xover = new InputStreamReader(gzis);
 				BufferedReader bf = new BufferedReader(xover);
@@ -680,12 +518,6 @@ public class ASA  extends SimpleBatchFilter {
 
 		att.add(inputFormat.classAttribute());
 
-		//		ArrayList<String> label = new ArrayList<String>();
-		//		label.add("negative");
-		//		label.add("positive");
-		//		att.add(new Attribute("class", label));
-
-
 
 		Instances result = new Instances(inputFormat.relationName(), att, 0);
 
@@ -710,9 +542,8 @@ public class ASA  extends SimpleBatchFilter {
 
 			Random r=new Random(this.m_randomSeed);
 
-			double posInstances=instances.size()*this.getInstFrac()*0.5;
 
-			for(int i=0;i<posInstances;i++){
+			for(int i=0;i<this.numPosInstances;i++){
 				double[] values = new double[result.numAttributes()];
 				for(int j=0;j<this.getTweetsPerCentroid();j++){
 					int randomIndex=r.nextInt(this.posTweets.size()); 
@@ -737,11 +568,7 @@ public class ASA  extends SimpleBatchFilter {
 
 			}
 
-
-			double negInstances= (instances.size()*this.getInstFrac()*0.5);
-
-
-			for(int i=0;i<negInstances;i++){
+			for(int i=0;i<this.numNegInstances;i++){
 
 				double[] values = new double[result.numAttributes()];
 
@@ -784,209 +611,239 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
-	public String getUsefulInfo(){
-		String res="PosTweet Set Size,"+this.posTweets.size()+"\nNegTweet Set Size,"+this.negTweets.size();		
-		return res;
-	}
 
 
 
-
-
+	@OptionMetadata(displayName = "textIndex",
+			description = "The index (starting from 1) of the target string attribute.",
+			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
+			displayOrder = 0)
 	/**
-	 * Sets the index of the string attribute
+	 * Get the position of the target string.
 	 * 
-	 * @return the index of the documents.
-	 */
+	 * @return the index of the target string
+	 */	
 	public int getTextIndex() {
 		return textIndex;
 	}
 
+
 	/**
-	 * Sets the index of the string attribute
+	 * Set the attribute's index with the string to process.
 	 * 
-	 * @param textIndex the index of the string attribute
-	 * 
+	 * @param textIndex the index value name
 	 */
 	public void setTextIndex(int textIndex) {
 		this.textIndex = textIndex;
 	}
 
 
-	public String getWordPrefix() {
-		return wordPrefix;
-	}
-
-
-	public void setWordPrefix(String prefix) {
-		this.wordPrefix = prefix;
-	}
-
-
-	public String getClustPrefix() {
-		return clustPrefix;
-	}
 
 
 
-	public void setClustPrefix(String clustPrefix) {
-		this.clustPrefix = clustPrefix;
-	}
-
-
+	@OptionMetadata(displayName = "lowercase",
+			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
+			commandLineParamName = "U", commandLineParamSynopsis = "-U",
+			displayOrder = 1)
+	/**
+	 * Gets the value of the lowercase flag.
+	 * 
+	 * @return the value of the flag.
+	 */
 	public boolean isToLowerCase() {
 		return toLowerCase;
 	}
 
+	/**
+	 * Sets the value of the lowercase flag.
+	 * 
+	 * @param toLowerCase the value of the flag.
+	 * 
+	 */
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
 
 
-	public int getMinAttDocs() {
-		return minAttDocs;
+
+	@OptionMetadata(displayName = "cleanTokens",
+			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
+					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
+					+ "and replacing user mentions and URLs with generic tokens.", 
+					commandLineParamIsFlag = true, commandLineParamName = "O", 
+					commandLineParamSynopsis = "-O",
+					displayOrder = 2)	
+	/**
+	 * Gets the value of the cleanTokens option.
+	 * 
+	 * @return the value of the flag.
+	 */
+	public boolean isCleanTokens() {
+		return cleanTokens;
+	}
+
+	/**
+	 * Sets the value of the cleanTokens flag.
+	 * 
+	 * @param cleanTokens the value of the flag.
+	 * 
+	 */
+	public void setCleanTokens(boolean cleanTokens) {
+		this.cleanTokens = cleanTokens;
 	}
 
 
-
+	@OptionMetadata(displayName = "minAttDocs",
+			description = "Minimum frequency of a sparse attribute to be considered in the attribute space.", 
+			commandLineParamName = "M", 
+			commandLineParamSynopsis = "-M <int>",
+			displayOrder = 3)	
+	public int getMinAttDocs() {
+		return minAttDocs;
+	}
 	public void setMinAttDocs(int minAttDocs) {
 		this.minAttDocs = minAttDocs;
 	}
 
 
+
+	@OptionMetadata(displayName = "createWordAtts",
+			description = "True for creating unigram attributes.", 
+			commandLineParamIsFlag = true, commandLineParamName = "W", 
+			commandLineParamSynopsis = "-W",
+			displayOrder = 4)	
 	public boolean isCreateWordAtts() {
 		return createWordAtts;
 	}
-
-
 
 	public void setCreateWordAtts(boolean createWordAtts) {
 		this.createWordAtts = createWordAtts;
 	}
 
+
+	@OptionMetadata(displayName = "createClustAtts",
+			description = "True for creating attributes using word clusters",
+			commandLineParamIsFlag = true, commandLineParamName = "C", 
+			commandLineParamSynopsis = "-C",
+			displayOrder = 5)	
 	public void setCreateClustAtts(boolean createClustAtts) {
 		this.createClustAtts = createClustAtts;
 	}
-
-
 	public boolean isCreateClustAtts() {
 		return createClustAtts;
 	}
 
 
 
-
-	public File getLexicon() {
-		return lexicon;
+	@OptionMetadata(displayName = "wordClustFile",
+			description = "The file containing the word clusters.", 
+			commandLineParamName = "H", 
+			commandLineParamSynopsis = "-H <string>",
+			displayOrder = 6)	
+	public File getWordClustFile() {
+		return wordClustFile;
+	}
+	public void setWordClustFile(File wordClustFile) {
+		this.wordClustFile = wordClustFile;
 	}
 
 
-
+	@OptionMetadata(displayName = "lexicon",
+			description = "The file containing a lexicon in ARFF format with word polarities.", 
+			commandLineParamName = "lex", 
+			commandLineParamSynopsis = "-lex <string>",
+			displayOrder = 7)	
+	public File getLexicon() {
+		return lexicon;
+	}
 	public void setLexicon(File lexicon) {
 		this.lexicon = lexicon;
 	}
 
 
 
-	public String getClustPath() {
-		return clustPath;
-	}
 
-
-
-	public void setClustPath(String clustPath) {
-		this.clustPath = clustPath;
-	}
-
-
-
-
-
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-
-
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-	public ObjectList<Object2IntMap<String>> getPosTweets() {
-		return posTweets;
-	}
-
-
-
-	public void setPosTweets(ObjectList<Object2IntMap<String>> posTweets) {
-		this.posTweets = posTweets;
-	}
-
-
-	public ObjectList<Object2IntMap<String>> getNegTweets() {
-		return negTweets;
-	}
-
-
-
-	public void setNegTweets(ObjectList<Object2IntMap<String>> negTweets) {
-		this.negTweets = negTweets;
-	}
-
-
+	@OptionMetadata(displayName = "tweetsPerCentroid",
+			description = "The number of tweets to average in each generated instance. \t default: 10", 
+			commandLineParamName = "A", 
+			commandLineParamSynopsis = "-A <int>",
+			displayOrder = 8)
 	public int getTweetsPerCentroid() {
 		return tweetsPerCentroid;
 	}
-
-
-
 	public void setTweetsPerCentroid(int tweetsPerCentroid) {
 		this.tweetsPerCentroid = tweetsPerCentroid;
 	}
 
 
 
-	public double getInstFrac() {
-		return instFrac;
+
+	@OptionMetadata(displayName = "numPosInstances",
+			description = "The number of positive instances to generaTE. \t default: 1000", 
+			commandLineParamName = "npos", 
+			commandLineParamSynopsis = "-npos <int>",
+			displayOrder = 9)	
+	public int getNumPosInstances() {
+		return numPosInstances;
+	}
+	public void setNumPosInstances(int numPosInstances) {
+		this.numPosInstances = numPosInstances;
 	}
 
 
 
-	public void setInstFrac(double instFrac) {
-		this.instFrac = instFrac;
+	@OptionMetadata(displayName = "numNegInstances",
+			description = "The number of negative instances to generate. \t default: 1000", 
+			commandLineParamName = "nneg", 
+			commandLineParamSynopsis = "-nneg <int>",
+			displayOrder = 10)
+	public int getNumNegInstances() {
+		return numNegInstances;
+	}
+	public void setNumNegInstances(int numNegInstances) {
+		this.numNegInstances = numNegInstances;
 	}
 
 
 
-
-
-
+	@OptionMetadata(displayName = "exclusiveSets",
+			description = "True for dicarding tweets containing both positive and negative words. False for adding these tweets into both the positive and negative sets from which tweets are sampled." +
+					"\t default False",
+					commandLineParamIsFlag = true, commandLineParamName = "E", 
+					commandLineParamSynopsis = "-E",
+					displayOrder = 11)	
 	public boolean isExclusiveSets() {
 		return exclusiveSets;
 	}
-
-
-
 	public void setExclusiveSets(boolean exclusiveSets) {
 		this.exclusiveSets = exclusiveSets;
 	}
 
 
-	public int getM_randomSeed() {
-		return m_randomSeed;
+
+
+	@OptionMetadata(displayName = "randomseed",
+			description = "The random seed number. \t default: 1", 
+			commandLineParamName = "R", 
+			commandLineParamSynopsis = "-R <int>",
+			displayOrder = 12)
+	public int getRandomSeed() {
+		return m_randomSeed;	}
+	public void setRandomSeed(int randomSeed) {
+		this.m_randomSeed = randomSeed;
 	}
 
 
+	
 
-	public void setM_randomSeed(int m_randomSeed) {
-		this.m_randomSeed = m_randomSeed;
-	}
-	
-	
+	@OptionMetadata(displayName = "polarityAttName",
+			description = "The lexicon attribute name with the word polarities. \t default: polarity", 
+			commandLineParamName = "polatt", 
+			commandLineParamSynopsis = "-polatt <string>",
+			displayOrder = 13)	
 	public String getPolarityAttName() {
 		return polarityAttName;
 	}
-
 
 
 	public void setPolarityAttName(String polarityAttName) {
@@ -995,24 +852,30 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
+
+	@OptionMetadata(displayName = "polarityAttPosValName",
+			description = "The lexicon attribute value name for positive words. \t default: positive", 
+			commandLineParamName = "posval", 
+			commandLineParamSynopsis = "-posval <String>",
+			displayOrder = 14)
 	public String getPolarityAttPosValName() {
 		return polarityAttPosValName;
 	}
-
-
-
 	public void setPolarityAttPosValName(String polarityAttPosValName) {
 		this.polarityAttPosValName = polarityAttPosValName;
 	}
 
 
 
+
+	@OptionMetadata(displayName = "polarityAttNegValName",
+			description = "The lexicon attribute value name for negative words. \t default: negative", 
+			commandLineParamName = "negval", 
+			commandLineParamSynopsis = "-negval <String>",
+			displayOrder = 15)
 	public String getPolarityAttNegValName() {
 		return polarityAttNegValName;
 	}
-
-
-
 	public void setPolarityAttNegValName(String polarityAttNegValName) {
 		this.polarityAttNegValName = polarityAttNegValName;
 	}
