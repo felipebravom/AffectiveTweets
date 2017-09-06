@@ -208,6 +208,38 @@ weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator "weka.dl4j.iterators
 This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
 
 
+#### Create a Lexicon of sentiment words using the TweetCentroid method
+
+* Open in the preprocess panel the __sent140train.arff.gz__ dataset. This is a large corpus, so make sure to increase the heap size when running Weka.
+
+2. Train word vectors using the tweet centroid model using the TweetCentroid filter. Paste the following snippet:
+
+```bash
+weka.filters.unsupervised.attribute.TweetCentroid -O -C -W -F -natt -M 10 -N 10 -I 1 -U -H /home/felipe/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz
+```
+
+3. Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:
+
+```bash
+weka.filters.unsupervised.attribute.LabelWordVector -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile /home/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1" -U -I last
+'''
+
+4. Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:
+
+```bash
+weka.filters.supervised.attribute.AddClassification -remove-old-class -distribution -W "weka.classifiers.meta.FilteredClassifier -F \"weka.filters.unsupervised.attribute.RemoveType -T string\" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000"
+```
+
+5. Remove all the word attributes to create a lexicon:
+
+```bash
+weka.filters.unsupervised.attribute.Remove -R first-1461
+```
+
+6. Save the resulting lexicon as an arff file by clicking on the save button.
+
+6. Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__.
+
 
 ### Command-line 
 
