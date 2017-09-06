@@ -32,6 +32,10 @@ You should also cite the papers describing any of the lexicons or resources you 
 
 ### Filters
 
+
+
+#### Tweet-level Filter 
+
 1. __TweetToSparseFeatureVector__: calculates sparse features, such as word and character n-grams from tweets. There are parameters for filtering out infrequent features e.g., (n-grams occurring in less than *m* tweets) and for setting the weighting approach  (boolean or frequency based).
  * __Word n-grams__: extracts word n-grams from *n*=1 to a maximum value. 
  * __Negations__: add a prefix to words occurring in negated contexts, e.g., I don't like you => I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation expression *([\\.|,|:|;|!|\\?]+)* .
@@ -61,6 +65,24 @@ You should also cite the papers describing any of the lexicons or resources you 
  - Average word embeddings.
  - Add word embeddings. 
  - Concatenation of first *k* embeddings. Dummy values are added if the tweet has less than *k* words. 
+
+
+
+
+#### Word-level Filters
+
+1. __PMILexiconExpander__:
+
+2. __TweetCentroid__:  We propose a distributional representation for words by treating them as the centroid of the tweet vectors in which they appear. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib) 
+
+3. __WordLabeler__:
+
+
+
+### Distant Supervision Filters
+
+1. __ASA__:  Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. ASA takes a collection of unlabelled tweets and a polarity lexicon composed of positive and negative words and creates synthetic labelled instances for MPC. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.
+
 
 
 ### Tokenizers
