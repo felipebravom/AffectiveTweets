@@ -13,7 +13,7 @@ The package implements WEKA filters for calculating state-of-the-art sentiment a
  * [Sentiment strength detection for the social Web](http://dl.acm.org/citation.cfm?id=2336261). Thelwall, M., Buckley, K., & Paltoglou, G. (2012). Journal of the American Society for Information Science and Technology, 63(1), 163-173. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
 
 
-The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used to generate feature vectors, including the teams that eventually ranked first, second, and third. 
+The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 
 The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/).
