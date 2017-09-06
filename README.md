@@ -242,7 +242,7 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 
 
 
-#### Create a Lexicon of sentiment words PMI Semantic Orientation
+#### Create a Lexicon of sentiment words using PMI Semantic Orientation
 * Open in the preprocess panel the __sent140train.arff.gz__ dataset. This is a large corpus, so make sure to increase the heap size when running Weka.
 
 2. Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
