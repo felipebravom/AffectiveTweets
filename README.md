@@ -247,7 +247,7 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 
 2. Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
 
-3. Save the lexicon as an arff file and use with the __TweetToInputLexiconFeatureVector__ filter.
+3. Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
 
 
 
