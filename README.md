@@ -42,7 +42,7 @@ You should also cite the papers describing any of the lexicons or resources you 
 
 
 
-#### Tweet-level Filter 
+#### Tweet-level Filters 
 
 1. __TweetToSparseFeatureVector__: calculates sparse features, such as word and character n-grams from tweets. There are parameters for filtering out infrequent features e.g., (n-grams occurring in less than *m* tweets) and for setting the weighting approach  (boolean or frequency based).
  * __Word n-grams__: extracts word n-grams from *n*=1 to a maximum value. 
