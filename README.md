@@ -272,11 +272,11 @@ weka.filters.unsupervised.attribute.Add -T NOM -N class -L negative,positive -C 
 Note that the values for the class are empty for all instances. We are adding these labels to make the data compatible with the target tweets on which the classifier we will train will be deployed.
 
 
-3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from 6HumanPosNeg.arff.gz. 
-  1.  sfds
-  2. dsfs
+3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from __6HumanPosNeg.arff.gz__. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
  
-
+```bash
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex /home/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -I 1 -U -A 10 -H /home/felipe/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+```
 
 
 
