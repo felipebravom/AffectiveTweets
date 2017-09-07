@@ -7,6 +7,16 @@
 The package implements WEKA filters for calculating state-of-the-art affective analysis features from tweets that can be fed into machine learning algorithms (Many of these features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm).). It also implements methods for building affective lexicons as well as distant supervision methods for training affective models from unlabelled tweets.
 
 
+The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
+
+
+The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/).
+
+Description about the filters, installation instructions, and examples are given below.
+
+
+
+
 ## Relevant Papers
 
 The most relevant papers on which this package is based are:
@@ -17,13 +27,6 @@ The most relevant papers on which this package is based are:
  * [Stance and sentiment in tweets](http://saifmohammad.com/WebDocs/1605.01655v1.pdf). Saif M. Mohammad, Parinaz Sobhani, and Svetlana Kiritchenko. 2017. Special Section of the ACM Transactions on Internet Technology on Argumentation in Social Media 17(3). [BibTeX](http://saifmohammad.com/WebPages/Abstracts/stance-toit.bib.txt)
  * [Sentiment strength detection for the social Web](http://dl.acm.org/citation.cfm?id=2336261). Thelwall, M., Buckley, K., & Paltoglou, G. (2012). Journal of the American Society for Information Science and Technology, 63(1), 163-173. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
 
-
-The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
-
-
-The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/).
-
-Description about the filters, installation instructions, and examples are given below.
 
 
 
