@@ -246,7 +246,7 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 
 6. Save the resulting lexicon as an arff file by clicking on the save button.
 
-6. Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__ filter.
+7. Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__ filter.
 
 
 
@@ -256,6 +256,25 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 2. Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
 
 3. Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
+
+
+
+#### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA method
+
+In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA method. The classifier wil be evaluated on positive and negative tweets.
+
+1. Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
+2. Add a class label with negative and positive values using the Add filter in the preprocess panel:
+
+```bash
+weka.filters.unsupervised.attribute.Add -T NOM -N class -L negative,positive -C last
+```
+Note that the values for the class are empty for all instances. We are adding these labels to make the data compatible with the target tweets on which the classifier we will train will be deployed.
+
+
+3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from 6HumanPosNeg.arff.gz. 
+ 1.  sfds
+ 
 
 
 
