@@ -74,13 +74,13 @@ You should also cite the papers describing any of the lexicons or resources you 
 1. __PMILexiconExpander__: calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. The score is calculated by substracting the PMI of the  target  word  with  a negative  sentiment from the PMI of the target word with a positive sentiment. This is a supervised filter.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/acl/Turney02.bib) 
  
 
-2. __TweetCentroid__:  calculates word distributional vectors from a corpus of unlabelled tweets by treating them as the centroid of the tweet vectors in which they appear. The vectors can be labelled using an affective lexicon to train a word-level affective classifier. This classifier can be used to expand the original lexicon.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib) [pdf](http://www.cs.waikato.ac.nz/~fbravoma/publications/sigir15.pdf)
+2. __TweetCentroid__:  calculates word distributional vectors from a corpus of unlabelled tweets by treating them as the centroid of the tweet vectors in which they appear. The vectors can be labelled using an affective lexicon to train a word-level affective classifier. This classifier can be used to expand the original lexicon.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/sigir15.pdf)
 
 3. __LabelWordVectors__: labels word vectors with an input lexicon in arff format. This filter is useful for training word-level affective classifiers.
 
 ### Distant Supervision Filters
 
-1. __ASA__:  Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib) [pdf](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
+1. __ASA__:  Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
 
 
 ### Tokenizers
