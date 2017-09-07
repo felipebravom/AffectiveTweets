@@ -4,7 +4,12 @@
 
 [AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. 
 
-The package implements WEKA filters for calculating state-of-the-art sentiment analysis features from tweets that can be fed into machine learning algorithms. (Many of the features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm).) The most relevant papers on which this package is based are:
+The package implements WEKA filters for calculating state-of-the-art affective analysis features from tweets that can be fed into machine learning algorithms. (Many of these features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm).) It also implements methods for building affective lexicons and distant supervision methods for training affective models from unlabelled tweets.
+
+
+## Relevant Papers
+
+The most relevant papers on which this package is based are:
 
 
  * [Sentiment Analysis of Short Informal Texts](http://saifmohammad.com/WebDocs/NRC-Sentiment-JAIR-2014.pdf). Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad. Journal of Artificial Intelligence Research, volume 50, pages 723-762, August 2014. [BibTeX](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt)
@@ -18,7 +23,7 @@ The package was also made available as the official baseline system for the [WAS
 
 The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/).
 
-Description about the filters, installation instructions, and sentiment classification examples are given below.
+Description about the filters, installation instructions, and examples are given below.
 
 
 
