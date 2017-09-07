@@ -273,7 +273,8 @@ Note that the values for the class are empty for all instances. We are adding th
 
 
 3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from 6HumanPosNeg.arff.gz. 
- 1.  sfds
+  1.  sfds
+  2. dsfs
  
 
 
