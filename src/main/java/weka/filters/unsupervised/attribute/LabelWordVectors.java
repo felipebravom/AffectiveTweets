@@ -53,7 +53,7 @@ import weka.filters.SimpleBatchFilter;
  */
 
 
-public class LabelWordVector extends SimpleBatchFilter {
+public class LabelWordVectors extends SimpleBatchFilter {
 
 
 	/** For serialization  */

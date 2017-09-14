@@ -48,7 +48,9 @@ import weka.filters.SimpleBatchFilter;
 
 
 /**
- *  <!-- globalinfo-start --> Calculates word sentiment associations using PMI Semantic Orientation from a corpus of labelled tweets.
+ *  <!-- globalinfo-start --> 
+ *  Calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. 
+ *  The score is calculated by substracting the PMI of the target word with a negative sentiment from the PMI of the target word with a positive sentiment.
  *   
  * <!-- globalinfo-end -->
  * 
@@ -169,7 +171,7 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 	@Override
 	public String globalInfo() {
-		return "Creates a word lexicon from a labelled corpus of tweets using PMI Semantic Orientation."				
+		return "Calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. The score is calculated by substracting the PMI of the target word with a negative sentiment from the PMI of the target word with a positive sentiment."				
 				+ "\n"+getTechnicalInformation().toString();
 	}
 

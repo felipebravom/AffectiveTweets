@@ -1,0 +1,286 @@
+/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ *    TweetToSentiStrengthFeatureVector.java
+ *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
+package weka.filters.unsupervised.attribute;
+
+
+import java.util.Enumeration;
+
+import weka.core.Capabilities;
+import weka.core.Option;
+import weka.core.OptionMetadata;
+import weka.core.SingleIndex;
+import weka.core.Capabilities.Capability;
+import weka.core.stemmers.NullStemmer;
+import weka.core.stemmers.Stemmer;
+import weka.core.stopwords.Null;
+import weka.core.stopwords.StopwordsHandler;
+import weka.core.tokenizers.Tokenizer;
+import weka.core.tokenizers.TweetNLPTokenizer;
+import weka.filters.SimpleBatchFilter;
+
+/**
+ *  <!-- globalinfo-start --> An attribute filter that calculates positive and negative scores using 
+ *  SentiStrength for a tweet represented as a string attribute. 
+ * <!-- globalinfo-end -->
+ * 
+ *  
+ * 
+ * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
+
+
+public abstract class TweetToFeatureVector extends SimpleBatchFilter {
+
+	/** For serialization  */
+	private static final long serialVersionUID = -3704559695773991498L;
+
+
+	/** the index of the string attribute to be processed */
+	protected SingleIndex m_textIndex = new SingleIndex("1");
+
+
+	
+
+	/** True if all tokens should be downcased. */
+	protected boolean toLowerCase=true;
+
+
+	/** True if url, users, and repeated letters are cleaned */
+	protected boolean standarizeUrlsUsers=false;
+	
+
+	/** True for standarizing repeated letters are cleaned */
+	protected boolean reduceRepeatedLetters=false;
+	
+
+	/** The tokenizer */
+	protected Tokenizer m_tokenizer=new TweetNLPTokenizer();
+
+	/** the stemming algorithm. */
+	protected Stemmer m_stemmer = new NullStemmer();
+
+
+	/** Stopword handler to use. */
+	protected StopwordsHandler m_stopwordsHandler = new Null();
+
+
+
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#listOptions()
+	 */
+	@Override
+	public Enumeration<Option> listOptions() {
+		//this.getClass().getSuperclass()
+		return Option.listOptionsForClassHierarchy(this.getClass(), this.getClass().getSuperclass()).elements();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getOptions()
+	 */
+	@Override
+	public String[] getOptions() {	
+		return Option.getOptionsForHierarchy(this, this.getClass().getSuperclass());
+
+		//return Option.getOptions(this, this.getClass());
+	}
+
+
+
+
+	/**
+	 * Parses the options for this object.
+	 * 
+	 * <!-- options-start --> 
+	 * <pre> 
+	 *-I &lt;col&gt;
+	 *  Index of string attribute (default: 1)
+	 * </pre>
+	 * <pre>
+	 *-U 
+	 *	 Lowercase content	(default: false)
+	 * </pre>
+	 * <pre>
+	 *-O 
+	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
+	 *</pre> 
+	 *  
+	 * <!-- options-end -->
+	 * 
+	 * @param options
+	 *            the options to use
+	 * @throws Exception
+	 *             if setting of options fails
+	 */
+	@Override
+	public void setOptions(String[] options) throws Exception {
+		Option.setOptionsForHierarchy(options, this, this.getClass().getSuperclass());
+	}
+
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getCapabilities()
+	 */
+	@Override
+	public Capabilities getCapabilities() {
+
+		Capabilities result = new Capabilities(this);
+		result.disableAll();
+
+
+
+		// attributes
+		result.enableAllAttributes();
+		result.enable(Capability.MISSING_VALUES);
+
+		// class
+		result.enableAllClasses();
+		result.enable(Capability.MISSING_CLASS_VALUES);
+		result.enable(Capability.NO_CLASS);
+
+		result.setMinimumNumberInstances(0);
+
+		return result;
+	}
+
+
+
+
+
+
+	@OptionMetadata(displayName = "textIndex",
+			description = "The index (starting from 1) of the target string attribute. Start and last are valid values. ",
+			commandLineParamName = "I", commandLineParamSynopsis = "-I <col>",
+			displayOrder = 0)
+	public String getTextIndex() {
+		return m_textIndex.getSingleIndex();
+	}
+	public void setTextIndex(String textIndex) {
+		this.m_textIndex.setSingleIndex(textIndex);
+	}
+
+
+	
+		
+
+
+	@OptionMetadata(displayName = "lowercase",
+			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
+			commandLineParamName = "U", commandLineParamSynopsis = "-U",
+			displayOrder = 1)
+	/**
+	 * Gets the value of the lowercase flag.
+	 * 
+	 * @return the value of the flag.
+	 */
+	public boolean isToLowerCase() {
+		return toLowerCase;
+	}
+
+	/**
+	 * Sets the value of the lowercase flag.
+	 * 
+	 * @param toLowerCase the value of the flag.
+	 * 
+	 */
+	public void setToLowerCase(boolean toLowerCase) {
+		this.toLowerCase = toLowerCase;
+	}
+
+
+
+	@OptionMetadata(displayName = "standarize URLs and @user mentions",
+			description = "Reduce the attribute space by replacing user mentions and URLs with generic tokens.", 
+					commandLineParamIsFlag = true, commandLineParamName = "stan", 
+					commandLineParamSynopsis = "-stan",
+					displayOrder = 2)	
+	public boolean isStandarizeUrlsUsers() {
+		return standarizeUrlsUsers;
+	}
+	public void setStandarizeUrlsUsers(boolean standarizeUrlsUsers) {
+		this.standarizeUrlsUsers = standarizeUrlsUsers;
+	}
+	
+	
+	@OptionMetadata(displayName = "reduceRepeatedLetters",
+			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
+					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove)", 
+					commandLineParamIsFlag = true, commandLineParamName = "red", 
+					commandLineParamSynopsis = "-red",
+					displayOrder = 2)		
+	public boolean isReduceRepeatedLetters() {
+		return reduceRepeatedLetters;
+	}
+	public void setReduceRepeatedLetters(boolean reduceRepeatedLetters) {
+		this.reduceRepeatedLetters = reduceRepeatedLetters;
+	}
+
+
+
+	@OptionMetadata(displayName = "tokenizer",
+			description = "The tokenizing algorithm to use on the tweets. Uses the CMU TweetNLP tokenizer as default",
+			commandLineParamName = "tokenizer",
+			commandLineParamSynopsis = "-tokenizer <string>", displayOrder = 3)		
+	public Tokenizer getTokenizer() {
+		return m_tokenizer;
+	}
+
+	public void setTokenizer(Tokenizer m_tokenizer) {
+		this.m_tokenizer = m_tokenizer;
+	}
+
+
+
+
+	@OptionMetadata(displayName = "stemmer",
+			description = "The stemming algorithm to use on the words.",
+			commandLineParamName = "stemmer",
+			commandLineParamSynopsis = "-stemmer <string>", displayOrder = 4)	
+	public Stemmer getStemmer() {
+		return m_stemmer;
+	}
+	public void setStemmer(Stemmer m_stemmer) {
+		this.m_stemmer = m_stemmer;
+	}
+
+
+
+	@OptionMetadata(displayName = "stopwordsHandler",
+			description = "The stopwords handler to use (Null means no stopwords are used).",
+			commandLineParamName = "stopwords-handler",
+			commandLineParamSynopsis = "-stopwords-handler <string>", displayOrder = 4)
+	public StopwordsHandler getStopwordsHandler() {
+		return m_stopwordsHandler;
+	}
+	public void setStopwordsHandler(StopwordsHandler m_stopwordsHandler) {
+		this.m_stopwordsHandler = m_stopwordsHandler;
+	}
+
+	
+	
+
+
+
+
+}

@@ -24,7 +24,6 @@ package weka.filters.unsupervised.attribute;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -34,12 +33,10 @@ import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
-import weka.filters.SimpleBatchFilter;
 
 /**
  *  <!-- globalinfo-start --> A batch filter that calculates attributes for a tweet using a given affective lexicon in arff format.
@@ -53,7 +50,7 @@ import weka.filters.SimpleBatchFilter;
  */
 
 
-public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
+public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 
 
 	/** For serialization  */
@@ -69,16 +66,6 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 	/** List of Lexicons to use */
 	protected ArffLexiconEvaluator[] lexiconEval=new ArffLexiconEvaluator[]{new ArffLexiconEvaluator()};
@@ -104,52 +91,6 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 
 
 
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		return Option.listOptionsForClass(this.getClass()).elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {		
-		return Option.getOptions(this, this.getClass());
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-		Option.setOptions(options, this, this.getClass());
-	}
 
 
 	/* (non-Javadoc)
@@ -240,14 +181,16 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		// Instances result = new Instances(determineOutputFormat(instances),
-		// 0);
+
+		
+		// set upper value for text index
+		m_textIndex.setUpper(instances.numAttributes() - 1);
 
 		Instances result = getOutputFormat();
 
 
 		// reference to the content of the message, users index start from zero
-		Attribute attrCont = instances.attribute(this.textIndex-1);
+		Attribute attrCont = instances.attribute(this.m_textIndex.getIndex());
 
 
 		for (int i = 0; i < instances.numInstances(); i++) {
@@ -256,7 +199,8 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 			String content = instances.instance(i).stringValue(attrCont);
-			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.cleanTokens);
+			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
+
 
 
 
@@ -286,82 +230,7 @@ public class TweetToInputLexiconFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
-	@OptionMetadata(displayName = "textIndex",
-			description = "The index (starting from 1) of the target string attribute.",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-			displayOrder = 0)
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
 
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-
-
-
-	@OptionMetadata(displayName = "lowercase",
-			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
-			commandLineParamName = "U", commandLineParamSynopsis = "-U",
-			displayOrder = 1)
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-
-	@OptionMetadata(displayName = "cleanTokens",
-			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
-					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-					+ "and replacing user mentions and URLs with generic tokens.", 
-					commandLineParamIsFlag = true, commandLineParamName = "O", 
-					commandLineParamSynopsis = "-O",
-					displayOrder = 2)	
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
 
 
 	@OptionMetadata(displayName = "ArffLexiconEvaluator",

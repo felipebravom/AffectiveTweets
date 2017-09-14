@@ -44,7 +44,9 @@ import weka.filters.SimpleBatchFilter;
  *  <!-- globalinfo-start --> 
  *  
  *  A batch filter that creates polarity labeled instances from unlabeled tweets and a seed polarity lexicon using the Annotate-Sample-Average Algorithm.
- *  
+ *  Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data.
+ *  ASA takes a collection of unlabelled tweets and a polarity lexicon composed of positive and negative words and creates synthetic labelled instances. 
+ *  Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.
  *  
  * <!-- globalinfo-end -->
  * 
@@ -192,9 +194,10 @@ public class ASA  extends SimpleBatchFilter {
 
 	@Override
 	public String globalInfo() {
-		return "A batch filter that creates polarity labeled instances from unlabeled tweets and a seed polarity lexicon using " +
-				"the Annotate-Sample-Average Algorithm." +
-				"\n"+getTechnicalInformation().toString();
+		return "Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. " +
+				"ASA takes a collection of unlabelled tweets and a polarity lexicon composed of positive and negative words and creates synthetic labelled instances. " +
+				"Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets." +
+				"\n Use this filter with the FilteredClassifier. \n"+getTechnicalInformation().toString();
 	}
 
 

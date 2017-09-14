@@ -22,17 +22,15 @@
 package weka.core.tokenizers;
 
 
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
-import weka.core.Option;
+import cmu.arktweetnlp.Twokenize;
+
 import weka.core.RevisionUtils;
 import weka.core.TechnicalInformation;
 import weka.core.TechnicalInformation.Type;
-import weka.core.Utils;
+
 
 
 
@@ -67,13 +65,7 @@ public class TweetNLPTokenizer extends Tokenizer {
 	/** the actual tokenizer */
 	protected transient Iterator<String> m_tokenIterator;
 
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-	/** True if url, users, and repeated letters are cleaned. */
-	protected boolean cleanTokens=true;
-
-
+	
 
 	/**
 	 * Returns a string describing this tokenizer.
@@ -109,88 +101,6 @@ public class TweetNLPTokenizer extends Tokenizer {
 }
 	
 	
-//	
-//	/**
-//	 * Returns the revision string.
-//	 * 
-//	 * @return the revision
-//	 */
-//	@Override
-//	public String getRevision() {
-//		return RevisionUtils.extract("$Revision: 1 $");
-//	}
-
-
-
-	/**
-	 * Returns an enumeration describing the available options.
-	 * 
-	 * @return an enumeration of all the available options.
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
-
-		result.addElement(new Option("\t Lowercase content.\n"
-				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
-
-		result.addElement(new Option("\t Normalize tokens (replace goood by good, normalize URLs and @users).\n"
-				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
-
-		result.addAll(Collections.list(super.listOptions()));
-
-		return result.elements();
-	}
-
-
-	/**
-	 * returns the options of the current setup
-	 * 
-	 * @return the current options
-	 */
-	@Override
-	public String[] getOptions() {
-
-		Vector<String> result = new Vector<String>();
-
-		if(this.toLowerCase)
-			result.add("-L");
-
-		if(this.cleanTokens)
-			result.add("-O");
-
-		Collections.addAll(result, super.getOptions());
-
-		return result.toArray(new String[result.size()]);
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-
-
-		this.toLowerCase=Utils.getFlag('L', options);
-
-		this.cleanTokens=Utils.getFlag('O', options);
-
-
-		super.setOptions(options);
-
-		Utils.checkForRemainingOptions(options);
-
-
-	}
-
-
 
 	/**
 	 * Tests if this enumeration contains more elements.
@@ -221,75 +131,13 @@ public class TweetNLPTokenizer extends Tokenizer {
 	@Override
 	public void tokenize(String s) {
 
-		List<String> words=affective.core.Utils.tokenize(s, this.toLowerCase, this.cleanTokens);
+		List<String> words=Twokenize.tokenizeRawTweetText(s);
 		this.m_tokenIterator=words.iterator();	
 
 
 	}
 
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String lowerCaseTipText() {
-		return "Lowercase the tweet's content.";
-	}
-
-
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String cleanTokensTipText() {
-		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
-				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing 	user mentions and URLs with generic tokens..";		
-	}
-
+	
 
 	
 	  /**

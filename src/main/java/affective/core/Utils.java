@@ -29,6 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import weka.core.stemmers.Stemmer;
+import weka.core.stopwords.StopwordsHandler;
+import weka.core.tokenizers.Tokenizer;
+
 import cmu.arktweetnlp.Twokenize;
 
 /**
@@ -129,13 +133,13 @@ public class Utils {
 		return negTokens;
 
 	}
-	
-	
-	
 
 
-	
-	
+
+
+
+
+
 	/**
 	 * Calculates a sequence of word-clusters from a list of tokens and a dictionary.
 	 * 
@@ -180,7 +184,7 @@ public class Utils {
 
 		return termFreq;
 	}
-	
+
 
 	/**
 	 * Calculates token n-grams from a sequence of tokens.
@@ -228,7 +232,63 @@ public class Utils {
 
 		return charNgram;		
 	}
+
+
+	static public List<String> getTokens(String content, Tokenizer tokenizer, Stemmer stemmer, StopwordsHandler stop){
+		List<String> tokens = new ArrayList<String>();
+		tokenizer.tokenize(content);
+		for(;tokenizer.hasMoreElements();){
+			String token=tokenizer.nextElement();
+			if(!stop.isStopword(token)){
+				tokens.add(stemmer.stem(token));
+
+			}
+		}
+		return tokens;
+
+	}
+
+
+
 	
+
+	static public List<String> tokenize(String content, boolean toLowerCase, boolean standarizeUrlsUsers, boolean reduceRepeatedLetters, Tokenizer tokenizer, Stemmer stemmer, StopwordsHandler stop) {
+
+		if (toLowerCase)
+			content = content.toLowerCase();
+
+		if (!standarizeUrlsUsers)
+			return getTokens(content,tokenizer, stemmer, stop);
+		else {
+			// if a letters appears two or more times it is replaced by only two
+			// occurrences of it
+			content = content.replaceAll("([a-z])\\1+", "$1$1");
+		}
+
+		List<String> tokens = new ArrayList<String>();
+
+		for (String word : getTokens(content,tokenizer, stemmer, stop)) {
+			String cleanWord = word;
+
+			if (reduceRepeatedLetters) {
+				// Replace URLs to a generic URL
+				if (word.matches("http.*|ww\\..*|www\\..*")) {
+					cleanWord = "http://www.url.com";
+				}
+
+				// Replaces user mentions to a generic user
+				else if (word.matches("@.*")) {
+					cleanWord = "@user";
+				}
+
+			}
+
+			tokens.add(cleanWord);
+		}
+		return tokens;
+
+	}
+
 
 
 }

@@ -23,29 +23,25 @@ package weka.filters.unsupervised.attribute;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import affective.core.SentiStrengthEvaluator;
 import weka.core.Attribute;
 import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
+import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
-import weka.core.Utils;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
+
 
 /**
- *  <!-- globalinfo-start --> An attribute filter that calculates lexicon-based features 
- *  for a tweet represented as a string attribute. Different lexicons are used. 
+ *  <!-- globalinfo-start --> An attribute filter that calculates positive and negative scores using 
+ *  SentiStrength for a tweet represented as a string attribute. 
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -69,7 +65,7 @@ import weka.filters.SimpleBatchFilter;
  */
 
 
-public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
+public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 
 	/** For serialization  */
 	private static final long serialVersionUID = 3748678887246129719L;
@@ -80,23 +76,12 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	/** The path of SentiStrength */
 	public static String SENTISTRENGTH_FOLDER_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"SentiStrength"+java.io.File.separator;
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
-
 
 	/** The folder with the language files. */
-	protected String langFolder=SENTISTRENGTH_FOLDER_NAME+"english"+java.io.File.separator;
+	protected File langFolder=new File(SENTISTRENGTH_FOLDER_NAME+"english");
 	
 
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
-
+	
 	
 
 	/**
@@ -130,127 +115,8 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
 
-		result.addElement(new Option("\t Index of string attribute.\n"
-				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));
-
-
-		result.addElement(new Option("\t Lowercase content.\n"
-				+ "\t(default: " + this.toLowerCase + ")", "U", 0, "-U"));
-
-		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
-				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
-		
-		
-		result.addElement(new Option("\t SentiStrength files folder).\n"
-				+ "\t(default: " + this.langFolder + ")", "L", 0, "-L"));	
-
-
-		result.addAll(Collections.list(super.listOptions()));
-
-		return result.elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {
-
-		Vector<String> result = new Vector<String>();
-
-		result.add("-I");
-		result.add("" + this.getTextIndex());
-
-		if(this.toLowerCase)
-			result.add("-U");
-
-		if(this.cleanTokens)
-			result.add("-O");
-		
-		result.add("-L");
-		result.add("" + this.getLangFolder());
-
-
-		Collections.addAll(result, super.getOptions());
-
-		return result.toArray(new String[result.size()]);
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-
-
-		String textIndexOption = Utils.getOption('I', options);
-		if (textIndexOption.length() > 0) {
-			String[] textIndexSpec = Utils.splitOptions(textIndexOption);
-			if (textIndexSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int index = Integer.parseInt(textIndexSpec[0]);
-			this.setTextIndex(index);
-
-		}
-
-
-		this.toLowerCase=Utils.getFlag('U', options);
-
-		this.cleanTokens=Utils.getFlag('O', options);
-		
-		
-		String langFolderOption = Utils.getOption('L', options);
-		if (langFolderOption.length() > 0) {
-			String[] langFolderSpec = Utils.splitOptions(langFolderOption);
-			if (langFolderSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			
-			this.setLangFolder(langFolderSpec[0]);
-
-		}
-		
-		
-
-		super.setOptions(options);
-
-		Utils.checkForRemainingOptions(options);
-
-
-	}
+	
 
 	
 	/* (non-Javadoc)
@@ -312,19 +178,21 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		// Instances result = new Instances(determineOutputFormat(instances),
-		// 0);
+
+		
+		// set upper value for text index
+		m_textIndex.setUpper(instances.numAttributes() - 1);
 
 		Instances result = getOutputFormat();
 
 
 		// reference to the content of the message, users index start from zero
-		Attribute attrCont = instances.attribute(this.textIndex-1);
+		Attribute attrCont = instances.attribute(this.m_textIndex.getIndex());
 
 
 		// SentiStrength is re-intialized in each batch as it is not serializable
 		SentiStrengthEvaluator sentiStrengthEvaluator=new SentiStrengthEvaluator(
-				this.langFolder,"SentiStrength");
+				this.langFolder.getAbsolutePath()+File.separator,"SentiStrength");
 		sentiStrengthEvaluator.processDict();
 
 		for (int i = 0; i < instances.numInstances(); i++) {
@@ -333,8 +201,7 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 			String content = instances.instance(i).stringValue(attrCont);
-			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.cleanTokens);
-
+			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 			
 			Map<String,Double> featuresForLex=sentiStrengthEvaluator.evaluateTweet(words);
@@ -359,107 +226,16 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
 
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String textIndexTipText() {
-
-		return "The index (starting from 1) of the target string attribute." ;
-	}
-
-
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String lowerCaseTipText() {
-		return "Lowercase the tweet's content.";
-	}
-
-
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String cleanTokensTipText() {
-		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
-				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing user mentions and URLs with generic tokens.";		
-	}
-
-
-	
+	@OptionMetadata(displayName = "language folder",
+			description = "The folder containing SentiStrength Files. Change it for using a language different from English.",
+			commandLineParamName = "L", commandLineParamSynopsis = "-L <string>",
+			displayOrder = 0)
 	/**
 	 * Returns the folder with the SentiStrength files.
 	 * @return the folder with the SentiStrength files.
 	 */
-	public String getLangFolder() {
+	public File getLangFolder() {
 		return langFolder;
 	}
 
@@ -467,19 +243,15 @@ public class TweetToSentiStrengthFeatureVector extends SimpleBatchFilter {
 	 * Sets the folder with the SentiStrength files.
 	 * @param langFolder the folder with the SentiStrength files.
 	 */
-	public void setLangFolder(String langFolder) {
+	public void setLangFolder(File langFolder) {
 		this.langFolder = langFolder;
 	}
 	
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String langFolderTipText() {
-		return "The folder containing SentiStrength Files. Change it for using a language different from English.";		
-	}
+
+
+
+
+	
 
 
 }
