@@ -234,57 +234,52 @@ public class Utils {
 	}
 
 
-	static public List<String> getTokens(String content, Tokenizer tokenizer, Stemmer stemmer, StopwordsHandler stop){
-		List<String> tokens = new ArrayList<String>();
-		tokenizer.tokenize(content);
-		for(;tokenizer.hasMoreElements();){
-			String token=tokenizer.nextElement();
-			if(!stop.isStopword(token)){
-				tokens.add(stemmer.stem(token));
 
-			}
-		}
-		return tokens;
-
-	}
-
-
-
-	
-
+	/**
+	 * Tokenizes a String
+	 * @param content the content
+	 * @param toLowerCase true for lowercasing the content
+	 * @param standarizeUrlsUsers true for standarizing urls and users
+	 * @param reduceRepeatedLetters true for reduing repeated letters
+	 * @param tokenizer the tokenizer
+	 * @param stemmer the stemmer
+	 * @param stop the stopwords handler
+	 * @return a list of tokens
+	 */
 	static public List<String> tokenize(String content, boolean toLowerCase, boolean standarizeUrlsUsers, boolean reduceRepeatedLetters, Tokenizer tokenizer, Stemmer stemmer, StopwordsHandler stop) {
 
 		if (toLowerCase)
 			content = content.toLowerCase();
 
-		if (!standarizeUrlsUsers)
-			return getTokens(content,tokenizer, stemmer, stop);
-		else {
-			// if a letters appears two or more times it is replaced by only two
-			// occurrences of it
+		// if a letters appears two or more times it is replaced by only two
+		// occurrences of it
+		if (reduceRepeatedLetters)
 			content = content.replaceAll("([a-z])\\1+", "$1$1");
-		}
+
 
 		List<String> tokens = new ArrayList<String>();
 
-		for (String word : getTokens(content,tokenizer, stemmer, stop)) {
-			String cleanWord = word;
+		tokenizer.tokenize(content);
+		for(;tokenizer.hasMoreElements();){
+			String token=tokenizer.nextElement();
+			if(!stop.isStopword(token)){
 
-			if (reduceRepeatedLetters) {
-				// Replace URLs to a generic URL
-				if (word.matches("http.*|ww\\..*|www\\..*")) {
-					cleanWord = "http://www.url.com";
-				}
+				if (standarizeUrlsUsers) {
+					// Replace URLs to a generic URL
+					if (token.matches("http.*|ww\\..*|www\\..*")) {
+						token="http://www.url.com";
+					}
+					// Replaces user mentions to a generic user
+					else if (token.matches("@.*")) {
+						token="@user";
+					}
 
-				// Replaces user mentions to a generic user
-				else if (word.matches("@.*")) {
-					cleanWord = "@user";
-				}
+				}				
 
+				tokens.add(stemmer.stem(token));
 			}
-
-			tokens.add(cleanWord);
 		}
+
 		return tokens;
 
 	}

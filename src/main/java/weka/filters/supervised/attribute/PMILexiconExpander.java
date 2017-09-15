@@ -28,7 +28,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -37,13 +36,12 @@ import weka.core.Capabilities;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
 import weka.core.OptionMetadata;
 import weka.core.TechnicalInformation;
 import weka.core.Utils;
 import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
+import weka.filters.unsupervised.attribute.TweetToFeatureVector;
 
 
 
@@ -72,7 +70,7 @@ import weka.filters.SimpleBatchFilter;
  * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class PMILexiconExpander extends SimpleBatchFilter {
+public class PMILexiconExpander extends TweetToFeatureVector {
 
 
 
@@ -83,19 +81,6 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 	/** the vocabulary and the WordRep */
 	protected Object2ObjectMap<String, WordCount> wordInfo; 
-
-
-
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 
 
@@ -201,66 +186,6 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 
 
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		return Option.listOptionsForClass(this.getClass()).elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {		
-		return Option.getOptions(this, this.getClass());
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-		Option.setOptions(options, this, this.getClass());
-	}
-
-
-
-
-	/* To allow determineOutputFormat to access to entire dataset
-	 * (non-Javadoc)
-	 * @see weka.filters.SimpleBatchFilter#allowAccessToFullInputFormat()
-	 */
-	public boolean allowAccessToFullInputFormat() {
-		return true;
-	}
-
-
-
 
 	/**
 	 * Calculates the counts of words occurring with the class values
@@ -276,7 +201,7 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 			this.wordInfo = new Object2ObjectOpenHashMap<String, WordCount>();
 
-			Attribute attrCont = inputFormat.attribute(this.textIndex-1);
+			Attribute attrCont = inputFormat.attribute(this.m_textIndex.getIndex());
 
 			Attribute attClassInp=inputFormat.attribute(inputFormat.classIndex());
 
@@ -298,7 +223,7 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 
 				// tokenises the content 
-				List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens);
+				List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 
 				// counts word frequencies for each distinct word
@@ -341,6 +266,9 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
+
+		// set upper value for text index
+		m_textIndex.setUpper(inputFormat.numAttributes() - 1);
 
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
@@ -410,90 +338,10 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 
 
 
-
-
-	@OptionMetadata(displayName = "textIndex",
-			description = "The index (starting from 1) of the target string attribute.",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-			displayOrder = 0)
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-
-
-
-	@OptionMetadata(displayName = "lowercase",
-			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
-			commandLineParamName = "U", commandLineParamSynopsis = "-U",
-			displayOrder = 1)
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-
-	@OptionMetadata(displayName = "cleanTokens",
-			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
-					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-					+ "and replacing user mentions and URLs with generic tokens.", 
-					commandLineParamIsFlag = true, commandLineParamName = "O", 
-					commandLineParamSynopsis = "-O",
-					displayOrder = 2)	
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
 	@OptionMetadata(displayName = "posClassValue",
 			description = "The value of the positive class.\t default positive",
 			commandLineParamName = "posClassValue", commandLineParamSynopsis = "-posClassValue <String>",
-			displayOrder = 3)
+			displayOrder = 6)
 	public String getPosClassValue() {
 		return m_PosClassValue;
 	}
@@ -504,7 +352,7 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 	@OptionMetadata(displayName = "negClassValue",
 			description = "The value of the negative class.\t default negative",
 			commandLineParamName = "negClassValue", commandLineParamSynopsis = "-negClassValue <String>",
-			displayOrder = 4)
+			displayOrder = 7)
 	public String getNegClassValue() {
 		return m_NegClassValue;
 	}
@@ -517,7 +365,7 @@ public class PMILexiconExpander extends SimpleBatchFilter {
 	@OptionMetadata(displayName = "minFreq",
 			description = "Minimum frequency of a word to be considered.\t default 10",
 			commandLineParamName = "minFreq", commandLineParamSynopsis = "-minFreq <int>",
-			displayOrder = 5)
+			displayOrder = 8)
 	public int getMinFreq() {
 		return minFreq;
 	}

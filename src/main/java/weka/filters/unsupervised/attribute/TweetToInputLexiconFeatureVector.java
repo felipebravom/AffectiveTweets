@@ -30,13 +30,11 @@ import java.util.Map;
 
 import affective.core.ArffLexiconEvaluator;
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.WekaPackageManager;
-import weka.core.Capabilities.Capability;
 
 /**
  *  <!-- globalinfo-start --> A batch filter that calculates attributes for a tweet using a given affective lexicon in arff format.
@@ -64,14 +62,8 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
 
 
-
-
-
 	/** List of Lexicons to use */
 	protected ArffLexiconEvaluator[] lexiconEval=new ArffLexiconEvaluator[]{new ArffLexiconEvaluator()};
-
-
-
 
 
 
@@ -88,36 +80,6 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 				+ " All numeric and nominal attributes from the given lexicon are considered. Numeric scores are added and nominal are counted. "
 				+ "The NRC-Affect-Intensity is used by deault. \n";
 	}
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getCapabilities()
-	 */
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
-
 
 
 
@@ -236,7 +198,7 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 	@OptionMetadata(displayName = "ArffLexiconEvaluator",
 			description = "The specification of a lexicon evaluator. This option can be used multiple times.",
 			commandLineParamName = "lexicon_evaluator",
-			commandLineParamSynopsis = "-lexicon_evaluator <string>", displayOrder = 3)		
+			commandLineParamSynopsis = "-lexicon_evaluator <string>", displayOrder = 6)		
 	public ArffLexiconEvaluator[] getLexiconEval() {
 		return lexiconEval;
 	}

@@ -59,7 +59,7 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	protected SingleIndex m_textIndex = new SingleIndex("1");
 
 
-	
+
 
 	/** True if all tokens should be downcased. */
 	protected boolean toLowerCase=true;
@@ -67,11 +67,11 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 
 	/** True if url, users, and repeated letters are cleaned */
 	protected boolean standarizeUrlsUsers=false;
-	
+
 
 	/** True for standarizing repeated letters are cleaned */
 	protected boolean reduceRepeatedLetters=false;
-	
+
 
 	/** The tokenizer */
 	protected Tokenizer m_tokenizer=new TweetNLPTokenizer();
@@ -111,23 +111,7 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 
 	/**
 	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
 	 *  
-	 * <!-- options-end -->
-	 * 
 	 * @param options
 	 *            the options to use
 	 * @throws Exception
@@ -168,9 +152,19 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 
 
 
+	/* To allow determineOutputFormat to access to entire dataset
+	 * (non-Javadoc)
+	 * @see weka.filters.SimpleBatchFilter#allowAccessToFullInputFormat()
+	 */
+	public boolean allowAccessToFullInputFormat() {
+		return true;
+	}
+
+
+
 
 	@OptionMetadata(displayName = "textIndex",
-			description = "The index (starting from 1) of the target string attribute. Start and last are valid values. ",
+			description = "The index (starting from 1) of the target string attribute. First and last are valid values. ",
 			commandLineParamName = "I", commandLineParamSynopsis = "-I <col>",
 			displayOrder = 0)
 	public String getTextIndex() {
@@ -181,29 +175,15 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	
-		
 
 
 	@OptionMetadata(displayName = "lowercase",
 			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
 			commandLineParamName = "U", commandLineParamSynopsis = "-U",
 			displayOrder = 1)
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
 	public boolean isToLowerCase() {
 		return toLowerCase;
 	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
 	public void setToLowerCase(boolean toLowerCase) {
 		this.toLowerCase = toLowerCase;
 	}
@@ -212,17 +192,17 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 
 	@OptionMetadata(displayName = "standarize URLs and @user mentions",
 			description = "Reduce the attribute space by replacing user mentions and URLs with generic tokens.", 
-					commandLineParamIsFlag = true, commandLineParamName = "stan", 
-					commandLineParamSynopsis = "-stan",
-					displayOrder = 2)	
+			commandLineParamIsFlag = true, commandLineParamName = "stan", 
+			commandLineParamSynopsis = "-stan",
+			displayOrder = 2)	
 	public boolean isStandarizeUrlsUsers() {
 		return standarizeUrlsUsers;
 	}
 	public void setStandarizeUrlsUsers(boolean standarizeUrlsUsers) {
 		this.standarizeUrlsUsers = standarizeUrlsUsers;
 	}
-	
-	
+
+
 	@OptionMetadata(displayName = "reduceRepeatedLetters",
 			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
 					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove)", 
@@ -245,7 +225,6 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	public Tokenizer getTokenizer() {
 		return m_tokenizer;
 	}
-
 	public void setTokenizer(Tokenizer m_tokenizer) {
 		this.m_tokenizer = m_tokenizer;
 	}
@@ -269,7 +248,7 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	@OptionMetadata(displayName = "stopwordsHandler",
 			description = "The stopwords handler to use (Null means no stopwords are used).",
 			commandLineParamName = "stopwords-handler",
-			commandLineParamSynopsis = "-stopwords-handler <string>", displayOrder = 4)
+			commandLineParamSynopsis = "-stopwords-handler <string>", displayOrder = 5)
 	public StopwordsHandler getStopwordsHandler() {
 		return m_stopwordsHandler;
 	}
@@ -277,8 +256,8 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 		this.m_stopwordsHandler = m_stopwordsHandler;
 	}
 
-	
-	
+
+
 
 
 

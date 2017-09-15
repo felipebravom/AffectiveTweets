@@ -40,23 +40,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.zip.GZIPInputStream;
 
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
-import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
-
 
 
 /**
@@ -69,7 +63,7 @@ import weka.filters.SimpleBatchFilter;
  * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class TweetCentroid extends SimpleBatchFilter {
+public class TweetCentroid extends TweetToFeatureVector {
 
 
 	/** For serialization.    **/
@@ -116,16 +110,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 	protected int minInstDocs=0; 
 
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
-
-
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-
 	/** True for calculating word-based attributes . */
 	protected boolean createWordAtts=true;
 
@@ -133,9 +117,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 	/** True for calculating cluster-based attributes . */
 	protected boolean createClustAtts=true;
 
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 
 	/** True if additional numerical attributes should be included to the centroid */
@@ -215,91 +196,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
-
-
-
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		return Option.listOptionsForClass(this.getClass()).elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {		
-		return Option.getOptions(this, this.getClass());
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-		Option.setOptions(options, this, this.getClass());
-	}
-
-
-
-	/* To allow determineOutputFormat to access to entire dataset
-	 * (non-Javadoc)
-	 * @see weka.filters.SimpleBatchFilter#allowAccessToFullInputFormat()
-	 */
-	public boolean allowAccessToFullInputFormat() {
-		return true;
-	}
-
-
-
 
 
 
@@ -330,6 +226,9 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 		if (!this.isFirstBatchDone()){
+			
+			// set upper value for text index
+			m_textIndex.setUpper(inputFormat.numAttributes() - 1);
 
 
 			this.wordInfo = new Object2ObjectOpenHashMap<String, WordRep>();
@@ -372,7 +271,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			if(this.considerNumericAtts){
 				this.numericAttributes=new  ObjectArrayList<Attribute>();
 				for(int i=0;i<inputFormat.numAttributes();i++){
-					if(i!=this.textIndex && inputFormat.attribute(i).type()==Attribute.NUMERIC){
+					if(i!=this.m_textIndex.getIndex() && inputFormat.attribute(i).type()==Attribute.NUMERIC){
 						this.numericAttributes.add(inputFormat.attribute(i));						
 					}
 
@@ -381,8 +280,8 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 
-			// reference to the content of the message, users index start from zero
-			Attribute attrCont = inputFormat.attribute(this.textIndex-1);
+			// reference to the content of the message
+			Attribute attrCont = inputFormat.attribute(this.m_textIndex.getIndex());
 
 			for (ListIterator<Instance> it = inputFormat.listIterator(); it
 					.hasNext();) {
@@ -391,7 +290,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 				// tokenises the content 
-				List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens);
+				List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 				// Identifies the distinct terms
 				AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
@@ -500,6 +399,8 @@ public class TweetCentroid extends SimpleBatchFilter {
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
+
+
 		Instances result = getOutputFormat();
 
 		for(String word:this.wordInfo.keySet()){
@@ -558,85 +459,6 @@ public class TweetCentroid extends SimpleBatchFilter {
 
 
 
-	@OptionMetadata(displayName = "textIndex",
-			description = "The index (starting from 1) of the target string attribute.",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-			displayOrder = 0)
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-
-
-
-
-	@OptionMetadata(displayName = "lowercase",
-			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
-			commandLineParamName = "U", commandLineParamSynopsis = "-U",
-			displayOrder = 1)
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-
-	@OptionMetadata(displayName = "cleanTokens",
-			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
-					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-					+ "and replacing user mentions and URLs with generic tokens.", 
-					commandLineParamIsFlag = true, commandLineParamName = "O", 
-					commandLineParamSynopsis = "-O",
-					displayOrder = 2)	
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
 
 
 
@@ -646,7 +468,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			description = "Minimum frequency of a sparse attribute to be considered in the attribute space.", 
 			commandLineParamName = "M", 
 			commandLineParamSynopsis = "-M <int>",
-			displayOrder = 3)	
+			displayOrder = 6)	
 	public int getMinAttDocs() {
 		return minAttDocs;
 	}
@@ -659,7 +481,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			description = "Minimum frequency of a word to be considered in the instance space.",
 			commandLineParamName = "N", 
 			commandLineParamSynopsis = "-N <int>",
-			displayOrder = 4)	
+			displayOrder = 7)	
 	public int getMinInstDocs() {
 		return minInstDocs;
 	}
@@ -672,7 +494,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			description = "True for creating unigram attributes.", 
 			commandLineParamIsFlag = true, commandLineParamName = "W", 
 			commandLineParamSynopsis = "-W",
-			displayOrder = 5)	
+			displayOrder = 8)	
 	public boolean isCreateWordAtts() {
 		return createWordAtts;
 	}
@@ -686,7 +508,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			description = "True for creating attributes using word clusters",
 			commandLineParamIsFlag = true, commandLineParamName = "C", 
 			commandLineParamSynopsis = "-C",
-			displayOrder = 6)	
+			displayOrder = 9)	
 	public void setCreateClustAtts(boolean createClustAtts) {
 		this.createClustAtts = createClustAtts;
 	}
@@ -700,7 +522,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			description = "The file containing the word clusters.", 
 			commandLineParamName = "H", 
 			commandLineParamSynopsis = "-H <string>",
-			displayOrder = 8)	
+			displayOrder = 10)	
 	public File getWordClustFile() {
 		return wordClustFile;
 	}
@@ -716,7 +538,7 @@ public class TweetCentroid extends SimpleBatchFilter {
 			commandLineParamIsFlag = true, 
 			commandLineParamName = "natt", 
 			commandLineParamSynopsis = "-natt",
-			displayOrder = 9)	
+			displayOrder = 11)	
 	public boolean isIncludeMetaData() {
 		return considerNumericAtts;
 	}
@@ -725,13 +547,13 @@ public class TweetCentroid extends SimpleBatchFilter {
 	}
 
 
-	
+
 	@OptionMetadata(displayName = "freqWeights",
 			description = "True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.",
 			commandLineParamIsFlag = true, 
 			commandLineParamName = "F", 
 			commandLineParamSynopsis = "-F",
-			displayOrder = 10)		
+			displayOrder = 12)		
 	public boolean isFreqWeights() {
 		return freqWeights;
 	}

@@ -28,14 +28,12 @@ import java.util.Map;
 
 import affective.core.SentiStrengthEvaluator;
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
 import weka.core.WekaPackageManager;
-import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
 
 
@@ -118,34 +116,6 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 
 	
 
-	
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getCapabilities()
-	 */
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
-
-
-
 	/* (non-Javadoc)
 	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
 	 */
@@ -202,7 +172,6 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 
 			String content = instances.instance(i).stringValue(attrCont);
 			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
-
 			
 			Map<String,Double> featuresForLex=sentiStrengthEvaluator.evaluateTweet(words);
 			for(String featName:featuresForLex.keySet()){
@@ -230,7 +199,7 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 	@OptionMetadata(displayName = "language folder",
 			description = "The folder containing SentiStrength Files. Change it for using a language different from English.",
 			commandLineParamName = "L", commandLineParamSynopsis = "-L <string>",
-			displayOrder = 0)
+			displayOrder = 6)
 	/**
 	 * Returns the folder with the SentiStrength files.
 	 * @return the folder with the SentiStrength files.

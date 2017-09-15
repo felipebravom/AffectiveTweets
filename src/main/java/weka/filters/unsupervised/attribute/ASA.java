@@ -16,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
@@ -27,17 +26,14 @@ import affective.core.ArffLexiconEvaluator;
 
 
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
 import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
 import weka.core.WekaPackageManager;
-import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
+
 
 
 /**
@@ -55,7 +51,7 @@ import weka.filters.SimpleBatchFilter;
  * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class ASA  extends SimpleBatchFilter {
+public class ASA  extends TweetToFeatureVector {
 
 
 
@@ -118,12 +114,6 @@ public class ASA  extends SimpleBatchFilter {
 	/** The number of negative instances to generate */
 	protected int numNegInstances=1000;
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
 
 
 	/** True for calculating word-based attributes . */
@@ -132,11 +122,6 @@ public class ASA  extends SimpleBatchFilter {
 
 	/** True for calculating cluster-based attributes . */
 	protected boolean createClustAtts=true;
-
-
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 
 
@@ -202,91 +187,6 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
-
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		return Option.listOptionsForClass(this.getClass()).elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {		
-		return Option.getOptions(this, this.getClass());
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-		Option.setOptions(options, this, this.getClass());
-	}
-
-
-
-	/* To allow determineOutputFormat to access to entire dataset
-	 * (non-Javadoc)
-	 * @see weka.filters.SimpleBatchFilter#allowAccessToFullInputFormat()
-	 */
-	public boolean allowAccessToFullInputFormat() {
-		return true;
-	}
-
-
-
-
-
 
 
 
@@ -297,7 +197,7 @@ public class ASA  extends SimpleBatchFilter {
 		Instances result=getOutputFormat();
 
 
-		Attribute contentAtt=inp.attribute(this.textIndex-1);
+		Attribute contentAtt=inp.attribute(this.m_textIndex.getIndex());
 
 
 		for(Instance inst:inp){
@@ -305,7 +205,8 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
-			List<String> tokens=affective.core.Utils.tokenize(content, this.toLowerCase, this.cleanTokens); 
+			// tokenises the content 
+			List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 			// Identifies the distinct terms
 			AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
@@ -421,7 +322,7 @@ public class ASA  extends SimpleBatchFilter {
 
 
 		// reference to the content of the message, users index start from zero
-		Attribute attrCont = inputFormat.attribute(this.textIndex-1);
+		Attribute attrCont = inputFormat.attribute(this.m_textIndex.getIndex());
 
 		for (ListIterator<Instance> it = inputFormat.listIterator(); it
 				.hasNext();) {
@@ -430,7 +331,7 @@ public class ASA  extends SimpleBatchFilter {
 
 
 			// tokenises the content 
-			List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens); 
+			List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 			// Identifies the distinct terms
 			AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
@@ -490,9 +391,9 @@ public class ASA  extends SimpleBatchFilter {
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
 
+		// set upper value for text index
+		m_textIndex.setUpper(inputFormat.numAttributes() - 1);
 
-
-		//	inputFormat.setClassIndex(inputFormat.numAttributes()-1);
 
 		// calculates the word frequency vectors and the vocabulary
 
@@ -535,6 +436,8 @@ public class ASA  extends SimpleBatchFilter {
 
 	@Override
 	protected Instances process(Instances instances) throws Exception {
+
+
 
 		Instances result;
 
@@ -615,92 +518,11 @@ public class ASA  extends SimpleBatchFilter {
 
 
 
-
-
-	@OptionMetadata(displayName = "textIndex",
-			description = "The index (starting from 1) of the target string attribute.",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <int>",
-			displayOrder = 0)
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-
-
-
-
-	@OptionMetadata(displayName = "lowercase",
-			description = "Lowercase the tweet's content.", commandLineParamIsFlag = true,
-			commandLineParamName = "U", commandLineParamSynopsis = "-U",
-			displayOrder = 1)
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-
-	@OptionMetadata(displayName = "cleanTokens",
-			description = "Reduce the attribute space by replacing sequences of letters occurring more than two "
-					+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-					+ "and replacing user mentions and URLs with generic tokens.", 
-					commandLineParamIsFlag = true, commandLineParamName = "O", 
-					commandLineParamSynopsis = "-O",
-					displayOrder = 2)	
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
 	@OptionMetadata(displayName = "minAttDocs",
 			description = "Minimum frequency of a sparse attribute to be considered in the attribute space.", 
 			commandLineParamName = "M", 
 			commandLineParamSynopsis = "-M <int>",
-			displayOrder = 3)	
+			displayOrder = 6)	
 	public int getMinAttDocs() {
 		return minAttDocs;
 	}
@@ -714,7 +536,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "True for creating unigram attributes.", 
 			commandLineParamIsFlag = true, commandLineParamName = "W", 
 			commandLineParamSynopsis = "-W",
-			displayOrder = 4)	
+			displayOrder = 7)	
 	public boolean isCreateWordAtts() {
 		return createWordAtts;
 	}
@@ -728,7 +550,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "True for creating attributes using word clusters",
 			commandLineParamIsFlag = true, commandLineParamName = "C", 
 			commandLineParamSynopsis = "-C",
-			displayOrder = 5)	
+			displayOrder = 8)	
 	public void setCreateClustAtts(boolean createClustAtts) {
 		this.createClustAtts = createClustAtts;
 	}
@@ -742,7 +564,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The file containing the word clusters.", 
 			commandLineParamName = "H", 
 			commandLineParamSynopsis = "-H <string>",
-			displayOrder = 6)	
+			displayOrder = 9)	
 	public File getWordClustFile() {
 		return wordClustFile;
 	}
@@ -755,7 +577,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The file containing a lexicon in ARFF format with word polarities.", 
 			commandLineParamName = "lex", 
 			commandLineParamSynopsis = "-lex <string>",
-			displayOrder = 7)	
+			displayOrder = 10)	
 	public File getLexicon() {
 		return lexicon;
 	}
@@ -770,7 +592,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The number of tweets to average in each generated instance. \t default: 10", 
 			commandLineParamName = "A", 
 			commandLineParamSynopsis = "-A <int>",
-			displayOrder = 8)
+			displayOrder = 11)
 	public int getTweetsPerCentroid() {
 		return tweetsPerCentroid;
 	}
@@ -785,7 +607,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The number of positive instances to generaTE. \t default: 1000", 
 			commandLineParamName = "npos", 
 			commandLineParamSynopsis = "-npos <int>",
-			displayOrder = 9)	
+			displayOrder = 12)	
 	public int getNumPosInstances() {
 		return numPosInstances;
 	}
@@ -799,7 +621,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The number of negative instances to generate. \t default: 1000", 
 			commandLineParamName = "nneg", 
 			commandLineParamSynopsis = "-nneg <int>",
-			displayOrder = 10)
+			displayOrder = 13)
 	public int getNumNegInstances() {
 		return numNegInstances;
 	}
@@ -814,7 +636,7 @@ public class ASA  extends SimpleBatchFilter {
 					"\t default False",
 					commandLineParamIsFlag = true, commandLineParamName = "E", 
 					commandLineParamSynopsis = "-E",
-					displayOrder = 11)	
+					displayOrder = 14)	
 	public boolean isExclusiveSets() {
 		return exclusiveSets;
 	}
@@ -829,7 +651,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The random seed number. \t default: 1", 
 			commandLineParamName = "R", 
 			commandLineParamSynopsis = "-R <int>",
-			displayOrder = 12)
+			displayOrder = 15)
 	public int getRandomSeed() {
 		return m_randomSeed;	}
 	public void setRandomSeed(int randomSeed) {
@@ -837,13 +659,13 @@ public class ASA  extends SimpleBatchFilter {
 	}
 
 
-	
+
 
 	@OptionMetadata(displayName = "polarityAttName",
 			description = "The lexicon attribute name with the word polarities. \t default: polarity", 
 			commandLineParamName = "polatt", 
 			commandLineParamSynopsis = "-polatt <string>",
-			displayOrder = 13)	
+			displayOrder = 16)	
 	public String getPolarityAttName() {
 		return polarityAttName;
 	}
@@ -860,7 +682,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The lexicon attribute value name for positive words. \t default: positive", 
 			commandLineParamName = "posval", 
 			commandLineParamSynopsis = "-posval <String>",
-			displayOrder = 14)
+			displayOrder = 17)
 	public String getPolarityAttPosValName() {
 		return polarityAttPosValName;
 	}
@@ -875,7 +697,7 @@ public class ASA  extends SimpleBatchFilter {
 			description = "The lexicon attribute value name for negative words. \t default: negative", 
 			commandLineParamName = "negval", 
 			commandLineParamSynopsis = "-negval <String>",
-			displayOrder = 15)
+			displayOrder = 18)
 	public String getPolarityAttNegValName() {
 		return polarityAttNegValName;
 	}
