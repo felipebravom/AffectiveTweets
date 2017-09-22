@@ -2,3 +2,4 @@ affective.core.ArffLexiconEvaluator=weka.gui.GenericObjectEditor
 affective.core.ArffLexiconEvaluator[]=weka.gui.GenericArrayEditor
 affective.core.ArffLexiconWordLabeller=weka.gui.GenericObjectEditor
 affective.core.ArffLexiconWordLabeller[]=weka.gui.GenericArrayEditor
+affective.core.EmbeddingHandler=weka.gui.GenericObjectEditor

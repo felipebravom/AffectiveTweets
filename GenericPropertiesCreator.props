@@ -1,2 +1,3 @@
 affective.core.ArffLexiconEvaluator =\ affective.core
 affective.core.ArffLexiconWordLabeller =\ affective.core 
+affective.core.EmbeddingHandler =\ affective.core 

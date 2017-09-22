@@ -17,7 +17,7 @@ package weka.filters.unsupervised.attribute;
 
 /*
  *    TweetToSparseFeatureVector.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -34,11 +34,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 
 import affective.core.NegationEvaluator;
@@ -46,16 +43,12 @@ import cmu.arktweetnlp.Tagger;
 import cmu.arktweetnlp.impl.ModelSentence;
 import cmu.arktweetnlp.impl.Sentence;
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
+import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
-import weka.core.Utils;
-import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
 
 /**
  *  <!-- globalinfo-start --> An attribute filter that calculates different types of sparse features 
@@ -80,12 +73,12 @@ import weka.filters.SimpleBatchFilter;
  * 
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
- * @version $Revision: 1 $
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 2 $
  */
 
 
-public class TweetToSparseFeatureVector extends SimpleBatchFilter {
+public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 
 
 	/** for serialization */
@@ -96,10 +89,11 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public static String RESOURCES_FOLDER_NAME = weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
 
 	/** Default path of POS tagger model. */
-	public static String TAGGER_FILE_NAME=RESOURCES_FOLDER_NAME+File.separatorChar+"model.20120919";
+	protected File taggerFile=new File (RESOURCES_FOLDER_NAME+File.separatorChar+"model.20120919");
+
 
 	/** The path of the word clusters. */
-	public static String WORD_CLUSTERS_FILE_NAME=RESOURCES_FOLDER_NAME+File.separatorChar+"50mpaths2.txt.gz";
+	protected File wordClustFile=new File(RESOURCES_FOLDER_NAME+File.separatorChar+"50mpaths2.txt.gz");
 
 
 	/** Counts the number of tweets in which candidate attributes appear. This will help for discarding infrequent attributes. */
@@ -111,8 +105,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	/** Brown Clusters Dictionary */
 	protected Object2ObjectMap<String,String> brownDict;
 
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 	/** True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise. */
 	protected boolean freqWeights=true;
@@ -120,8 +112,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	/** The minimum number of tweets for an attribute to be considered in the attribute space. */
 	protected int minAttDocs=0; 
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
 
 	/** The maximum number of type of word ngrams to calculate. If n=3 Unigrams, bigrams and trigrams will calculated */
 	protected int wordNgramMaxDim=1;
@@ -131,10 +121,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 	/** True for adding a prefix to words occurring in a negated context */
 	protected boolean negateTokens=false;
-
-
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
 
 
 	/** True to calculate character ngram features */
@@ -205,356 +191,6 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
-
-		result.addElement(new Option("\t Minimum number of tweets for an attribute to be considered.\n"
-				+ "\t(default: " + this.minAttDocs + ")", "M", 1, "-M"));
-
-		result.addElement(new Option("\t The index (starting from 1) of the target string attribute.\n"
-				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));		
-
-
-		result.addElement(new Option("\t Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you.\n "
-				+ "\t The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. \n"
-				+ "\t(default: " + this.negateTokens + ")", "R", 0, "-R"));
-
-		result.addElement(new Option("\t Maximum size for the word n-gram features. \n"
-				+ "\t Set this variable to zero for no word n-gram attributes."
-				+ " All word n-grams from i=1 to this value will be extracted."
-				+ "\n"
-				+ "\t(default: " + this.wordNgramMaxDim + ")", "Q", 1, "-Q"));
-
-
-		result.addElement(new Option("\t Calculate character n-gram features."
-				+ "\n"
-				+ "\t(default: " + this.calculateCharNgram + ")", "A", 0, "-A"));
-
-
-		result.addElement(new Option("\t The minimum size for character n-grams."
-				+ "\n"
-				+ "\t(default: " + this.charNgramMinDim + ")", "D", 1, "-D"));
-
-
-		result.addElement(new Option("\t The maximum size for character n-grams."
-				+ "\n"
-				+ "\t(default: " + this.charNgramMaxDim + ")", "E", 1, "-E"));
-
-
-
-		result.addElement(new Option("\t Lowercase content.\n"
-				+ "\t(default: " + this.toLowerCase + ")", "L", 0, "-L"));
-
-
-		result.addElement(new Option("\t Normalize tokens (replace goood by good, standarise URLs and @users).\n"
-				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));		
-
-		result.addElement(new Option("\t True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.\n"
-				+ "\t(default: " + this.freqWeights + ")", "F", 0, "-F"));
-
-
-		result.addElement(new Option("\t The maximum size for POS n-grams."
-				+ " Set this variable to zero for no POS attributes. \n"
-				+ "\t The tweets are POS-tagged using the CMU TweetNLP tool.\n"
-				+ "\t(default: " + this.posNgramMaxDim + ")", "G", 1, "-G"));
-
-
-		result.addElement(new Option("\t The maximum dimension for n-grams calculated with Brown word clusters.\n"
-				+ "\t Set this variable to zero for no word-clusters attributes. \n"
-				+ "\t The word clusters are taken from the CMU Tweet NLP tool.\n"
-				+ "\t(default: " + this.clustNgramMaxDim + ")", "I", 1, "-I"));
-
-
-		result.addAll(Collections.list(super.listOptions()));
-
-		return result.elements();
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {
-
-		Vector<String> result = new Vector<String>();
-
-		result.add("-M");
-		result.add("" + this.getMinAttDocs());
-
-		result.add("-I");
-		result.add("" + this.getTextIndex());
-
-
-		if(this.negateTokens)
-			result.add("-R");
-
-		result.add("-Q");
-		result.add("" + this.getWordNgramMaxDim());
-
-		if(this.calculateCharNgram)
-			result.add("-A");
-
-
-		result.add("-D");
-		result.add("" + this.getCharNgramMinDim());
-
-		result.add("-E");
-		result.add("" + this.getCharNgramMaxDim());
-
-		if(this.toLowerCase)
-			result.add("-L");
-
-		if(this.cleanTokens)
-			result.add("-O");
-
-		if(this.freqWeights)
-			result.add("-F");
-
-		result.add("-G");
-		result.add("" + this.posNgramMaxDim);
-
-
-		result.add("-I");
-		result.add("" + this.clustNgramMaxDim);
-
-
-		Collections.addAll(result, super.getOptions());
-
-		return result.toArray(new String[result.size()]);
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start -->
-	 *<pre>  
-	 *-M
-	 *	 Minimum number of tweets for an attribute to be considered.
-	 *	(default: 0)
-	 *</pre> 
-	 *<pre> 
-	 *-I
-	 *	 The index (starting from 1) of the target string attribute.
-	 *	(default: 1)
-	 *</pre>
-	 *<pre>  
-	 *-R
-	 *	 Add a prefix to words occurring in negated contexts e.g., I don't like you {@literal =>} I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark. 
-	 *	(default: false)
-	 *</pre>
-	 *<pre>  
-	 *-Q
-	 *	 Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted.
-	 *	(default: 1)
-	 *</pre>
-	 *<pre>  
-	 *-A
-	 *	 Calculate character n-gram features.
-	 *	(default: false)
-	 *</pre> 
-	 *<pre> 
-	 *-D
-	 *	 The minimum size for character n-grams.
-	 *	(default: 3)
-	 *</pre> 
-	 *<pre> 
-	 *-E
-	 *	 The maximum size for character n-grams.
-	 *	(default: 5)
-	 *</pre> 
-	 *<pre> 
-	 *-L
-	 *	 Lowercase content.
-	 *	(default: false)
-	 *</pre> 
-	 *<pre> 
-	 *-O
-	 *	 Normarlize tokens (replace goood by good, standarise URLs and @users).
-	 *	(default: false)
-	 *</pre> 
-	 *<pre> 
-	 *-F
-	 *	 True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.
-	 *	(default: false)
-	 *</pre> 
-	 *<pre> 
-	 *-G
-	 *	 The maximum size for POS n-grams. The tweets are POS-tagges using the CMU TweetNLP tool.
-	 *	(default: 0)
-	 *</pre> 
-	 *<pre> 
-	 *-I
-	 *	 The maximum dimension for n-grams calculated with Brown word clusters. The word clusters are taken from the CMU Tweet NLP tool.
-	 *	(default: 0)
-	 *</pre>  
-	 *  
-	 *  <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-
-		String textMinAttDocOption = Utils.getOption('M', options);
-		if (textMinAttDocOption.length() > 0) {
-			String[] textMinAttDocOptionSpec = Utils.splitOptions(textMinAttDocOption);
-			if (textMinAttDocOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid value");
-			}
-			int minDocAtt = Integer.parseInt(textMinAttDocOptionSpec[0]);
-			this.setMinAttDocs(minDocAtt);
-
-		}
-
-
-
-		String textIndexOption = Utils.getOption('I', options);
-		if (textIndexOption.length() > 0) {
-			String[] textIndexSpec = Utils.splitOptions(textIndexOption);
-			if (textIndexSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int index = Integer.parseInt(textIndexSpec[0]);
-			this.setTextIndex(index);
-
-		}
-
-		this.negateTokens=Utils.getFlag('R', options);	
-
-		String wordNgramMaxDimOption = Utils.getOption('Q', options);
-		if (wordNgramMaxDimOption.length() > 0) {
-			String[] wordNgramMaxDimOptionSpec = Utils.splitOptions(wordNgramMaxDimOption);
-			if (wordNgramMaxDimOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid value");
-			}			
-			int ngramMaxDimOptionVal = Integer.parseInt( wordNgramMaxDimOptionSpec[0]);
-			this.setWordNgramMaxDim(ngramMaxDimOptionVal);
-
-		}
-
-
-		this.calculateCharNgram=Utils.getFlag('A', options);		
-
-
-		String charNgramMinDimOption = Utils.getOption('D', options);
-		if (charNgramMinDimOption.length() > 0) {
-			String[] charNgramMinDimOptionSpec = Utils.splitOptions(charNgramMinDimOption);
-			if (charNgramMinDimOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid value");
-			}			
-			int charNgramMinDimOptionVal = Integer.parseInt( charNgramMinDimOptionSpec[0]);
-			this.setCharNgramMinDim(charNgramMinDimOptionVal);
-
-		}
-
-		String charNgramMaxDimOption = Utils.getOption('E', options);
-		if (charNgramMaxDimOption.length() > 0) {
-			String[] charNgramMaxDimOptionSpec = Utils.splitOptions(charNgramMaxDimOption);
-			if (charNgramMaxDimOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}			
-			int charNgramMaxDimOptionVal = Integer.parseInt( charNgramMaxDimOptionSpec[0]);
-			this.setCharNgramMaxDim(charNgramMaxDimOptionVal);
-
-		}
-
-
-		this.toLowerCase=Utils.getFlag('L', options);
-
-		this.cleanTokens=Utils.getFlag('O', options);
-
-		this.freqWeights=Utils.getFlag('F', options);
-
-
-		String posNgramMaxDimOption = Utils.getOption('G', options);
-		if (posNgramMaxDimOption.length() > 0) {
-			String[] posNgramMaxDimOptionSpec = Utils.splitOptions(posNgramMaxDimOption);
-			if (posNgramMaxDimOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}			
-			int posNgramMaxDimOptionVal = Integer.parseInt(posNgramMaxDimOptionSpec[0]);
-			this.setPosNgramMaxDim(posNgramMaxDimOptionVal);
-
-		}
-
-
-		String clustNgramMaxDimOption = Utils.getOption('I', options);
-		if (clustNgramMaxDimOption.length() > 0) {
-			String[] clustNgramMaxDimOptionSpec = Utils.splitOptions(clustNgramMaxDimOption);
-			if (clustNgramMaxDimOptionSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid prefix");
-			}			
-			int clustNgramMaxDimOptionVal = Integer.parseInt(clustNgramMaxDimOptionSpec[0]);
-			this.setClustNgramMaxDim(clustNgramMaxDimOptionVal);
-
-		}
-
-
-		super.setOptions(options);
-
-		Utils.checkForRemainingOptions(options);
-
-
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getCapabilities()
-	 */
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
-
-
-
-
-
-	/* To allow determineOutputFormat to access to entire dataset
-	 * (non-Javadoc)
-	 * @see weka.filters.SimpleBatchFilter#allowAccessToFullInputFormat()
-	 */
-	public boolean allowAccessToFullInputFormat() {
-		return true;
-	}
-
-
-
-
-
-
 
 
 	/**
@@ -563,7 +199,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public void initializeTagger(){
 		try {
 			this.tagger= new Tagger();
-			this.tagger.loadModel(TAGGER_FILE_NAME);
+			this.tagger.loadModel(taggerFile.getAbsolutePath());
 		} catch (IOException e) {
 			this.posNgramMaxDim=0;
 		}
@@ -633,7 +269,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	public Object2IntMap<String> calculateDocVec(String content) {
 
 		// tokenizes the content 
-		List<String> tokens=affective.core.Utils.tokenize(content,this.toLowerCase,this.cleanTokens); 
+		List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
 
 		if(this.calculateCharNgram){
@@ -703,7 +339,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 			if(this.clustNgramMaxDim>0){
 				this.brownDict=new Object2ObjectOpenHashMap<String,String>();
 				try {
-					FileInputStream fin = new FileInputStream(WORD_CLUSTERS_FILE_NAME);
+					FileInputStream fin = new FileInputStream(wordClustFile);
 					GZIPInputStream gzis = new GZIPInputStream(fin);
 					InputStreamReader xover = new InputStreamReader(gzis);
 					BufferedReader bf = new BufferedReader(xover);
@@ -711,7 +347,8 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 					String line;
 					while ((line = bf.readLine()) != null) {
 						String pair[] = line.split("\t");
-						brownDict.put(pair[1], pair[0]);
+						// the word in the clusters are stemmed
+						brownDict.put(this.m_stemmer.stem(pair[1]), pair[0]);
 
 
 					}
@@ -742,7 +379,7 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 		this.procTweets = new ObjectArrayList<Object2IntMap<String>>();
 
 		// reference to the content of the message, users index start from zero
-		Attribute attrCont = tweetInstances.attribute(this.textIndex-1);
+		Attribute attrCont = tweetInstances.attribute(this.m_textIndex.getIndex());
 
 		for (ListIterator<Instance> it = tweetInstances.listIterator(); it
 				.hasNext();) {
@@ -788,6 +425,9 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
+		// set upper value for text index
+		m_textIndex.setUpper(inputFormat.numAttributes() - 1);
+
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
 
@@ -822,6 +462,8 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
+
+
 
 		Instances result = getOutputFormat();
 
@@ -869,402 +511,160 @@ public class TweetToSparseFeatureVector extends SimpleBatchFilter {
 
 
 
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String textIndexTipText() {
-
-		return "The index (starting from 1) of the target string attribute." ;
-	}
 
 
 
-	/**
-	 * Get the minAttDocs value.
-	 *
-	 * @return the minAttDocs value.
-	 */		
+	@OptionMetadata(displayName = "minAttDocs",
+			description = "Minimum frequency of a sparse attribute to be considered in the attribute space.", 
+			commandLineParamName = "M", 
+			commandLineParamSynopsis = "-M <int>",
+			displayOrder = 6)	
 	public int getMinAttDocs() {
 		return minAttDocs;
 	}
-
-
-	/**
-	 * Sets the value of minAttDocs.
-	 * 
-	 * @param minAttDocs the value of minAttDocs.
-	 * 
-	 */
 	public void setMinAttDocs(int minAttDocs) {
 		this.minAttDocs = minAttDocs;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String minAttDocsTipText() {
-
-		return "Minimum number of tweets for an attribute to be considered." ;
-	}
-
-
-
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String lowerCaseTipText() {
-		return "Lowercase the tweet's content.";
-	}
-
-
-	/**
-	 * Get the value of.
-	 *
-	 * @return the freqWeights value.
-	 */			
+	@OptionMetadata(displayName = "freqWeights",
+			description = "True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise.\n",
+			commandLineParamIsFlag = true, 
+			commandLineParamName = "F", 
+			commandLineParamSynopsis = "-F",
+			displayOrder = 7)	
 	public boolean isFreqWeights() {
 		return freqWeights;
 	}
-
-
-
-	/**
-	 * Sets the value of the freqWeights flag.
-	 * 
-	 * @param freqWeights the value of the flag.
-	 * 
-	 */	
 	public void setFreqWeights(boolean freqWeights) {
 		this.freqWeights = freqWeights;
 	}
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String freqWeightsTipText() {
-		return "True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise." ;
-	}
 
 
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
 
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String cleanTokensTipText() {
-		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
-				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing user mentions and URLs with generic tokens.";		
-	}
-
-
-	/**
-	 * Get the wordNgramMaxDim value.
-	 *
-	 * @return the wordNgramMaxDim value.
-	 */		
+	@OptionMetadata(displayName = "wordNgramMaxDim",
+			description = "Maximum size for the word n-gram features. \n"
+					+ "\t Set this variable to zero for no word n-gram attributes."
+					+ " All word n-grams from i=1 to this value will be extracted.", 
+					commandLineParamName = "Q", 
+					commandLineParamSynopsis = "-Q <int>",
+					displayOrder = 8)	
 	public int getWordNgramMaxDim() {
 		return wordNgramMaxDim;
 	}
-
-
-	/**
-	 * Sets the value of wordNgramMaxDim.
-	 * 
-	 * @param wordNgramMaxDim the value of the variable.
-	 * 
-	 */
 	public void setWordNgramMaxDim(int wordNgramMaxDim) {
 		this.wordNgramMaxDim = wordNgramMaxDim;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String wordNgramMaxDimTipText() {
-
-		return "Maximum size for the word n-gram features. All word n-grams from i=1 to this value will be extracted."
-				+ " Set this variable to zero for no word n-gram attributes." ;
-	}
-
-	/**
-	 * Get the negateTokens value.
-	 *
-	 * @return the negateTokens value.
-	 */		
+	@OptionMetadata(displayName = "negateTokens",
+			description = "Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you.\n "
+					+ "\t The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation mark.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "R", 
+					commandLineParamSynopsis = "-R",
+					displayOrder = 9)		
 	public boolean isNegateTokens() {
 		return negateTokens;
 	}
-
-
-	/**
-	 * Sets the value of the negateTokens flag.
-	 * 
-	 * @param negateTokens the value of the flag.
-	 * 
-	 */	
 	public void setNegateTokens(boolean negateTokens) {
 		this.negateTokens = negateTokens;
 	}
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String negateTokensTipText() {
 
-		return "Add a prefix to words occurring in negated contexts e.g., I don't like you => I don't NEG-like NEG-you. \n "
-				+ "The prefixes only affect word n-gram features. \n"
-				+ "The scope of negation finishes with the next punctuation mark. \n" ;
-	}
-
-	/**
-	 * Get the calculateCharNgram value.
-	 *
-	 * @return the calculateCharNgram value.
-	 */			
+	@OptionMetadata(displayName = "calculateCharNgram",
+			description = "Calculate character n-gram features.",
+			commandLineParamIsFlag = true, 
+			commandLineParamName = "A", 
+			commandLineParamSynopsis = "-A",
+			displayOrder = 10)		
 	public boolean isCalculateCharNgram() {
 		return calculateCharNgram;
 	}
-
-
-
-	/**
-	 * Sets the value of calculateCharNgram.
-	 * 
-	 * @param calculateCharNgram the value of the variable.
-	 * 
-	 */	
 	public void setCalculateCharNgram(boolean calculateCharNgram) {
 		this.calculateCharNgram = calculateCharNgram;
 	}
 
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String calculateCharNgramTipText() {
-
-		return "Calculate character n-gram features." ;
-	}	
-
-
-	/**
-	 * Get the charNgramMinDim value.
-	 *
-	 * @return the charNgramMinDim value.
-	 */			
+	@OptionMetadata(displayName = "charNgramMinDim",
+			description = "The minimum dimension for character n-grams.", 
+			commandLineParamName = "D", 
+			commandLineParamSynopsis = "-D <int>",
+			displayOrder = 11)		
 	public int getCharNgramMinDim() {
 		return charNgramMinDim;
 	}
-
-
-
-	/**
-	 * Sets the value of charNgramMinDim .
-	 * 
-	 * @param charNgramMinDim the value of the variable.
-	 * 
-	 */	
 	public void setCharNgramMinDim(int charNgramMinDim) {
 		this.charNgramMinDim = charNgramMinDim;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String charNgramMinDimTipText() {
 
-		return "The minimum size for character n-grams." ;
-	}		
-
-
-	/**
-	 * Get the charNgramMaxDim value.
-	 *
-	 * @return the charNgramMaxDim value.
-	 */			
+	@OptionMetadata(displayName = "charNgramMaxDim",
+			description = "The maximum dimension for character n-grams.", 
+			commandLineParamName = "E", 
+			commandLineParamSynopsis = "-E <int>",
+			displayOrder = 12)	
 	public int getCharNgramMaxDim() {
 		return charNgramMaxDim;
 	}
-
-
-
-	/**
-	 * Sets the value of the charNgramMaxDim variable.
-	 * 
-	 * @param charNgramMaxDim the value of the variable.
-	 * 
-	 */	
 	public void setCharNgramMaxDim(int charNgramMaxDim) {
 		this.charNgramMaxDim = charNgramMaxDim;
 	}
 
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String charNgramMaxDimTipText() {
-
-		return "The maximum size for character n-grams." ;
-	}		
-
-
-	/**
-	 * Get the posNgramMaxDim value.
-	 *
-	 * @return the posNgramMaxDim value.
-	 */		
+	@OptionMetadata(displayName = "posNgramMaxDim",
+			description = "The maximum size for POS n-grams."
+					+ " Set this variable to zero for no POS attributes. \n"
+					+ "\t The tweets are POS-tagged using the CMU TweetNLP tool.", 
+					commandLineParamName = "G", 
+					commandLineParamSynopsis = "-G <int>",
+					displayOrder = 13)	
 	public int getPosNgramMaxDim() {
 		return posNgramMaxDim;
 	}
-
-
-
-	/**
-	 * Sets the value of the posNgramMaxDim value.
-	 * 
-	 * @param posNgramMaxDim the value of the variable.
-	 * 
-	 */	
 	public void setPosNgramMaxDim(int posNgramMaxDim) {
 		this.posNgramMaxDim = posNgramMaxDim;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String posNgramMaxDimTipText() {
-		return "The maximum size for POS n-grams. Set this variable to zero for no POS attributes. "
-				+ "The tweets are POS-tagged using the CMU TweetNLP tool." ;
-	}	
-
-
-	/**
-	 * Get the clustNgramMaxDim value.
-	 *
-	 * @return the clustNgramMaxDim value.
-	 */		
+	@OptionMetadata(displayName = "getClustNgramMaxDim",
+			description = "The maximum dimension for n-grams calculated with Brown word clusters.\n"
+					+ "\t Set this variable to zero for no word-clusters attributes. \n"
+					+ "\t The word clusters are taken from the CMU Tweet NLP tool.", 
+					commandLineParamName = "I", 
+					commandLineParamSynopsis = "-I <int>",
+					displayOrder = 14)	
 	public int getClustNgramMaxDim() {
 		return clustNgramMaxDim;
 	}
-
-
-	/**
-	 * Sets the value of the clustNgramMaxDim variable.
-	 * 
-	 * @param clustNgramMaxDim the value of the variable.
-	 * 
-	 */
 	public void setClustNgramMaxDim(int clustNgramMaxDim) {
 		this.clustNgramMaxDim = clustNgramMaxDim;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String clustNgramMaxDimTipText() {
-		return "	 The maximum dimension for n-grams calculated with Brown word clusters."
-				+ " Set this variable to zero for no word-clusters attributes. "
-				+ "	The word clusters are taken from the CMU Tweet NLP tool." ;
-	}		
+	@OptionMetadata(displayName = "taggerFile",
+			description = "The file with TweetNLP POS tagger model.",
+			commandLineParamName = "taggerFile", commandLineParamSynopsis = "-taggerFile <string>",
+			displayOrder = 15)
+	public File getTaggerFile() {
+		return taggerFile;
+	}
+	public void setTaggerFile(File taggerFile) {
+		this.taggerFile = taggerFile;
+	}
+
+	@OptionMetadata(displayName = "wordClustFile",
+			description = "The file with the word clusters in gzip format.",
+			commandLineParamName = "wordClustFile", commandLineParamSynopsis = "-wordClustFile <string>",
+			displayOrder = 16)
+	public File getWordClustFile() {
+		return wordClustFile;
+	}
+	public void setWordClustFile(File wordClustFile) {
+		this.wordClustFile = wordClustFile;
+	}
+
+
 
 
 

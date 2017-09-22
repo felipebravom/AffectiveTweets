@@ -15,7 +15,7 @@
 
 /*
  *    TweetToLexiconFeatureVector.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -24,11 +24,8 @@ package weka.filters.unsupervised.attribute;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import affective.core.IntensityLexiconEvaluator;
 import affective.core.LexiconEvaluator;
@@ -39,17 +36,13 @@ import affective.core.NegationEvaluator;
 import affective.core.PolarityLexiconEvaluator;
 import affective.core.SWN3LexiconEvaluator;
 import weka.core.Attribute;
-import weka.core.Capabilities;
 import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.Option;
+import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
-import weka.core.Utils;
 import weka.core.WekaPackageManager;
-import weka.core.Capabilities.Capability;
 import weka.core.TechnicalInformation.Type;
-import weka.filters.SimpleBatchFilter;
 
 /**
  *  <!-- globalinfo-start --> An attribute filter that calculates lexicon-based features 
@@ -76,12 +69,12 @@ import weka.filters.SimpleBatchFilter;
  <!-- technical-bibtex-end -->
  *  
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
- * @version $Revision: 1 $
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 2 $
  */
 
 
-public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
+public class TweetToLexiconFeatureVector extends TweetToFeatureVector {
 
 	/** For serialization  */
 	private static final long serialVersionUID = 4983739424598292130L;
@@ -113,13 +106,13 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 	/** The path of the NRC Hashtag Emotion lexicon */
 	public static String NRC_HASH_EMO_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz";
-	
-	
+
+
 	/** The path of SentiWordnet */
 	public static String SENTIWORDNET_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"SentiWordNet_3.0.0.txt.gz";
-	
-	
-	
+
+
+
 	/** The path of the emoticon list */
 	public static String EMOTICON_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"AFINN-emoticon-8.txt.gz";
 
@@ -127,8 +120,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	/** The path of the negation list */
 	public static String NEGATION_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NegatingWordList.txt.gz";
 
-	/** the index of the string attribute to be processed */
-	protected int textIndex=1; 
 
 	/** True for calculating features from the MPQA lexicon */
 	protected boolean useMpqa=true;
@@ -169,12 +160,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	/** True for calculating features from the Negation list */
 	protected boolean useNegation=true;
 
-	/** True if all tokens should be downcased. */
-	protected boolean toLowerCase=true;
-
-
-	/** True if url, users, and repeated letters are cleaned */
-	protected boolean cleanTokens=false;
 
 	/** List of Lexicons to use */
 	private List<LexiconEvaluator> lexicons=new ArrayList<LexiconEvaluator>();
@@ -211,302 +196,6 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 		return result;
 	}
 
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#listOptions()
-	 */
-	@Override
-	public Enumeration<Option> listOptions() {
-		Vector<Option> result = new Vector<Option>();
-
-		result.addElement(new Option("\t Index of string attribute.\n"
-				+ "\t(default: " + this.textIndex + ")", "I", 1, "-I"));
-
-
-		result.addElement(new Option(
-				"\t use MPQA Lexicon\n"
-						+ "\t(default:"+this.useMpqa+")", "A", 0, "-A"));
-
-
-		result.addElement(new Option(
-				"\t use Bing Liu Lexicon\n"
-						+ "\t(default:"+this.useBingLiu+")", "D", 0, "-D"));
-
-
-		result.addElement(new Option(
-				"\t use AFINN Lexicon\n"
-						+ "\t(default:"+this.useAfinn+")", "F", 0, "-F"));
-
-
-		result.addElement(new Option(
-				"\t use S140 Lexicon\n"
-						+ "\t(default:"+this.useS140+")", "H", 0, "-H"));
-
-
-		result.addElement(new Option(
-				"\t use NRC-Hash-Sent Lexicon\n"
-						+ "\t(default:"+this.useNrcHashSent+")", "J", 0, "-J"));
-
-
-		result.addElement(new Option(
-				"\t use NRC-10 Emotion Lexicon\n"
-						+ "\t(default:"+this.useNrc10+")", "L", 0, "-L"));
-
-
-		result.addElement(new Option(
-				"\t use NRC-10-Expanded Emotion Lexicon\n"
-						+ "\t(default:"+this.useNrc10Expanded+")", "N", 0, "-N"));
-
-
-
-		result.addElement(new Option(
-				"\t use NRC Hashtag Emotion Lexicon\n"
-						+ "\t(default:"+this.useNrcHashEmo+")", "P", 0, "-P"));
-		
-		result.addElement(new Option(
-				"\t use SentiWordnet\n"
-						+ "\t(default:"+this.useSentiWordnet+")", "Q", 0, "-Q"));
-
-
-		result.addElement(new Option(
-				"\t use Emoticon List\n"
-						+ "\t(default:"+this.useEmoticons+")", "R", 0, "-R"));
-
-
-		result.addElement(new Option(
-				"\t use Negation List\n"
-						+ "\t(default:"+this.useNegation+")", "T", 0, "-T"));
-
-		result.addElement(new Option("\t Lowercase content.\n"
-				+ "\t(default: " + this.toLowerCase + ")", "U", 0, "-U"));
-
-		result.addElement(new Option("\t Clean tokens (replace goood by good, standarise URLs and @users).\n"
-				+ "\t(default: " + this.cleanTokens + ")", "O", 0, "-O"));	
-
-
-		result.addAll(Collections.list(super.listOptions()));
-
-		return result.elements();
-	}
-
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getOptions()
-	 */
-	@Override
-	public String[] getOptions() {
-
-		Vector<String> result = new Vector<String>();
-
-		result.add("-I");
-		result.add("" + this.getTextIndex());
-
-		if(this.isUseMpqa())
-			result.add("-A");
-
-
-		if(this.isUseBingLiu())
-			result.add("-D");
-
-
-		if(this.isUseAfinn())
-			result.add("-F");
-
-
-		if(this.isUseS140())
-			result.add("-H");
-
-
-		if(this.isUseNrcHashSent())
-			result.add("-J");
-
-
-		if(this.isUseNrc10())
-			result.add("-L");
-
-
-		if(this.isUseNrc10Expanded())
-			result.add("-N");
-
-
-		if(this.isUseNrcHashEmo())
-			result.add("-P");
-		
-		if(this.isUseSentiWordnet())
-			result.add("-Q");
-
-		if(this.isUseEmoticons())
-			result.add("-R");
-
-
-		if(this.isUseNegation())
-			result.add("-T");
-
-		if(this.toLowerCase)
-			result.add("-U");
-
-		if(this.cleanTokens)
-			result.add("-O");
-
-
-		Collections.addAll(result, super.getOptions());
-
-		return result.toArray(new String[result.size()]);
-	}
-
-
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-A 
-	 *  use MPQA Lexicon (default:false)
-	 * </pre>
-	 * <pre>
-	 *-D 
-	 *	 use Bing Liu Lexicon (default:false)
-	 * </pre>
-	 * <pre>
-	 *-F 
-	 *	 use AFINN Lexicon (default:false)
-	 * </pre>
-	 * <pre>
-	 *-H 
-	 *	 use S140 Lexicon (default:false)
-	 * </pre>
-	 * <pre>
-	 *-J 
-	 *	 use NRC-Hash-Sent Lexicon (default:false)
-	 * </pre>
-	 * <pre>
-	 *-L 
-	 *	 use NRC-10 Emotion Lexicon	(default:false)
-	 * </pre>
-	 * <pre>
-	 *-N 
-	 *	 use NRC-10-Expanded Emotion Lexicon	(default:false)
-	 * </pre>
-	 * <pre>
-	 *-P 
-	 *	 use NRC Hashtag Emotion Lexicon (default:false)
-	 * </pre>
-	 *<pre>
-	 *-Q 
-	 *	 use SentiWordNet (default:false)
-	 * </pre>
-	 * <pre>
-	 *-R 
-	 *	 use Emoticon List (default:false)
-	 * </pre>
-	 * <pre>
-	 *-T  
-	 *	 use Negation List (default:false)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 * <pre>
-	 *-O 
-	 *	 Clean tokens (replace goood by good, standarise URLs and @users) 	(default: false)
-	 *</pre> 
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
-	 */
-	@Override
-	public void setOptions(String[] options) throws Exception {
-
-
-		String textIndexOption = Utils.getOption('I', options);
-		if (textIndexOption.length() > 0) {
-			String[] textIndexSpec = Utils.splitOptions(textIndexOption);
-			if (textIndexSpec.length == 0) {
-				throw new IllegalArgumentException(
-						"Invalid index");
-			}
-			int index = Integer.parseInt(textIndexSpec[0]);
-			this.setTextIndex(index);
-
-		}
-
-		this.useMpqa=Utils.getFlag('A', options);
-
-		this.useBingLiu=Utils.getFlag('D', options);
-
-
-		this.useAfinn=Utils.getFlag('F', options);
-
-
-		this.useS140=Utils.getFlag('H', options);
-
-		this.useNrcHashSent=Utils.getFlag('J', options);
-
-
-		this.useNrc10=Utils.getFlag('L', options);
-
-
-		this.useNrc10Expanded=Utils.getFlag('N', options);
-
-
-		this.useNrcHashEmo=Utils.getFlag('P', options);
-		
-		this.useSentiWordnet=Utils.getFlag('Q', options);
-
-
-		this.useEmoticons=Utils.getFlag('R', options);
-
-
-		this.useNegation=Utils.getFlag('T', options);
-
-
-		this.toLowerCase=Utils.getFlag('U', options);
-
-		this.cleanTokens=Utils.getFlag('O', options);
-
-		super.setOptions(options);
-
-		Utils.checkForRemainingOptions(options);
-
-
-	}
-
-
-	/* (non-Javadoc)
-	 * @see weka.filters.Filter#getCapabilities()
-	 */
-	@Override
-	public Capabilities getCapabilities() {
-
-		Capabilities result = new Capabilities(this);
-		result.disableAll();
-
-
-
-		// attributes
-		result.enableAllAttributes();
-		result.enable(Capability.MISSING_VALUES);
-
-		// class
-		result.enableAllClasses();
-		result.enable(Capability.MISSING_CLASS_VALUES);
-		result.enable(Capability.NO_CLASS);
-
-		result.setMinimumNumberInstances(0);
-
-		return result;
-	}
 
 
 
@@ -619,8 +308,8 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 
 
 		}
-		
-		
+
+
 
 		if(this.useSentiWordnet){
 			LexiconEvaluator sentiWordEvaluator = new SWN3LexiconEvaluator(
@@ -673,6 +362,9 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	protected Instances determineOutputFormat(Instances inputFormat)
 			throws Exception {
 
+		// set upper value for text index
+		m_textIndex.setUpper(inputFormat.numAttributes() - 1);
+
 		ArrayList<Attribute> att = new ArrayList<Attribute>();
 
 		// Adds all attributes of the inputformat
@@ -684,7 +376,7 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 		// The dictionaries of the lexicons are intialized only in the first batch
 		if(!this.isFirstBatchDone())
 			this.initializeDicts();
-		
+
 
 
 		for(LexiconEvaluator le:this.lexicons){
@@ -708,14 +400,13 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
-		// Instances result = new Instances(determineOutputFormat(instances),
-		// 0);
+
 
 		Instances result = getOutputFormat();
 
 
-		// reference to the content of the message, users index start from zero
-		Attribute attrCont = instances.attribute(this.textIndex-1);
+		// reference to the content of the message
+		Attribute attrCont = instances.attribute(this.m_textIndex.getIndex());
 
 
 		for (int i = 0; i < instances.numInstances(); i++) {
@@ -724,7 +415,8 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 			String content = instances.instance(i).stringValue(attrCont);
-			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.cleanTokens);
+			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
+
 
 			for(LexiconEvaluator le:this.lexicons){
 				Map<String,Double> featuresForLex=le.evaluateTweet(words);
@@ -749,463 +441,184 @@ public class TweetToLexiconFeatureVector extends SimpleBatchFilter {
 	}
 
 
-	/**
-	 * Get the position of the target string.
-	 * 
-	 * @return the index of the target string
-	 */	
-	public int getTextIndex() {
-		return textIndex;
-	}
-
-
-	/**
-	 * Set the attribute's index with the string to process.
-	 * 
-	 * @param textIndex the index value name
-	 */
-	public void setTextIndex(int textIndex) {
-		this.textIndex = textIndex;
-	}
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String textIndexTipText() {
-
-		return "The index (starting from 1) of the target string attribute." ;
-	}
-
-
-	/**
-	 * Get the isUseMpqa value.
-	 *
-	 * @return the isUseMpqa  value.
-	 */	
+	@OptionMetadata(displayName = "useMpqa",
+			description = "Counts the number of positive and negative words from the MPQA subjectivity lexicon.\n"
+					+ "More info at: http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/ \n"
+					+ "Publication: Theresa Wilson, Janyce Wiebe, and Paul Hoffmann, Recognizing Contextual Polarity in Phrase-Level Sentiment Analysis.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "A", 
+					commandLineParamSynopsis = "-A",
+					displayOrder = 6)		
 	public boolean isUseMpqa() {
 		return useMpqa;
 	}
-
-
-	/**
-	 * Set the useMpqa value.
-	 *
-	 * @param useMpqa The useMpqa value.
-	 */	
 	public void setUseMpqa(boolean useMpqa) {
 		this.useMpqa = useMpqa;
 	}
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useMpqaIndexTipText() {
 
-		return "Counts the number of positive and negative words from the MPQA subjectivity lexicon.\n"
-				+ "More info at: http://mpqa.cs.pitt.edu/lexicons/subj_lexicon/ \n"
-				+ "Publication: Theresa Wilson, Janyce Wiebe, and Paul Hoffmann, Recognizing Contextual Polarity in Phrase-Level Sentiment Analysis." ;
-	}
-
-	/**
-	 * Get the isUseBingLiu value.
-	 *
-	 * @return the isUseBingLiu  value.
-	 */	
+	@OptionMetadata(displayName = "useBingLiu",
+			description = "Counts the number of positive and negative words from the Bing Liu lexicon.\n"
+					+ "More info at: https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon \n"
+					+ "Publication: Minqing Hu and Bing Liu, Mining and summarizing customer reviews.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "D", 
+					commandLineParamSynopsis = "-D",
+					displayOrder = 7)			
 	public boolean isUseBingLiu() {
 		return useBingLiu;
 	}
-
-	/**
-	 * Set the useBingLiu value.
-	 *
-	 * @param useBingLiu The useBingLiu value.
-	 */	
 	public void setUseBingLiu(boolean useBingLiu) {
 		this.useBingLiu = useBingLiu;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useBingLiuTipText() {
-
-		return "Counts the number of positive and negative words from the Bing Liu lexicon.\n"
-				+ "More info at: https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon \n"
-				+ "Publication: Minqing Hu and Bing Liu, Mining and summarizing customer reviews.";
-	}	
-
-
-	/**
-	 * Get the isUseAfinn value.
-	 *
-	 * @return the isUseAfinn  value.
-	 */	
+	@OptionMetadata(displayName = "useAfinn",
+			description = "Calculates a positive and negative score by aggregating the word associations provided by the AFINN lexicon.\n"
+					+ "More info at: http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010 \n"
+					+ "Publication: Finn Arup Nielsen, A new ANEW: Evaluation of a word list for sentiment analysis in microblogs.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "F", 
+					commandLineParamSynopsis = "-F",
+					displayOrder = 8)			
 	public boolean isUseAfinn() {
 		return useAfinn;
 	}
-
-	/**
-	 * Set the useAfinn value.
-	 *
-	 * @param useAfinn The useAfinn value.
-	 */	
 	public void setUseAfinn(boolean useAfinn) {
 		this.useAfinn = useAfinn;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useAfinnTipText() {
-
-		return "Calculates a positive and negative score by aggregating the word associations provided by the AFINN lexicon.\n"
-				+ "More info at: http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010 \n"
-				+ "Publication: Finn Arup Nielsen, A new ANEW: Evaluation of a word list for sentiment analysis in microblogs";
-	}	
-
-
-	/**
-	 * Get the isUseS140 value.
-	 *
-	 * @return the isUseS140  value.
-	 */	
+	@OptionMetadata(displayName = "useS140",
+			description = "Calculates a positive and negative score by aggregating the word associations provided by the S140 lexicon.\n"
+					+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
+					+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "H", 
+					commandLineParamSynopsis = "-H",
+					displayOrder = 9)			
 	public boolean isUseS140() {
 		return useS140;
 	}
-
-	/**
-	 * Set the useS140 value.
-	 *
-	 * @param useS140 The useS140 value.
-	 */	
 	public void setUseS140(boolean useS140) {
 		this.useS140 = useS140;
 	}
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useS140TipText() {
-
-		return "Calculates a positive and negative score by aggregating the word associations provided by the S140 lexicon.\n"
-				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
-				+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts." ;
-	}
-
-	/**
-	 * Get the isUseNrcHashSent value.
-	 *
-	 * @return the isUseNrcHashSent  value.
-	 */	
+	@OptionMetadata(displayName = "useNrcHashSent",
+			description = "Calculates a positive and negative score by aggregating the word associations provided by the NRC Hashtag Sentiment lexicon.\n"
+					+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
+					+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "J", 
+					commandLineParamSynopsis = "-J",
+					displayOrder = 10)			
 	public boolean isUseNrcHashSent() {
 		return useNrcHashSent;
 	}
-
-	/**
-	 * Set the useNrcHashSent value.
-	 *
-	 * @param useNrcHashSent The useNrcHashSent value.
-	 */	
 	public void setUseNrcHashSent(boolean useNrcHashSent) {
 		this.useNrcHashSent = useNrcHashSent;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useNrcHashSentTipText() {
-
-		return "Calculates a positive and negative score by aggregating the word associations provided by the NRC Hashtag Sentiment lexicon.\n"
-				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html \n"
-				+ "Publication: Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad, Sentiment Analysis of Short Informal Texts." ;
-	}	
-
-
-	/**
-	 * Get the isUseNrc10 value.
-	 *
-	 * @return the isUseNrc10  value.
-	 */	
+	@OptionMetadata(displayName = "useNrc10",
+			description = "Counts the number of words matching each emotion from the NRC Word-Emotion Association Lexicon.\n"
+					+ "More info at: http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm\n"
+					+ "Publication: Saif Mohammad and Peter Turney, Crowdsourcing a Word-Emotion Association Lexicon.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "L", 
+					commandLineParamSynopsis = "-L",
+					displayOrder = 11)		
 	public boolean isUseNrc10() {
 		return useNrc10;
 	}
-
-	/**
-	 * Set the useNrc10 value.
-	 *
-	 * @param useNrc10 The useNrc10 value.
-	 */	
 	public void setUseNrc10(boolean useNrc10) {
 		this.useNrc10 = useNrc10;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useNrc10TipText() {
-
-		return "Counts the number of words matching each emotion from the NRC Word-Emotion Association Lexicon.\n"
-				+ "More info at: http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm\n"
-				+ "Publication: Saif Mohammad and Peter Turney, Crowdsourcing a Word-Emotion Association Lexicon." ;
-	}	
-
-
-	/**
-	 * Get the isUseNrc10Expanded value.
-	 *
-	 * @return the isUseNrc10Expanded value.
-	 */	
+	@OptionMetadata(displayName = "useNrc10Expanded",
+			description = "Adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.\n"
+					+ "More info at: http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter\n"
+					+ "Publication: F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer, Determining Word--Emotion Associations from Tweets by Multi-Label Classification.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "N", 
+					commandLineParamSynopsis = "-N",
+					displayOrder = 12)			
 	public boolean isUseNrc10Expanded() {
 		return useNrc10Expanded;
 	}
-
-	/**
-	 * Set the useNrc10Expanded value.
-	 *
-	 * @param useNrc10Expanded The useNrc10Expanded value.
-	 */	
 	public void setUseNrc10Expanded(boolean useNrc10Expanded) {
 		this.useNrc10Expanded = useNrc10Expanded;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useNrc10ExpandedTipText() {
-
-		return "Adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon.\n"
-				+ "More info at: http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter\n"
-				+ "Publication: F. Bravo-Marquez, E. Frank, S. M. Mohammad, and B. Pfahringer, Determining Word--Emotion Associations from Tweets by Multi-Label Classification.";
-	}	
-
-
-	/**
-	 * Get the useNrcHashEmo value.
-	 *
-	 * @return the useNrcHashEmo value.
-	 */		
+	@OptionMetadata(displayName = "useNrcHashEmo",
+			description = "Adds the emotion associations of the words matching the NRC Hashtag Emotion Association Lexicon.\n"
+					+ "More info at: http://saifmohammad.com/WebPages/lexicons.html\n"
+					+ "Publication: Saif M. Mohammad, Svetlana Kiritchenko, Using Hashtags to Capture Fine Emotion Categories from Tweets.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "P", 
+					commandLineParamSynopsis = "-P",
+					displayOrder = 13)			
 	public boolean isUseNrcHashEmo() {
 		return useNrcHashEmo;
 	}
-
-	/**
-	 * Set the useNrcHashEmo value.
-	 *
-	 * @param useNrcHashEmo The useNrcHashEmo value.
-	 */	
 	public void setUseNrcHashEmo(boolean useNrcHashEmo) {
 		this.useNrcHashEmo = useNrcHashEmo;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useNrcHashEmoTipText() {
-		return "Adds the emotion associations of the words matching the NRC Hashtag Emotion Association Lexicon.\n"
-				+ "More info at: http://saifmohammad.com/WebPages/lexicons.html\n"
-				+ "Publication: Saif M. Mohammad, Svetlana Kiritchenko, Using Hashtags to Capture Fine Emotion Categories from Tweets.";
-	}		
 
-
-	/**
-	 * Get the useSentiWordnet value.
-	 *
-	 * @return the useSentiWordnet value.
-	 */		
+	@OptionMetadata(displayName = "useSentiWordnet",
+			description = "Calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for "
+					+ "word occuring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give "
+					+ "higher weights to most popular senses. \n"
+					+ "More info at: http://sentiwordnet.isti.cnr.it/\n"
+					+ "Publication: Stefano Baccianella, Andrea Esuli, and Fabrizio Sebastiani, SENTIWORDNET 3.0: An Enhanced Lexical Resource for Sentiment Analysis"
+					+ " and Opinion Mining.",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "Q", 
+					commandLineParamSynopsis = "-Q",
+					displayOrder = 14)			
 	public boolean isUseSentiWordnet() {
 		return useSentiWordnet;
 	}
-
-	
-	/**
-	 * Set the useSentiWordnet value.
-	 *
-	 * @param useSentiWordnet The useNrcHashEmo value.
-	 */		
 	public void setUseSentiWordnet(boolean useSentiWordnet) {
 		this.useSentiWordnet = useSentiWordnet;
 	}
-	
-	
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useSentiWordnetTipText() {
-		return "Calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for "
-				+ "word occuring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give "
-				+ "higher weights to most popular senses. \n"
-				+ "More info at: http://sentiwordnet.isti.cnr.it/\n"
-				+ "Publication: Stefano Baccianella, Andrea Esuli, and Fabrizio Sebastiani, SENTIWORDNET 3.0: An Enhanced Lexical Resource for Sentiment Analysis"
-				+ " and Opinion Mining.";
-	}	
-	
-	
-	
 
-	/**
-	 * Get the isUseEmoticons value.
-	 *
-	 * @return the isUseEmoticons  value.
-	 */		
+
+	@OptionMetadata(displayName = "useEmoticons",
+			description = "Calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons.\n"
+					+ "The list is taken from the AFINN project.\n"
+					+ "More info at: https://github.com/fnielsen/afinn \n",
+					commandLineParamIsFlag = true, 
+					commandLineParamName = "R", 
+					commandLineParamSynopsis = "-R",
+					displayOrder = 15)			
 	public boolean isUseEmoticons() {
 		return useEmoticons;
 	}
-
-	/**
-	 * Set the useEmoticons value.
-	 *
-	 * @param useEmoticons The useEmoticons value.
-	 */	
 	public void setUseEmoticons(boolean useEmoticons) {
 		this.useEmoticons = useEmoticons;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useEmoticonsTipText() {
-
-		return "Calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons.\n"
-				+ "The list is taken from the AFINN project.\n"
-				+ "More info at: https://github.com/fnielsen/afinn \n";
-	}
-
-
-
-	/**
-	 * Get the isUseNegation value.
-	 *
-	 * @return the isUseNegation  value.
-	 */		
+	@OptionMetadata(displayName = "useNegation",
+			description = "Counts the number of negating words in the tweet.",
+			commandLineParamIsFlag = true, 
+			commandLineParamName = "T", 
+			commandLineParamSynopsis = "-T",
+			displayOrder = 16)			
 	public boolean isUseNegation() {
 		return useNegation;
 	}
-
-	/**
-	 * Set the useNegation value.
-	 *
-	 * @param useNegation The useNegation value.
-	 */	
 	public void setUseNegation(boolean useNegation) {
 		this.useNegation = useNegation;
 	}
 
 
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String useNegationTipText() {
 
-		return "Counts the number of negating words in the tweet." ;
-	}
-
-
-
-	/**
-	 * Gets the value of the lowercase flag.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isToLowerCase() {
-		return toLowerCase;
-	}
-
-	/**
-	 * Sets the value of the lowercase flag.
-	 * 
-	 * @param toLowerCase the value of the flag.
-	 * 
-	 */
-	public void setToLowerCase(boolean toLowerCase) {
-		this.toLowerCase = toLowerCase;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String lowerCaseTipText() {
-		return "Lowercase the tweet's content.";
-	}
-
-
-	/**
-	 * Gets the value of the cleanTokens option.
-	 * 
-	 * @return the value of the flag.
-	 */
-	public boolean isCleanTokens() {
-		return cleanTokens;
-	}
-
-	/**
-	 * Sets the value of the cleanTokens flag.
-	 * 
-	 * @param cleanTokens the value of the flag.
-	 * 
-	 */
-	public void setCleanTokens(boolean cleanTokens) {
-		this.cleanTokens = cleanTokens;
-	}
-
-
-	/**
-	 * Returns the tip text for this property.
-	 * 
-	 * @return tip text for this property suitable for displaying in the
-	 *         explorer/experimenter gui
-	 */
-	public String cleanTokensTipText() {
-		return "Reduce the attribute space by replacing sequences of letters occurring more than two "
-				+ "times in a row with two occurrences of them (e.g., huuungry is reduced to huungry, loooove to loove), "
-				+ "and replacing user mentions and URLs with generic tokens.";		
-	}
 
 
 

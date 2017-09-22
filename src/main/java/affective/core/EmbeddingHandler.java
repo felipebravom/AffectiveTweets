@@ -15,7 +15,7 @@
 
 /*
  *    EmbeddingHandler.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -24,92 +24,88 @@
 package affective.core;
 
 import it.unimi.dsi.fastutil.doubles.AbstractDoubleList;
-import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.util.zip.GZIPInputStream;
+import java.util.Enumeration;
+
+import weka.core.Option;
+import weka.core.OptionHandler;
+
+
 
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for handling word vector or embeddings stored in zgipped files with format:
- *  emb1 tab emb2 tab ..word. 
+ *  This abstract class is used for handling word vector or embeddings.
  * 
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
-public class EmbeddingHandler implements Serializable {
-	
+public abstract class EmbeddingHandler implements Serializable, OptionHandler {
+
+
 	/** For serialization **/ 
-	private static final long serialVersionUID = -2458037798910799631L;
+	private static final long serialVersionUID = -2789278587499972963L;
 	
-	/** File where word vectors are stored. */
-	private String filePath;
-	
+
 	/** Mapping between words and their vectors. */
-	private Object2ObjectMap<String, AbstractDoubleList> wordMap;
-	
+	protected Object2ObjectMap<String, AbstractDoubleList> wordMap=new Object2ObjectOpenHashMap<String, AbstractDoubleList>();
+
 	/** Number of dimensions of the embeddings. */ 
-	private int dimensions;
+	protected int dimensions;
 
 
-    /**
-     * initializes the EmbeddingHandler
-     * 
-     * @param filePath the file with the embeddings
-     */
-	public EmbeddingHandler(String filePath){
-		this.filePath=filePath;
-		this.wordMap=new Object2ObjectOpenHashMap<String, AbstractDoubleList>() ;
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#listOptions()
+	 */
+	@Override
+	public Enumeration<Option> listOptions() {
+		//this.getClass().getSuperclass()
+		return Option.listOptionsForClassHierarchy(this.getClass(), this.getClass().getSuperclass()).elements();
 	}
 
-	 /**
-     * initializes the dictionary
-     * 
-     * @throws Exception in case of wrong file
-     */
-	public void createDict() throws Exception{
-		
-		FileInputStream fin = new FileInputStream(this.filePath);
-		GZIPInputStream gzis = new GZIPInputStream(fin);
-		InputStreamReader xover = new InputStreamReader(gzis);
-		BufferedReader bf = new BufferedReader(xover);
 
-		String line;
-		boolean firstLine=true;
-		while ((line = bf.readLine()) != null) {
-			//		System.out.println(line);
-			String parts[]=line.split("\t");
-
-			AbstractDoubleList wordVector=new DoubleArrayList();
-			for(int i=0;i<parts.length-1;i++){
-				wordVector.add(Double.parseDouble(parts[i]));
-			}
-			
-			if(firstLine)
-				this.dimensions=wordVector.size();
-
-			if(wordVector.size()==this.dimensions)
-				this.wordMap.put(parts[parts.length-1], wordVector);
-
-
-
-		}
-		bf.close();
-		xover.close();
-		gzis.close();
-		fin.close();
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#getOptions()
+	 */
+	@Override
+	public String[] getOptions() {	
+		return Option.getOptionsForHierarchy(this, this.getClass().getSuperclass());
 
 	}
 
+
+
+
+	/**
+	 * Parses the options for this object.
+	 *  
+	 * @param options
+	 *            the options to use
+	 * @throws Exception
+	 *             if setting of options fails
+	 */
+	@Override
+	public void setOptions(String[] options) throws Exception {
+		Option.setOptionsForHierarchy(options, this, this.getClass().getSuperclass());
+	}
+
+
+
+	/**
+	 * initializes the dictionary
+	 * 
+	 * @throws Exception in case of wrong file
+	 */
+	abstract public void createDict() throws Exception;
+
+	
 	/**
 	 * Gets the dictionary mapping the words to their vectors
 	 * 
@@ -128,6 +124,9 @@ public class EmbeddingHandler implements Serializable {
 	public int getDimensions() {
 		return dimensions;
 	}
+
+
+
 
 
 }

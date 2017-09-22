@@ -33,7 +33,6 @@ import weka.core.stemmers.Stemmer;
 import weka.core.stopwords.StopwordsHandler;
 import weka.core.tokenizers.Tokenizer;
 
-import cmu.arktweetnlp.Twokenize;
 
 /**
  * <!-- globalinfo-start --> Provides static functions for String processing.
@@ -46,54 +45,7 @@ import cmu.arktweetnlp.Twokenize;
 
 public class Utils {
 
-	/**
-	 * tokenizes and normalizes the content of a tweet
-	 * 
-	 * @param content
-	 *            the input String
-	 * @param toLowerCase
-	 *            to lowercase the content
-	 * @param cleanTokens
-	 *            normalize URLs, user mentions, and reduce repetitions of
-	 *            letters
-	 * @return a list of tokens
-	 */
-	static public List<String> tokenize(String content, boolean toLowerCase,
-			boolean cleanTokens) {
-
-		if (toLowerCase)
-			content = content.toLowerCase();
-
-		if (!cleanTokens)
-			return Twokenize.tokenizeRawTweetText(content);
-		else {
-			// if a letters appears two or more times it is replaced by only two
-			// occurrences of it
-			content = content.replaceAll("([a-z])\\1+", "$1$1");
-		}
-
-		List<String> tokens = new ArrayList<String>();
-
-		for (String word : Twokenize.tokenizeRawTweetText(content)) {
-			String cleanWord = word;
-
-			if (cleanTokens) {
-				// Replace URLs to a generic URL
-				if (word.matches("http.*|ww\\..*")) {
-					cleanWord = "http://www.url.com";
-				}
-
-				// Replaces user mentions to a generic user
-				else if (word.matches("@.*")) {
-					cleanWord = "@user";
-				}
-
-			}
-
-			tokens.add(cleanWord);
-		}
-		return tokens;
-	}
+	
 
 	/**
 	 * Adds a negation prefix to the tokens that follow a negation word until
