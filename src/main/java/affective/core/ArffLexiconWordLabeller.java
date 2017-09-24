@@ -38,7 +38,10 @@ import weka.core.Instances;
 import weka.core.Option;
 import weka.core.OptionHandler;
 import weka.core.OptionMetadata;
+import weka.core.SingleIndex;
 import weka.core.WekaPackageManager;
+import weka.core.stemmers.NullStemmer;
+import weka.core.stemmers.Stemmer;
 
 
 /**
@@ -74,7 +77,7 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 
 	/** the index of the word attribute in the given arff lexicon */
-	protected int lexiconWordIndex=1;
+	protected SingleIndex lexiconWordIndex=new SingleIndex("1");
 
 	/** The input lexicon in arff format  */
 	protected File m_lexiconFile = new File(METALEX_FILE_NAME);
@@ -82,6 +85,8 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	/** The lexicon name to be prefixed in all features */
 	protected String lexiconName="MetaLexEmo";
 
+	/** the stemming algorithm. */
+	protected Stemmer m_stemmer = new NullStemmer();
 
 
 
@@ -91,15 +96,18 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	 */
 	public void processDict() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(this.m_lexiconFile));
-		Instances lex=new Instances(reader);
+		Instances lexInstances=new Instances(reader);
 
 
+		// set upper value for word index
+		lexiconWordIndex.setUpper(lexInstances.numAttributes() - 1);
+		
 		// checks all numeric and nominal attributes and discards the word attribute
-		for(int i=0;i<lex.numAttributes();i++){
+		for(int i=0;i<lexInstances.numAttributes();i++){
 
-			if(i!=this.lexiconWordIndex-1){
-				if(lex.attribute(i).isNumeric() || lex.attribute(i).isNominal()  ){
-					this.attributes.add(lex.attribute(i));
+			if(i!=this.lexiconWordIndex.getIndex()){
+				if(lexInstances.attribute(i).isNumeric() || lexInstances.attribute(i).isNominal()  ){
+					this.attributes.add(lexInstances.attribute(i));
 				}
 
 			}
@@ -108,9 +116,11 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 
 		// Maps all words with their affective scores discarding missing values
-		for(Instance inst:lex){
-			if(inst.attribute(this.lexiconWordIndex-1).isString()){
-				String word=inst.stringValue(this.lexiconWordIndex-1);
+		for(Instance inst:lexInstances){
+			if(inst.attribute(this.lexiconWordIndex.getIndex()).isString()){
+				String word=inst.stringValue(this.lexiconWordIndex.getIndex());
+				// stems the word
+				word=this.m_stemmer.stem(word);
 
 				// map numeric scores
 				if(!attributes.isEmpty()){
@@ -134,8 +144,8 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 
 	/**
-	 * Calculates lexicon-based feature values from a list of tokens
-	 * @param tokens a tokenized tweet
+	 * Retrieves word-sentiment associations from a lexicon for a particular word
+	 * @param word the target word
 	 * @return a mapping between attribute names and their scores
 	 */	
 	public Map<Attribute, Double> evaluateWord(String word) {
@@ -225,7 +235,7 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	@OptionMetadata(displayName = "lexiconName",
 			description = "The lexicon name to be prefixed in all features calculated from this lexicon.",
 			commandLineParamName = "B", commandLineParamSynopsis = "-B",
-			displayOrder = 1)   
+			displayOrder = 2)   
 	public String getLexiconName() {
 		return lexiconName;
 	}
@@ -236,14 +246,30 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 
 	@OptionMetadata(displayName = "lexiconWordIndex",
-			description = "The index of the word attribute in the given arff lexicon (starting from 1).", 
-			commandLineParamName = "A", commandLineParamSynopsis = "-A",
-			displayOrder = 1)	
-	public int getLexiconWordIndex() {
-		return lexiconWordIndex;
+			description = "The index of the word attribute in the given arff lexicon (starting from 1). First and last are valid values.", 
+			commandLineParamName = "A", commandLineParamSynopsis = "-A <col>",
+			displayOrder = 3)	
+	public String getLexiconWordIndex() {
+		return lexiconWordIndex.getSingleIndex();
 	}
-	public void setLexiconWordIndex(int lexiconWordIndex) {
-		this.lexiconWordIndex = lexiconWordIndex;
+	public void setLexiconWordIndex(String lexiconWordIndex) {
+		this.lexiconWordIndex.setSingleIndex(lexiconWordIndex);
 	}
+	
+	
+	@OptionMetadata(displayName = "stemmer",
+			description = "The stemming algorithm to use on the words from the lexicon. It is recommended to use the same stemmer used with the main filter."
+					+ " Default: no stemming.",
+			commandLineParamName = "lex-stemmer",
+			commandLineParamSynopsis = "-lex-stemmer <string>", displayOrder = 4)	
+	public Stemmer getStemmer() {
+		return m_stemmer;
+	}
+	public void setStemmer(Stemmer m_stemmer) {
+		this.m_stemmer = m_stemmer;
+	}
+	
+	
+	
 
 }

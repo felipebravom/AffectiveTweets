@@ -233,7 +233,7 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 
 
 	@OptionMetadata(displayName = "stemmer",
-			description = "The stemming algorithm to use on the words.",
+			description = "The stemming algorithm to use on the words. Default: no stemming.",
 			commandLineParamName = "stemmer",
 			commandLineParamSynopsis = "-stemmer <string>", displayOrder = 4)	
 	public Stemmer getStemmer() {
