@@ -38,8 +38,7 @@ import weka.core.tokenizers.TweetNLPTokenizer;
 import weka.filters.SimpleBatchFilter;
 
 /**
- *  <!-- globalinfo-start --> An attribute filter that calculates positive and negative scores using 
- *  SentiStrength for a tweet represented as a string attribute. 
+ *  <!-- globalinfo-start --> An abstract Weka filter for calculating attributes from tweets.
  * <!-- globalinfo-end -->
  * 
  *  

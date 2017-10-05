@@ -39,8 +39,8 @@ import weka.core.tokenizers.Tokenizer;
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
- * @version $Revision: 1 $
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 2 $
  */
 
 public class Utils {
