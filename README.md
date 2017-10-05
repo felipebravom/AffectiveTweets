@@ -231,7 +231,7 @@ weka.filters.unsupervised.attribute.TweetCentroid -O -C -W -F -natt -M 10 -N 10 
 3. Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:
 
 ```bash
-weka.filters.unsupervised.attribute.LabelWordVector -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1" -U -I last
+weka.filters.unsupervised.attribute.LabelWordVectors -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1" -U -I last
 ```
 
 4. Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:
