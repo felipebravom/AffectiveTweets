@@ -1,35 +1,32 @@
-# Prerequisites
-- Weka 3.8.1 or above ([here](https://sourceforge.net/projects/weka/files/latest/download))
-- WekaDeeplearning4j package 1.2 or above ([here](https://github.com/Waikato/wekaDeeplearning4j/releases/latest))
+## Installation
 
-You need to unzip the Weka zip file to a directory of your choice.
+* Download the latest stable [version](http://www.cs.waikato.ac.nz/ml/weka/downloading.html) or the  developer [branch](http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html) of Weka.
+You can also build the developer branch from the SVN repository: 
 
-#### CPU
-For the CPU package no further requisites are necessary.
-
-#### GPU
-The GPU package needs the CUDA 8.0 backend to be installed on your system. Nvidia provides some good installation instructions for all platforms:
-
-- [Linux](http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html)
-- [Mac OS X](http://docs.nvidia.com/cuda/cuda-installation-guide-mac-os-x/index.html)
-- [Windows](http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
-
-# Installing the Weka Package
-Weka packages can be easily installed either via the user interface as described [here](https://weka.wikispaces.com/How+do+I+use+the+package+manager%3F#toc2), or simply via the commandline:
 ```bash
-$ java -cp <WEKA-JAR-PATH> weka.core.WekaPackageManager \
-       -install-package wekaDeeplearning4j<BACKEND>-dev.zip
+svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
+ant -f weka/build.xml exejar
 ```
-where `<WEKA-JAR-PATH>` must be replaced by the path pointing to the Weka jar file and `<BACKEND>` must be replaced by either `CPU` or `GPU`, depending on which version you chose.
 
-You can check whether the installation was successful with
+* Install AffectiveTweets using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F): 
+
 ```bash
-$ java -cp <WEKA-JAR-PATH> weka.core.WekaPackageManager \
-       -list-packages installed
+java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 ```
-which results in
+
+* You can also install the newest version of the package (not officially released yet) as follows: 
+
+```bash
+# Uninstall the previous version of AffectiveTweets
+java -cp weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
+# Install the newest development version:
+java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.1.zip
 ```
-Installed	Repository	Loaded	Package
-=========	==========	======	=======
-1.2.0    	-----     	Yes	    wekaDeeplearning4j<BACKEND>-dev: Weka wrappers for Deeplearning4j
+
+* (Optional) Install other useful packages for classification, regression and evaluation:
+
+```bash
+java -cp weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
+java -cp weka.jar weka.core.WekaPackageManager -install-package LibSVM
+java -cp weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
 ```

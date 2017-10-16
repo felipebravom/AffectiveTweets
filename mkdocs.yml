@@ -1,13 +1,9 @@
-site_name: WekaDeeplearning4j
+site_name: AffectiveTweets
 theme: readthedocs
-repo_url: https://github.com/Waikato/wekaDeeplearning4j
-site_description: WekaDeeplearning4j Documentation
+repo_url: https://github.com/felipebravom/AffectiveTweets
+site_description: AffectiveTweets Documentation
 pages:
     - Home: index.md
     - Installation: install.md
 
-    - Getting Started: getting-started.md
-    - Examples:
-        - 'Classifying the Iris Dataset': 'examples/classifying-iris.md'
-        - 'Classifying the MNIST Dataset': 'examples/classifying-mnist.md'
-    - Troubleshooting: troubleshooting.md
+    - Examples: examples.md
