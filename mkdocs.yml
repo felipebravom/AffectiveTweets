@@ -1,0 +1,13 @@
+site_name: WekaDeeplearning4j
+theme: readthedocs
+repo_url: https://github.com/Waikato/wekaDeeplearning4j
+site_description: WekaDeeplearning4j Documentation
+pages:
+    - Home: index.md
+    - Installation: install.md
+
+    - Getting Started: getting-started.md
+    - Examples:
+        - 'Classifying the Iris Dataset': 'examples/classifying-iris.md'
+        - 'Classifying the MNIST Dataset': 'examples/classifying-mnist.md'
+    - Troubleshooting: troubleshooting.md
