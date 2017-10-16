@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Troubleshooting - WekaDeeplearning4j</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Troubleshooting";
+    var mkdocs_page_input_path = "troubleshooting.md";
+    var mkdocs_page_url = "/troubleshooting/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> WekaDeeplearning4j</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../install/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../getting-started/">Getting Started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Examples</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../examples/classifying-iris/">Classifying the Iris Dataset</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../examples/classifying-mnist/">Classifying the MNIST Dataset</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Troubleshooting</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#cuda-gomp-version-40-not-found">CUDA: GOMP Version 4.0 not found</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#issue">Issue</a></li>
+        
+            <li><a class="toctree-l3" href="#solution">Solution</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">WekaDeeplearning4j</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Troubleshooting</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/troubleshooting.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>This section shall provide solutions for issues that  may appear.</p>
+<hr />
+<h2 id="cuda-gomp-version-40-not-found">CUDA: GOMP Version 4.0 not found</h2>
+<h5 id="issue">Issue</h5>
+<p>Starting the <code>Dl4jMlpClassifier</code> while using the GPU version of the package results in something similar to:</p>
+<pre><code>Caused by: java.lang.UnsatisfiedLinkError: 
+    /home/user/.javacpp/cache/nd4j-cuda-8.0-0.9.1-linux-x86_64.jar/org/nd4j/nativeblas/linux-x86_64/libjnind4jcuda.so: 
+    /usr/lib/x86_64-linux-gnu/libgomp.so.1: 
+    version `GOMP_4.0' not found 
+    (required by /home/user/.javacpp/cache/nd4j-cuda-8.0-0.9.1-linux-x86_64.jar/org/nd4j/nativeblas/linux-x86_64/libnd4jcuda.so)
+
+</code></pre>
+
+<p>This happens when your system is using a version below 4.9 of the gcc compiler. You can check this with:</p>
+<pre><code>$ gcc --version
+gcc (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4
+Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre>
+
+<p>Therefore the libgomp.so.1 library is still of version 3.0, while the nd4j backend expects version 4.0.</p>
+<h5 id="solution">Solution</h5>
+<p>Download the latest version of libgomp for your system and export the following:</p>
+<pre><code class="bash">export LD_PRELOAD=&lt;PATH-TO-NEW-LIBGOMP.SO&gt;
+</code></pre>
+
+<p>For Ubuntu you can get the library <a href="https://packages.ubuntu.com/xenial/libgomp1">here</a>, choose your architecture, download and extract the deb-file. For amd64 architectures this would be:</p>
+<pre><code class="bash">$ wget http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libgomp1_5.4.0-6ubuntu1~16.04.4_amd64.deb
+$ ar vx libgomp1_5.4.0-6ubuntu1~16.04.4_amd64.deb
+$ tar -xvf data.tar.xz
+</code></pre>
+
+<p>This extracts the library to <code>./usr/lib/x86_64-linux-gnu/libgomp.so.1</code>. Afterward set the <code>LD_PRELOAD</code> variable to this path as an absolute path and export it as shown above.</p>
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../examples/classifying-mnist/" class="btn btn-neutral" title="Classifying the MNIST Dataset"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../examples/classifying-mnist/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

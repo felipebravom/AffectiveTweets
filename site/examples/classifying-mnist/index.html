@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Classifying the MNIST Dataset - WekaDeeplearning4j</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Classifying the MNIST Dataset";
+    var mkdocs_page_input_path = "examples/classifying-mnist.md";
+    var mkdocs_page_url = "/examples/classifying-mnist/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> WekaDeeplearning4j</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../install/">Installation</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../getting-started/">Getting Started</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Examples</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../classifying-iris/">Classifying the Iris Dataset</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Classifying the MNIST Dataset</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#the-mnist-dataset">The MNIST Dataset</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#commandline">Commandline</a></li>
+        
+            <li><a class="toctree-l4" href="#java">Java</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../troubleshooting/">Troubleshooting</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">WekaDeeplearning4j</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Examples &raquo;</li>
+        
+      
+    
+    <li>Classifying the MNIST Dataset</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/examples/classifying-mnist.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="the-mnist-dataset">The MNIST Dataset</h1>
+<p>The MNIST dataset provides images of handwritten digits of 10 classes (0-9) and suits the task of simple image classification. </p>
+<p>The minimal MNIST arff file can be found in the <code>datasets/nominal</code> directory of the WekaDeeplearning4j package. This arff file lists all images in <code>datasets/nominal/mnist-minimal</code> and annotates their path with their class label.</p>
+<p><strong>Important note:</strong> The arff dataset contains two features, the first one being the <code>filename</code> and the second one being the <code>class</code>. Therefore it is necessary to define an <code>ImageDataSetIterator</code> which uses these filenames in the directory given by the option <code>-imagesLocation</code>.</p>
+<h2 id="commandline">Commandline</h2>
+<p>The following run creates a Conv&gt;Pool&gt;Conv&gt;Pool&gt;Dense&gt;Out architecture</p>
+<pre><code class="bash">$ java -Xmx5g -cp weka.jar weka.Run \
+     .Dl4jMlpClassifier \
+     -S 1 \
+     -iterator &quot;weka.dl4j.iterators.ImageDataSetIterator -imagesLocation datasets/nominal/mnist-minimal -numChannels 1 -height 28 -width 28&quot; \
+     -normalization &quot;Standardize training data&quot; \
+     -layer &quot;weka.dl4j.layers.ConvolutionLayer -nFilters 32 -activation weka.dl4j.activations.ActivationReLU -kernelSizeX 3 -kernelSizeY 3 -paddingX 0 -paddingY 0 -strideX 1 -strideY 1 -updater ADAM&quot; \
+     -layer &quot;weka.dl4j.layers.SubsamplingLayer -kernelSizeX 2 -kernelSizeY 2 -paddingX 0 -paddingY 0 -poolingType MAX -strideX 1 -strideY 1&quot; \
+     -layer &quot;weka.dl4j.layers.ConvolutionLayer -nFilters 64 -activation weka.dl4j.activations.ActivationReLU -kernelSizeX 3 -kernelSizeY 3 -paddingX 0 -paddingY 0 -strideX 1 -strideY 1 -updater ADAM&quot; \
+     -layer &quot;weka.dl4j.layers.SubsamplingLayer -kernelSizeX 2 -kernelSizeY 2 -paddingX 0 -paddingY 0 -poolingType MAX -strideX 1 -strideY 1&quot; \
+     -layer &quot;weka.dl4j.layers.DenseLayer -nOut 128 -activation weka.dl4j.activations.ActivationReLU&quot; \
+     -layer &quot;weka.dl4j.layers.OutputLayer -activation weka.dl4j.activations.ActivationSoftmax -lossFn weka.dl4j.lossfunctions.LossMCXENT&quot; \
+     -numEpochs 10 \
+     -t datasets/nominal/mnist.meta.minimal.arff \
+     -no-cv
+</code></pre>
+
+<h2 id="java">Java</h2>
+<p>The same architecture can be built programmatically with the following Java code</p>
+<pre><code class="java">// Set up the MLP classifier
+Dl4jMlpClassifier clf = new Dl4jMlpClassifier();
+clf.setSeed(1);
+clf.setNumEpochs(10);
+
+
+// Load the arff file
+Instances data = new Instances(new FileReader(&quot;datasets/nominal/mnist.meta.minimal.arff&quot;));
+data.setClassIndex(data.numAttributes() - 1);
+
+
+// Load the image iterator
+ImageDataSetIterator imgIter = new ImageDataSetIterator();
+imgIter.setImagesLocation(new File(&quot;datasets/nominal/mnist-minimal&quot;));
+imgIter.setHeight(28);
+imgIter.setWidth(28);
+imgIter.setNumChannels(1);
+imgIter.setTrainBatchSize(1);
+clf.setDataSetIterator(imgIter);
+
+
+// Setup the network layers
+// First convolution layer, 32 3x3 filter 
+ConvolutionLayer convLayer1 = new ConvolutionLayer();
+convLayer1.setKernelSizeX(3);
+convLayer1.setKernelSizeY(3);
+convLayer1.setStrideX(1);
+convLayer1.setStrideY(1);
+convLayer1.setActivationFn(Activation.RELU.getActivationFunction());
+convLayer1.setNOut(32);
+
+// First maxpooling layer, 2x2 filter
+SubsamplingLayer poolLayer1 = new SubsamplingLayer();
+poolLayer1.setPoolingType(PoolingType.MAX);
+poolLayer1.setKernelSizeX(2);
+poolLayer1.setKernelSizeY(2);
+poolLayer1.setStrideX(2);
+poolLayer1.setStrideY(2);
+
+// Second convolution layer, 64 3x3 filter
+ConvolutionLayer convLayer2 = new ConvolutionLayer();
+convLayer2.setKernelSizeX(3);
+convLayer2.setKernelSizeY(3);
+convLayer2.setStrideX(1);
+convLayer2.setStrideY(1);
+convLayer2.setActivationFn(Activation.RELU.getActivationFunction());
+convLayer2.setNOut(64);
+
+// Second maxpooling layer, 2x2 filter
+SubsamplingLayer poolLayer2 = new SubsamplingLayer();
+poolLayer2.setPoolingType(PoolingType.MAX);
+poolLayer2.setKernelSizeX(2);
+poolLayer2.setKernelSizeY(2);
+poolLayer2.setStrideX(2);
+poolLayer2.setStrideY(2);
+
+// Fully connected dense leyer, 128 output units
+DenseLayer denseLayer = new DenseLayer();
+denseLayer.setNOut(128);
+denseLayer.setActivationFn(Activation.RELU.getActivationFunction());
+
+// Output layer with softmax activation
+OutputLayer outputLayer = new OutputLayer();
+outputLayer.setActivationFn(Activation.SOFTMAX.getActivationFunction());
+outputLayer.setLossFn(new LossMCXENT());
+
+
+// Set up the network configuration
+NeuralNetConfiguration nnc = new NeuralNetConfiguration();
+nnc.setOptimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+clf.setNeuralNetConfiguration(nnc);
+
+
+// Set the layers
+clf.setLayers(new Layer[]{convLayer1, poolLayer1, convLayer2, poolLayer2, denseLayer, outputLayer});
+
+
+// Evaluate the network
+Evaluation eval = new Evaluation(data);
+int numFolds = 10;
+eval.crossValidateModel(clf, data, numFolds, new Random(1));
+
+System.out.println(&quot;% Correct = &quot; + eval.pctCorrect());
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../troubleshooting/" class="btn btn-neutral float-right" title="Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../classifying-iris/" class="btn btn-neutral" title="Classifying the Iris Dataset"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../classifying-iris/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../../troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+
+</body>
+</html>
