@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="WekaDeeplearning4j Documentation">
+  <meta name="description" content="AffectiveTweets Documentation">
   
   <link rel="shortcut icon" href="./img/favicon.ico">
-  <title>Home - WekaDeeplearning4j</title>
+  <title>Home - AffectiveTweets</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="./css/theme.css" type="text/css" />
@@ -35,7 +35,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> WekaDeeplearning4j</a>
+        <a href="." class="icon icon-home"> AffectiveTweets</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -73,20 +73,6 @@
         </ul>
     
 
-    <li class="toctree-l2"><a href="#installation">Installation</a></li>
-    
-
-    <li class="toctree-l2"><a href="#examples">Examples</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#gui">GUI</a></li>
-        
-            <li><a class="toctree-l3" href="#command-line">Command-line</a></li>
-        
-        </ul>
-    
-
     <li class="toctree-l2"><a href="#team">Team</a></li>
     
 
@@ -103,27 +89,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="getting-started/">Getting Started</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Examples</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="examples/classifying-iris/">Classifying the Iris Dataset</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="examples/classifying-mnist/">Classifying the MNIST Dataset</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="troubleshooting/">Troubleshooting</a>
+    <a class="" href="examples/">Examples</a>
 	    </li>
           
         </ul>
@@ -136,7 +102,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">WekaDeeplearning4j</a>
+        <a href=".">AffectiveTweets</a>
       </nav>
 
       
@@ -151,7 +117,7 @@
     <li>Home</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/index.md"
+        <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/index.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -254,187 +220,6 @@
 <p><strong>Pre-trained Word-Embeddings</strong>: The package provides a file with pre-trained word vectors trained with the <a href="https://code.google.com/archive/p/word2vec/">Word2Vec</a> tool in gzip compressed format. It is a tab separated file with the word in last column located in $WEKA_HOME/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading <a href="https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz">w2v.twitter.edinburgh10M.400d.csv.gz</a>, which provides  embeddings trained from 10 million tweets taken from the <a href="http://www.aclweb.org/anthology/W/W10/W10-0513.pdf">Edinburgh corpus</a>. The parameters were calibrated for classifying words into emotions. More info in this <a href="http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf">paper</a>.</p>
 </li>
 </ol>
-<h2 id="installation">Installation</h2>
-<ul>
-<li>Download the latest stable <a href="http://www.cs.waikato.ac.nz/ml/weka/downloading.html">version</a> or the  developer <a href="http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html">branch</a> of Weka.
-You can also build the developer branch from the SVN repository: </li>
-</ul>
-<pre><code class="bash">svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
-ant -f weka/build.xml exejar
-</code></pre>
-
-<ul>
-<li>Install AffectiveTweets using the <a href="http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F">WekaPackageManager</a>: </li>
-</ul>
-<pre><code class="bash">java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
-</code></pre>
-
-<ul>
-<li>You can also install the newest version of the package (not officially released yet) as follows: </li>
-</ul>
-<pre><code class="bash"># Uninstall the previous version of AffectiveTweets
-java -cp weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
-# Install the newest development version:
-java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.1.zip
-</code></pre>
-
-<ul>
-<li>(Optional) Install other useful packages for classification, regression and evaluation:</li>
-</ul>
-<pre><code class="bash">java -cp weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
-java -cp weka.jar weka.core.WekaPackageManager -install-package LibSVM
-java -cp weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
-</code></pre>
-
-<h2 id="examples">Examples</h2>
-<p>The package can be used from the Weka GUI or the command line.</p>
-<h3 id="gui">GUI</h3>
-<p>Run WEKA and open the Explorer:<br />
- ```
- java -Xmx4G -jar weka.jar </p>
-<pre><code>
-Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
-
-#### Train an SVM using sparse features:
-
-* Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the *Files of Type* option. 
-
-* Choose the *TweetToSparseFeatureVector* filter and configure it for calculating word n-grams, character n-grams, Brown word clusters, and POS tags:
-
- &lt;p align=&quot;center&quot;&gt;
- &lt;img src=&quot;img/tweetToSparseOptions.png&quot; alt=&quot;alt text&quot; width=&quot;40%&quot; height=&quot;40%&quot;&gt; 
- &lt;/p&gt;
-
-* Train an SVM using LibLinear. Go to the *classify* panel and select the target class as the variable (Nom) class. 
-
-* Right click on the panel right to the *Choose* button and click on the *Edit Configuration option*. Paste the following snippet:
-
- ```
- weka.classifiers.meta.FilteredClassifier -F &quot;weka.filters.unsupervised.attribute.RemoveType -T string&quot; -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
- ``` 
-
- Note: Weka allows copying and pasting the configuration of its objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
-
-* Select the Percentage split option and start training the classifier. 
-
-#### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
-* Go back to the preprocess panel and press the *Undo* button to go back to the original dataset (or load the __sent140test.arff.gz__ dataset in case you skipped the first example).
-* Go to the *Classify* panel and paste the following snippet in the classifier's configuration:
-
- ```
- weka.classifiers.meta.FilteredClassifier -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -I 1 -U\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 4-last,3\&quot;&quot; -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
-</code></pre>
-
-<p>Note: replace $HOME by your home directory (e.g., /home/felipe). </p>
-<ul>
-<li>
-<p>We are using the MultiFilter filter to nest multiple filters.  The Reorder filter is used to discard the first two String attributes and moving the class label to the last position.</p>
-</li>
-<li>
-<p>Now you can train the classifier by pressing the <em>Start</em> button. </p>
-</li>
-</ul>
-<h4 id="train-a-convolution-neural-network-on-the-concatenation-of-word-embeddings">Train a Convolution Neural Network on the concatenation of word embeddings:</h4>
-<p>In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this <a href="http://dl.acm.org/citation.cfm?doid=2766462.2767830">paper</a> using the <em>WekaDeepLearning4j</em> package, which is a wrapper of the <a href="https://deeplearning4j.org/">DeepLearning4j</a> library. </p>
-<ul>
-<li>First, install the package:</li>
-</ul>
-<pre><code class="bash"># For CPU
-java -cp weka.jar weka.core.WekaPackageManager -install-package WekaDeepLearning4jCPU
-
-# For GPU
-java -cp weka.jar weka.core.WekaPackageManager -install-package WekaDeepLearning4jGPU
-</code></pre>
-
-<ul>
-<li>Represent each tweet from the <strong>sent140test.arff.gz</strong>  dataset as a sequence of its first 15 word embeddings by pasting the following filter configuration:</li>
-</ul>
-<pre><code class="bash">weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 2 -K 15 -L -O
-</code></pre>
-
-<ul>
-<li>Discard the string content and move the class label to the last position:</li>
-</ul>
-<pre><code class="bash">weka.filters.unsupervised.attribute.Reorder -R 4-last,3
-</code></pre>
-
-<ul>
-<li>Train a convolutional neural network using a <em>Dl4jMlpClassifier</em>. Paste the following snippet in the Classification panel: </li>
-</ul>
-<pre><code class="bash">weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator &quot;weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500&quot; -layers &quot;weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \&quot;Convolution layer\&quot; -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER&quot; -layers &quot;weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \&quot;Output layer\&quot; -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER&quot; -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
-</code></pre>
-
-<p>This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.</p>
-<h4 id="create-a-lexicon-of-sentiment-words-using-the-tweetcentroid-method">Create a Lexicon of sentiment words using the TweetCentroid method</h4>
-<ul>
-<li>
-<p>Open in the preprocess panel the <strong>unlabelled.arff.gz</strong> dataset of unlabelled tweets. </p>
-</li>
-<li>
-<p>Train word vectors using the tweet centroid model using the TweetCentroid filter. Paste the following snippet:</p>
-</li>
-</ul>
-<pre><code class="bash">weka.filters.unsupervised.attribute.TweetCentroid -O -C -W -F -natt -M 10 -N 10 -I 1 -U -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz
-</code></pre>
-
-<ol>
-<li>Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:</li>
-</ol>
-<pre><code class="bash">weka.filters.unsupervised.attribute.LabelWordVectors -lexicon_evaluator &quot;affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1&quot; -U -I last
-</code></pre>
-
-<ol>
-<li>Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:</li>
-</ol>
-<pre><code class="bash">weka.filters.supervised.attribute.AddClassification -remove-old-class -distribution -W &quot;weka.classifiers.meta.FilteredClassifier -F \&quot;weka.filters.unsupervised.attribute.RemoveType -T string\&quot; -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000&quot;
-</code></pre>
-
-<ol>
-<li>Remove all the word attributes to create a lexicon:</li>
-</ol>
-<pre><code class="bash">weka.filters.unsupervised.attribute.Remove -R first-1461
-</code></pre>
-
-<ol>
-<li>
-<p>Save the resulting lexicon as an arff file by clicking on the save button.</p>
-</li>
-<li>
-<p>Use your new lexicon on a different tweet dataset using the <strong>TweetToInputLexiconFeatureVector</strong> filter.</p>
-</li>
-</ol>
-<h4 id="create-a-lexicon-of-sentiment-words-using-pmi-semantic-orientation">Create a Lexicon of sentiment words using PMI Semantic Orientation</h4>
-<ul>
-<li>
-<p>Open in the preprocess panel the <strong>sent140train.arff.gz</strong> dataset. This is a large corpus, so make sure to increase the heap size when running Weka.</p>
-</li>
-<li>
-<p>Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.</p>
-</li>
-<li>
-<p>Save the lexicon as an arff file and use it with the <strong>TweetToInputLexiconFeatureVector</strong> filter.</p>
-</li>
-</ul>
-<h4 id="train-a-tweet-level-polarity-classifier-from-unlabelled-tweets-using-the-asa-method">Train a Tweet-level polarity classifier from unlabelled tweets using the ASA method</h4>
-<p>In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA method. The classifier wil be evaluated on positive and negative tweets.</p>
-<ol>
-<li>Open in the preprocess panel the <strong>unlabelled.arff.gz</strong> dataset of unlabelled tweets. </li>
-<li>Add a class label with negative and positive values using the Add filter in the preprocess panel:</li>
-</ol>
-<pre><code class="bash">weka.filters.unsupervised.attribute.Add -T NOM -N class -L negative,positive -C last
-</code></pre>
-
-<p>Note that the values for the class are empty for all instances. We are adding these labels to make the data compatible with the target tweets on which the classifier we will train will be deployed.</p>
-<ol>
-<li>Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from <strong>6HumanPosNeg.arff.gz</strong>. Go to the classsify panel and set the file <strong>6HumanPosNeg.arff.gz</strong> as the supplied test set. Next, paste the following snippet in the classify panel:</li>
-</ol>
-<pre><code class="bash">weka.classifiers.meta.FilteredClassifier -F &quot;weka.filters.unsupervised.attribute.ASA -C -W -lex /home/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -I 1 -U -A 10 -H /home/felipe/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz&quot; -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
-</code></pre>
-
-<h3 id="command-line">Command-line</h3>
-<p>The same classification schemes can be run from the command line. An example using word embeddings is given below:</p>
-<p><code>bash
-java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000</code></p>
 <h2 id="team">Team</h2>
 <p>Main Developer:
 * <a href="http://www.cs.waikato.ac.nz/~fbravoma/">Felipe Bravo-Marquez</a>.</p>
@@ -481,7 +266,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
       
@@ -496,5 +281,5 @@ java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $H
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-10-16 22:45:15
+Build Date UTC : 2017-10-16 22:55:44
 -->

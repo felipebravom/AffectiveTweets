@@ -19,31 +19,7 @@
 
     
     <url>
-     <loc>/getting-started/</loc>
-     <lastmod>2017-10-17</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-        
-    <url>
-     <loc>/examples/classifying-iris/</loc>
-     <lastmod>2017-10-17</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/examples/classifying-mnist/</loc>
-     <lastmod>2017-10-17</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-    <url>
-     <loc>/troubleshooting/</loc>
+     <loc>/examples/</loc>
      <lastmod>2017-10-17</lastmod>
      <changefreq>daily</changefreq>
     </url>

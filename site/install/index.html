@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Installation - WekaDeeplearning4j</title>
+  <title>Installation - AffectiveTweets</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -35,7 +35,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> WekaDeeplearning4j</a>
+        <a href=".." class="icon icon-home"> AffectiveTweets</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -57,18 +57,7 @@
     <a class="current" href="./">Installation</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#prerequisites">Prerequisites</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#cpu">CPU</a></li>
-        
-            <li><a class="toctree-l3" href="#gpu">GPU</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#installing-the-weka-package">Installing the Weka Package</a></li>
+    <li class="toctree-l2"><a href="#installation">Installation</a></li>
     
 
     </ul>
@@ -76,27 +65,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../getting-started/">Getting Started</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Examples</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../examples/classifying-iris/">Classifying the Iris Dataset</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../examples/classifying-mnist/">Classifying the MNIST Dataset</a>
-                </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../troubleshooting/">Troubleshooting</a>
+    <a class="" href="../examples/">Examples</a>
 	    </li>
           
         </ul>
@@ -109,7 +78,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">WekaDeeplearning4j</a>
+        <a href="..">AffectiveTweets</a>
       </nav>
 
       
@@ -124,7 +93,7 @@
     <li>Installation</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/Waikato/wekaDeeplearning4j/edit/master/docs/install.md"
+        <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/install.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -134,37 +103,36 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="prerequisites">Prerequisites</h1>
+                <h2 id="installation">Installation</h2>
 <ul>
-<li>Weka 3.8.1 or above (<a href="https://sourceforge.net/projects/weka/files/latest/download">here</a>)</li>
-<li>WekaDeeplearning4j package 1.2 or above (<a href="https://github.com/Waikato/wekaDeeplearning4j/releases/latest">here</a>)</li>
+<li>Download the latest stable <a href="http://www.cs.waikato.ac.nz/ml/weka/downloading.html">version</a> or the  developer <a href="http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html">branch</a> of Weka.
+You can also build the developer branch from the SVN repository: </li>
 </ul>
-<p>You need to unzip the Weka zip file to a directory of your choice.</p>
-<h4 id="cpu">CPU</h4>
-<p>For the CPU package no further requisites are necessary.</p>
-<h4 id="gpu">GPU</h4>
-<p>The GPU package needs the CUDA 8.0 backend to be installed on your system. Nvidia provides some good installation instructions for all platforms:</p>
-<ul>
-<li><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html">Linux</a></li>
-<li><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-mac-os-x/index.html">Mac OS X</a></li>
-<li><a href="http://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html">Windows</a></li>
-</ul>
-<h1 id="installing-the-weka-package">Installing the Weka Package</h1>
-<p>Weka packages can be easily installed either via the user interface as described <a href="https://weka.wikispaces.com/How+do+I+use+the+package+manager%3F#toc2">here</a>, or simply via the commandline:</p>
-<pre><code class="bash">$ java -cp &lt;WEKA-JAR-PATH&gt; weka.core.WekaPackageManager \
-       -install-package wekaDeeplearning4j&lt;BACKEND&gt;-dev.zip
+<pre><code class="bash">svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
+ant -f weka/build.xml exejar
 </code></pre>
 
-<p>where <code>&lt;WEKA-JAR-PATH&gt;</code> must be replaced by the path pointing to the Weka jar file and <code>&lt;BACKEND&gt;</code> must be replaced by either <code>CPU</code> or <code>GPU</code>, depending on which version you chose.</p>
-<p>You can check whether the installation was successful with</p>
-<pre><code class="bash">$ java -cp &lt;WEKA-JAR-PATH&gt; weka.core.WekaPackageManager \
-       -list-packages installed
+<ul>
+<li>Install AffectiveTweets using the <a href="http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F">WekaPackageManager</a>: </li>
+</ul>
+<pre><code class="bash">java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 </code></pre>
 
-<p>which results in</p>
-<pre><code>Installed   Repository  Loaded  Package
-=========   ==========  ======  =======
-1.2.0       -----       Yes     wekaDeeplearning4j&lt;BACKEND&gt;-dev: Weka wrappers for Deeplearning4j
+<ul>
+<li>You can also install the newest version of the package (not officially released yet) as follows: </li>
+</ul>
+<pre><code class="bash"># Uninstall the previous version of AffectiveTweets
+java -cp weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
+# Install the newest development version:
+java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.1.zip
+</code></pre>
+
+<ul>
+<li>(Optional) Install other useful packages for classification, regression and evaluation:</li>
+</ul>
+<pre><code class="bash">java -cp weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
+java -cp weka.jar weka.core.WekaPackageManager -install-package LibSVM
+java -cp weka.jar weka.core.WekaPackageManager -install-package RankCorrelation
 </code></pre>
               
             </div>
@@ -173,7 +141,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../getting-started/" class="btn btn-neutral float-right" title="Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../examples/" class="btn btn-neutral float-right" title="Examples">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -201,13 +169,13 @@
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/Waikato/wekaDeeplearning4j" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../getting-started/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../examples/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
