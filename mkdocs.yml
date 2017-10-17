@@ -1,5 +1,5 @@
 site_name: AffectiveTweets
-theme: mkdocs 
+theme: readthedocs 
 repo_url: https://github.com/felipebravom/AffectiveTweets
 site_description: AffectiveTweets Documentation
 pages:
