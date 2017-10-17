@@ -10,7 +10,7 @@ The package implements WEKA filters for calculating state-of-the-art affective a
 The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 
-Installatation and execution examples are provided in the project's [webpage](https://felipebravom.github.io/AffectiveTweets).
+Installatation and execution examples are provided in the project [website](https://felipebravom.github.io/AffectiveTweets).
 
 
 
@@ -33,7 +33,7 @@ Please cite the following paper if using this package in an academic publication
 
 * __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
 
-You should also cite the papers describing any of the lexicons or resources you are using with this package. The corresponding references can be found through the links provided below.
+You should also cite the papers describing any of the lexicons or resources you are using with this package. 
 
 
 ## Team
