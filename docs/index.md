@@ -10,7 +10,7 @@ The package implements WEKA filters for calculating state-of-the-art affective a
 The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 
-The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/index.html).
+
 
 Description about the filters, installation instructions, and examples are given below.
 
@@ -102,6 +102,9 @@ You should also cite the papers describing any of the lexicons or resources you 
 3. __Pre-trained Word-Embeddings__: The package provides a file with pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. It is a tab separated file with the word in last column located in $WEKA_HOME/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading [w2v.twitter.edinburgh10M.400d.csv.gz](https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz), which provides  embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
  
 
+## Documentation
+
+The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/index.html).
 
 
 
