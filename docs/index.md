@@ -10,7 +10,7 @@ The package implements WEKA filters for calculating state-of-the-art affective a
 The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 
-The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/index.html).
+The Java documentation is available [here](https://felipebravom.github.io/AffectiveTweets/doc/).
 
 Description about the filters, installation instructions, and examples are given below.
 
