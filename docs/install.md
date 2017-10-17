@@ -1,4 +1,3 @@
-## Installation
 
 * Download the latest stable [version](http://www.cs.waikato.ac.nz/ml/weka/downloading.html) or the  developer [branch](http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html) of Weka.
 You can also build the developer branch from the SVN repository: 

@@ -1,44 +1,43 @@
 
 
-## Examples
 The package can be used from the Weka GUI or the command line.
 
-### GUI 
+## GUI 
 
 Run WEKA and open the Explorer:  
- ```
+```bash
  java -Xmx4G -jar weka.jar 
 ```
 
 Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
-#### Train an SVM using sparse features:
+### Train an SVM using sparse features:
 
 * Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the *Files of Type* option. 
 
 * Choose the *TweetToSparseFeatureVector* filter and configure it for calculating word n-grams, character n-grams, Brown word clusters, and POS tags:
 
- <p align="center">
- <img src="img/tweetToSparseOptions.png" alt="alt text" width="40%" height="40%"> 
- </p>
+
+![Options](img/tweetToSparseOptions.png)
+
 
 * Train an SVM using LibLinear. Go to the *classify* panel and select the target class as the variable (Nom) class. 
  
 * Right click on the panel right to the *Choose* button and click on the *Edit Configuration option*. Paste the following snippet:
  
- ```
+```bash
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
- ``` 
+``` 
 
  Note: Weka allows copying and pasting the configuration of its objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
  
 * Select the Percentage split option and start training the classifier. 
 
-#### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
+### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset (or load the __sent140test.arff.gz__ dataset in case you skipped the first example).
 * Go to the *Classify* panel and paste the following snippet in the classifier's configuration:
 
- ```
+```bash
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -I 1 -U\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
  Note: replace $HOME by your home directory (e.g., /home/felipe). 
@@ -48,7 +47,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 * Now you can train the classifier by pressing the *Start* button. 
 
 
-#### Train a Convolution Neural Network on the concatenation of word embeddings:
+### Train a Convolution Neural Network on the concatenation of word embeddings:
 In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
 * First, install the package:
@@ -76,13 +75,13 @@ weka.filters.unsupervised.attribute.Reorder -R 4-last,3
 * Train a convolutional neural network using a *Dl4jMlpClassifier*. Paste the following snippet in the Classification panel: 
 
 ```bash
-weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator "weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500" -layers "weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \"Convolution layer\" -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER" -layers "weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \"Output layer\" -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER" -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
+ weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator "weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500" -layers "weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \"Convolution layer\" -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER" -layers "weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \"Output layer\" -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER" -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
 ```
 
 This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
 
 
-#### Create a Lexicon of sentiment words using the TweetCentroid method
+### Create a Lexicon of sentiment words using the TweetCentroid method
 
 * Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
 
@@ -116,7 +115,7 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 
 
 
-#### Create a Lexicon of sentiment words using PMI Semantic Orientation
+### Create a Lexicon of sentiment words using PMI Semantic Orientation
 * Open in the preprocess panel the __sent140train.arff.gz__ dataset. This is a large corpus, so make sure to increase the heap size when running Weka.
 
 2. Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
@@ -125,7 +124,7 @@ weka.filters.unsupervised.attribute.Remove -R first-1461
 
 
 
-#### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA method
+### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA method
 
 In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA method. The classifier wil be evaluated on positive and negative tweets.
 
@@ -146,10 +145,10 @@ weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute
 
 
 
-### Command-line 
+## Command-line 
 
 The same classification schemes can be run from the command line. An example using word embeddings is given below:
 
- ```bash
+```bash
 java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
