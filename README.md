@@ -2,7 +2,7 @@
 
 ## About
 
-[AffectiveTweets](https://felipebravom.github.io/AffectiveTweets) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. 
+[AffectiveTweets](https://affectivetweets.cms.waikato.ac.nz/) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of English written tweets. 
 
 The package implements WEKA filters for calculating state-of-the-art affective analysis features from tweets that can be fed into machine learning algorithms. Many of these features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm). It also implements methods for building affective lexicons and distant supervision methods for training affective models from unlabelled tweets.
 
@@ -10,7 +10,7 @@ The package implements WEKA filters for calculating state-of-the-art affective a
 The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
 
-Installatation and execution examples are provided in the project [website](https://felipebravom.github.io/AffectiveTweets).
+Installatation and execution examples are provided in the project [website](https://affectivetweets.cms.waikato.ac.nz/).
 
 
 
