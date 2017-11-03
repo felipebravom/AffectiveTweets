@@ -2,6 +2,8 @@
 
 The package can be used from the Weka GUI or the command line.
 
+Note: The following examples work with the newest version of the package. 
+
 ## GUI 
 
 Run WEKA and open the Explorer:  
@@ -38,7 +40,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 * Go to the *Classify* panel and paste the following snippet in the classifier's configuration:
 
 ```bash
- weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -I 1 -U\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -I 1 -A -D -F -H -J -L -N -P -Q -R -T -U -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+weka.classifiers.meta.FilteredClassifier -F  "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\"affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \\\\\\\"\\\\\\\\t\\\\\\\" -I last\\\" -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
  Note: replace $HOME by your home directory (e.g., /home/felipe). 
 
@@ -48,22 +50,16 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 
 ### Train a Convolution Neural Network on the concatenation of word embeddings:
-In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the *WekaDeepLearning4j* package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
+In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the [WekaDeepLearning4j](https://deeplearning.cms.waikato.ac.nz/) package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
-* First, install the package:
+* First, install the package following the instructions from [here](https://deeplearning.cms.waikato.ac.nz/install/):
 
-```bash
-# For CPU
-java -cp weka.jar weka.core.WekaPackageManager -install-package WekaDeepLearning4jCPU
-
-# For GPU
-java -cp weka.jar weka.core.WekaPackageManager -install-package WekaDeepLearning4jGPU
-```
 
 * Represent each tweet from the __sent140test.arff.gz__  dataset as a sequence of its first 15 word embeddings by pasting the following filter configuration:
 
 ```bash
-weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B /Users/admin/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 2 -K 15 -L -O
+weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S CONCATENATE_ACTION -embeddingHandler "affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \"\\t\" -I last" -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler "weka.core.stopwords.Null " -I 1 -U -tokenizer "weka.core.tokenizers.TweetNLPTokenizer "
+
 ```
 
 * Discard the string content and move the class label to the last position:
@@ -78,6 +74,8 @@ weka.filters.unsupervised.attribute.Reorder -R 4-last,3
  weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator "weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500" -layers "weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \"Convolution layer\" -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER" -layers "weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \"weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\" -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \"Output layer\" -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER" -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
 ```
 
+
+
 This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
 
 
@@ -88,13 +86,15 @@ This network has 100 filters in a convolutional layer, followed by the output la
 2. Train word vectors using the tweet centroid model using the TweetCentroid filter. Paste the following snippet:
 
 ```bash
-weka.filters.unsupervised.attribute.TweetCentroid -O -C -W -F -natt -M 10 -N 10 -I 1 -U -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz
+weka.filters.unsupervised.attribute.TweetCentroid -C -W -F -natt -M 10 -N 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler "weka.core.stopwords.Null " -I 1 -U -tokenizer "weka.core.tokenizers.TweetNLPTokenizer "
+
+
 ```
 
 3. Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:
 
 ```bash
-weka.filters.unsupervised.attribute.LabelWordVectors -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1" -U -I last
+weka.filters.unsupervised.attribute.LabelWordVectors -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1 -lex-stemmer weka.core.stemmers.NullStemmer" -U -I last
 ```
 
 4. Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:
@@ -106,7 +106,7 @@ weka.filters.supervised.attribute.AddClassification -remove-old-class -distribut
 5. Remove all the word attributes to create a lexicon:
 
 ```bash
-weka.filters.unsupervised.attribute.Remove -R first-1461
+weka.filters.unsupervised.attribute.Remove -R first-4121
 ```
 
 6. Save the resulting lexicon as an arff file by clicking on the save button.
@@ -140,15 +140,33 @@ Note that the values for the class are empty for all instances. We are adding th
 3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from __6HumanPosNeg.arff.gz__. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
  
 ```bash
-weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex /home/felipe/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -I 1 -U -A 10 -H /home/felipe/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -A 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
 
 
 
 ## Command-line 
 
-The same classification schemes can be run from the command line. An example using word embeddings is given below:
+The same classification schemes can be run from the command line. 
+
+### Tweet Classification from the CL
+An example using word embeddings is given below:
 
 ```bash
-java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -I 1 -B $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -S 0 -K 15 -L -O\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F  "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\"affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \\\\\\\"\\\\\\\\t\\\\\\\" -I last\\\" -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 4-last,3\"" -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 ```
+
+## Feature Extraction from the CL
+There is also possible to run filters in isolation and then convert the processed files into CSV files:
+
+1. First run a filter:
+```bash
+java -Xmx4G -cp weka.jar weka.Run weka.filters.unsupervised.attribute.TweetToInputLexiconFeatureVector  -i  $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -o proc_data.arff -lexicon_evaluator "affective.core.ArffLexiconEvaluator -lexiconFile /Users/admin/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/NRC-AffectIntensity-Lexicon.arff -B NRC-Affect-Intensity -A 1 -lex-stemmer weka.core.stemmers.NullStemmer" -stemmer weka.core.stemmers.NullStemmer -stopwords-handler "weka.core.stopwords.Null " -I 1 -U -tokenizer "weka.core.tokenizers.TweetNLPTokenizer "
+```
+
+2. Then, convert the new feature vector into a CSV file.
+```bash
+java -Xmx4G -cp weka.jar weka.core.converters.CSVSaver -i proc_data.arff -o proc_data.csv 
+```
+
+

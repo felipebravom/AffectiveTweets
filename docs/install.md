@@ -13,13 +13,13 @@ ant -f weka/build.xml exejar
 java -cp weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 ```
 
-* You can also install the newest version of the package (not officially released yet) as follows: 
+* We recommend installing the newest version of the package (not officially released yet) as follows: 
 
 ```bash
 # Uninstall the previous version of AffectiveTweets
 java -cp weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
 # Install the newest development version:
-java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/AffectiveTweets1.0.1.zip
+java -cp weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
 ```
 
 * (Optional) Install other useful packages for classification, regression and evaluation:
