@@ -169,4 +169,6 @@ java -Xmx4G -cp weka.jar weka.Run weka.filters.unsupervised.attribute.TweetToInp
 java -Xmx4G -cp weka.jar weka.core.converters.CSVSaver -i proc_data.arff -o proc_data.csv 
 ```
 
+More information about how to run filters from the command line on the test data can be found [here](https://weka.wikispaces.com/Batch+filtering).
+
 
