@@ -604,7 +604,7 @@ public class ASA  extends TweetToFeatureVector {
 
 
 	@OptionMetadata(displayName = "numPosInstances",
-			description = "The number of positive instances to generaTE. \t default: 1000", 
+			description = "The number of positive instances to generate. \t default: 1000", 
 			commandLineParamName = "npos", 
 			commandLineParamSynopsis = "-npos <int>",
 			displayOrder = 12)	
