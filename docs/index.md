@@ -65,7 +65,7 @@ You should also cite the papers describing any of the lexicons or resources you 
 	* [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
 	* Negations: counts the number of negating words in the tweet.
  
- 3. __TweetToInputLexiconFeatureVector__ (new): calculates features from a tweet using a given list of affective lexicons, where each lexicon is represented as an [ARFF](https://weka.wikispaces.com/ARFF) file.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault. (This is filter is only available with the new version of the package).  [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
+ 3. __TweetToInputLexiconFeatureVector__: calculates features from a tweet using a given list of affective lexicons, where each lexicon is represented as an [ARFF](https://weka.wikispaces.com/ARFF) file.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault.   [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
  
 4. __TweetToSentiStrengthFeatureVector__: calculates positive and negative sentiment strengths for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
  
@@ -130,7 +130,7 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 
 ## How to Contribute
 
-New contributors are more than welcome. If you want to contribute just fork the project and send [pull request](https://help.github.com/articles/about-pull-requests/) with your changes. 
+New contributors are more than welcome. If you want to contribute just fork the project and send a [pull request](https://help.github.com/articles/about-pull-requests/) with your changes. 
 
 ## Contact
  * Email: fbravoma at waikato.ac.nz

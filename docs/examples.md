@@ -11,7 +11,7 @@ Run WEKA and open the Explorer:
  java -Xmx4G -jar weka.jar 
 ```
 
-Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
+Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info [here](http://weka.wikispaces.com/OutOfMemoryException).
 
 ### Train an SVM using sparse features
 
