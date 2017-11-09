@@ -7,19 +7,20 @@
 # Package Files #
 *.war
 *.ear
-#*.jar
+*.jar
 
 .settings/
 resources/
 lexicons/
 dist/
 data/
+lib/
 
 #site
 site/
 
-#scripts
-upload_page.sh
+# scripts #
+*.sh
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
