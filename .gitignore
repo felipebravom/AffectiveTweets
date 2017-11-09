@@ -9,12 +9,11 @@
 *.ear
 #*.jar
 
-.settings
-#resources/
-#lexicons/
-#*.gz
-dist
-data
+.settings/
+resources/
+lexicons/
+dist/
+data/
 
 #site
 site/
