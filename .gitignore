@@ -12,7 +12,7 @@
 .settings
 #resources/
 #lexicons/
-*.gz
+#*.gz
 dist
 data
 
