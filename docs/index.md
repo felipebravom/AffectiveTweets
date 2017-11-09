@@ -98,7 +98,7 @@ Tje model includes a simple modification to the tweet centroid model for increas
 [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib), [original paper](https://www.cs.waikato.ac.nz/~fbravoma/publications/wi2016t.pdf)
 
 
-1. __LexiconDistantSupervision__:   is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
+1. __LexiconDistantSupervision__: This is the most popolar distant supervision approach for Twitter sentiment analysis. It takes a collection of unlabelled tweets and a polarity lexicon in arff format of positive and negative tokens. If a word from the lexicon is found the tweet is labelled with the word's polarity. Tweets with both positive and negative words are dicarded. The word used for labelling the tweet can be removed from the content. Emoticons are used as the default lexicon. [original paper](http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf)
 
 ### Tokenizers
 
