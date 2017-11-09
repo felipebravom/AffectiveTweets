@@ -35,7 +35,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
  
 * Select the Percentage split option and start training the classifier 
 
-### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
+### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset (or load the __sent140test.arff.gz__ dataset in case you skipped the first example).
 * Go to the *Classify* panel and paste the following snippet in the classifier's configuration:
 
