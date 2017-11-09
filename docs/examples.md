@@ -82,7 +82,7 @@ This network has 100 filters in a convolutional layer, followed by the output la
 
 * Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
 
-2. Train word vectors using the tweet centroid model using the TweetCentroid filter. Paste the following snippet:
+* Train word vectors using the tweet centroid model using the TweetCentroid filter. Paste the following snippet:
 
 ```bash
 weka.filters.unsupervised.attribute.TweetCentroid -C -W -F -natt -M 10 -N 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler "weka.core.stopwords.Null " -I 1 -U -tokenizer "weka.core.tokenizers.TweetNLPTokenizer "
@@ -90,55 +90,55 @@ weka.filters.unsupervised.attribute.TweetCentroid -C -W -F -natt -M 10 -N 10 -H 
 
 ```
 
-3. Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:
+* Label the resulting word vectors with a seed lexicon in arff format using the LabelWordVector Filter:
 
 ```bash
 weka.filters.unsupervised.attribute.LabelWordVectors -lexicon_evaluator "affective.core.ArffLexiconWordLabeller -lexiconFile $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/metaLexEmo.arff -B MetaLexEmo -A 1 -lex-stemmer weka.core.stemmers.NullStemmer" -U -I last
 ```
 
-4. Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:
+* Train a classifier a logistic regression on labelled words and add predictions as new attributes using the AddClassification filter:
 
 ```bash
 weka.filters.supervised.attribute.AddClassification -remove-old-class -distribution -W "weka.classifiers.meta.FilteredClassifier -F \"weka.filters.unsupervised.attribute.RemoveType -T string\" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000"
 ```
 
-5. Remove all the word attributes to create a lexicon:
+* Remove all the word attributes to create a lexicon:
 
 ```bash
 weka.filters.unsupervised.attribute.Remove -R first-4121
 ```
 
-6. Save the resulting lexicon as an arff file by clicking on the save button.
+* Save the resulting lexicon as an arff file by clicking on the save button.
 
-7. Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__ filter.
+* Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__ filter.
 
 
 
 ### Create a Lexicon of sentiment words using PMI Semantic Orientation
 * Open in the preprocess panel the __sent140train.arff.gz__ dataset. This is a large corpus, so make sure to increase the heap size when running Weka.
 
-2. Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
+* Create a PMI lexicon using the PMILexiconExpander filter with default parameters. This is a supervised filter.
 
-3. Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
+* Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
 
 
 ### Train a Tweet-level polarity classifier from unlabelled tweets using emoticon labels
 
 Distant supervision is very useful when tweets annotated by sentiment are not available. In this example we will show how to train a classifier using emoticons as noisy labels.
 
-1. Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
-2. Label tweets based on the polarity of emoticons (tweets without emoticons will be discarded):
+* Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
+* Label tweets based on the polarity of emoticons (tweets without emoticons will be discarded):
 
 ```bash
 weka.filters.unsupervised.attribute.LexiconDistantSupervision -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/emoticons.arff -polatt polarity -negval negative -posval positive -removeMatchingWord -I 1 -tokenizer "weka.core.tokenizers.TweetNLPTokenizer " 
 ```
-3. Rename the polarity label to *class* (this is needed to make the data compatible with the testing set):
+* Rename the polarity label to *class* (this is needed to make the data compatible with the testing set):
 
 ```bash
 weka.filters.unsupervised.attribute.RenameAttribute -find polarity -replace class -R last
 ```
 
-4. Train a classifier using unigram as features and deploy the classifier on target annotated tweets. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
+* Train a classifier using unigram as features and deploy the classifier on target annotated tweets. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
 
 
 ```bash
@@ -149,8 +149,8 @@ weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.
 
 In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA and the PTCM methods. The classifier wil be evaluated on positive and negative tweets.
 
-1. Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
-2. Add a class label with negative and positive values using the Add filter in the preprocess panel:
+* Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
+* Add a class label with negative and positive values using the Add filter in the preprocess panel:
 
 ```bash
 weka.filters.unsupervised.attribute.Add -T NOM -N class -L negative,positive -C last
@@ -158,13 +158,13 @@ weka.filters.unsupervised.attribute.Add -T NOM -N class -L negative,positive -C 
 Note that the values for the class are empty for all instances. We are adding these labels to make the data compatible with the target tweets on which the classifier we will train will be deployed.
 
 
-3. Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from __6HumanPosNeg.arff.gz__. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
+* Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from __6HumanPosNeg.arff.gz__. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
  
 ```bash
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -A 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
 
-4. Paste the following snippet for using the PTCM. The partition size for the word vectors is set to 4: 
+* Paste the following snippet for using the PTCM. The partition size for the word vectors is set to 4: 
 
 ```bash
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.PTCM -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 4 -N 4 -A 10 -H /Users/admin/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
