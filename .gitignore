@@ -9,7 +9,12 @@
 *.ear
 *.jar
 
+# Eclipse files
+.classpath
+.project
 .settings/
+
+# Project resources
 resources/
 lexicons/
 dist/
