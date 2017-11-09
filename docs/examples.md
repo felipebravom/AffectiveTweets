@@ -122,10 +122,32 @@ weka.filters.unsupervised.attribute.Remove -R first-4121
 3. Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
 
 
+### Train a Tweet-level polarity classifier from unlabelled tweets using emoticon labels.
 
-### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA method
+Distant supervision is very useful when tweets annotated by sentiment are not available. In this example we will show how to train a classifier using emoticons as noisy labels.
 
-In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA method. The classifier wil be evaluated on positive and negative tweets.
+1. Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
+2. Label tweets based on the polarity of emoticons (tweets without emoticons will be discarded):
+
+```bash
+weka.filters.unsupervised.attribute.LexiconDistantSupervision -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/emoticons.arff -polatt polarity -negval negative -posval positive -removeMatchingWord -I 1 -tokenizer "weka.core.tokenizers.TweetNLPTokenizer " 
+```
+3. Rename the polarity label to *class* (this is needed to make the data compatible with the testing set):
+
+```bash
+weka.filters.unsupervised.attribute.RenameAttribute -find polarity -replace class -R last
+```
+
+4. Train a classifier using unigram as features and deploy the classifier on target annotated tweets. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
+
+
+```bash
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 0 -G 0 -taggerFile $HOME/wekafiles/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 1 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+```
+
+### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA and PTCM distant supervision methods
+
+In this example we will generate positive and negative instances from a corpus of unlabelled tweets using the ASA and the PTCM methods. The classifier wil be evaluated on positive and negative tweets.
 
 1. Open in the preprocess panel the __unlabelled.arff.gz__ dataset of unlabelled tweets. 
 2. Add a class label with negative and positive values using the Add filter in the preprocess panel:
@@ -142,7 +164,11 @@ Note that the values for the class are empty for all instances. We are adding th
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -A 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
 
+4. Paste the following snippet for using the PTCM. The partition size for the word vectors is set to 4: 
 
+```bash
+weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.PTCM -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 4 -N 4 -A 10 -H /Users/admin/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+```
 
 ## Command-line 
 
