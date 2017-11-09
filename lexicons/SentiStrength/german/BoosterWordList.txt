@@ -1,0 +1,38 @@
+absolut	1
+ausgesprochen	1
+außerordentlich	1
+besonders	1
+bestimmt	1
+bißchen	-1
+definitiv	1
+echt	1
+einige	-1
+einigermaßen	-1
+enorm	2
+eventuell	-1
+extra	1
+extrem	2
+halbwegs	-1
+hatte	-1	 9. Juni 2010 [Vergangenheit weniger stark]
+hoffentlich	-1
+insbesondere	1
+irrsinnig	2
+jedenfalls	1
+kaum	-1
+komplett	1
+könnte	-1
+leicht	-1
+manchmal	-1
+möglicherweise	-1	konjunktivisch
+verdammt	2
+verflixt	1
+voll	1
+vollständig	 1
+völlig	1
+wenig	-1	# wenig gefallen; wenig aufregend
+wirklich	1
+würde	-1
+ziemlich	0
+zweifellos	1
+zweifelsfrei	0	??
+zweifelsohne	1

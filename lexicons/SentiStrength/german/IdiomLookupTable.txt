@@ -1,0 +1,13 @@
+besten dank	2
+das gefällt mir	2
+er mag	2
+gut ist	2
+herzliche grüße	2
+ich mag	2
+mach dir keine Sorgen	2
+sie mag	2
+um ehrlich zu sein	-2
+vielen dank	2
+was gibts	2
+wie gehts es Dir	2
+wie gehts es Ihnen	2

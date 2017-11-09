@@ -1,0 +1,1312 @@
+﻿abbaubarkeit*	-2	degrad*	-2			
+abenteuer*	1	adventur*	1			
+abenteuerlich*	-1	adventur*	1	??? negativ		
+abgedroschen*	-3	trite	-3			
+abgehalfter*	-2					
+abgelenk*	-1	distract*	-1			
+abgemueh*	-2	strugg*	-2			
+abgemüh*	-2	strugg*	-2			
+abgeneig*	-3	dislikes	-3			
+abgerack*	-2	strugg*	-2			
+abgestumpft*	-3	jaded	-3 ???			
+ablehnen*	-2	reject*	-2			
+abmueh*	-2	strugg*	-2			
+abmüh*	-2	strugg*				
+abneig*	-3	dislike	-3			
+abneigung*	-3	dislikes	-3			
+abracker*	-2	strugg*	-2			
+abschaum	-3	scum	-3		new	
+abschrecke*	-2	discourag*	-1			
+abwehr*	-1	defenc*	-1			
+aengste	-3	fears	-3			
+aerger*	-4	anger*	-4			
+aergern*	-3	resent*	-3			
+aggress*	-3	aggress*	-3			
+agonie	-4	agony	-4			
+ahnungslos*	-2					
+aktiv*	2	active*	2			
+akzepta*	2	accepta*	2			
+akzeptier*	1	accept	1			
+alarm*	-3	alarm*	-3			
+allein*	-1	alone	-1			
+alol	2	alol	2		actually laughing out loud	
+amor*	2	amor*	2			
+amues*	2	amus*	2			
+amus*	2	amus*	2			
+amüs*	2	amus*	2			
+anfaelle	-1	tempers	-1			
+anfall*	-4	rage*	-4			
+anfälle	-1	tempers	-1			
+angelogen	-3	lied	-3			
+angenehm*	3	pleasant*	3			
+angespann*	-2	strain*	-2			
+angespannt*	-3	tense*	-3			
+angestreng*	-2	strain*	-2			
+angriff*	-3	assault*	-3			
+angst*	-3	fearful*	-3			
+angsteinfloessen*	-3	 			auch: angst einfloessend	 
+angsteinflößen*	-3	 			auch: angst einflößend	 
+anluegen*	-3	lied	-3			
+anlügen*	-3	lied	-3			
+anmutig*	3	graceful*	3			
+anreiz*	1	incentive*	1			
+anscheiss*	-3	neu				
+anscheiß*	-3	neu				
+anschiss	-3	neu				
+anschiß	-3	neu				
+anspannung*	-2	strain*	-2			
+anspeib*	-3	neu			 noneg	
+antagoni*	-2	antagoni*	-2			
+anziehen*	2	attract*	2			
+aok	2	aok	2			
+apath*	-2	apath*	-2			
+argh*	-2	argh*	-2			
+arrogant*	-3	arrogan*	-3			
+arroganz*	-3	arrogan*	-3			
+arschloch*	-3	asshole*	-3			
+arschloech*	-3	asshole*	-3			
+arschlöch*	-3	asshole*	-3			
+attraktiv*	2	handsom*	2			
+aufgeben*	-2	abandon*	-2		liwc uness specified otherwise	
+aufgegeben	-2	abandon*	-2		liwc uness specified otherwise	
+aufgereg*	-2	agitat*	-2			
+aufgeschlossen*	1	openminded*	1			
+aufgeschreck*	-2	startl*	-2			
+aufgetakelt*	-2					
+aufreg*	-2	agitat*	-2			
+aufregen*	-3	upset*	-3			
+aufregend*	3	excit*	3			
+aufruhr	-3	turmoil	-3			
+ausgelach*	-3	laugh*	3			
+ausgespotte*	-3	mocked	-3			
+ausgezeichn*	1	award*	1			
+auskotz*	-3	neu			 noneg	
+auslachen*	-3	laugh*	3			
+ausraub*	-4	raping	-4			
+ausspotte*	-3	mocked	-3			
+austoben*	-1	| 				
+auszeichn*	1	award*	1			
+aversi*	-3	aversi*	-3			
+bastard*	-3	bastard*	-3			
+beaengstig*	-3	 				
+bedankt*	1	thanked	1			
+bedauern*	-2	regret*	-2			
+bedrohung*	-3	threat*	-3			
+beduerftig*	-2	needy	-2			
+bedürftig*	-2	needy	-2			
+beeindruck*	2	impress*	2			
+befrei*	2	freed*	2			
+befreit*	2	frees*	2			
+befreiung*	2	libert*	2			
+befried*	2	satisf*	2			
+befuercht*	-3	feared	-3			
+befürcht*	-3	feared	-3			
+begierig*	1	eager*	1			
+begnadet	3	graced	3			
+begnueg*	2	contented*	2			
+begnüg*	2	contented*	2			
+begriffsstutz*	-2	dull*	-2			
+behagen	1	contentment	1			
+beilaeufig	2	casually	2			
+beiläufig	2	casually	2			
+bejeweled	2	truly	2			
+belaestig*	-4	molest*	-4			
+belaestigen*	-3	harass*	-3			
+belast*	-1	burden*	-1			
+beleidig*	-3	offend*	-3			
+beleidigung*	-3	insult*	-3			
+beliebt*	3	popular*	3			
+belohn*	2	reward*	2			
+belästig*	-4	molest*	-4			
+belästigen*	-3	harass*	-3			
+benommen*	-2	daze*	-2			
+bereit	1	ready	1			
+bereitschaft	1	readiness	1			
+bereitwillig*	1	readiness	1			
+beruhigend	2					
+beschaedigt*	-2					
+beschaem*	-4	asham*	-4			
+beschimpf*	-2	abuse*				
+beschwer*	-2	complain*	-2			
+beschwerd*	-2	discomfort*	-2			
+beschwichtig*	2	reassur*	2			
+beschädigt*	-2					
+beschäm*	-4	asham*	-4			
+besessen*	-3	obsess*	-3			
+besorgt*	-4	worr*	-4			
+besser	2	better	2			
+beste*	2	best	2		lemma: gut	
+bestimmte*	2	certain*	2			
+bestraf*	-2	punish*	-2			
+bestuerz*	-3	dismay*	-3			
+bestürz*	-3	dismay*	-3			
+betaeub*	-2	daze*	-2			
+betaeubt	-2	stuns	-2			
+betreu*	2	cared	2			
+betrueblich*	-4	sadde*	-4  ???			
+betrueg*	-3	cheat*	-3			
+betrug*	-3	cheat*	-3			
+betrüblich*	-4	sadde*	-4  ???			
+betrüg*	-3	cheat*	-3			
+betäub*	-2	daze*	-2			
+betäubt	-2	stuns	-2			
+beunruh*	-3					
+bewertung	2	valuing	2			
+bewund*	3	admir*	3			
+beängstig*	-3	 				
+bff	4	bff	4		best friends forever	
+bg	2	bg	2		big grin	
+bitte*	2	please*	2			
+bitter*	-2	bitter*	-2			
+blam*	-2	blam*	-2			
+bloedsinn*	-3	rubbish	-2		everything from here until "liwc" is added by george paltoglou	
+blödsinn*	-3	rubbish	-2		everything from here until "liwc" is added by george paltoglou	
+boah	3	wow*	3			
+boese*	-3	evil*	-3			
+boese*	-3	wicked*	-3			
+boesewicht*	-3	villain*	-3			
+bonus*	1	bonus*	1			
+brillian*	2	brillian*	2			
+bruell*	-4	|	scream*		-4	
+bruha*	-2	muah	2  // bruhaha			
+brutal*	-3	brutal*	-3			
+brutto*	-2	gross*	-2			
+brüll*	-4	|	scream*		-4	
+bullshi*	-3	crappy	-3			
+böse*	-3	evil*	-3			
+bösewicht*	-3	villain*	-3			
+casual	2	casual	2			
+champio*	2	champ*	2  //118block champ*			
+chaos	-1	mess	-1			
+chaot*	-1	mess	-1			
+chaotisch*	-1	mess	-1			
+charit*	2	charit*	2			
+charme*	2	charm*	2			
+chillig*	2	laidback	2			
+clever*	1	clever*	1			
+cool*	2	cool	2			
+coolst*	3	coolest	3		ur da coolest mom ever!!	
+courag*	2	bold*	2			
+dankb*	2	gratef*	2			
+dankbar*	2	thankf*	2			
+danke	2	thank	1			
+defekt*	-1	defect*	-1			
+defensi*	-1	defens*	-1			
+delectabl*	3	delectabl*	3			
+demotivier*	-2	discourag*	-1			
+depp*	-4	|	mad		-3	
+deppert*	-3	mad	-3			
+depress*	-4	depress*	-4			
+depression*	-4	sadness	-4			
+deprimier*	-4	depress*	-4			
+depriv*	-1	depriv*	-1			
+deptessiv*	-4	sadness	-4			
+desperat*	-3	desperat*	-3			
+devot*	3	devot*	3			
+dickkoepfig*	-3	stubborn*	-3			
+dickkopf*	-3	stubborn*	-3			
+dickköpfig*	-3	stubborn*	-3			
+dieb*	-2	thief	-2			
+diebstahl	-2	thief	-2			
+dillo	-3		insult			
+dominant*	-2	domina*	-2			
+druck*	-3	|	pressur*		-2	
+duester*	-3	|	gloom*			
+duesternis*	-3	gloom*	-3			
+dumm*	-2	stupid*	-2			
+dumpf*	-1	dump*	-1			
+dumpfback*	-1	dump*	-1 // insult			
+durchfallen*	-3	flunk*	-3			
+durchgefall*	-3	flunk*	-3			
+durstig*	-2	thirsty	-2		new, thirsty	
+dynami*	1	dynam*	1			
+düster*	-3	|	gloom*			
+düsternis*	-3	gloom*	-3			
+effizien*	2	efficien*	2			
+egoism*	-3	egotis*	-3			
+egoismus*	-4	selfish*	-4			
+egoist*	-3	egotis*	-3			
+egoistisch*	-4	selfish*	-4			
+ehre*	1	honour*	1			
+ehrlich*	1	honest*	1			
+eifersucht	-3	jealous*	-3			
+eifersuechtig*	-3	jealous*	-3			
+eifersüchtig*	-3	jealous*	-3			
+eigenartig*	-1	peculiar*	-1			
+eigensinn*	-3	stubborn*	-3			
+eigensinnig*	-3	stubborn*	-3			
+eigentuemlich*	-1	peculiar*	-1			
+eigentümlich*	-1	peculiar*	-1			
+ein_witz	-2	joking	3 blocker: das ist ja ein witz			
+einfach*	1	easy*	1			
+eingebildet*	-2	smug*	-2			
+eingenist*	-1	dwell*	-1			
+eingeschraenkt*	-1					
+eingeschränkt*	-1					
+einnist*	-1	dwell*	-1			
+einsam*	-2	|	lone*		-2	
+einwandfrei*	2	flawless*	2			
+einzelkaempfer*	-2	lone*	-2			
+einzelkämpfer*	-2	lone*	-2			
+eitelkeit	-2	vanity	-2			
+ekel*	-4	disgust*	-4			
+elegan*	2	elegan*	2			
+emotcry	-3	emotcry	-3			
+emotgrumby	-2	emotgrumby	-2			
+emothappy	3	emothappy	3			
+emotional*	-2	emotional	-2			
+emotsmiley	2	emotsmiley	2			
+emotwink	2	emotwink	2			
+energ*	1	energ*	1			
+engagement*	2	commitment*	2			
+engagie*	1	engag*	1			
+engel*	2	luck	3  // blocker			
+enthusi*	3	enthus*	3			
+entmutig*	-2	dishearten*	-2			
+entsetzlich*	-3	horrific	-3			
+entspannen*	3	relax*	3			
+entspannt*	2	laidback	2			
+enttaeusch*	-2	disappoint*	-2			
+enttäusch*	-2	disappoint*	-2			
+erbaerml*	-4	dread*	-4			
+erbos*	-4	enrag*	-4			
+erbrechen*	-3	neu			 noneg	
+erbärml*	-4	dread*	-4			
+erfolg*	3	success*	3			
+erfolglos*	-3	unsuccessful*	-3			
+erfreu*	3	deligh*	3			
+erkrank*	-4	sicken*	-4			
+erleichterung	2	relief	2			
+ermutigend*	2	encourag*	2			
+ernst	-2	|	seriousness		-2	
+ernsthaft*	-2	serious	-2			
+ernstlich*	-2	seriously	-2			
+ernuecht*	-2	disillusion*	-2			
+ernücht*	-2	disillusion*	-2			
+erschoepf*	-2	exhaust*	-2			
+erschreck*	-4	scare*	-4			
+erschreckend	-4	terrifying	-4			
+erschreckt	-4	terrifies	-4			
+erschrock*	-4	scare*	-4			
+erschöpf*	-2	exhaust*	-2			
+erspare*	2	save	2  ??? 			
+erstaunl*	3	amaz*	3			
+erstell*	2	create*	2			
+erzuernt*	-4	enrag*	-4			
+erzürnt*	-4	enrag*	-4			
+esel	-2	neu noneg				
+exstase*	4	ecsta*	4			
+exstati*	4	ecsta*	4			
+extrovertiert*	2	outgoing	1			
+fabelhaft*	3	fabulous*	3			
+faelschli*	-2	fake	-2			
+faelschu*	-2	fake	-2			
+fake	-2	fake	-2			
+falsch*	-2	wrong*	-2			
+falschheit	-3	| neu				
+fan	1	|	supporter*		2	
+fantastisch*	3	fantastic*	3			
+fassunglsos*	-2	stunned	-2			
+faul*	-2	lazy	-2			
+fehde*	-2	feud*	-2			
+fehler*	-2	mistak*	-2			
+fehlerhaft*	-2	mistak*	-2			
+fehlt	-2	missing	-2			
+feigling*	-3	wimp*	-3			
+fein	2	fine	2			
+feind*	-2	enemy*	-2			
+feindselig*	-3	hostil*	-3			
+feindseligkeit*	-3	hostil*	-3			
+feine*	2	fine	2			
+festiv*	1	festiv*	1			
+fetzen	-2		insult? trunkenheit / kleidungsstueck noun! 			
+fetzenschaed*	-3		insult			
+fetzenschäd*	-3		insult noneg			
+fiasko	-3	|	disaster*		-1	
+fick*	-3	fuck	-3			
+ficker*	-3	fucker*	-3			
+fies*	-4	sinister	-4			
+fiesta*	1	fiesta*	1			
+flame	-3	flame	-3			
+flexibel*	1	flexib*	1			
+fliehen*	-2	flee	-2			
+flirt*	2	flirt*	2			
+folter*	-4	tortur*	-4			
+fotze*	-4	cunt*	-4			
+freak*	-2	freak*	-2			
+frei*	2	free	2			
+freier	2	freer	2			
+freih*	2	free*	2			
+freiheit*	2	libert*	2			
+freude*	3	joy*	3			
+freund*	2	friend*	2			
+freundl*	2	friend*	2			
+freundlich*	3	kind	3			
+freundlicherweise	2	kindly	2			
+frieden*	1	peace*	1			
+friedhof	-2	grave*				
+friedlich*	1	peace*	1			
+froehlich*	3	joll*	3			
+froh*	2	glad	2			
+frustrie*	-3	frustrat*	-3			
+fröhlich*	3	joll*	3			
+fuck	-3	fuck	-3			
+fuckin*	-3	fuckin*	-3			
+fud	-3	fud	-3		fear, uncertainty and doubt	
+fuercht*	-4	afraid	-4			
+fuerchterl*	-4	dread*	-4			
+fun	2	fun	2			
+furcht*	-4	afraid	-4			
+furchtbar*	-4	dread*	-4			
+furchterregend*	-3		auch: furcht erregend		 	
+furchtlos*	2	fearless*	2			
+fälschli*	-2	fake	-2			
+fälschu*	-2	fake	-2			
+fürcht*	-4	afraid	-4			
+fürchterl*	-4	dread*	-4			
+gauner*	-3	villain*	-3			
+geber*	2	giver*	2			
+geek*	-1	geek*	-1			
+gefaehr*	-1	danger*	-1			
+gefaelsch*	-2	fake	-2			
+gefahr*	-1	danger*	-1			
+gefallen	2	favor*	2			
+gefallen*	2	favour*	2			
+gefeuert	-3	fired	-3			
+gefickt*	-3	fucked*	-3			
+geflame*	-3	flame	-3			
+geflohen*	-2	flee	-2			
+gefähr*	-1	danger*	-1			
+gefälsch*	-2	fake	-2			
+gegensaetzlich*	-2	advers*	-2			
+gegensätzlich*	-2	advers*	-2			
+gehasst	-4	hated	-4			
+gehemmt*	-2	inhib*	-2			
+geier*	-3	vulture*	-3			
+geistesgestoe*	-3	moron*	-3			
+geistesgestö*	-3	moron*	-3			
+geistesschwach*	-3	moron*	-3			
+geitler*	-3	miser*	-3  *** miserable 			
+geizhals	-3	miser*	-3			
+geliebte*	4	sweetheart*	4			
+gelingen*	3	succeed*	3			
+gelitten	-4	suffered	-4			
+gelog*	-4	lying	-4			
+gelogen	-3	lied	-3			
+gemotz*	-2	nag*	-2			
+genero*	2	genero*	2			
+geniess*	3	enjoy*	3			
+genieß*	3	enjoy*	3			
+geringacht*	-4	contempt*	-4			
+geringschaetz*	-4	contempt*	-4			
+geringschätz*	-4	contempt*	-4			
+gerne	2	gladly	2			
+geschaetzt	2	valued	2			
+gescheitert*	-2	fail*	-2			
+geschlagen	-1	beaten	-1			
+geschrie*	-4	cried	-4			
+geschätzt	2	valued	2			
+gesegne*	2	bless*	2			
+gespielt	1	played	1			
+gestank*	-3	stench*	-3			
+gestohl*	-3	steal*	-3			
+gestunk*	-3	stank	-3			
+gestunken	-3	stunk	-3			
+gewalttaetig*	-3	violent*	-3			
+gewalttätig*	-3	violent*	-3			
+geweint	-4	cried	-4			
+gewinn*	2	profit*	3			
+gewinnt	1	wins	1			
+gewonn*	1	wins	1			
+gibt	2	giving	2			
+gier*	-3	greed*	-3			
+gift*	-3	poison*	-3			
+giggl*	3	giggl*	3			
+glaenzen*	2	excel*	2			
+glaenzend*	3	radian*	3			
+glamour*	2	glamor*	2			
+glaubhaf*	2	credit*	2			
+glaubwuerd*	2	credit*	2			
+glaubwürd*	2	credit*	2			
+glori*	2	glori*	2			
+glory	2	glory	2			
+glueck	3	luck	3			
+gluecklos*	-3	luckless*	-3			
+gluecks*	3	luck	3  ...pilz, ...gefuehl ...keks ...spiel			
+gluecksspiel*	-1	luck	3  // blocker			
+glänzen*	2	excel*	2			
+glänzend*	3	radian*	3			
+glück	3	luck	3			
+glücklos*	-3	luckless*	-3			
+glücks*	3	luck	3  ...pilz, ...gefühl ...keks ...spiel			
+glücksspiel*	-1	luck	3  // blocker			
+gmbo	3	gmbo	3		giggling my butt off	
+goettl*	2	divin*	2			
+gottverdammte*	-3	goddam*	-3			
+grab	-3	grave*	-3			
+grabesstimm*	-3	grave*	-3			
+grace	3	grace	3			
+graessli*	-4	dread*	-4			
+grand	2	grand	2			
+grandios*	2	grand	2			
+grantig*	-2	grouch*	-2			
+gratis	2	free	2			
+grausam*	-4	cruel*	-4			
+grauslich*	-3	 				
+griesgram*	-2	grouch*	-2			
+griev*	-4	griev*	-4			
+grimmig	-3	grim*	-3			
+grinsen	2	grin	2			
+groesszueg*	2	genero*	2			
+grossartig*	3	gorgeous*	3			
+grossmaul*	-3					
+großartig*	3	gorgeous*	3			
+großmaul*	-3					
+grr*	-3	grr*	-3			
+grufti*	-2	neu			insult	
+grusel*	-3	 				
+grusli*	-3	 				
+gräßli*	-4	dread*	-4			
+größzüg*	2	genero*	2			
+guete	2	goodness	2			
+gut	2	good	2		could also be 1?	
+gut*	2	well*	2			
+gutartig*	2	benign*	2			
+gutmuetig*	2	benevolen*	2			
+gutmütig*	2	benevolen*	2			
+göttl*	2	divin*	2			
+güte	2	goodness	2			
+ha	2	ha	2			
+haesslich*	-3	ugl*	-3			
+haha*	3	haha*	3			
+halsstarr*	-3	stubborn*	-3			
+happi*	3	happi*	3			
+happy	3	happy	3			
+harmlos*	2	harmless*	2			
+harmonie	2	harmon*	2			
+harmonisch*	2	harmon*	2			
+hass	-4	hate	-4			
+hasse	-4	hate	-4			
+hassen	-4	hating	-4			
+hasser*	-4	hater*	-4			
+hasserfuellt*	-4	hateful*	-4			
+hasserfüllt*	-4	hateful*	-4			
+hasst	-4	hates	-4			
+heartbroke*	-4	heartbroke*	-4			
+heartwarm*	3	heartwarm*	3			
+hegen*	3	cherish*	3			
+heh*	3	heh*	3			
+heimtuecke*	-3		| neu			
+heimtueckisch*	-3		| neu			
+heimtücke*	-3		| neu			
+heimtückisch*	-3		| neu			
+heimweh*	-3	homesick*	-3			
+heimzahle*	-2	revenge*	-2			
+heisslaeuf*	-2	fiery	-2			
+heißläuf*	-2	fiery	-2			
+hektik	-2	hectic	-2		this year has been hectic	
+hektisch*	-2	hectic	-2		this year has been hectic	
+held*	3	hero*	3			
+helfer*	2	helper*	2			
+herausford*	2	challeng*	2			
+herumnoerg*	-2	nag*	-2			
+herumnörg*	-2	nag*	-2			
+herzlichen	2	heartfelt	2			
+herzlos*	-3	heartless*	-3			
+herzschmerz*	-4	heartbreak*	-4			
+hexe*	-1	witch	-1			
+hexenver*	-3	witch	-1 verbrennung, verfolgung			
+hilfe	2	helping	2			
+hilflos*	-2	helpless*	-2			
+hilfreich*	2	helpful*	2			
+hilfsbereit*	2	helpful*	2			
+hilft	2	helps	2			
+himmel*	2	heaven*	2			
+himmlisch*	2	heaven*	2			
+hingebungsvoll*	3	devot*	3			
+hingezoge*	3	devot*	3			
+hinterlist*	-3	| neu				
+hirni*	-3	moron*	-3			
+hirnrissi*	-4	moron*	-3 // noneg			
+hochachtung	3	respect 	3			
+hochachtungsvoll*	3	respect 	3			
+hoelle	-3	hell	-3			
+hoellisch*	-3	hellish	-3			
+hoffentlich	1					
+hoffnung*	2	hopefulness	2			
+hoffnungslos*	-4	hopeless*	-4			
+hoffnungsvoll	2	hopeful	2			
+hoffte	2	hoped	2			
+hoho*	3	hoho*	3			
+horrend*	-4	horr*	-4			
+horro*	-4	horr*	-4			
+huebsch*	3	cute*	3			
+hugg*	3	hugg*	3			
+humiliat*	-4	humiliat*	-4			
+humor*	3	humour*	3			
+hunger*	-2	hungr*	-2		new - hungry	
+hungr*	-2	hungr*	-2		new - hungry	
+hure*	-3	bitch*	-3			
+hurra*	3	hurra*	3			
+häßlich*	-3	ugl*	-3			
+hölle	-3	hell	-3			
+höllisch*	-3	hellish	-3			
+hübsch*	3	cute*	3			
+ideal*	2	ideal*	2			
+idiot*	-3	idiot	-2  // insult			
+ignorant*	-3	ignor*	-3  // insult			
+in_ordnung	2	alright*	2			
+inadequa*	-2	inadequa*	-2			
+indecis*	-2	indecis*	-2			
+ineffekt*	-2	ineffect*	-2			
+inspiration*	3	inspir*	3			
+inspirieren*	3	inspir*	3			
+inspiriert*	3	inspir*	3			
+intelligent*	2	intell*	2			
+interess*	2	interest*	2			
+irrational*	-3	irrational*	-3			
+irre	-3	weird*	-3			
+irritation*	-3	irrita*	-3			
+islamfeindlich*	-3	islamaphobia	-3			
+isolati*	-2	isolat*	-2			
+jaehzorn*	-3	fiery	-2			
+jammern	-3	whining	-3			
+jammern*	-3	whine*	-3			
+jubeln*	2	cheer*	2			
+jähzorn*	-3	fiery	-2			
+kaempft*	-3	fought	-3			
+kampf*	-3	fight*	-3			
+kaputt*	-2					
+katastroph*	-1	disaster*	-1			
+keif*	-2	nag*	-2			
+kicher*	3	chuckl*	3			
+kichererbs*	1	giggl*	3		blocker	
+kinderschaender*	-4	rapist*	-4			
+kinderschänder*	-4	rapist*	-4			
+kindn*	2	kindness*	2 ???			
+klatsch*	-1	gossip*	-1			
+kleinlich*	-1	petty*	-1			
+klug*	2	bright*	2			
+klugschei*	-2	bright*	2			
+koestli*	3	delicious*	3			
+komfort*	1	comfort*	1			
+komoed*	1	comed*	1			
+kompliment*	2	compliment*	2			
+komöd*	1	comed*	1			
+konfront*	-3	confront*	-3			
+konfus*	-2	confus*	-2			
+kontaktfreudig*	2	outgoing	1			
+korrupt*	-2	insincer*	-2			
+kostbar*	3	precious*	3			
+kostenlos	2	free	2			
+kotz*	-3	neu			 noneg	
+kotzbrock*	-3		insult noneg			
+kraft*	1	vigour*	1			
+krapp	-3	madder	-3 ???			
+kreati*	2	creati*	2			
+krida	-2	|	vulture*		-3	
+krieg	-3	war	-3			
+kriege	-3	wars	-3			
+kriegs*	-3	|	warring		-3	
+kriegspartei*	-3	warring	-3			
+kriegstreib*	-3	warfare*	-3			
+kritisch*	-2	critical	-2			
+kuehn*	1	daring	1			
+kuemmer*	2	care	2			
+kuemmerlich*	-2	care	2			
+kuesschen	3	kiss*	3			
+kuss*	3	kiss*	3			
+kämpft*	-3	fought	-3			
+köstli*	3	delicious*	3			
+kühn*	1	daring	1			
+kümmer*	2	care	2			
+kümmerlich*	-2	care	2			
+küßchen	3	kiss*	3			
+lachen*	3	laugh*	3			
+lacht*	3	laugh*	3			
+laecheln*	3	smil*	3			
+laecherlich*	-3	ludicrous*	-3			
+lahm*	-3	lame*	-3			
+lahmarsch*	-3		insult			
+langweil*	-3	boring	-3			
+launen	-3	temper	-3			
+launisch*	-3	moodi*	-3			
+lausig*	-3	|	lous*		-3	
+lebenswichtig*	1	vital*	1			
+lebhaft*	2	livel*	2			
+lecker*	3	delicious*	3			
+leer*	-1	empt*	-1			
+leichte*	1	easily	1			
+leichtigkeit	1	ease*	1			
+leiden	-4	suffer	-4			
+leidende*	-4	sufferer*	-4			
+leidenschaft*	3	passion*	3			
+leidenschaftlich*	3	passion*	3			
+leidenschaftslos*	1	passion*	3 blocker			
+leider	-4	sadly	-4			
+leidet	-4	suffers	-4			
+leidwesen	-2	regret*	-2			
+liabilit*	-3	liabilit*	-3			
+libert*	2	libert*	2			
+liebe	3	love	3			
+liebe*	2	dear*	2			
+liebenswert*	3	likeab*	3			
+liebenswuerdig*	3	likeab*	3			
+liebenswürdig*	3	likeab*	3			
+liebes*	2	amor*	2			
+liebevoll*	3	fondly	3			
+liebling*	3	darlin*	3			
+lob*	3	prais*	3			
+lob*	3	prais*	3			
+loben*	3	prais*	3			
+lobhudel*	-2	prais*	3			
+locker*	1	easing	1			
+lohnen*	2	worthwhil	2			
+lohnend*	2	worthwhile	2			
+lojal*	2	loyal*	2			
+lol	3	lol	3			
+lotterie*	-1	luck	3  // blocker			
+loyal*	2	loyal*	2			
+lueg*	-3	|	lies		-3	
+luege	-4	lying	-4			
+luegner*	-3	liar*	-3			
+lustig*	2	funn*	2			
+lächeln*	3	smil*	3			
+lächerlich*	-3	ludicrous*	-3			
+lüg*	-3	|	lies		-3	
+lüge	-4	lying	-4			
+lügner*	-3	liar*	-3			
+mag	3	liked	3			
+mangelhaft*	-3	|	lous*		-3 neu	
+maniac*	-3	maniac*	-3			
+marter*	-4	agoniz*	-4			
+masochis*	-3	masochis*	-3			
+melanchol*	-4	melanchol*	-4			
+melancholie*	-4	melanchol*	-4			
+melancholisch*	-4	melanchol*	-4			
+minderwert*	-3	|	lous*		-3 neu	
+minderwertig*	-2	inferior*			-2	
+miserab*	-3	|	miser*		-3  *** miserable 	
+miserabel	-3	|	miser*		-3  *** miserable 	
+missbraeuch*	-2	abuse*				
+missbrauch*	-4	abuse*	-4			
+missbrauchen	-4	abusi*	-4			
+misstrau*	-2	distrust*	-2			
+mist	-3	crap	-3			
+mitgefuehl*	2	compassion*	2			
+mitgefühl*	2	compassion*	2			
+mißbräuch*	-2	abuse*				
+mochte	3	liked	3			
+mockier*	-2	mock	-3			
+mockieren	-2	mock	-3			
+moerder*	-4	murder*	-4			
+moesse*	-4	cunt*	-4			
+mooch*	-2	mooch*	-2			
+moody	-3	moody	-3			
+mord*	-4	murder*	-4			
+morsch*	-3	rotten	-3			
+motzerei*	-2	nag*	-2			
+muah	2	muah	2			
+muedigkeit	-3	fatigu*	-3			
+muehe*	-1	bother*	-1			
+muell	-2	rubbish	-2	n	everything from here until "liwc" is added by george paltoglou	
+mutig*	2	bold*	2			
+mörder*	-4	murder*	-4			
+möße*	-4	cunt*	-4			
+müdigkeit	-3	fatigu*	-3			
+mühe*	-1	bother*	-1			
+müll	-2	rubbish	-2	n	everything from here until "liwc" is added by george paltoglou	
+nachdenklich*	2	thoughtful*	2			
+nachteil*	-2	disadvantage*	-2			
+narr*	-2	fool*	-2			
+neid*	-3	envie*	-3			
+neidisch	-3	envious	-3			
+nerd*	-3	nerd*	-3			
+nervenkitzel*	4	thrill*	4			
+nervig*	-3	tensing	-3			
+nervoes*	-3	nervous*	-3			
+nervös*	-3	nervous*	-3			
+nett*	2	nice*	2			
+netto	1	nice*	2 // blocker			
+neurotisch*	-3	neurotic*	-3			
+nicht_einverstanden*	-2	disagree*	-2			
+niedergang*	-1	decay*	-1			
+niederlage*	-1	defeat*	-1			
+niedrig*	-2	low*	-2			
+noergel*	-2	nag*	-2			
+noergl*	-2	nag*	-2			
+not*	-3	distress*	-3			
+nuetzlich*	2	useful*	2			
+nutter	-2	nutter	-2		new ??	
+nutzlos*	-3	useless*			-3	
+nörgel*	-2	nag*	-2			
+nörgl*	-2	nag*	-2			
+nützlich*	2	useful*	2			
+offenheit	1	openness	1			
+offenherzig*	2	outgoing	1			
+offensiv*	-2	offens*	-3 			
+ok	1	ok	1			
+okay	1	okay	1			
+okays	1	okays	1			
+oks	1	oks	1			
+omfg	2	omfg	2			
+omg	2	omg	2			
+opfer*	-3	victim*	-3			
+opportunist*	-3	opportun*	1			
+optimale*	1	optimal*	1			
+optimierung*	1	optimi*	1			
+original*	1	original	1			
+paedophil*	-4	rapist*	-4			
+panik*	-3	panic*	-3			
+panisch*	-3	panic*	-3			
+paradies	4	paradise	4			
+paradiesisch*	4	paradise	4			
+paranoi*	-3	paranoi*	-3			
+paranoia*	-3	paranoi*	-3			
+paranoid*	-3	paranoi*	-3			
+partie*	1	partie*	1 ?????			
+party*	1	party*	1			
+passion	3	passion*	3			
+peinlich*	-3	embarrass*	-3			
+perfekt*	2	perfect*	2			
+perver*	-2	perver*	-2  noneg			
+pessimis*	-3	pessimis*	-3			
+pettie*	-1	pettie*	-1			
+pflege	3	caring	3			
+pflegefa*	-2					
+pfosten	-2	neu noneg austria				
+phantastisch*	3	fantastic*	3			
+phobi*	-3	phobi*	-3			
+pissen*	-3	piss*	-3			
+piti*	-3	piti*	-3			
+pleite	-1	broke	-1			
+pleite*	-2	|	vulture*		-3	
+pleitegeier*	-2	vulture*	-3			
+populaer*	3	popular*	3			
+populär*	3	popular*	3			
+positiv*	3	positiv*	3			
+praepotent*	-3					
+prettie*	3	prettie*	3			
+privileg*	-2	privileg*	2			
+problem*	-2	problem*	-2			
+profitier*	2	benefit	2			
+prostituier*	-3	whore*	-3			
+protest*	-2	protest	-2			
+protestieren*	-2	protest	-2			
+präpotent*	-3					
+puk*	-3	puk*	-3			
+pädophil*	-4	rapist*	-4			
+quael*	-4	agoniz*	-4			
+quengel*	-2	nag*	-2			
+quengl*	-2	nag*	-2			
+quäl*	-4	agoniz*	-4			
+rache*	-2	revenge*	-2			
+raeuber*	-3	villain*	-3			
+rage	-4	rage*	-4			
+ranzig*	-3	rancid*	-3			
+raub*	-4	raping	-4			
+rauch*	-3	fume*	-3			
+rauchend*	-4	fuming	-4			
+rebell*	-2	rebel*	-2			
+reich*	1	rich*	1			
+reichtum*	1	wealth*	1			
+relax*	2	laidback	2			
+reliev*	2	reliev*	2			
+respekt	3	respect 	3			
+respektab*	2	respect 	3			
+respektvoll*	3	respect 	3			
+reue*	-3	remorse*	-3			
+richtigkeit	2	trueness	2			
+risikant*	-2	risk*	-2			
+risikier*	-2	risk*	-2			
+risiko*	-2	risk*	-2			
+riss	-3	jerk	-3 ???			
+riß	-3	jerk	-3 ???			
+rock	3	rock	3		as in you rock! but not as in rock, stone	
+rofl	3	rofl	3			
+roh*	-2	crude*	-2			
+romantisch*	4	romantic*	4			
+romanz*	4	romanc*	4			
+ruecksichtsvoll*	2	considerate	2			
+ruecktritt*	-2	resign*	-2			
+ruhe*	2	calm*	2			
+ruhig*	2	tranquil*	2			
+ruinier*	-2	ruin*	-2			
+räuber*	-3	villain*	-3			
+rücksichtsvoll*	2	considerate	2			
+rücktritt*	-2	resign*	-2			
+sanft	2	gently	2			
+sanft*	2	gentle	2			
+sanfter*	3	gentler	3			
+sanfteste*	3	gentlest	3			
+sarkamus*	-3	sarcas*	-3			
+sarkasti*	-3	sarcas*	-3			
+sauber*	1	neat*	1			
+schade*	-2	pity*			-2	
+schaden	-3	harm	-3			
+schadensereignisse*	-1	damag*	-1			
+schadet	-3	harms	-3			
+schaedlich*	-2	harmful*	-2			
+schaem*	-4	asham*	-4			
+scham*	-3	shame*	-3			
+schande*	-3	shame*	-3			
+schaurig*	-3	 				
+scheiss*	-3	crappy	-3			
+scheitern*	-2	fail*	-2			
+scheiß*	-3	crappy	-3			
+scherz*	2	joke*	2			
+scherzbold*	-2	joke*	2			
+scheu*	-2	|	shy*		-3	
+schlacht*	-2	battl*	-2			
+schlampe*	-3	slut*	-3			
+schlampig*	-3	slut*	-3			
+schlecht*	-2	bad	-2			
+schlechtest*	-3	bad	-2			
+schleichen*	-2	sneak*	-2		new	
+schleim*	-3	opportun*	1 nich negierbar			
+schleimer*	-3	opportun*	1 nich negierbar			
+schleimscheiss*	-4	opportun*	1 nich negierbar insult			
+schleimscheiß*	-4	opportun*	1 nich negierbar insult			
+schlimm*	-3	nast*	-3			
+schlimmer*	-3	worse*	-3			
+schlimmste*	-3	worst	-3			
+schluchz*	-4	sob	-4			
+schludrig*	-1	messy	-1			
+schmeichel*	1	flatter*	1			
+schmerz	-4	pain	-4			
+schmerz*	-2	ache*	-2			
+schmerzen	-4	pains	-4			
+schmerzend*	-4	paining	-4			
+schmerzhaft*	-4	painful*	-4			
+schmerzlos*	2	painl*	2			
+schneide*	-2	cut	-2			
+schnittt	-2	cut	-2			
+schnoesel*	-2	smug*	-2			
+schnösel*	-2	smug*	-2			
+schock*	-3	shock*	-3			
+schoen*	3	beaut*	3			
+schreck*	-2	fright*	-4 : deutsch: -2			
+schrecke*	-4	scare*	-4			
+schrecken	-4	terrify	-4			
+schreckhaf*	-2	fright*	-4			
+schrecklich*	-4	dread*	-4			
+schrei	-4	cry	-4			
+schreien	-4	crying	-4			
+schreien*	-4	scream*	-4			
+schreit	-3	cries	-3			
+schuderhaft*	-4	dread*	-4			
+schuechtern*	-2	timid*	-2			
+schuettel*	-2	shook	-2 ???			
+schuetteln*	-2	shake*	-2			
+schuld*	-3	fault, guilt			
+schwach*	-2	weak*	-2			
+schwachsinn*	-3	moron*	-3 // noneg			
+schwaech*	-2	weak*	-2			
+schwaechst*	-3	weak*	-2			
+schwaerm*	-1	get a crush on...				
+schweren*	-2	severe*	-2 ???			
+schwierig*	-1	difficult*	-1			
+schwucht*	-2	gay	-2		common in us as term of abuse	
+schwul*	-2	gay	-2		common in us as term of abuse	
+schwummr*	-2	daze*	-2			
+schwäch*	-2	weak*	-2			
+schwächst*	-3	weak*	-2			
+schwärm*	-1	get a crush on...				
+schädlich*	-2	harmful*	-2			
+schäm*	-4	asham*	-4			
+schön*	3	beaut*	3			
+schüchtern*	-2	timid*	-2			
+schüttel*	-2	shook	-2 ???			
+schütteln*	-2	shake*	-2			
+scummy	-2	scummy	-2		new	
+seelenverwandte*	3	soulmate*	3			
+segnen*	2	bless*	2			
+sehnen*	-2	yearn*	-2			
+sehnsucht*	-3	longing*	-3			
+selbstbewusst*	2	confidently	2			
+selbstbewußt*	2	confidently	2			
+selbstgefaellig*	-2	smug*	-2			
+selbstgefällig*	-2	smug*	-2			
+seltsam	-1	strange	-1			
+sentimental*	3	sentimental*	3			
+sicher*	2	safe*	2			
+sicherlich	1	safe*	2  // blocker			
+sieger*	1	winn*	1			
+siegreich*	1	wins	1			
+sincer*	1	sincer*	1			
+skepti*	-2	skeptic*	-2			
+smart*	2	smart*	2			
+snob*	-3	snob*	-3			
+snobistisch*	-2	snob*	-2			
+sociab*	2	sociab*	2			
+sonnig*	2	sunny	2			
+sonnigeren	2	sunnier	2			
+sonnigsten	2	sunniest	2			
+sorge*	-3	sorrow*	-3			
+sorgenfrei*	2	carefree	2			
+sorgfaeltig*	3	careful*	3			
+sorgfältig*	3	careful*	3			
+sorglos*	2	carefree	2			
+sorry	-3	sorry	-3			
+spam*	-2	spam*	-2			
+spannung*	-3	tension*	-3			
+spare*	1	save	2  ??? 			
+spass	2	fun	2			
+spaß	2	fun	2			
+speib*	-3	neu			 noneg	
+spiel	2	playing	2			
+spiel*	2	plays	2			
+spielen	1	play	1			
+spoettel*	-2	mocker*	-3			
+spoetter*	-2	mocker*	-3			
+spoettisch*	-2	mocking	-3			
+spotte*	-3	mocks	-3			
+spöttel*	-2	mocker*	-3			
+spötter*	-2	mocker*	-3			
+spöttisch*	-2	mocking	-3			
+staerke*	1	strength*	1			
+stammel*	-2	stammer*	-2			
+starr*	-2	rigid*	-2			
+stehlen*	-3	steal*	-3			
+still*	2	tranquil*	2			
+stink*	-3	reek*	-3			
+stinkfaul*	-3	lazy	-2			
+stoer*	-1	disturb*	-1			
+stoerrisch*	-3	stubborn*	-3			
+stolz	2	pride	2			
+stolz*	3	proud*	2			
+stolzier*	-1	pride	2			
+stottern*	-2	stutter*	-2			
+straftat*	-2	offence*	-2			
+streit*	-2	argu*	-2			
+stress*	-2	stress*	-2			
+struggl*	-2	struggl*	-2			
+stumpfsinn*	-2	dull*	-2			
+stunk	-3	reek*	-3			
+stur*	-3	stubborn*	-3			
+stärke*	1	strength*	1			
+stör*	-1	disturb*	-1			
+störrisch*	-3	stubborn*	-3			
+suck*	-2	suck	-2			
+suende*	-2	sin	-2			
+suendig*	-2	sin	-2			
+suess*	3	cute*	3			
+suesse*	3	sweetness*	3			
+suessigkeiten	2	sweets	2			
+sunshin*	2	sunshin*	2			
+super	3	super	3			
+suprem*	3	suprem*	3			
+sweetie*	4	sweetie*	4			
+sympathie*	3					
+sympathisch*	3					
+sünde*	-2	sin	-2			
+sündig*	-2	sin	-2			
+süß*	3	cute*	3			
+süße*	3	sweetness*	3			
+süßigkeiten	2	sweets	2			
+talent*	3	talent*	3			
+tapfer*	3	brave*	3			
+taub*	-2	numb*	-2			
+teilen	1	share	1			
+teilt*	1	shares	1			
+teppert*	-3	mad	-3			
+terribl*	-4	terribl*	-4			
+terror*	-3	terror*	-3			
+teufel*	-1	devil*	-1			
+teufelskreis*	-4	vicious*	-4			
+teuflisch*	-1	devil*	-1			
+toben*	-4	raging	-4			
+tobsucht*	-4	rage*	-4			
+todgweih*	-2	doom*	-2			
+toedlich*	-3	fatal*	-3			
+toeten*	-4	kill*	-4			
+tolerant*	2	toleran*	2			
+toleranz	2	toleran*	2			
+tortur*	-4	tortur*	-4			
+traenen	-4	tears	-4			
+tragisch*	-3	tragic*			-3	
+tragoedie*	-3	traged*	-3			
+tragödie*	-3	traged*	-3			
+trauer*	-4	grief	-4			
+trauma*	-4	trauma*	-4			
+traumatisch*	-4	trauma*	-4			
+traurig*	-4	sad	-4			
+traurigerweise*	-4	sadly	-4			
+traurigkeit	-4	sadness	-4			
+triumph*	3	triumph*	3			
+triumphiere*	3	triumph*	3			
+trivial*	-2	trivi*	-2			
+trottel*	-3		insult			
+trotz*	-3	spite*	-4			
+tränen	-4	tears	-4			
+tuecke*	-3		| neu			
+tueckisch*	-3		| neu			
+tugend*	3	virtue*	3			
+turbulenzen	-3	turmoil	-3			
+tödlich*	-3	fatal*	-3			
+töten*	-4	kill*	-4			
+tücke*	-3		| neu			
+tückisch*	-3		| neu			
+ueberbewert*	-2					
+ueberfordert*	-2					
+ueberheblich*	-2					
+ueberlegen*	3	superior*	3			
+ueberraschend*	1	surpris*	1			
+ueberschaetz*	-2					
+ueberwaeltigen*	-3	overwhelm*	-3			
+ueberzeugende*	2	convinc*	2			
+umarmen	3	hug 	3			
+umarmung	3	hug 	3			
+umarmungen	3	hugs	3			
+unangenehm	-3	unpleasant	-3			
+unannehmlich*	-2	discomfort*	-2			
+unattraktiv*	-3	unattractive	-3			
+unausstehlich*	-3	obnoxious*	-3			
+unbefried*	-2	dissatisf*	-2			
+unbehag*	-2	discomfort*	-2			
+unbeherrscht*	-2	uncontrol*	-2			
+unbeliebt*	-3	disliked	-3			
+unbesorgt*	3	worr*	-4			
+undankbar*	-3	ungrateful*	-3			
+uneffekt*	-2	ineffect*	-2			
+unehrlich*	-2	insincer*	-2			
+unflexib*	-2	rigid*	-2			
+unfreundlich	-3	unkind	-3			
+ungeduld*	-2	impatien*	-2			
+ungeschickt*	-2	awkward*	-2			
+ungeschuetzt*	-3	unprotected	-3			
+ungeschützt*	-3	unprotected	-3			
+ungluecklich*	-3	unhapp*	-3			
+unglueckselig*	-3	unfortunate*	-2			
+unglücklich*	-3	unhapp*	-3			
+unglückselig*	-3	unfortunate*	-2			
+unhoeflich*	-3	rude*	-3			
+unhöflich*	-3	rude*	-3			
+unkomfortab*	-3	uncomfortabl*	-3			
+unkontroliertl*	-2	uncontrol*	-2			
+unmoralisch*	-3	immoral*	-3			
+unordentlich*	-1	messy	-1			
+unpersoenlich*	-1	impersonal	-1			
+unpersönlich*	-1	impersonal	-1			
+unruhig*	-2	restless*	-2			
+unschuld	2	innocen*	2			
+unschuldig*	2	innocen*	2			
+unschuldsengel*	-3					
+unschuldslaemmchen*	2	innocen*	2			
+unschuldslaemmer*	2	innocen*	2			
+unschuldslamm*	2	unschuldslamm*	2	innocen*	2			
+unschuldslämmchen*	2	innocen*	2			
+unschuldslämmer*	2	innocen*	2			
+unschuldsmine*	-3					
+unschuldsvermutung	-3					
+unsicher*	-1	uncertain*	-1			
+unsinn*	-2	rubbish	-2		
+unsinnig*	-2			a?		
+unsympathisch*	-3					
+unsympathler*	-3		insult  noneg			
+unterbrechung*	-2	interrup*	-2			
+unterdruecken*	-2	repress*	-2			
+unterdrücken*	-2	repress*	-2			
+untergang*	-2	doom*	-2			
+unterhaltsa*	2	entertain*	2			
+unterschaetz*	-1					
+unterschätz*	-1					
+unterstuetzen*	2	supportive*	2			
+unterstuetzende*	2	supporting	2			
+unterstuetzt	2	supported	2			
+unterstuetzung	2	support	2			
+unterstützen*	2	supportive*	2			
+unterstützende*	2	supporting	2			
+unterstützt	2	supported	2			
+unterstützung	2	support	2			
+unterwuerf*	3	devot*	3			
+unterwuerfig*	-2	submissive*	-2			
+unterwürf*	3	devot*	3			
+unterwürfig*	-2	submissive*	-2			
+unverbesserlich*	-3	obnoxious*	-3			
+unvorsichtig*	-2	careless*	-2			
+unwichtig*	-2	unimportant	-2			
+unwillkommen*	-3	unwelcom*	-3			
+unzufried*	-2	dissatisf*	-2			
+urkomisch*	3	hilarious	3			
+veracht*	-4	despis*	-4			
+verachtung*	-4	contempt*	-4			
+verarsch*	-2	trick*	-2			
+verbesser*	2	improve*	2			
+verbesserung	2	improving	2			
+verbiet*	-1	forbid*	-1			
+verbissen*	-3	stubborn*	-3			
+verboten*	-1	forbid*	-1			
+verbrech*	-3	offence*	-2			
+verdaecht*	-2	suspicio*	-2			
+verdammt*	-2	damn*	-2			
+verdienstentgang*	-2	xxxmerit*	2			
+verdiensvoll*	2	merit*	2			
+verdorben*	-3	wicked*	-3			
+verdächt*	-2	suspicio*	-2			
+verehrung*	2	worship*	2			
+vereinsam*	-4	isolat*	-2			
+verfolgungswahn*	-3	paranoi*	-3 noneg			
+vergeb*	2	forgave	2			
+vergeblich*	-3	vain	-3			
+vergelt*	-2	revenge*	-2			
+vergewaltigen*	-4	raping	-4			
+vergewaltigung*	-4	rape*	-4			
+vergoetter*	2	worship*	2			
+vergötter*	2	worship*	2			
+verheerend*	-3	devastat*	-3			
+verklemmt*	-3	uptight*	-3			
+verkomm*	-3	rotten	-3			
+verlegen*	-2	embarrass*	-3			
+verletzbar*	-3	vulnerab*	-3			
+verletzlich*	-3	vulnerab*	-3			
+verletzt*	-3	hurt*	-3			
+verlier*	-2	lose	-2			
+verlierer*	-3	loser*	-3			
+verlobt	1	engag*	1			
+verlog*	-4	lying	-4			
+verlogen*	-2	insincer*	-2			
+verlogenheit	-3	| neu				
+verloren*	-1	lost	-1			
+verlust*	-3	loss*	-3			
+vermeid*	-1	avoid*	-1			
+vermiss*	-3	miss	-3			
+vermoegen*	1	wealth*	1			
+vermögen*	1	wealth*	1			
+vernachlaessigung*	-1	neglect*	-1			
+vernachlässigung*	-1	neglect*	-1			
+verpass*	-3	miss	-3			
+verrotte*	-3	rotten	-3			
+verrueck*	-1	craz*	-1			
+verrueckt*	-3	maddening	-3			
+verruecktest*	-3	maddest	-3			
+verrück*	-1	craz*	-1			
+verrückt*	-3	maddening	-3			
+verrücktest*	-3	maddest	-3			
+verschaemt*	-3	bashful*	-3			
+verschämt*	-3	bashful*	-3			
+versicher*	2	assur*	2			
+versnobt*	-2	snob*	-2			
+verspielt*	2	playful*	2			
+verspotte*	-3	mocked	-3			
+versteiner*	-4	petrif*	-4			
+versteinern*	-4	petrif*	-4			
+verstoert*	-4	distraught	-4			
+verstoss*	-3	violat*	-4			
+verstossen*	-3	violat*	-4			
+verstoß*	-3	violat*	-4			
+verstoßen*	-3	violat*	-4			
+verstört*	-4	distraught	-4			
+vertrauen*	2	trust*	2			
+verwahrlost*	-3	rotten	-3			
+verwundbar*	-3	vulnerab*	-3			
+verzweif*	-4	despair*	-4			
+vielversprech*	2	promis*	2			
+virtuos*	3	virtuo*	3			
+vital*	2	vital*	1			
+vollkoffer*	-3		insult			
+vorliebe	3	liking	3			
+vorsichtig	3	careful*	3			
+vorteil*	2	advantag	2			
+vorurteil*	-3	prejudic*	-3			
+wackelig*	-2	shaky	-2			
+waerm*	1	warm*	1			
+waffe*	-2	weapon*	-1			
+waffel*	-1	weapon*	-1  blocker			
+wahnsinnig*	2	madly	2			
+wahnsinnigst*	-3	maddest	-3			
+wahr*	2	true 	2			
+wahrer	2	truer	2			
+wahrheit*	2	truth*	2			
+wahrsten	2	truest	2			
+warm*	1	warm*	1			
+warmherzig	3	heartwarm*				
+weh	-2	pained	-2			
+wehe*	-2	woe*	-2			
+weichei*	-3	wimp*	-3			
+weinen*	-3	weep*	-3			
+weinte	-4	wept	-4			
+weird*	-3	weird*	-3			
+weisheit	1	wisdom	1			
+welcom*	2	welcom*	2			
+wert*	2	value	2			
+werte	2	values	2			
+wertlos*	-3	worthless*			-3	
+wertvoll*	2	valuabl*	2			
+whow*	3	wow*	3			
+wichigtuer*	-3					
+wichtig*	1	importan*	1			
+wichtigtuer	-2	importan*	1			
+wichtigtuerisch*	-2	importan*	1			
+widerlich*	-3	rancid*	-3			
+widerspenstig*	-3	stubborn*	-3			
+widerspr*	-2	contradic*	-2			
+wilde*	-3	savage*	-3 ???			
+witzbold*	-2	joke*	2			
+witze	3	joking	3			
+wohlbehagen	1	contentment	1			
+wow*	3	wow*	3			
+wtf	-3	wtf	-3		what the fuck?	
+wuerdevo*	2					
+wuetend*	-4	furious*	-4			
+wunderbar*	3	wonderf*	3			
+wut	-4	fury	-4			
+wut*	-4	rage*	-4			
+wutanfall*	-3	tantrum*	-3			
+wärm*	1	warm*	1			
+würdevo*	2					
+wütend*	-4	furious*	-4			
+xox*	2	xox*	2			
+xxx*	2	xxx*	2			
+zaeh*	-2	tough*	-2			
+zaertl*	2	delicate*	2			
+zaertlich*	3	tender*	3			
+zaghaft*	-2	timid*	-2			
+zart*	2	delicate*	2			
+zerdrueck*	-1	crushed	-1			
+zerdrück*	-1	crushed	-1			
+zerfall*	-1	decay*	-1			
+zermarter*	-4	agoniz*	-4			
+zerstoer*	-3	destroy*	-3			
+zerstör*	-3	destroy*	-3			
+zeter*	-2	nag*	-2			
+zittern*	-3	trembl*	-3			
+zittrig*	-3	trembl*	-3			
+zoeger*	-1	hesita*	-1			
+zoegerlich*	-2	reluctan*	-2			
+zoegern*	-2	reluctan*	-2			
+zombie*	-3	zombie	-3			
+zorn*	-4	anger*	-4			
+zornausbr*	-4	rage*	-4			
+zu_scherzen	-2	kidding	1 beliebt zu scherzen, zu scherzen aufgelegt			
+zuckt	-3	jerks	-3			
+zuckte	-1	jerked	-1 ???			
+zufrieden*	1	contentment	1			
+zufriedenheit	1	contentment	1			
+zuneigung*	3	affection*	3			
+zustimm*	2	agree	2			
+zuversichtlich*	2	confident	2			
+zuwider	-2	advers*	-2			
+zuwiderhand*	-3	advers*	-2			
+zweifel*	-2	doubt*	-2			
+zweifle*	-2	doubt*	-2			
+zyniker*	-2	cynic*	-2			
+zynis*	-2	cynic*	-2			
+zäh*	-2	tough*	-2			
+zärtl*	2	delicate*	2			
+zärtlich*	3	tender*	3			
+zöger*	-1	hesita*	-1			
+zögerlich*	-2	reluctan*	-2			
+zögern*	-2	reluctan*	-2			
+ängste	-3	fears	-3			
+ärger*	-4	anger*	-4			
+ärgern*	-3	resent*	-3			
+überbewert*	-2					
+überfordert*	-2					
+überheblich*	-2					
+überlegen*	3	superior*	3			
+überraschend*	1	surpris*	1			
+überschätz*	-2					
+überwältigen*	-3	overwhelm*	-3			
+überzeugende*	2	convinc*	2			
+﻿

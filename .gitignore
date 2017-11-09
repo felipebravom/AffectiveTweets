@@ -10,8 +10,8 @@
 *.jar
 
 .settings
-resources/
-lexicons/
+#resources/
+#lexicons/
 *.gz
 dist
 data

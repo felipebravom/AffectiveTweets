@@ -1,0 +1,10 @@
+﻿absolutamente	1
+algo -1
+definitivamente 1
+extremadamente 2
+gran 2
+increiblemente 2
+muchísimo 2
+muy 2
+solamente -1
+únicamente -1

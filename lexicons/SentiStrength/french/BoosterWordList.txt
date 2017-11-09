@@ -1,0 +1,21 @@
+﻿absolument	1
+ainsi	0
+certainement	1
+certains	-1
+complet	1
+devrait	-1
+extrêmement	2
+extrêmement	2
+incroyablement	2
+légèrement	-1
+massivement	2
+parfois	-1
+peut	-1
+pourrait	-1
+pourrait	-1
+putain	2
+serait	-1
+somme -1	-1
+total	1
+très	1
+vraiment	1

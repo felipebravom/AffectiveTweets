@@ -1,0 +1,8 @@
+@relation AFINN-weka.filters.unsupervised.attribute.StringToNominal-Rlast
+
+@attribute word string
+@attribute polarity {positive,negative}
+
+@data
+':)',positive
+':(',negative

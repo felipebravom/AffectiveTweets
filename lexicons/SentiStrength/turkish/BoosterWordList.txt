@@ -1,0 +1,12 @@
+asla	-1
+bazen	-1	sometimes	-1	9 June 2010
+çok	1	very	1
+elbette	1
+en	1
+gerçekten	1	really	1	9 June 2010
+kesinlikle	1	absolutely	1
+keþke	-1
+mutlaka	1	
+özellikle	1	especially	1	9 June 2010
+rahatlýkla	1
+tamamen	1	completely	1	9 June 2010
