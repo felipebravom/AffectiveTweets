@@ -7,7 +7,7 @@
 # Package Files #
 *.war
 *.ear
-*.jar
+#*.jar
 
 .settings
 #resources/
