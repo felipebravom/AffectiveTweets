@@ -9,6 +9,9 @@
 *.ear
 *.jar
 
+# zip files #
+*.zip
+
 # Eclipse files
 .classpath
 .project

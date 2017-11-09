@@ -90,8 +90,15 @@ You should also cite the papers describing any of the lexicons or resources you 
 
 ### Distant Supervision Filters
 
-1. __ASA__:  Annotate-Sample-Average (ASA) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
+1. __ASA__:  Annotate-Sample-Average (ASA) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
 
+
+1. __PTCM__:  The Partitioned Tweet Centroid Model (PTCM) is an adaption of the TweetCentroidModel for distant supervison.  As tweets and words are represented by the same feature vectors, a word-level classifier trained from a polarity lexicon and a corpus of unlabelled tweets can be used for classifying the sentiment of tweets represented by sparse feature vectors.  In other words, the labelled word vectors correspond to lexicon-annotated training data for message-level polarity classification.
+Tje model includes a simple modification to the tweet centroid model for increasing the number of labelled instances, yielding *partitioned tweet centroids*.  This modification is based on partitioning the tweets associated with each word into smaller disjoint subsets of a fixed size. The method calculates one centroid per partition, which is labelled according to the lexicon.
+[BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib), [original paper](https://www.cs.waikato.ac.nz/~fbravoma/publications/wi2016t.pdf)
+
+
+1. __LexiconDistantSupervision__:   is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
 
 ### Tokenizers
 
@@ -114,14 +121,16 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 ## Team
 
 ### Main Developer
- * [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fbravoma/).
+ * [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fbravoma/)
  
 ## Contributors
  * [Saif Mohammad](http://saifmohammad.com/)
  * [Eibe Frank](http://www.cs.waikato.ac.nz/~eibe/)
  * [Bernhard Pfahringer](https://www.cs.auckland.ac.nz/people/b-pfahringer)
 
-New contributors are more than welcome!
+## How to Contribute
+
+New contributors are more than welcome. If you want to contribute just fork the project and send [pull request](https://help.github.com/articles/about-pull-requests/) with your changes. 
 
 ## Contact
  * Email: fbravoma at waikato.ac.nz

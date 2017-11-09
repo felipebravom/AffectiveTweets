@@ -9,8 +9,13 @@ The package implements WEKA filters for calculating state-of-the-art affective a
 
 The package was also made available as the official baseline system for the [WASSA-2017](http://optima.jrc.it/wassa2017/) Shared Task on Emotion Intensity [(EmoInt)](http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html). (Instructions for using the system with the task data are available [here](https://github.com/felipebravom/EmoInt#2-weka-baseline-system).) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. 
 
+[https://affectivetweets.cms.waikato.ac.nz/](https://affectivetweets.cms.waikato.ac.nz/)
 
-Installatation and execution examples are provided in the project [website](https://affectivetweets.cms.waikato.ac.nz/).
+## Using AffectiveTweets
+
+* [About](https://affectivetweets.cms.waikato.ac.nz/#about)
+* [Installation](https://affectivetweets.cms.waikato.ac.nz/install/)
+* [Examples](https://affectivetweets.cms.waikato.ac.nz/examples/)
 
 
 
@@ -36,16 +41,6 @@ Please cite the following paper if using this package in an academic publication
 You should also cite the papers describing any of the lexicons or resources you are using with this package. 
 
 
-## Team
-Main Developer:
-* [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fbravoma/).
- 
-Contributors:
-* [Saif Mohammad](http://saifmohammad.com/)
-* [Eibe Frank](http://www.cs.waikato.ac.nz/~eibe/)
-* [Bernhard Pfahringer](https://www.cs.auckland.ac.nz/people/b-pfahringer)
-
-New contributors are more than welcome!
 
 ## Contact
 * Email: fbravoma at waikato.ac.nz
