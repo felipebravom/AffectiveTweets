@@ -13,7 +13,7 @@ Run WEKA and open the Explorer:
 
 Note: The -Xmx parameter allows incrementing the memory available for the Java virtual machine. It is strongly recommend to allocate as much memory as possible for large datasets or when calculating large dimensional features, such as word n-grams. More info at: http://weka.wikispaces.com/OutOfMemoryException .
 
-### Train an SVM using sparse features:
+### Train an SVM using sparse features
 
 * Open in the preprocess panel the __sent140test.arff.gz__ dataset located in HOME/wekafiles/packages/AffectiveTweets/data/. Note: Select arff.gz files in the *Files of Type* option. 
 
@@ -33,7 +33,7 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
  Note: Weka allows copying and pasting the configuration of its objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
  
-* Select the Percentage split option and start training the classifier. 
+* Select the Percentage split option and start training the classifier 
 
 ### Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector:
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset (or load the __sent140test.arff.gz__ dataset in case you skipped the first example).
@@ -49,7 +49,7 @@ weka.classifiers.meta.FilteredClassifier -F  "weka.filters.MultiFilter -F \"weka
 * Now you can train the classifier by pressing the *Start* button. 
 
 
-### Train a Convolution Neural Network on the concatenation of word embeddings:
+### Train a Convolution Neural Network on the concatenation of word embeddings
 In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) using the [WekaDeepLearning4j](https://deeplearning.cms.waikato.ac.nz/) package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
 * First, install the package following the instructions from [here](https://deeplearning.cms.waikato.ac.nz/install/):
@@ -122,7 +122,7 @@ weka.filters.unsupervised.attribute.Remove -R first-4121
 3. Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
 
 
-### Train a Tweet-level polarity classifier from unlabelled tweets using emoticon labels.
+### Train a Tweet-level polarity classifier from unlabelled tweets using emoticon labels
 
 Distant supervision is very useful when tweets annotated by sentiment are not available. In this example we will show how to train a classifier using emoticons as noisy labels.
 
