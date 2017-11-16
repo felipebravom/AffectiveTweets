@@ -94,7 +94,7 @@ You should also cite the papers describing any of the lexicons or resources you 
 
 
 1. __PTCM__:  The Partitioned Tweet Centroid Model (PTCM) is an adaption of the TweetCentroidModel for distant supervison.  As tweets and words are represented by the same feature vectors, a word-level classifier trained from a polarity lexicon and a corpus of unlabelled tweets can be used for classifying the sentiment of tweets represented by sparse feature vectors.  In other words, the labelled word vectors correspond to lexicon-annotated training data for message-level polarity classification.
-Tje model includes a simple modification to the tweet centroid model for increasing the number of labelled instances, yielding *partitioned tweet centroids*.  This modification is based on partitioning the tweets associated with each word into smaller disjoint subsets of a fixed size. The method calculates one centroid per partition, which is labelled according to the lexicon.
+The model includes a simple modification to the tweet centroid model for increasing the number of labelled instances, yielding *partitioned tweet centroids*.  This modification is based on partitioning the tweets associated with each word into smaller disjoint subsets of a fixed size. The method calculates one centroid per partition, which is labelled according to the lexicon.
 [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib), [original paper](https://www.cs.waikato.ac.nz/~fbravoma/publications/wi2016t.pdf)
 
 
