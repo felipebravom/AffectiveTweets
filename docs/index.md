@@ -35,7 +35,14 @@ Please cite the following paper if using this package in an academic publication
 
 * __Emotion Intensities in Tweets__. Saif M. Mohammad and Felipe Bravo-Marquez. In Proceedings of the Joint Conference on Lexical and Computational Semantics (*Sem), August 2017, Vancouver, Canada. 
 
-You should also cite the papers describing any of the lexicons or resources you are using with this package. The corresponding references can be found through the links provided below.
+You should also cite the papers describing any of the lexicons or resources you are using with this package. 
+
+* Here is the [BibTex](fullBio.bib.txt) entry for the package along with the entries for the resources listed below. 
+
+* Here is the [BibTex](shortBio.bib.txt) entry just for the package.
+
+
+The individual references for each resource can be found through the links provided below.
 
 ### Filters
 
