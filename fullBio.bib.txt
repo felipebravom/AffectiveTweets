@@ -1,0 +1,160 @@
+
+
+@InProceedings{MohammadB17,
+  Title                    = {Emotion Intensities in Tweets},
+  Author                   = {Saif Mohammad and Felipe Bravo{-}Marquez},
+  Booktitle                = {Proceedings of the 6th Joint Conference on Lexical and Computational Semantics, *SEM @ACM 2017, Vancouver, Canada, August 3-4, 2017},
+  Year                     = {2017},
+  Pages                    = {65--77}
+}
+
+
+@InProceedings{Bravo-MarquezFM16,
+  Title                    = {Determining Word-Emotion Associations from Tweets by Multi-label Classification},
+  Author                   = {Felipe Bravo{-}Marquez and Eibe Frank and Saif M. Mohammad and Bernhard Pfahringer},
+  Booktitle                = {2016 {IEEE/WIC/ACM} International Conference on Web Intelligence, {WI} 2016, Omaha, NE, USA, October 13-16, 2016},
+  Year                     = {2016},
+  Pages                    = {536--539}
+}
+
+@InProceedings{Bravo-MarquezFP16,
+  Title                    = {Annotate-Sample-Average {(ASA):} {A} New Distant Supervision Approach for Twitter Sentiment Analysis},
+  Author                   = {Felipe Bravo{-}Marquez and Eibe Frank and Bernhard Pfahringer},
+  Booktitle                = {{ECAI} 2016 - 22nd European Conference on Artificial Intelligence, 29 August-2 September 2016, The Hague, The Netherlands - Including Prestigious Applications of Artificial Intelligence {(PAIS} 2016)},
+  Year                     = {2016},
+  Pages                    = {498--506}
+}
+
+@InProceedings{Bravo-MarquezWIC16,
+  Title                    = {From Opinion Lexicons to Sentiment Classification of Tweets and Vice Versa: {A} Transfer Learning Approach},
+  Author                   = {Felipe Bravo{-}Marquez and Eibe Frank and Bernhard Pfahringer},
+  Booktitle                = {2016 {IEEE/WIC/ACM} International Conference on Web Intelligence, {WI} 2016, Omaha, NE, USA, October 13-16, 2016},
+  Year                     = {2016},
+  Pages                    = {145--152}
+}
+
+@InProceedings{Bravo-MarquezFP15,
+  Title                    = {From Unlabelled Tweets to Twitter-specific Opinion Words},
+  Author                   = {Felipe Bravo{-}Marquez and Eibe Frank and Bernhard Pfahringer},
+  Booktitle                = {Proceedings of the 38th International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval, Santiago, Chile, August 9-13, 2015},
+  Year                     = {2015},
+  Pages                    = {743--746}
+}
+
+@Article{Bravo-MarquezMP14,
+  Title                    = {Meta-level sentiment models for big social data analysis},
+  Author                   = {Felipe Bravo{-}Marquez and Marcelo Mendoza and Barbara Poblete},
+  Journal                  = {Knowl.-Based Syst.},
+  Year                     = {2014},
+  Pages                    = {86--99},
+  Volume                   = {69}
+}
+
+@InProceedings{GimpelSODMEHYFS11,
+  Title                    = {Part-of-Speech Tagging for Twitter: Annotation, Features, and Experiments},
+  Author                   = {Kevin Gimpel and  Nathan Schneider and  Brendan O'Connor and  Dipanjan Das and  Daniel Mills and  Jacob Eisenstein and  Michael Heilman and  Dani Yogatama and  Jeffrey Flanigan and  Noah A. Smith},
+  Booktitle                = {The 49th Annual Meeting of the Association for Computational Linguistics:  Human Language Technologies, Proceedings of the Conference, 19-24  June, 2011, Portland, Oregon, {USA} - Short Papers},
+  Year                     = {2011},
+  Pages                    = {42--47},
+  Url                      = {http://www.aclweb.org/anthology/P11-2008}
+}
+
+@InProceedings{HuL04,
+  Title                    = {Mining and summarizing customer reviews},
+  Author                   = {Minqing Hu and
+ Bing Liu},
+  Booktitle                = {Proceedings of the Tenth {ACM} {SIGKDD} International Conference on  Knowledge Discovery and Data Mining, Seattle, Washington, USA, August  22-25, 2004},
+  Year                     = {2004},
+  Pages                    = {168--177}
+}
+
+
+
+@Article{COIN12024,
+  Title                    = {Using Hashtags to Capture Fine Emotion Categories from Tweets},
+  Author                   = {Mohammad, Saif M. and Kiritchenko, Svetlana},
+  Journal                  = {Computational Intelligence},
+  Year                     = {2015},
+  Number                   = {2},
+  Pages                    = {301--326},
+  Volume                   = {31},
+
+  Doi                      = {10.1111/coin.12024},
+  ISSN                     = {1467-8640},
+  Keywords                 = {affect, tweets, social media, hashtags, basic emotions, personality detection, Big 5 model, word–emotion associations, sentiment analysis},
+  Url                      = {http://dx.doi.org/10.1111/coin.12024}
+}
+
+@Article{MohammadSK17,
+  Title                    = {Stance and Sentiment in Tweets},
+  Author                   = {Mohammad, Saif M. and Sobhani, Parinaz and Kiritchenko, Svetlana},
+  Journal                  = {Special Section of the ACM Transactions on Internet Technology on Argumentation in Social Media},
+  Year                     = {2017},
+  Number                   = {3},
+  Volume                   = {17}
+}
+
+@Article{Mohammad13,
+  Title                    = {Crowdsourcing a Word-Emotion Association Lexicon},
+  Author                   = {Mohammad, Saif M. and Turney, Peter D.},
+  Year                     = {2013},
+  Number                   = {3},
+  Pages                    = {436--465},
+  Volume                   = {29},
+
+  Booktitle                = {Computational Intelligence}
+}
+
+@InProceedings{Nielsen11,
+  Title                    = {A New {ANEW:} Evaluation of a Word List for Sentiment Analysis in
+ Microblogs},
+  Author                   = {Finn {\AA}rup Nielsen},
+  Booktitle                = {Proceedings of the {ESWC2011} Workshop on 'Making Sense of Microposts':
+ Big things come in small packages, Heraklion, Crete, Greece, May 30,
+ 2011},
+  Year                     = {2011},
+  Pages                    = {93--98}
+}
+
+@Article{NRCJAIR14,
+  Title                    = {Sentiment Analysis of Short Informal Texts},
+  Author                   = {Svetlana Kiritchenko, Xiaodan Zhu, and Saif M. Mohammad},
+  Pages                    = {723-762},
+  Volume                   = {50},
+
+  Date                     = {2014},
+  Urnal                    = {Journal of Artificial Intelligence Research (JAIR)}
+}
+
+@Article{ThelwallBP12,
+  Title                    = {Sentiment strength detection for the social web},
+  Author                   = {Mike Thelwall and
+ Kevan Buckley and
+ Georgios Paltoglou},
+  Journal                  = {{JASIST}},
+  Year                     = {2012},
+  Number                   = {1},
+  Pages                    = {163--173},
+  Volume                   = {63}
+}
+
+@InProceedings{Turney02,
+  Title                    = {Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised
+ Classification of Reviews},
+  Author                   = {Peter D. Turney},
+  Booktitle                = {Proceedings of the 40th Annual Meeting of the Association for Computational
+ Linguistics, July 6-12, 2002, Philadelphia, PA, {USA.}},
+  Year                     = {2002},
+  Pages                    = {417--424},
+
+  Url                      = {http://www.aclweb.org/anthology/P02-1053.pdf}
+}
+
+@InProceedings{WilsonWH05,
+  Title                    = {Recognizing Contextual Polarity in Phrase-Level Sentiment Analysis},
+  Author                   = {Theresa Wilson and Janyce Wiebe and Paul Hoffmann},
+  Booktitle                = {{HLT/EMNLP} 2005, Human Language Technology Conference and Conference on Empirical Methods in Natural Language Processing, Proceedings of the Conference, 6-8 October 2005, Vancouver, British Columbia, Canada},
+  Year                     = {2005},
+  Pages                    = {347--354}
+}
+
