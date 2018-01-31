@@ -40,6 +40,10 @@ Please cite the following paper if using this package in an academic publication
 
 You should also cite the papers describing any of the lexicons or resources you are using with this package. 
 
+* Here is the [BibTex](https://affectivetweets.cms.waikato.ac.nz/fullBio.bib.txt) entry for the package along with the entries for the resources listed below. 
+
+* Here is the [BibTex](https://affectivetweets.cms.waikato.ac.nz/shortBio.bib.txt) entry just for the package.
+
 
 
 ## Contact

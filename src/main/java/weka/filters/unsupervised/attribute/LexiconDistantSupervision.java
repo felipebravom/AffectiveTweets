@@ -118,7 +118,7 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 	@Override
 	public String globalInfo() {
 		return "This is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. " +
-				"A lexicon is used for labelling tweets. If word from the lexicon is found the tweet is labelled with the word's polarity. "
+				"A lexicon is used for labelling tweets. If a word from the lexicon is found the tweet is labelled with the word's polarity. "
 				+ "Tweets with both positive and negative words are dicarded. Emoticons are used as the default lexicon."+
 				"\n"+getTechnicalInformation().toString();
 	}
