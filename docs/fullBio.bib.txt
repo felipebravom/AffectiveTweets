@@ -1,12 +1,5 @@
-
-
-@InProceedings{MohammadB17,
-  Title                    = {Emotion Intensities in Tweets},
-  Author                   = {Saif Mohammad and Felipe Bravo{-}Marquez},
-  Booktitle                = {Proceedings of the 6th Joint Conference on Lexical and Computational Semantics, *SEM @ACM 2017, Vancouver, Canada, August 3-4, 2017},
-  Year                     = {2017},
-  Pages                    = {65--77}
-}
+% This file was created with JabRef 2.10.
+% Encoding: MacRoman
 
 
 @InProceedings{Bravo-MarquezFM16,
@@ -52,10 +45,11 @@
 
 @InProceedings{GimpelSODMEHYFS11,
   Title                    = {Part-of-Speech Tagging for Twitter: Annotation, Features, and Experiments},
-  Author                   = {Kevin Gimpel and  Nathan Schneider and  Brendan O'Connor and  Dipanjan Das and  Daniel Mills and  Jacob Eisenstein and  Michael Heilman and  Dani Yogatama and  Jeffrey Flanigan and  Noah A. Smith},
-  Booktitle                = {The 49th Annual Meeting of the Association for Computational Linguistics:  Human Language Technologies, Proceedings of the Conference, 19-24  June, 2011, Portland, Oregon, {USA} - Short Papers},
+  Author                   = {Kevin Gimpel and Nathan Schneider and Brendan O'Connor and Dipanjan Das and Daniel Mills and Jacob Eisenstein and Michael Heilman and Dani Yogatama and Jeffrey Flanigan and Noah A. Smith},
+  Booktitle                = {The 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, Proceedings of the Conference, 19-24 June, 2011, Portland, Oregon, {USA} - Short Papers},
   Year                     = {2011},
   Pages                    = {42--47},
+
   Url                      = {http://www.aclweb.org/anthology/P11-2008}
 }
 
@@ -63,12 +57,18 @@
   Title                    = {Mining and summarizing customer reviews},
   Author                   = {Minqing Hu and
  Bing Liu},
-  Booktitle                = {Proceedings of the Tenth {ACM} {SIGKDD} International Conference on  Knowledge Discovery and Data Mining, Seattle, Washington, USA, August  22-25, 2004},
+  Booktitle                = {Proceedings of the Tenth {ACM} {SIGKDD} International Conference on Knowledge Discovery and Data Mining, Seattle, Washington, USA, August 22-25, 2004},
   Year                     = {2004},
   Pages                    = {168--177}
 }
 
-
+@InProceedings{MohammadB17,
+  Title                    = {Emotion Intensities in Tweets},
+  Author                   = {Saif Mohammad and Felipe Bravo{-}Marquez},
+  Booktitle                = {Proceedings of the 6th Joint Conference on Lexical and Computational Semantics, *SEM @ACM 2017, Vancouver, Canada, August 3-4, 2017},
+  Year                     = {2017},
+  Pages                    = {65--77}
+}
 
 @Article{COIN12024,
   Title                    = {Using Hashtags to Capture Fine Emotion Categories from Tweets},
@@ -124,18 +124,6 @@
 
   Date                     = {2014},
   Urnal                    = {Journal of Artificial Intelligence Research (JAIR)}
-}
-
-@Article{ThelwallBP12,
-  Title                    = {Sentiment strength detection for the social web},
-  Author                   = {Mike Thelwall and
- Kevan Buckley and
- Georgios Paltoglou},
-  Journal                  = {{JASIST}},
-  Year                     = {2012},
-  Number                   = {1},
-  Pages                    = {163--173},
-  Volume                   = {63}
 }
 
 @InProceedings{Turney02,

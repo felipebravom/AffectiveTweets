@@ -75,7 +75,7 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes for a tweet using a given list of affective lexicon in arff format."
+		return "A batch filter that calcuates attributes for a tweet using a given list of affective lexicons in arff format."
 				+ " The features are calculated by adding or counting the affective associations of the words matching the lexicon."
 				+ " All numeric and nominal attributes from the given lexicon are considered. Numeric scores are added and nominal are counted. "
 				+ "The NRC-Affect-Intensity is used by deault. \n";
