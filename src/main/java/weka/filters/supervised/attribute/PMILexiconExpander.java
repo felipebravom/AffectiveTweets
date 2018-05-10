@@ -15,7 +15,7 @@
 
 /*
  *    PMILexiconExpander.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -45,6 +45,7 @@ import weka.filters.unsupervised.attribute.TweetToFeatureVector;
 
 
 
+
 /**
  *  <!-- globalinfo-start --> 
  *  Calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. 
@@ -53,9 +54,11 @@ import weka.filters.unsupervised.attribute.TweetToFeatureVector;
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
+ * 
  * BibTeX:
  * <pre>
- * &#64inproceedings{turney2002thumbs,
+ *  
+ * &#64;inproceedings{turney2002thumbs,
  * title={Thumbs up or thumbs down? Semantic orientation applied to unsupervised classification of reviews},
  * author={Turney, Peter D},
  * booktitle={Proceedings of the 40th Annual Meeting on Association for Computational Linguistics},
@@ -374,6 +377,11 @@ public class PMILexiconExpander extends TweetToFeatureVector {
 	}
 
 
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
 	public static void main(String[] args) {
 		runFilter(new PMILexiconExpander(), args);
 	}

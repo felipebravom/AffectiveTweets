@@ -1,8 +1,31 @@
+/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ *    LexiconDistantSupervision.java
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
 package weka.filters.unsupervised.attribute;
 
 
 
 import java.io.File;
+
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -10,8 +33,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import affective.core.ArffLexiconEvaluator;
-
-
 
 import weka.core.Attribute;
 import weka.core.Capabilities;
@@ -33,8 +54,8 @@ import weka.filters.SimpleBatchFilter;
 
 /**
  *  <!-- globalinfo-start --> 
- *  A lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. 
- *  A lexicon is used for labelling tweets. The opinion word can be removed from the content. Tweets with both positive and negative words are dicarded. 
+ *  A lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labeled data. 
+ *  A lexicon is used for labeling tweets. The trailing word can be removed from the content. Tweets with both positive and negative words are discarded. 
  *    
  * <!-- globalinfo-end -->
  * 
@@ -51,43 +72,39 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 	private static final long serialVersionUID = 1616693021695150782L;
 
 
-
-
 	/** Default path to where lexicons are stored */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
 
-
-	/** The path of the seed lexicon . */
+	/** The path of the seed lexicon. */
 	protected File lexicon=new File(LEXICON_FOLDER_NAME+File.separator+"emoticons.arff");
 
 
-	/** The tokenizer */
+	/** The tokenizer. */
 	protected Tokenizer m_tokenizer=new TweetNLPTokenizer();
 
-	/** the index of the string attribute to be processed */
+	/** The index of the string attribute to be processed. */
 	protected SingleIndex m_textIndex = new SingleIndex("1");
 
 
-	/** true for removing labelling words from the tweet */
+	/** True for removing the trailing labeling word from the tweet's content. */
 	protected boolean removeMatchingWord=true;
 
 
-
-	/** The target lexicon attribute */
+	/** The target lexicon attribute name. */
 	protected String polarityAttName="polarity";
 
 
-	/** LexiconEvaluator for sentiment prefixes */
+	/** Object containing the lexicon to use. */
 	protected ArffLexiconEvaluator lex=new ArffLexiconEvaluator();
 
 
 
-	/** The positive attribute value name in the lexicon */
+	/** The positive attribute value name from the lexicon arff file. */
 	protected String polarityAttPosValName="positive";
 
 
-	/** The negative attribute value name in the lexicon */
+	/** The negative attribute value name from the lexicon arff file. */
 	protected String polarityAttNegValName="negative";
 
 
@@ -115,16 +132,16 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 
 
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#globalInfo()
+	 */
 	@Override
 	public String globalInfo() {
-		return "This is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. " +
-				"A lexicon is used for labelling tweets. If a word from the lexicon is found the tweet is labelled with the word's polarity. "
-				+ "Tweets with both positive and negative words are dicarded. Emoticons are used as the default lexicon."+
+		return "This is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labeled data. " +
+				"A lexicon is used for labeling tweets. If a word from the lexicon is found, the tweet is labeled with the word's polarity. "
+				+ "Tweets with both positive and negative words are discarded. Emoticons are used as the default lexicon."+
 				"\n"+getTechnicalInformation().toString();
 	}
-
-
-
 
 
 
@@ -204,10 +221,9 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 
 
 
-
-
-
-
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
+	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
@@ -267,6 +283,9 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#process(weka.core.Instances)
+	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
@@ -344,25 +363,10 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 
 			}
 
-
-
-
-
-
-
 		}
 
 		return result;
 	}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -463,8 +467,13 @@ public class LexiconDistantSupervision  extends SimpleBatchFilter {
 	public void setRemoveMatchingWord(boolean removeMatchingWord) {
 		this.removeMatchingWord = removeMatchingWord;
 	}
+	
 
-
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */	
 	public static void main(String[] args) {
 		runFilter(new LexiconDistantSupervision(), args);
 	}

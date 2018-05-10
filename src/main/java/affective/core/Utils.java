@@ -116,6 +116,7 @@ public class Utils {
 	 * 
 	 * @param tokens the input tokens 
 	 * @param prefix the prefix of each vector attribute
+	 * @param freqWeights true for considering term-frequency weights (booleans weights are used otherwise)
 	 * @return an Object2IntMap object mapping the attributes to their values
 	 */		
 	public static Object2IntMap<String> calculateTermFreq(List<String> tokens, String prefix, boolean freqWeights) {

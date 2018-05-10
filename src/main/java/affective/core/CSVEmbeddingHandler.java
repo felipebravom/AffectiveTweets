@@ -15,7 +15,7 @@
 
 /*
  *    EmbeddingHandler.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -39,7 +39,7 @@ import weka.core.WekaPackageManager;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for handling word vector or embeddings stored in zgipped files.
+ *  This class is used for handling word vector or embeddings stored in gzipped files.
  * 
  * <!-- globalinfo-end -->
  * 
@@ -61,7 +61,7 @@ public class CSVEmbeddingHandler extends EmbeddingHandler {
 
 
 	/** The separator String    **/
-	protected String separator="\t";
+	protected String separator="TAB";
 
 
 	/** the index of the string attribute to be processed */
@@ -84,6 +84,9 @@ public class CSVEmbeddingHandler extends EmbeddingHandler {
 
 
 
+	/* (non-Javadoc)
+	 * @see affective.core.EmbeddingHandler#createDict()
+	 */
 	public void createDict() throws Exception {
 
 		FileInputStream fin = new FileInputStream(this.embeddingsFile);
@@ -91,6 +94,9 @@ public class CSVEmbeddingHandler extends EmbeddingHandler {
 		InputStreamReader xover = new InputStreamReader(gzis);
 		BufferedReader bf = new BufferedReader(xover);
 
+		this.separator = this.separator.equals("TAB")?"\t":this.separator;
+		
+		
 		String line;
 		boolean firstLine=true;
 		while ((line = bf.readLine()) != null) {
@@ -142,7 +148,7 @@ public class CSVEmbeddingHandler extends EmbeddingHandler {
 
 
 	@OptionMetadata(displayName = "separator",
-			description = "The string to use as separator for the columns (use '\\t' for TAB). \t Default:TAB",
+			description = "The string to use as separator for the columns (you can use 'TAB' or '\\t' for the TAB symbol). \t Default:TAB",
 			commandLineParamName = "sep", commandLineParamSynopsis = "-sep <string>",
 			displayOrder = 2)	
 	public String getSeparator() {

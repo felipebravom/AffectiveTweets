@@ -15,7 +15,7 @@
 
 /*
  *    TweetCentroid.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -54,8 +54,9 @@ import weka.core.TechnicalInformation.Type;
 
 
 /**
- *  <!-- globalinfo-start --> Given a corpus of documents creates Vector Space model for each word using bag-of-words and cluster-based attributes.
- *   
+ *  <!-- globalinfo-start --> 
+ *  A filter that creates word vectors from tweets using the Tweet Centroid Model. 
+ *  Each word is calculated as the average vector of the tweets in which it occurs.   
  * <!-- globalinfo-end -->
  * 
  *  
@@ -130,16 +131,29 @@ public class TweetCentroid extends TweetToFeatureVector {
 
 
 
-	// This class contains all the information of the word to compute the centroid
-	class WordRep{
-		String word; // the word
-		int numDoc; // number of documents where the word occurs
-		Object2IntMap<String> wordSpace; // the vector space model of the word
 
-		// additional numeric attributes
+	/**
+	 * This class contains all the information of a word for calculating a word vector.
+	 *
+	 */
+	class WordRep{
+		/** The word. */
+		String word; 
+
+		/** The number of documents where the word occurs. */
+		int numDoc; 
+
+		/** The vector representation of the word. */
+		Object2IntMap<String> wordSpace; 
+
+		/** Additional numeric attributes occurring in the original dataset.  */
 		Object2DoubleMap<String> metaData; //
 
 
+		/**
+		 * Creates a new WordRep object.
+		 * @param word the word
+		 */
 		public WordRep(String word){
 			this.word=word;
 			this.numDoc=0;
@@ -147,6 +161,11 @@ public class TweetCentroid extends TweetToFeatureVector {
 			this.metaData=new Object2DoubleOpenHashMap<String>();
 		}
 
+
+		/**
+		 * Adds a new document to the word representation.
+		 * @param docVector a  document vector
+		 */
 		public void addDoc(Object2IntMap<String> docVector){
 			this.numDoc++;
 			for(String vecWord:docVector.keySet()){
@@ -157,6 +176,10 @@ public class TweetCentroid extends TweetToFeatureVector {
 
 		}
 
+		/**
+		 * Adds values of additional attributes to the word vector.
+		 * @param metaVector the values of the additional attributes of the document
+		 */
 		public void addMetaData(Object2DoubleMap<String> metaVector){
 			for(String metaName:metaVector.keySet()){
 				double metaVal=metaVector.getDouble(metaName);
@@ -187,6 +210,9 @@ public class TweetCentroid extends TweetToFeatureVector {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#globalInfo()
+	 */
 	@Override
 	public String globalInfo() {
 		return "A filter that creates word vectors from tweets using the Tweet Centroid Model."
@@ -199,6 +225,11 @@ public class TweetCentroid extends TweetToFeatureVector {
 
 
 
+	/**
+	 * Calculates tweet vectors from a list of tokens
+	 * @param tokens a tokenized tweet
+	 * @return a mapping between attribute names and values
+	 */
 	public Object2IntMap<String> calculateDocVec(List<String> tokens) {
 
 		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
@@ -218,15 +249,16 @@ public class TweetCentroid extends TweetToFeatureVector {
 
 
 
-	/* Calculates the vocabulary and the word vectors from an Instances object
+	/**
+	 * Calculates the vocabulary and the word vectors from an Instances object
 	 * The vocabulary is only extracted the first time the filter is run.
-	 * 
-	 */	 
+	 * @param inputFormat the input Instances
+	 */
 	public void computeWordVecsAndVoc(Instances inputFormat) {
 
 
 		if (!this.isFirstBatchDone()){
-			
+
 			// set upper value for text index
 			m_textIndex.setUpper(inputFormat.numAttributes() - 1);
 
@@ -353,6 +385,9 @@ public class TweetCentroid extends TweetToFeatureVector {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
+	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
@@ -396,6 +431,9 @@ public class TweetCentroid extends TweetToFeatureVector {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#process(weka.core.Instances)
+	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
@@ -562,6 +600,11 @@ public class TweetCentroid extends TweetToFeatureVector {
 	}
 
 
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
 	public static void main(String[] args) {
 		runFilter(new TweetCentroid(), args);
 	}

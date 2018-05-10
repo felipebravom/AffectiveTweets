@@ -1,3 +1,26 @@
+/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ *    PTCM.java
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
+
+
 package weka.filters.unsupervised.attribute;
 
 
@@ -11,17 +34,14 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-import affective.core.ArffLexiconEvaluator;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -29,106 +49,44 @@ import weka.core.OptionMetadata;
 import weka.core.SparseInstance;
 import weka.core.TechnicalInformation;
 import weka.core.Utils;
-import weka.core.WekaPackageManager;
 import weka.core.TechnicalInformation.Type;
 
-public class PTCM extends TweetToFeatureVector{
 
-	/**
-	 *  Represents words and tweets by vectors of the same dimensionality unsing the Tweet Centroid Model. 
-	 *  Uses a lexicon to label word vectors calculated from unlabelled tweets, the target tweets are mapped
-	 *  into a compatible feature space.
-	 *   
-	 **/ 
-
-
-
-	private static final long serialVersionUID = 7553647795494402690L;
-
-
-	/** Default path to where resources are stored. */
-	public static String RESOURCES_FOLDER_NAME = weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "resources";
+/**
+ *  <!-- globalinfo-start --> 
+ *	Partitioned Tweet Centroid Model (PTCM) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labeled data. 
+ *  Word vectors are calculated using the Tweet Centroid Model and labeled using the lexicon.  The tweets from the second batch are represented with compatible features.
+ * <!-- globalinfo-end -->
+ * 
+ *  
+ * 
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 1 $
+ */
+public class PTCM extends DistantSupervisionSyntheticFilter{
 
 
-	/** Default path to where lexicons are stored */
-	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
+	/** For serialization. */
+	private static final long serialVersionUID = 7826961590788120593L;	
 
 
-
-	/** True if the value of each feature is set to its frequency in the tweet. Boolean weights are used otherwise. */
-	protected boolean freqWeights=true;
-
-
-	/** The path of the seed lexicon . */
-	protected File lexicon=new File(LEXICON_FOLDER_NAME+File.separator+"BingLiu.arff");
-
-	/** The path of the word clusters. */
-	protected File wordClustFile=new File(RESOURCES_FOLDER_NAME+File.separator+"50mpaths2.txt.gz");
-
-
-	/** the vocabulary and the WordRep */
+	/** A mapping between words and their representations. */
 	protected transient Object2ObjectMap<String, WordRep> wordInfo; 
 
-	/** Counts the number of documents in which candidate attributes appear */
-	protected Object2IntMap<String> attributeCount;
 
-
-	/** Contains a mapping of valid attribute with their indexes. */
-	protected Object2IntMap<String> m_Dictionary;
-
-	/** Brown Clusters Dictionary */
-	protected Object2ObjectMap<String,String> brownDict;
-
-	/** the minimum number of documents for an attribute to be considered. */
-	protected int minAttDocs=0; 
-
-
-	/** the minimum number of documents for a word to be included. */
+	/** The minimum number of documents for a word to be included. */
 	protected int minInstDocs=0; 
 
 
-	/** the number of parititions in each centrod */
+	/** The partition size of each centroid. */
 	protected int partNumber=-1;
-
-	/** the prefix of the word attributes */
-	static public String UNIPREFIX="WORD-";
-
-	/** the prefix of the cluster-based attributes */
-	static public String CLUSTPREFIX="CLUST-";
-
-
-	/** True for calculating word-based attributes . */
-	protected boolean createWordAtts=true;
-
-
-	/** True for calculating cluster-based attributes . */
-	protected boolean createClustAtts=true;
-
-
-
-	/** The target lexicon attribute */
-	protected String polarityAttName="polarity";
-
-
-	/** The positive attribute value name in the lexicon */
-	protected String polarityAttPosValName="positive";
-
-
-	/** The negative attribute value name in the lexicon */
-	protected String polarityAttNegValName="negative";
-
-
-	/** LexiconEvaluator for sentiment prefixes */
-	protected ArffLexiconEvaluator lex=new ArffLexiconEvaluator();
-
 
 
 
 	@Override
 	public String globalInfo() {
-		return "Partioned Tweet Centroid Model (PTCM) is a lexical-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. " +
-				"PTCM takes calculated word vectors from a corpus of unalabelled tweets using the Tweet Centroid Model. These word vectors are labelled using a seed lexicon. " +
-				"The tweets from the second batch are represented with compatible features." +
+		return "Partitioned Tweet Centroid Model (PTCM) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labeled data. " +
+				"Word vectors are calculated using the Tweet Centroid Model and labeled using the lexicon.  The tweets from the second batch are represented with compatible features. " +
 				"\n Use this filter with the FilteredClassifier. \n"+getTechnicalInformation().toString();
 	}
 
@@ -152,33 +110,54 @@ public class PTCM extends TweetToFeatureVector{
 	}
 
 
-	// This class contains all the information of the word to compute the centroid
+	/**
+	 * This class contains all the information of the word to compute the centroid.
+	 *
+	 */
 	class WordRep {
 
-		String word; // the word
-		int numDoc; // number of documents where the word occurs		
+		/** The word. */
+		String word; 
+		
+		/** The number of documents where the word occurs. */	
+		int numDoc; 	
+		
+		/** The document vectors in which the word occurs. */
 		ObjectList<Object2IntMap<String>> postingList; 
 
 
+		/**
+		 * Creates a new WordRep object.
+		 * @param word the word
+		 */
 		public WordRep(String word){
 			this.word=word;
 			this.numDoc=0;
 			this.postingList=new ObjectArrayList<Object2IntMap<String>>();
 		}
 
+		/**
+		 * Adds a new document to the posting list.
+		 * @param docVector a  document vector
+		 */
 		public void addDoc(Object2IntMap<String> docVector){
 			this.postingList.add(docVector);
 			this.numDoc++;
 		}
 
 
-		// returns a list of partions of the posting List
-		public ObjectList<ObjectList<Object2IntMap<String>>> partitionate(int partSize){
+	
+		/**
+		 * Returns a list of partitions of the posting list.
+		 * @param partSize the size of the partitions.
+		 * @return a list of word vectors.
+		 */
+		public ObjectList<ObjectList<Object2IntMap<String>>> partition(int partSize){
 
 			ObjectList<ObjectList<Object2IntMap<String>>> resList= new ObjectArrayList<ObjectList<Object2IntMap<String>>>();
 
 			// if the partition size is larger than the posting list, then put the whole list into one partition
-			// if partsize is less or equal than zero we create one single partition too, which is equivalent as the full
+			// if partsize is less or equal than zero we create one single partition too, which is equivalent to the full
 			// tweet centroid model
 			if(partSize>=this.postingList.size() || partSize <=0){
 				resList.add(this.postingList);
@@ -195,8 +174,6 @@ public class PTCM extends TweetToFeatureVector{
 
 			}
 
-
-
 			return resList;
 
 		}
@@ -207,100 +184,11 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
-
-
-	/* Converts a sequence of words into a sequence of word-clusters
-	 * 
-	 */	 	
-	public List<String> clustList(List<String> tokens, Map<String,String> dict){
-		List<String> clusters=new ArrayList<String>();
-		for(String token:tokens){
-			if(dict.containsKey(token)){
-				clusters.add(dict.get(token));
-			}
-
-		}	
-		return clusters;
-	}
-
-
-
-	// Maps a given instance with an attribute called content into a target instance with the same dimensions
-	public Instances mapTargetInstance(Instances inp){
-		// Creates instances with the same format
-		Instances result=getOutputFormat();
-		Attribute contentAtt=inp.attribute(this.m_textIndex.getIndex());
-
-		for(Instance inst:inp){
-			String content=inst.stringValue(contentAtt);
-
-			// tokenises the content 
-			List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
-
-			// Identifies the distinct terms
-			AbstractObjectSet<String> terms=new  ObjectOpenHashSet<String>(); 
-			terms.addAll(tokens);
-
-
-			Object2IntMap<String> docVec=this.calculateDocVec(tokens);
-
-			double[] values = new double[result.numAttributes()];
-
-
-			values[result.classIndex()]= inst.classValue();
-
-			for(String att:docVec.keySet()){
-
-				if(this.m_Dictionary.containsKey(att)){
-					int attIndex=this.m_Dictionary.getInt(att);
-					// we normalise the value by the number of documents
-					values[attIndex]=docVec.getInt(att);					
-				}
-
-
-			}
-
-
-			Instance outInst=new SparseInstance(1, values);
-
-			inst.setDataset(result);
-
-			result.add(outInst);
-
-		}
-
-		return result;
-
-	}
-
-
-	public Object2IntMap<String> calculateDocVec(List<String> tokens) {
-
-		Object2IntMap<String> docVec = new Object2IntOpenHashMap<String>();
-		// add the word-based vector
-		if(this.createWordAtts)
-			docVec.putAll(affective.core.Utils.calculateTermFreq(tokens,UNIPREFIX,this.freqWeights));
-
-		if(this.createClustAtts){
-			// calcultates the vector of clusters
-			List<String> brownClust=affective.core.Utils.clustList(tokens,brownDict);
-			docVec.putAll(affective.core.Utils.calculateTermFreq(brownClust,CLUSTPREFIX,this.freqWeights));			
-		}	
-
-
-		return docVec;
-
-	}
-
-
-
-
-
-
-	/* Calculates the vocabulary and the word vectors from an Instances object
+	/**
+	 * Calculates the vocabulary and the word vectors from an Instances object
 	 * The vocabulary is only extracted the first time the filter is run.
-	 * 
-	 */	 
+	 * @param inputFormat the input Instances
+	 */
 	public void computeWordVecsAndVoc(Instances inputFormat) {
 
 
@@ -314,12 +202,9 @@ public class PTCM extends TweetToFeatureVector{
 		}
 
 
-
 		this.wordInfo = new Object2ObjectOpenHashMap<String, WordRep>();
 
 		this.attributeCount= new Object2IntOpenHashMap<String>(); 
-
-
 
 
 		// the Dictionary of the brown Clusters
@@ -352,10 +237,8 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
-
-		// reference to the content of the message, users index start from zero
+		// reference to the content of the message
 		Attribute attrCont = inputFormat.attribute(this.m_textIndex.getIndex());
-
 
 
 		for (ListIterator<Instance> it = inputFormat.listIterator(); it
@@ -364,7 +247,7 @@ public class PTCM extends TweetToFeatureVector{
 			String content = inst.stringValue(attrCont);
 
 
-			// tokenises the content 
+			// tokenizes the content 
 			List<String> tokens = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
 
 
@@ -378,7 +261,7 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
-			// adds the attributes to the List of attributes
+			// adds the attributes to the global list of attributes
 			for(String docAtt:docVec.keySet()){
 				if(this.attributeCount.containsKey(docAtt)){
 					int prevFreq=this.attributeCount.getInt(docAtt);
@@ -393,7 +276,7 @@ public class PTCM extends TweetToFeatureVector{
 
 
 			// if the word is new we add it to the vocabulary, otherwise we
-			// add the document to the vector
+			// add the document to the word representation
 			for (String word : terms) {
 				if(this.lex.getNomDict().containsKey(word)){				
 					String value=this.lex.getNomDict().get(word).get(this.polarityAttName);
@@ -415,6 +298,9 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
+	 */
 	@Override
 	protected Instances determineOutputFormat(Instances inputFormat) {
 
@@ -463,6 +349,9 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
+	/* (non-Javadoc)
+	 * @see weka.filters.SimpleFilter#process(weka.core.Instances)
+	 */
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
@@ -483,7 +372,7 @@ public class PTCM extends TweetToFeatureVector{
 				if(wordRep.numDoc>=this.minInstDocs){
 
 					// a list of lists of tweet vectors
-					ObjectList<ObjectList<Object2IntMap<String>>> partitions=wordRep.partitionate(this.getPartNumber());
+					ObjectList<ObjectList<Object2IntMap<String>>> partitions=wordRep.partition(this.getPartNumber());
 
 					// traverse the partitions
 					for(ObjectList<Object2IntMap<String>> tweetPartition:partitions){
@@ -498,7 +387,7 @@ public class PTCM extends TweetToFeatureVector{
 								// only include valid words
 								if(this.m_Dictionary.containsKey(innerWord)){
 									int attIndex=this.m_Dictionary.getInt(innerWord);
-									// we normalise the value by the number of documents
+									// we normalize the value by the number of documents
 									values[attIndex]+=((double)wordSpace.getInt(innerWord))/tweetPartition.size();					
 								}
 							}
@@ -525,13 +414,12 @@ public class PTCM extends TweetToFeatureVector{
 
 
 
-
 					}
 				}
 			}
 		}
 
-		// Second batch maps tweets into the corresponding feature space
+		// Second batch maps tweets into the original feature space
 		else{
 			result=this.mapTargetInstance(instances);
 
@@ -542,25 +430,13 @@ public class PTCM extends TweetToFeatureVector{
 	}
 
 
-	@OptionMetadata(displayName = "minAttDocs",
-			description = "Minimum frequency of a sparse attribute to be considered in the attribute space.", 
-			commandLineParamName = "M", 
-			commandLineParamSynopsis = "-M <int>",
-			displayOrder = 6)	
-	public int getMinAttDocs() {
-		return minAttDocs;
-	}
-	public void setMinAttDocs(int minAttDocs) {
-		this.minAttDocs = minAttDocs;
-	}
-
 
 
 	@OptionMetadata(displayName = "minInstDocs",
 			description = "Minimum frequency of a word to be considered in the instance space.",
 			commandLineParamName = "N", 
 			commandLineParamSynopsis = "-N <int>",
-			displayOrder = 7)	
+			displayOrder = 13)	
 	public int getMinInstDocs() {
 		return minInstDocs;
 	}
@@ -568,58 +444,6 @@ public class PTCM extends TweetToFeatureVector{
 		this.minInstDocs = minInstDocs;
 	}
 
-	@OptionMetadata(displayName = "createWordAtts",
-			description = "True for creating unigram attributes.", 
-			commandLineParamIsFlag = true, commandLineParamName = "W", 
-			commandLineParamSynopsis = "-W",
-			displayOrder = 8)	
-	public boolean isCreateWordAtts() {
-		return createWordAtts;
-	}
-
-	public void setCreateWordAtts(boolean createWordAtts) {
-		this.createWordAtts = createWordAtts;
-	}
-
-
-	@OptionMetadata(displayName = "createClustAtts",
-			description = "True for creating attributes using word clusters",
-			commandLineParamIsFlag = true, commandLineParamName = "C", 
-			commandLineParamSynopsis = "-C",
-			displayOrder = 9)	
-	public void setCreateClustAtts(boolean createClustAtts) {
-		this.createClustAtts = createClustAtts;
-	}
-	public boolean isCreateClustAtts() {
-		return createClustAtts;
-	}
-
-
-
-	@OptionMetadata(displayName = "wordClustFile",
-			description = "The file containing the word clusters.", 
-			commandLineParamName = "H", 
-			commandLineParamSynopsis = "-H <string>",
-			displayOrder = 10)	
-	public File getWordClustFile() {
-		return wordClustFile;
-	}
-	public void setWordClustFile(File wordClustFile) {
-		this.wordClustFile = wordClustFile;
-	}
-
-
-	@OptionMetadata(displayName = "lexicon",
-			description = "The file containing a lexicon in ARFF format with word polarities.", 
-			commandLineParamName = "lex", 
-			commandLineParamSynopsis = "-lex <string>",
-			displayOrder = 11)	
-	public File getLexicon() {
-		return lexicon;
-	}
-	public void setLexicon(File lexicon) {
-		this.lexicon = lexicon;
-	}
 
 
 
@@ -628,7 +452,7 @@ public class PTCM extends TweetToFeatureVector{
 			description = "The size of the partition for the tweet centroid model (-1 for not partionining). \t default: -1", 
 			commandLineParamName = "A", 
 			commandLineParamSynopsis = "-A <int>",
-			displayOrder = 12)
+			displayOrder = 14)
 	public int getPartNumber() {
 		return partNumber;
 	}
@@ -637,7 +461,11 @@ public class PTCM extends TweetToFeatureVector{
 	}
 
 
-
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */	
 	public static void main(String[] args) {
 		runFilter(new PTCM(), args);
 	}

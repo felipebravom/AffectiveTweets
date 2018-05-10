@@ -15,7 +15,7 @@
 
 /*
  *    TweetToSentiStrengthFeatureVector.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -58,29 +58,29 @@ import weka.core.TechnicalInformation.Type;
  <!-- technical-bibtex-end -->
  *  
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
- * @version $Revision: 1 $
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ * @version $Revision: 2 $
  */
 
 
 public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 
-	/** For serialization  */
+	/** For serialization.  */
 	private static final long serialVersionUID = 3748678887246129719L;
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons";
 
-	/** The path of SentiStrength */
+	/** The path of SentiStrength. */
 	public static String SENTISTRENGTH_FOLDER_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"SentiStrength"+java.io.File.separator;
 
 
 	/** The folder with the language files. */
 	protected File langFolder=new File(SENTISTRENGTH_FOLDER_NAME+"english");
-	
 
-	
-	
+
+
+
 
 	/**
 	 * Returns a string describing this filter.
@@ -90,7 +90,7 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates positive and negative scores for a tweet using SentiSrength.\n"
+		return "A filter that calcuates positive and negative scores for a tweet using SentiSrength.\n"
 				+ "More info at: http://sentistrength.wlv.ac.uk .\n"
 				+ "Disclaimer: SentiStrength can only be used for academic purposes from whitin this package.\n"+getTechnicalInformation().toString();
 	}
@@ -114,7 +114,7 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 	}
 
 
-	
+
 
 	/* (non-Javadoc)
 	 * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
@@ -149,7 +149,7 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 	@Override
 	protected Instances process(Instances instances) throws Exception {
 
-		
+
 		// set upper value for text index
 		m_textIndex.setUpper(instances.numAttributes() - 1);
 
@@ -172,7 +172,7 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 
 			String content = instances.instance(i).stringValue(attrCont);
 			List<String> words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
-			
+
 			Map<String,Double> featuresForLex=sentiStrengthEvaluator.evaluateTweet(words);
 			for(String featName:featuresForLex.keySet()){
 				values[result.attribute(featName).index()] = featuresForLex.get(featName);
@@ -215,12 +215,19 @@ public class TweetToSentiStrengthFeatureVector extends TweetToFeatureVector {
 	public void setLangFolder(File langFolder) {
 		this.langFolder = langFolder;
 	}
-	
 
 
 
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
+	public static void main(String[] args) {
+		runFilter(new TweetToSentiStrengthFeatureVector(), args);
+	}
 
-	
+
 
 
 }

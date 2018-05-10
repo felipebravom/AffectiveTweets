@@ -15,7 +15,7 @@
 
 /*
  *    TweetToEmbeddingsFeatureVector.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -40,9 +40,8 @@ import weka.core.TechnicalInformation.Type;
 
 
 /**
- *  <!-- globalinfo-start --> An attribute filter that calculates word embedding (word vectros) features 
+ *  <!-- globalinfo-start --> An attribute filter that calculates word embedding (word vectors) features 
  *  for a tweet represented as a string attribute. 
- *  The embeddings format is a csv.gz file with format: emb1 tab emb2 tab..word. 
  * <!-- globalinfo-end -->
  * 
  * <!-- technical-bibtex-start -->
@@ -83,18 +82,12 @@ public class TweetToEmbeddingsFeatureVector extends TweetToFeatureVector {
 		CONCATENATE_ACTION,
 	}
 
-
-
 	/** The action in which embeddings are operated on the tweet. */
 	protected Action m_action = Action.AVERAGE_ACTION;
 
 
-
-
 	/** Embedding Handler.    **/
 	protected EmbeddingHandler embeddingHandler=new CSVEmbeddingHandler();
-
-
 
 
 	/** The number of word embeddings to concatenate. */
@@ -109,8 +102,8 @@ public class TweetToEmbeddingsFeatureVector extends TweetToFeatureVector {
 	 */
 	public String globalInfo() {
 		return "An attribute filter that calculates features for a string attribute  from "
-				+ "given list of word vectors (embeddings). The embeddings format is a csv.gz "
-				+ "file with format: value1<tab>value2<tab>...<tab>word .\n Pretrained word embeddings are provided in: "
+				+ "given list of word vectors (embeddings). The embeddings format is a csv.gz file.\n "
+				+ "Pretrained word embeddings are provided in: "
 				+ RESOURCES_FOLDER_NAME+".\n"+getTechnicalInformation().toString();
 	}
 
@@ -269,9 +262,9 @@ public class TweetToEmbeddingsFeatureVector extends TweetToFeatureVector {
 
 	@OptionMetadata(displayName = "k",
 			description = "Number of words (from left to right) of the tweet whose embeddings will be concatenated.", 
-					commandLineParamName = "K", 
-					commandLineParamSynopsis = "-K <int>",
-					displayOrder = 7)		
+			commandLineParamName = "K", 
+			commandLineParamSynopsis = "-K <int>",
+			displayOrder = 7)		
 	public int getK() {
 		return k;
 	}	
@@ -291,5 +284,14 @@ public class TweetToEmbeddingsFeatureVector extends TweetToFeatureVector {
 		this.embeddingHandler = embeddingHandler;
 	}
 
+
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
+	public static void main(String[] args) {
+		runFilter(new TweetToEmbeddingsFeatureVector(), args);
+	}	
 
 }

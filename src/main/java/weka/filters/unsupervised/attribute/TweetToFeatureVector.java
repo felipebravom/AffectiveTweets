@@ -14,8 +14,8 @@
  */
 
 /*
- *    TweetToSentiStrengthFeatureVector.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    TweetToFeatureVector.java
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -35,6 +35,7 @@ import weka.core.stopwords.Null;
 import weka.core.stopwords.StopwordsHandler;
 import weka.core.tokenizers.Tokenizer;
 import weka.core.tokenizers.TweetNLPTokenizer;
+import weka.filters.Filter;
 import weka.filters.SimpleBatchFilter;
 
 /**
@@ -43,7 +44,7 @@ import weka.filters.SimpleBatchFilter;
  * 
  *  
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 
@@ -54,28 +55,26 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	private static final long serialVersionUID = -3704559695773991498L;
 
 
-	/** the index of the string attribute to be processed */
+	/** The index of the string attribute to be processed. */
 	protected SingleIndex m_textIndex = new SingleIndex("1");
-
-
 
 
 	/** True if all tokens should be downcased. */
 	protected boolean toLowerCase=true;
 
 
-	/** True if url, users, and repeated letters are cleaned */
+	/** True if url and users are standarized. */
 	protected boolean standarizeUrlsUsers=false;
 
 
-	/** True for standarizing repeated letters are cleaned */
+	/** True for standarizing repeated letters. */
 	protected boolean reduceRepeatedLetters=false;
 
 
-	/** The tokenizer */
+	/** The tokenizer. */
 	protected Tokenizer m_tokenizer=new TweetNLPTokenizer();
 
-	/** the stemming algorithm. */
+	/** The stemming algorithm. */
 	protected Stemmer m_stemmer = new NullStemmer();
 
 
@@ -90,8 +89,7 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	public Enumeration<Option> listOptions() {
-		//this.getClass().getSuperclass()
-		return Option.listOptionsForClassHierarchy(this.getClass(), this.getClass().getSuperclass()).elements();
+		return Option.listOptionsForClassHierarchy(this.getClass(), Filter.class).elements();
 	}
 
 
@@ -100,25 +98,18 @@ public abstract class TweetToFeatureVector extends SimpleBatchFilter {
 	 */
 	@Override
 	public String[] getOptions() {	
-		return Option.getOptionsForHierarchy(this, this.getClass().getSuperclass());
-
-		//return Option.getOptions(this, this.getClass());
+		return Option.getOptionsForHierarchy(this, Filter.class);
 	}
 
 
 
 
-	/**
-	 * Parses the options for this object.
-	 *  
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#setOptions(java.lang.String[])
 	 */
 	@Override
 	public void setOptions(String[] options) throws Exception {
-		Option.setOptionsForHierarchy(options, this, this.getClass().getSuperclass());
+		Option.setOptionsForHierarchy(options, this, Filter.class);
 	}
 
 

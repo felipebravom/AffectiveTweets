@@ -15,7 +15,7 @@
 
 /*
  *    TweetToInputLexiconFeatureVector.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 import affective.core.ArffLexiconEvaluator;
 import weka.core.Attribute;
 import weka.core.Instance;
@@ -37,13 +36,13 @@ import weka.core.SparseInstance;
 import weka.core.WekaPackageManager;
 
 /**
- *  <!-- globalinfo-start --> A batch filter that calculates attributes for a tweet using a given affective lexicon in arff format.
+ *  <!-- globalinfo-start --> A filter that calculates attributes for a tweet using a list of affective lexicons in arff format.
  *   
  * <!-- globalinfo-end -->
  * 
  *  
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 
@@ -75,7 +74,7 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes for a tweet using a given list of affective lexicons in arff format."
+		return "A filter that calcuates attributes for a tweet using a given list of affective lexicons in arff format."
 				+ " The features are calculated by adding or counting the affective associations of the words matching the lexicon."
 				+ " All numeric and nominal attributes from the given lexicon are considered. Numeric scores are added and nominal are counted. "
 				+ "The NRC-Affect-Intensity is used by deault. \n";
@@ -207,5 +206,14 @@ public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 	}
 	
 
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
+	public static void main(String[] args) {
+		runFilter(new TweetToInputLexiconFeatureVector(), args);
+	}		
+	
 
 }

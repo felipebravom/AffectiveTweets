@@ -47,7 +47,7 @@ import weka.core.stemmers.Stemmer;
 /**
  *  <!-- globalinfo-start --> 
  *  This class is used for calculating scores for a tweet using a lexicons in arff format. 
- *  Numeric associations are added  and nominal ones are countes.
+ *  Numeric associations are added  and nominal ones are counted.
  *  <!-- globalinfo-end -->
  * 
  * 

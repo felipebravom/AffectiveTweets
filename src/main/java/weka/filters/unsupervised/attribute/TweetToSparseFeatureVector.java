@@ -1,5 +1,3 @@
-package weka.filters.unsupervised.attribute;
-
 /*
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,9 +15,11 @@ package weka.filters.unsupervised.attribute;
 
 /*
  *    TweetToSparseFeatureVector.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
+
+package weka.filters.unsupervised.attribute;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -81,7 +81,7 @@ import weka.core.TechnicalInformation.Type;
 public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 
 
-	/** for serialization */
+	/** for serialization. */
 	private static final long serialVersionUID = 3635946466523698211L;
 
 
@@ -99,10 +99,10 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 	/** Counts the number of tweets in which candidate attributes appear. This will help for discarding infrequent attributes. */
 	protected Object2IntMap<String> attributeCount; 
 
-	/** List of tweets to process with their feature vectors. */
+	/** List of tweets to process represented as feature vectors. */
 	protected ObjectList<Object2IntMap<String>> procTweets; 
 
-	/** Brown Clusters Dictionary */
+	/** Brown Clusters Dictionary. */
 	protected Object2ObjectMap<String,String> brownDict;
 
 
@@ -113,20 +113,20 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 	protected int minAttDocs=0; 
 
 
-	/** The maximum number of type of word ngrams to calculate. If n=3 Unigrams, bigrams and trigrams will calculated */
+	/** The maximum dimension for the ngrams to calculate. If n=3 Unigrams, bigrams and trigrams will be calculated. */
 	protected int wordNgramMaxDim=1;
 
-	/** Prefix for word ngram featues */
+	/** Prefix for word ngram featues. */
 	protected String wordNgramPrefix="WNGRAM-";
 
-	/** True for adding a prefix to words occurring in a negated context */
+	/** True for adding a prefix to words occurring in a negated context. */
 	protected boolean negateTokens=false;
 
 
-	/** True to calculate character ngram features */
+	/** True to calculate character ngram features. */
 	protected boolean calculateCharNgram=false;
 
-	/** Prefix for character ngram features */ 
+	/** Prefix for character ngram features. */ 
 	protected String charNgramPrefix="CNGRAM-";
 
 	/** The minimum dimension for character ngrams.  */
@@ -140,7 +140,7 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 	protected int posNgramMaxDim=0;
 
 
-	/** the prefix of the POS-bases attributes */
+	/** The prefix of the POS-based attributes. */
 	protected String posPrefix="POS-";
 
 
@@ -148,13 +148,13 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 	protected int clustNgramMaxDim=0;
 
 
-	/** the prefix of the cluster-based attributes */
+	/** The prefix of the cluster-based attributes. */
 	protected String clustPrefix="CLUST-";
 
-	/** TwitterNLP Tagger model */
+	/** TwitterNLP Tagger model. */
 	protected transient Tagger tagger;
 
-	/** The NegationEvaluator object with the negating list */
+	/** The NegationEvaluator object with the negating list. */
 	protected NegationEvaluator negEval;
 
 
@@ -170,7 +170,7 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 				+ " represented as a string attribute. The type of features include: word n-grams, "
 				+ "character n-grams, POS tags and Brown word clusters. The tokenization and POS tagging"
 				+ " is done with the CMU Twitter NLP tool. The size of the attribute space"
-				+ " would depend on the training dataset.\n"+getTechnicalInformation().toString();
+				+ " will depend on the training dataset.\n"+getTechnicalInformation().toString();
 	}
 
 	/**
@@ -667,7 +667,11 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 
 
 
-
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
 	public static void main(String[] args) {
 		runFilter(new TweetToSparseFeatureVector(), args);
 	}

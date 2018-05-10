@@ -15,7 +15,7 @@
 
 /*
  *    LabelWordVector.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -39,10 +39,11 @@ import weka.core.SingleIndex;
 import weka.core.SparseInstance;
 import weka.core.WekaPackageManager;
 import weka.core.Capabilities.Capability;
+import weka.filters.Filter;
 import weka.filters.SimpleBatchFilter;
 
 /**
- *  <!-- globalinfo-start --> A batch filter that labels word vectors using a given affective lexicon in arff format.
+ *  <!-- globalinfo-start --> A filter for labeling word vectors using a list of affective lexicons in arff format.
  *   
  * <!-- globalinfo-end -->
  * 
@@ -51,24 +52,21 @@ import weka.filters.SimpleBatchFilter;
  * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
-
-
 public class LabelWordVectors extends SimpleBatchFilter {
 
 
-	/** For serialization  */
+	/** For serialization.  */
 	private static final long serialVersionUID = 1122160781260403611L;
 
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
-	/** The path of the default lexicon */
+	/** The path of the default lexicon. */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"metaLexEmo.arff";
 
 
-	
-	/** the index of the string attribute with the target word */
+	/** The index of the string attribute with the target word. */
 	protected SingleIndex m_WordIndex = new SingleIndex("last");
 
 
@@ -77,11 +75,8 @@ public class LabelWordVectors extends SimpleBatchFilter {
 	protected boolean toLowerCase=true;
 
 
-	/** List of Lexicons to use */
+	/** List of lexicons to use. */
 	protected ArffLexiconWordLabeller[] lexiconLabs=new ArffLexiconWordLabeller[]{new ArffLexiconWordLabeller()};
-
-
-
 
 
 
@@ -104,7 +99,8 @@ public class LabelWordVectors extends SimpleBatchFilter {
 	 */
 	@Override
 	public Enumeration<Option> listOptions() {
-		return Option.listOptionsForClass(this.getClass()).elements();
+		//this.getClass().getSuperclass()
+		return Option.listOptionsForClassHierarchy(this.getClass(), Filter.class).elements();
 	}
 
 
@@ -112,34 +108,21 @@ public class LabelWordVectors extends SimpleBatchFilter {
 	 * @see weka.filters.Filter#getOptions()
 	 */
 	@Override
-	public String[] getOptions() {		
-		return Option.getOptions(this, this.getClass());
+	public String[] getOptions() {	
+		return Option.getOptionsForHierarchy(this, Filter.class);
+
+		//return Option.getOptions(this, this.getClass());
 	}
 
 
-	/**
-	 * Parses the options for this object.
-	 * 
-	 * <!-- options-start --> 
-	 * <pre> 
-	 *-I &lt;col&gt;
-	 *  Index of string attribute (default: 1)
-	 * </pre>
-	 * <pre>
-	 *-U 
-	 *	 Lowercase content	(default: false)
-	 * </pre>
-	 *  
-	 * <!-- options-end -->
-	 * 
-	 * @param options
-	 *            the options to use
-	 * @throws Exception
-	 *             if setting of options fails
+
+
+	/* (non-Javadoc)
+	 * @see weka.filters.Filter#setOptions(java.lang.String[])
 	 */
 	@Override
 	public void setOptions(String[] options) throws Exception {
-		Option.setOptions(options, this, this.getClass());
+		Option.setOptionsForHierarchy(options, this, Filter.class);
 	}
 
 
@@ -214,18 +197,18 @@ public class LabelWordVectors extends SimpleBatchFilter {
 					atts.add(new Attribute(lexEval.getLexiconName()+"-"+att.name()));
 				else if(att.isNominal()){
 					List<String> attValues=new ArrayList<String>();
-				
+
 					for(int i=0;i<att.numValues();i++){
 						attValues.add(att.value(i));
 					}					
-					
+
 					atts.add(new Attribute(lexEval.getLexiconName()+"-"+att.name(),attValues));
-					
+
 				}
-					
-				
+
+
 			}
-								
+
 		}
 
 
@@ -235,8 +218,8 @@ public class LabelWordVectors extends SimpleBatchFilter {
 
 		// set the class index
 		result.setClassIndex(inputFormat.classIndex());
-		
-		
+
+
 
 		return result;
 	}
@@ -253,15 +236,15 @@ public class LabelWordVectors extends SimpleBatchFilter {
 		// set upper value for word index
 		m_WordIndex.setUpper(instances.numAttributes() - 1);
 
-		
+
 		Instances result = getOutputFormat();
-		
+
 
 		// reference to the words attribute
 		Attribute attrCont = instances.attribute(m_WordIndex.getIndex());
 
 
-		
+
 
 		for (int i = 0; i < instances.numInstances(); i++) {
 			double[] values = new double[result.numAttributes()];
@@ -269,19 +252,15 @@ public class LabelWordVectors extends SimpleBatchFilter {
 				values[n] = instances.instance(i).value(n);
 
 			String word = instances.instance(i).stringValue(attrCont);
-		
+
 
 			for(ArffLexiconWordLabeller lexEval:this.lexiconLabs){
 				Map<Attribute,Double> featuresForLex=lexEval.evaluateWord(word);
 				for(Attribute att:featuresForLex.keySet()){
 					values[result.attribute(lexEval.getLexiconName()+"-"+att.name()).index()] = featuresForLex.get(att);		
-					
+
 				}			
 			}
-
-
-
-
 
 
 			Instance inst = new SparseInstance(1, values);
@@ -298,21 +277,21 @@ public class LabelWordVectors extends SimpleBatchFilter {
 		return result;
 	}
 
-	
-	
+
+
 	@OptionMetadata(displayName = "wordIndex",
 			description = "The word index (starting from 1) of the target string attribute. Start and last are valid values."
 					+ "\t(default last).",
-			commandLineParamName = "I", commandLineParamSynopsis = "-I <col>",
-			displayOrder = 0)	
+					commandLineParamName = "I", commandLineParamSynopsis = "-I <col>",
+					displayOrder = 0)	
 	public String getWordIndex() {
 		return m_WordIndex.getSingleIndex();
 	}
 	public void setWordIndex(String wordIndex) {		
 		this.m_WordIndex.setSingleIndex(wordIndex);
 	}
-	
-	
+
+
 
 
 
@@ -352,11 +331,18 @@ public class LabelWordVectors extends SimpleBatchFilter {
 	public void setLexiconLabs(ArffLexiconWordLabeller[] lexiconLabs) {
 		this.lexiconLabs = lexiconLabs;
 	}
-	
-	
-	
 
-	
+
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */	
+	public static void main(String[] args) {
+		runFilter(new LabelWordVectors(), args);
+	}	
+
+
 
 
 }

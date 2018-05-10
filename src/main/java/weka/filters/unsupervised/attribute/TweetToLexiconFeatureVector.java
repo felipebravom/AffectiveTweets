@@ -15,7 +15,7 @@
 
 /*
  *    TweetToLexiconFeatureVector.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -619,7 +619,14 @@ public class TweetToLexiconFeatureVector extends TweetToFeatureVector {
 
 
 
-
+	/**
+	 * Main method for testing this class.
+	 *
+	 * @param args should contain arguments to the filter: use -h for help
+	 */		
+	public static void main(String[] args) {
+		runFilter(new TweetToLexiconFeatureVector(), args);
+	}
 
 
 
