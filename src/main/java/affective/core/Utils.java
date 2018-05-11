@@ -15,7 +15,7 @@
 
 /*
  *    Utils.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 

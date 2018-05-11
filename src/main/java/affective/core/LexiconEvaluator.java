@@ -15,7 +15,7 @@
 
 /*
  *    LexiconEvaluator.java
- *    Copyright (C) 2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2018 University of Waikato, Hamilton, New Zealand
  */
 
 package affective.core;
@@ -31,7 +31,7 @@ import java.util.Map;
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public abstract class LexiconEvaluator implements Serializable {

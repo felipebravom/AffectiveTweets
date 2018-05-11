@@ -15,7 +15,7 @@
 
 /*
  *    SentiStrengthEvaluator.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -45,10 +45,10 @@ import uk.ac.wlv.sentistrength.SentiStrength;
 public class SentiStrengthEvaluator extends LexiconEvaluator  {
 
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = -2094228012480778199L;
 	
-	/** The SentiStrengh object */
+	/** The SentiStrengh object. */
 	protected transient SentiStrength sentiStrength;
 	
 

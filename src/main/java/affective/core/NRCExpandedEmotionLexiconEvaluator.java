@@ -15,7 +15,7 @@
 
 /*
  *    NRCExpandedEmotionEvaluator.java
- *    Copyright (C) 2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 2018 University of Waikato, Hamilton, New Zealand
  */
 
 
@@ -34,20 +34,20 @@ import java.util.zip.GZIPInputStream;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for evaluating the NRC-10 Expanded Emotion Lexicon
+ *  This class is used for evaluating the NRC-10 Expanded Emotion Lexicon.
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class NRCExpandedEmotionLexiconEvaluator extends LexiconEvaluator {
 
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = -6019728417777495994L;
 
-	/** a mapping between words and the affective scores */	
+	/** A mapping between words and the affective scores. */	
 	protected Map<String, Map<String, Double>> dict; 
 
 	/**

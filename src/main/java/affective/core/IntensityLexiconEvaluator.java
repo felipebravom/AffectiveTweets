@@ -15,7 +15,7 @@
 
 /*
  *    IntensityLexiconEvaluator.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -36,24 +36,24 @@ import java.util.zip.GZIPInputStream;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for evaluating lexicons with numerical sentiment scores: 
+ *  This class is used for evaluating lexicons with numerical sentiment scores.
  *  <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class IntensityLexiconEvaluator extends LexiconEvaluator  {
 
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = -2094228012480778199L;
 
-	/** the dictionary */
+	/** The dictionary. */
 	protected Map<String, String> dict;
 
 	/**
-	 * initializes the Object
+	 * Initializes the Object
 	 * 
 	 * @param file the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon

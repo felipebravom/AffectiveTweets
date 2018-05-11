@@ -40,15 +40,15 @@ import java.util.zip.GZIPInputStream;
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class PolarityLexiconEvaluator extends LexiconEvaluator {
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 5921580335557644894L;
 
-	/** a mapping between words and the sentiment label */	
+	/** A mapping between words and the sentiment label. */	
 	protected Map<String, String> dict;
 
 

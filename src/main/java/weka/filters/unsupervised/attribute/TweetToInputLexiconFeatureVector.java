@@ -50,18 +50,18 @@ import weka.core.WekaPackageManager;
 public class TweetToInputLexiconFeatureVector extends TweetToFeatureVector {
 
 
-	/** For serialization  */
+	/** For serialization.  */
 	private static final long serialVersionUID = -530731678800460897L;
 
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
 	/** The path of the MPQA lexicon */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
 
 
-	/** List of Lexicons to use */
+	/** List of Lexicons to use. */
 	protected ArffLexiconEvaluator[] lexiconEval=new ArffLexiconEvaluator[]{new ArffLexiconEvaluator()};
 
 

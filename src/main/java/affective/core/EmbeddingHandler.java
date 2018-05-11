@@ -15,7 +15,7 @@
 
 /*
  *    EmbeddingHandler.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -49,7 +49,7 @@ import weka.core.OptionHandler;
 public abstract class EmbeddingHandler implements Serializable, OptionHandler {
 
 
-	/** For serialization **/ 
+	/** For serialization, **/ 
 	private static final long serialVersionUID = -2789278587499972963L;
 	
 

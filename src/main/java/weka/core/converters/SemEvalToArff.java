@@ -15,7 +15,7 @@
 
 /*
  *    SemEvalToArff.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -45,6 +45,9 @@ import weka.core.converters.ArffSaver;
 
 public class SemEvalToArff extends TweetCollectionToArff {
 
+	/* (non-Javadoc)
+	 * @see weka.core.converters.TweetCollectionToArff#createDataset(java.lang.String)
+	 */
 	@Override
 	public Instances createDataset(String collectionPath) throws Exception {
 

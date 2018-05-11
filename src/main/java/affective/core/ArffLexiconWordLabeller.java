@@ -15,7 +15,7 @@
 
 /*
  *    ArffLexiconWordLabeller.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -46,46 +46,46 @@ import weka.core.stemmers.Stemmer;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for calculating scores for a tweet using a lexicons in arff format. 
- *  Numeric associations are added  and nominal ones are countes.
+ *  This class is used for labeling words using lexicons in arff format. 
+ *  Numeric associations are added  and nominal ones are counted.
  *  <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 8291541753405292438L;
 
 
-	/** A list with all the features provided by the lexicon evaluator */
+	/** A list with all the features provided by the lexicon evaluator. */
 	protected List<Attribute> attributes=new ArrayList<Attribute>();
 
-	/** a mapping between words and Attribute-value pairs */	
+	/** A mapping between words and Attribute-value pairs. */	
 	protected Map<String, Map<Attribute, Double>> attValMap = new HashMap<String, Map<Attribute, Double>>(); 	
 
 
 
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
-	/** The path of the MetaLexLexicon lexicon */
+	/** The path of the MetaLexLexicon default lexicon. */
 	public static String METALEX_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"metaLexEmo.arff";
 
 
-	/** the index of the word attribute in the given arff lexicon */
+	/** The index of the word attribute in the given arff lexicon. */
 	protected SingleIndex lexiconWordIndex=new SingleIndex("1");
 
-	/** The input lexicon in arff format  */
+	/** The input lexicon in arff format.  */
 	protected File m_lexiconFile = new File(METALEX_FILE_NAME);
 
-	/** The lexicon name to be prefixed in all features */
+	/** The lexicon name to be prefixed in all features. */
 	protected String lexiconName="MetaLexEmo";
 
-	/** the stemming algorithm. */
+	/** The stemming algorithm. */
 	protected Stemmer m_stemmer = new NullStemmer();
 
 
@@ -144,7 +144,7 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 
 
 	/**
-	 * Retrieves word-sentiment associations from a lexicon for a particular word
+	 * Retrieves word-affective associations from a lexicon for a particular word
 	 * @param word the target word
 	 * @return a mapping between attribute names and their scores
 	 */	
@@ -191,7 +191,7 @@ public class ArffLexiconWordLabeller implements Serializable, OptionHandler {
 	 *         explorer/experimenter gui
 	 */	
 	public String globalInfo() {
-		return "This object calculates features from a lexicon in arff format. \n";
+		return "This object labels word vectors using a list of affective lexicons in arff format. \n";
 	}
 
 

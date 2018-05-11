@@ -76,92 +76,92 @@ import weka.core.TechnicalInformation.Type;
 
 public class TweetToLexiconFeatureVector extends TweetToFeatureVector {
 
-	/** For serialization  */
+	/** For serialization.  */
 	private static final long serialVersionUID = 4983739424598292130L;
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons";
 
-	/** The path of the MPQA lexicon */
+	/** The path of the MPQA lexicon. */
 	public static String MPQA_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"mpqa.txt.gz";
 
-	/** The path of the BingLiu lexicon */
+	/** The path of the BingLiu lexicon. */
 	public static String BING_LIU_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"BingLiu.csv.gz";
 
-	/** The path of the AFINN lexicon */
+	/** The path of the AFINN lexicon. */
 	public static String AFINN_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"AFINN-en-165.txt.gz";
 
-	/** The path of the S140 lexicon */
+	/** The path of the S140 lexicon. */
 	public static String S140_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"Sentiment140-Lexicon-v0.1"+java.io.File.separator+"unigrams-pmilexicon.txt.gz";
 
-	/** The path of the NRC-Hashtag-Sentiment lexicon */
+	/** The path of the NRC-Hashtag-Sentiment lexicon. */
 	public static String NRC_HASH_SENT_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Sentiment-Lexicon-v0.1"+java.io.File.separator+"unigrams-pmilexicon.txt.gz";
 
-	/** The path of the NRC-emotion lexicon */
+	/** The path of the NRC-emotion lexicon. */
 	public static String NRC10_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-emotion-lexicon-wordlevel-v0.92.txt.gz";
 
-	/** The path of the NRC-10-Expanded lexicon */
+	/** The path of the NRC-10-Expanded lexicon. */
 	public static String NRC10_EXPANDED_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"w2v-dp-BCC-Lex.csv.gz";
 
 
-	/** The path of the NRC Hashtag Emotion lexicon */
+	/** The path of the NRC Hashtag Emotion lexicon. */
 	public static String NRC_HASH_EMO_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-Hashtag-Emotion-Lexicon-v0.2.txt.gz";
 
 
-	/** The path of SentiWordnet */
+	/** The path of SentiWordnet. */
 	public static String SENTIWORDNET_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"SentiWordNet_3.0.0.txt.gz";
 
 
 
-	/** The path of the emoticon list */
+	/** The path of the emoticon list. */
 	public static String EMOTICON_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"AFINN-emoticon-8.txt.gz";
 
 
-	/** The path of the negation list */
+	/** The path of the negation list. */
 	public static String NEGATION_LIST_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NegatingWordList.txt.gz";
 
 
-	/** True for calculating features from the MPQA lexicon */
+	/** True for calculating features from the MPQA lexicon. */
 	protected boolean useMpqa=true;
 
-	/** True for calculating features from the BingLiu lexicon */
+	/** True for calculating features from the BingLiu lexicon. */
 	protected boolean useBingLiu=true;
 
-	/** True for calculating features from the AFINN lexicon */
+	/** True for calculating features from the AFINN lexicon. */
 	protected boolean useAfinn=true;
 
 
-	/** True for calculating features from the S140 lexicon */
+	/** True for calculating features from the S140 lexicon. */
 	protected boolean useS140=true;
 
 
-	/** True for calculating features from the NRC-Hashtag-Sentiment lexicon */
+	/** True for calculating features from the NRC-Hashtag-Sentiment lexicon. */
 	protected boolean useNrcHashSent=true;
 
 
-	/** True for calculating features from the NRC-emotion lexicon */
+	/** True for calculating features from the NRC-emotion lexicon. */
 	protected boolean useNrc10=true;
 
 
-	/** True for calculating features from the NRC-10-Expanded lexicon */
+	/** True for calculating features from the NRC-10-Expanded lexicon. */
 	protected boolean useNrc10Expanded=true;
 
 
-	/** True for calculating features from the NRC Hashtag Emotion Lexicon */
+	/** True for calculating features from the NRC Hashtag Emotion Lexicon. */
 	protected boolean useNrcHashEmo=true;
 
 
-	/** True for calculating features from SentiWordnet */
+	/** True for calculating features from SentiWordnet. */
 	protected boolean useSentiWordnet=true;
 
-	/** True for calculating features from the Emoticon list */
+	/** True for calculating features from the Emoticon list. */
 	protected boolean useEmoticons=true;
 
-	/** True for calculating features from the Negation list */
+	/** True for calculating features from the Negation list. */
 	protected boolean useNegation=true;
 
 
-	/** List of Lexicons to use */
+	/** List of Lexicons to use. */
 	private List<LexiconEvaluator> lexicons=new ArrayList<LexiconEvaluator>();
 
 
@@ -173,7 +173,7 @@ public class TweetToLexiconFeatureVector extends TweetToFeatureVector {
 	 */	
 	@Override
 	public String globalInfo() {
-		return "A batch filter that calcuates attributes for a tweet using different lexical resources for sentiment analysis.\n"
+		return "A batch filter that calcuates attributes for a tweet using multiple affective lexicons.\n"
 				+ getTechnicalInformation().toString();
 	}
 

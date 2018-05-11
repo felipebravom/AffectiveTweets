@@ -15,7 +15,7 @@
 
 /*
  *    ArffLexiconEvaluator.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -46,7 +46,7 @@ import weka.core.stemmers.Stemmer;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for calculating scores for a tweet using a lexicons in arff format. 
+ *  This class is used for calculating scores for a tweet using a list of affective lexicons in arff format. 
  *  Numeric associations are added  and nominal ones are counted.
  *  <!-- globalinfo-end -->
  * 
@@ -56,40 +56,40 @@ import weka.core.stemmers.Stemmer;
  */
 public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 8291541753405292438L;
 
 
-	/** A list with all the features provided by the lexicon evaluator */
+	/** A list with all the features provided by the lexicon evaluator. */
 	protected List<String> featureNames=new ArrayList<String>(); 
 
-	/** a mapping between words and the affective numeric scores */	
+	/** A mapping between words and the affective numeric scores. */	
 	protected Map<String, Map<String, Double>> numDict = new HashMap<String, Map<String, Double>>(); 	
 
-	/** a mapping between words and the affective nominal categories */	
+	/** A mapping between words and the affective nominal categories. */	
 	protected Map<String, Map<String, String>> nomDict = new HashMap<String, Map<String,String>>(); 	
 
 
 
-	/** Default path to where lexicons are stored */
+	/** Default path to where lexicons are stored. */
 	public static String LEXICON_FOLDER_NAME = WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "AffectiveTweets" + File.separator + "lexicons"+ File.separator + "arff_lexicons";
 
-	/** The path of the default lexicon */
+	/** The path of the default lexicon. */
 	public static String NRC_AFFECT_INTENSITY_FILE_NAME=LEXICON_FOLDER_NAME+java.io.File.separator+"NRC-AffectIntensity-Lexicon.arff";
 
 
-	/** the index of the word attribute in the given arff lexicon */
+	/** The index of the word attribute in the given arff lexicon. */
 	protected SingleIndex lexiconWordIndex=new SingleIndex("1");
 
 	
-	/** The input lexicon in arff format  */
+	/** The input lexicon in arff format.  */
 	protected File m_lexiconFile = new File(NRC_AFFECT_INTENSITY_FILE_NAME);
 
-	/** The lexicon name to be prefixed in all features */
+	/** The lexicon name to be prefixed in all features. */
 	protected String lexiconName="NRC-Affect-Intensity";
 
 
-	/** the stemming algorithm. */
+	/** The stemming algorithm. */
 	protected Stemmer m_stemmer = new NullStemmer();
 
 
@@ -235,7 +235,7 @@ public class ArffLexiconEvaluator implements Serializable, OptionHandler {
 	 *         explorer/experimenter gui
 	 */	
 	public String globalInfo() {
-		return "This object calculates features from a lexicon in arff format. \n";
+		return "This object calculates features from a list of affective lexicons in arff format. \n";
 	}
 
 

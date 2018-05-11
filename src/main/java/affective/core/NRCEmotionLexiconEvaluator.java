@@ -38,16 +38,16 @@ import java.util.zip.GZIPInputStream;
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class NRCEmotionLexiconEvaluator extends LexiconEvaluator  {
 
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 5020983098724465636L;
 
-	/** a mapping between words and the affective scores */
+	/** A mapping between words and the affective scores. */
 	protected Map<String, Map<String, Integer>> dict; // each word is mapped to
 
 

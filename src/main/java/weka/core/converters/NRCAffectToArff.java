@@ -15,7 +15,7 @@
 
 /*
  *    NRCAffectToArff.java
- *    Copyright (C) 1999-2017 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -38,11 +38,17 @@ import weka.core.Instances;
  * Builds an arff dataset from the NRC Affective Lexicon.
  * analysis. 
  * 
- * @author Felipe Bravo-Marquez (fjb11 at students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version 1.0
  */
 public class NRCAffectToArff {
 	
+	/**
+	 * Creates a Weka Instances object from the lexicon.
+	 * @param collectionPath the file path of the lexicon.
+	 * @return an Instances object
+	 * @throws Exception
+	 */
 	public Instances createDataset(String collectionPath) throws Exception {
 
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();

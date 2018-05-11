@@ -15,7 +15,7 @@
 
 /*
  *    SWN3LexiconEvaluator.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -34,19 +34,19 @@ import java.util.zip.GZIPInputStream;
 
 /**
  *  <!-- globalinfo-start --> 
- *  This class is used for evaluating SentiWordnet
+ *  This class is used for evaluating SentiWordnet.
  * <!-- globalinfo-end -->
  * 
  * 
- * @author Felipe Bravo-Marquez (fjb11@students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version $Revision: 1 $
  */
 public class SWN3LexiconEvaluator extends LexiconEvaluator{
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 1576067300486821206L;
 
-	/** the dictionary */
+	/** The dictionary. */
 	protected Map<String, Double> dict;
 
 	/**
@@ -81,7 +81,7 @@ public class SWN3LexiconEvaluator extends LexiconEvaluator{
 
 		String line = "";
 
-		// dicard comments
+		// discard comments
 		while ((line = bf.readLine()) != null) {
 			if (line.startsWith("#") || line.startsWith("				#")) {
 				continue;

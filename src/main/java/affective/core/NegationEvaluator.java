@@ -46,14 +46,14 @@ import java.util.zip.GZIPInputStream;
  */
 public class NegationEvaluator extends LexiconEvaluator {
 
-	/** for serialization */
+	/** For serialization. */
 	private static final long serialVersionUID = 1331150082874408516L;
 
-	/** the negating words */
+	/** The negating words. */
 	protected Set<String> wordList;
 
 	/**
-	 * initializes the Object
+	 * Initializes the Object
 	 * 
 	 * @param path the file with the lexicon
 	 * @param name the prefix for all the attributes calculated from this lexicon

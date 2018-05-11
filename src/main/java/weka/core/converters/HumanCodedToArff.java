@@ -15,7 +15,7 @@
 
 /*
  *    HumanCodedToArff.java
- *    Copyright (C) 1999-2016 University of Waikato, Hamilton, New Zealand
+ *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -37,11 +37,14 @@ import weka.core.converters.ArffSaver;
  * Builds an arff dataset from the 6HumanCoded collection of tweets for sentiment
  * analysis. 
  * 
- * @author Felipe Bravo-Marquez (fjb11 at students.waikato.ac.nz)
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
  * @version 1.0
  */
 public class HumanCodedToArff extends TweetCollectionToArff {
 
+	/* (non-Javadoc)
+	 * @see weka.core.converters.TweetCollectionToArff#createDataset(java.lang.String)
+	 */
 	@Override
 	public Instances createDataset(String collectionPath) throws Exception {
 

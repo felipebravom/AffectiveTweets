@@ -35,6 +35,7 @@ public abstract class TweetCollectionToArff {
 	
 	
 	/**
+	 * Creates the dataset.
 	 * @param collectionPath the file wit he the input collection
 	 * @return the Instances weka object
 	 * @throws Exception if something goes wrong
