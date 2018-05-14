@@ -627,7 +627,7 @@ public class TweetToSparseFeatureVector extends TweetToFeatureVector {
 	}
 
 
-	@OptionMetadata(displayName = "getClustNgramMaxDim",
+	@OptionMetadata(displayName = "clustNgramMaxDim",
 			description = "The maximum dimension for n-grams calculated with Brown word clusters.\n"
 					+ "\t Set this variable to zero for no word-clusters attributes. \n"
 					+ "\t The word clusters are taken from the CMU Tweet NLP tool.", 
