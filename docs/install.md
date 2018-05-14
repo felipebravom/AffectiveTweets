@@ -12,23 +12,22 @@ ant -f weka/build.xml exejar
 
 ## Installing AffectiveTweets
 
-Install AffectiveTweets1.0.0 using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F): 
+Install AffectiveTweets1.0.1 using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F): 
 
 ```bash
 java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 ```
 
-In order to properly run our [examples](examples), we recommend installing the newest version of the package v.1.0.1 (not officially released yet) as follows: 
+Make sure you have installed version 1.0.1 to run the [examples](examples).
+
+In case of having problems with the Weka packages repository, install the package as follows:
 
 ```bash
-# Uninstall the previous version of AffectiveTweets
-java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
-# Install the newest development version:
 java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
 ```
 
 ## Building AffectiveTweets
-You can also build the package from the repository's version to try the most recent features. This is very useful if you want to contribute.
+You can also build the package from the Github version to try the most recent features. This is very useful if you want to modify the code or contribute with a new feature.
 
 ```bash
 # clone the repository
@@ -71,7 +70,7 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package RankC
 
 * [Snowball-stemmers](https://github.com/fracpete/snowball-stemmers-weka-package): This package allows using the Porter stemmer as well as other Snowball stemmers.
 ```bash
-java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/fracpete/snowball-stemmers-weka-package/releases/download/v1.0.1/snowball-stemmers-1.0.1.zip
+java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package snowball-stemmers
 ```
 
 

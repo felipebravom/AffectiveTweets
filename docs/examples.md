@@ -175,9 +175,20 @@ More information about how to run filters from the command line on the test data
 
 In order to train deep learning models with AffectiveTweets you first need to install the [WekaDeepLearning4j](https://deeplearning.cms.waikato.ac.nz/) package, which is a wrapper of the [DeepLearning4j](https://deeplearning4j.org/) library. 
 
-The package can be installed by following the instructions from [here](https://deeplearning.cms.waikato.ac.nz/install/):
+The package can be installed by following the instructions from [here](https://deeplearning.cms.waikato.ac.nz/install/).
 
-### Train a Convolution Neural Network on the concatenation of word embeddings
+Some examples instructions using the two packages together are given below.
+
+## Create a Lexicon of Sentiment words using Word2Vec and Glove.
+
+The WekaDeepLearning4j package implements two filters for calculating word vectors (or word embeddings) using modern bi-linear neural networks models:
+
+ 1. __Dl4jStringToWord2Vec__: calculates word embeddings on a string attribute using the [Word2Vec](https://code.google.com/archive/p/word2vec/) method
+ 2. __Dl4jStringToGlove__: calculates word embeddings on a string attribute using the [Glove]( https://nlp.stanford.edu/projects/glove/) method.
+
+Use these filters in an analogous way as the *TweetCentroid* filter and then following the same steps as the example from [here](#create-a-lexicon-of-sentiment-words-using-the-tweetcentroid-method).
+
+## Train a Convolution Neural Network on the concatenation of word embeddings
 In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this [paper](http://dl.acm.org/citation.cfm?doid=2766462.2767830) from the Weka GUI. 
 
 
