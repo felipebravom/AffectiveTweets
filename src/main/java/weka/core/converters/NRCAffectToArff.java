@@ -47,7 +47,7 @@ public class NRCAffectToArff {
 	 * Creates a Weka Instances object from the lexicon.
 	 * @param collectionPath the file path of the lexicon.
 	 * @return an Instances object
-	 * @throws Exception
+	 * @throws Exception if a wrong file is used.
 	 */
 	public Instances createDataset(String collectionPath) throws Exception {
 
