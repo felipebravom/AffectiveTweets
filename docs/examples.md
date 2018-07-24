@@ -24,15 +24,15 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
 
 * Train an SVM using LibLinear. Go to the *classify* panel and select the target class as the variable (Nom) class. 
- 
+
 * Right click on the panel right to the *Choose* button and click on the *Edit Configuration option*. Paste the following snippet:
- 
+
 ```bash
  weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.RemoveType -T string" -W    weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
-``` 
+```
 
  Note: Weka allows copying and pasting the configuration of its objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
- 
+
 * Select the Percentage split option and start training the classifier 
 
 ### Train an SVM using multiple affective lexicons, SentiStrength, and the average word-embedding vector
@@ -132,7 +132,7 @@ Note that the values for the class are empty for all instances. We are adding th
 
 
 * Generate positive and negative instances using ASA and the BingLiu lexicon, then train a logistic regression on those instances, and deploy this classifier on the tweets from __6HumanPosNeg.arff.gz__. Go to the classsify panel and set the file __6HumanPosNeg.arff.gz__ as the supplied test set. Next, paste the following snippet in the classify panel:
- 
+
 ```bash
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.ASA -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 10 -nneg 1000 -npos 1000 -polatt polarity -negval negative -posval positive -R 1 -A 10 -H $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
@@ -167,7 +167,7 @@ java -Xmx4G -cp weka.jar weka.Run weka.filters.unsupervised.attribute.TweetToInp
 java -Xmx4G -cp weka.jar weka.core.converters.CSVSaver -i proc_data.arff -o proc_data.csv 
 ```
 
-More information about how to run filters from the command line on the test data can be found [here](https://weka.wikispaces.com/Batch+filtering).
+More information about how to run filters from the command line on the test data can be found [here](https://waikato.github.io/weka-wiki/batch_filtering/).
 
 
 

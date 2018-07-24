@@ -12,7 +12,7 @@ ant -f weka/build.xml exejar
 
 ## Installing AffectiveTweets
 
-Install AffectiveTweets1.0.1 using the [WekaPackageManager](http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F): 
+Install AffectiveTweets1.0.1 using the [WekaPackageManager](https://waikato.github.io/weka-wiki/packages/manager/): 
 
 ```bash
 java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
