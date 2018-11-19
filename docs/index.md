@@ -134,7 +134,7 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 ## Team
 
 ### Main Developer
- * [Felipe Bravo-Marquez](http://www.cs.waikato.ac.nz/~fbravoma/)
+ * [Felipe Bravo-Marquez](https://felipebravom.com/)
 
 ## Contributors
  * [Saif Mohammad](http://saifmohammad.com/)
