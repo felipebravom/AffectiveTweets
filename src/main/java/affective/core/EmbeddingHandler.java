@@ -64,7 +64,6 @@ public abstract class EmbeddingHandler implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#listOptions()
 	 */
-	@Override
 	public Enumeration<Option> listOptions() {
 		//this.getClass().getSuperclass()
 		return Option.listOptionsForClassHierarchy(this.getClass(), this.getClass().getSuperclass()).elements();
@@ -74,7 +73,6 @@ public abstract class EmbeddingHandler implements Serializable, OptionHandler {
 	/* (non-Javadoc)
 	 * @see weka.filters.Filter#getOptions()
 	 */
-	@Override
 	public String[] getOptions() {	
 		return Option.getOptionsForHierarchy(this, this.getClass().getSuperclass());
 
@@ -91,7 +89,6 @@ public abstract class EmbeddingHandler implements Serializable, OptionHandler {
 	 * @throws Exception
 	 *             if setting of options fails
 	 */
-	@Override
 	public void setOptions(String[] options) throws Exception {
 		Option.setOptionsForHierarchy(options, this, this.getClass().getSuperclass());
 	}
