@@ -1,4 +1,5 @@
 affective.core
+test
 weka.core.converters
 weka.core.tokenizers
 weka.filters.supervised.attribute
