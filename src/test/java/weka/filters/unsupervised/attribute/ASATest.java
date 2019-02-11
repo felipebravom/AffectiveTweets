@@ -20,9 +20,7 @@
 package weka.filters.unsupervised.attribute;
 
 import weka.classifiers.meta.FilteredClassifier;
-import weka.core.Attribute;
 import weka.core.Instances;
-import weka.core.TestInstances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
@@ -33,24 +31,23 @@ import junit.framework.TestSuite;
  * Tests ASA. Run from the command line with: <p/>
  * java weka.filters.unsupervised.attribute.ASATest
  *
- * @author FracPete (fracpete at waikato dot ac dot nz)
+ * @author FracPete and eibe
  * @version $Revision: 9568 $
  */
-public class ASATest
-        extends AbstractFilterTest {
+public class ASATest extends AbstractFilterTest {
 
     public ASATest(String name) {
         super(name);
     }
 
-    /** Creates a default ASA */
+    /** Creates a default ASA filter */
     public Filter getFilter() {
         return new ASA();
     }
 
     /**
-     * returns the configured FilteredClassifier. Since the base classifier is
-     * determined heuristically, derived tests might need to adjust it.
+     * ASA is not suitable for use in a FilteredClassifier, so this just creates a dummy
+     * FilteredClassifier so that the tests run through.
      *
      * @return the configured FilteredClassifier
      */
@@ -59,51 +56,33 @@ public class ASATest
 
         result = new FilteredClassifier();
 
-        result.setFilter(getFilter());
-        result.setClassifier(new weka.classifiers.functions.SMO());
+        result.setFilter(new weka.filters.AllFilter());
+        result.setClassifier(new weka.classifiers.rules.ZeroR());
 
         return result;
     }
 
     /**
-     * returns data generated for the FilteredClassifier test
-     *
-     * @return		the dataset for the FilteredClassifier
-     * @throws Exception	if generation of data fails
-     */
-    protected Instances getFilteredClassifierData() throws Exception{
-        TestInstances	test;
-        Instances		result;
-
-        test = TestInstances.forCapabilities(m_FilteredClassifier.getCapabilities());
-        test.setClassIndex(TestInstances.CLASS_IS_LAST);
-
-        result = test.generate();
-
-        return result;
-    }
-
-    /**
-     * Called by JUnit before each test method. This implementation creates
-     * the default filter to test and loads a test set of Instances.
+     * Called by JUnit before each test method. Sets up the Instances object to use based on 
+     * one of the datasets that comes with the package.
      *
      * @throws Exception if an error occurs reading the example instances.
      */
     protected void setUp() throws Exception {
         super.setUp();
 
-        m_Instances = (new weka.core.converters.ConverterUtils.DataSource("data/sem-eval-train-dev-test-2013.arff.gz")).getDataSet();
+        m_Instances = (new weka.core.converters.ConverterUtils.DataSource("data/sent140test.arff.gz")).getDataSet();
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
 
     /**
-     * performs a typical test
+     * Sets up the standard test using one of the lexicons that comes with the package.
      */
     public void testTypical() {
         Instances icopy = new Instances(m_Instances);
 
         m_Filter = getFilter();
-	((ASA)m_Filter).setLexicon(new java.io.File("lexicons/arff_lexicons/metaLexEmo.arff"));
+	((ASA)m_Filter).setLexicon(new java.io.File("lexicons/arff_lexicons/NRC-AffectIntensity-Lexicon.arff"));
 
         Instances result = useFilter();
     }
