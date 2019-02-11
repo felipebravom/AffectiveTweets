@@ -19,6 +19,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import weka.filters.unsupervised.attribute.ASATest;
+import weka.filters.unsupervised.attribute.PTCMTest;
 
 /**
  * Test class for all tests in this directory. Run from the command line with:
@@ -34,6 +35,7 @@ public class AllPackageTests extends TestSuite {
     TestSuite suite = new TestSuite();
 
     suite.addTestSuite(ASATest.class);
+    suite.addTestSuite(PTCMTest.class);
 
     return suite;
   }

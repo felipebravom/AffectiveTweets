@@ -28,25 +28,25 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests ASA. Run from the command line with: <p/>
- * java weka.filters.unsupervised.attribute.ASATest
+ * Tests PTCM. Run from the command line with: <p/>
+ * java weka.filters.unsupervised.attribute.PTCMTest
  *
  * @author FracPete and eibe
  * @version $Revision: 9568 $
  */
-public class ASATest extends AbstractFilterTest {
+public class PTCMTest extends AbstractFilterTest {
 
-    public ASATest(String name) {
+    public PTCMTest(String name) {
         super(name);
     }
 
-    /** Creates a default ASA filter */
+    /** Creates a default PTCM filter */
     public Filter getFilter() {
-        return new ASA();
+        return new PTCM();
     }
 
     /**
-     * ASA is not suitable for use in a FilteredClassifier, so this just creates a dummy
+     * PTCM is not suitable for use in a FilteredClassifier, so this just creates a dummy
      * FilteredClassifier so that the tests run through.
      *
      * @return the configured FilteredClassifier
@@ -82,13 +82,13 @@ public class ASATest extends AbstractFilterTest {
         Instances icopy = new Instances(m_Instances);
 
         m_Filter = getFilter();
-	((ASA)m_Filter).setLexicon(new java.io.File("lexicons/arff_lexicons/metaLexEmo.arff"));
+	((PTCM)m_Filter).setLexicon(new java.io.File("lexicons/arff_lexicons/metaLexEmo.arff"));
 
         Instances result = useFilter();
     }
 
     public static Test suite() {
-        return new TestSuite(ASATest.class);
+        return new TestSuite(PTCMTest.class);
     }
 
     public static void main(String[] args){
