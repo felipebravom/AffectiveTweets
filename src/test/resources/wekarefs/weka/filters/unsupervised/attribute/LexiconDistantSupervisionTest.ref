@@ -1,0 +1,58 @@
+@relation 'Twitter Sentiment Analysis Sentiment140 Test: Dataset. More info at: http://help.sentiment140.com/-weka.filters.unsupervised.attribute.LexiconDistantSupervision-lex../AffectiveTweets/lexicons/arff_lexicons/emoticons.arff-polattpolarity-negvalnegative-posvalpositive-removeMatchingWord-I1-tokenizerweka.core.tokenizers.TweetNLPTokenizer'
+
+@attribute content string
+@attribute topic string
+@attribute class {negative,neutral,positive}
+@attribute polarity {negative,positive}
+
+@data
+{0 '@kenburbary You\'ll love your Kindle2. I\'ve had mine for a few months and never looked back. The new big one is huge! No need for remorse! ',1 kindle2,2 positive,3 positive}
+{0 '@mikefish  Fair enough. But i have the Kindle2 and I think it\'s perfect  ',1 kindle2,2 positive,3 positive}
+{0 'downloading apps for my iphone! So much fun  There literally is an app for just about anything.',1 'iphone app',2 positive,3 positive}
+{0 'I\'m listening to \"P.Y.T\" by Danny Gokey &lt;3 &lt;3 &lt;3 Aww, he\'s so amazing. I &lt;3 him so much ',1 'Danny Gokey',2 positive,3 positive}
+{0 'is going to sleep then on a bike ride',1 sleep,2 positive,3 positive}
+{0 'Hello Twitter API ',1 '\"twitter api\"',2 positive,3 positive}
+{0 'RT @SmartChickPDX: Was just told that Nike layoffs started today ',1 nike}
+{0 'Back when I worked for Nike we had one fav word : JUST DO IT! ',1 nike,2 positive,3 positive}
+{0 'Class... The 50d is supposed to come today ',1 50d,2 positive,3 positive}
+{0 'needs someone to explain lambda calculus to him! ',1 'lambda calculus'}
+{0 'insects have infected my spinach plant ',1 insects}
+{0 'I hate revision, it\'s so boring! I am totally unprepared for my exam tomorrow  Things are not looking good...',1 exam}
+{0 'Higher physics exam tommorow, not lookin forward to it much ',1 exam}
+{0 'It\'s a bank holiday, yet I\'m only out of work now. Exam season sucks',1 exam}
+{0 'i srsly hate the stupid twitter API timeout thing, soooo annoying!!!!! ',1 'twitter api'}
+{0 'Night at the Museum tonite instead of UP.  oh well. that 4 yr old better enjoy it. LOL',1 '\"night at the museum\"'}
+{0 'Ahh...got rid of stupid time warner today &amp; now taking a nap while the roomies cook for me. Pretty good end for a monday ',1 'time warner',3 positive}
+{0 'Recovering from surgery..wishing @julesrenner was here ',1 surgery}
+{0 'My wrist still hurts. I have to get it looked at. I HATE the dr/dentist/scary places.  Time to watch Eagle eye. If you want to join, txt!',1 dentist,2 positive}
+{0 '@kirstiealley my dentist is great but she\'s expensive...',1 dentist}
+{0 'is studing math  tomorrow exam and dentist ',1 dentist,2 positive,3 positive}
+{0 'Going to the dentist later.',1 dentist}
+{0 'Found NOTHING at Nike Factory  Off to Banana Republic Outlet! http/myloc.me/2zic',1 nike}
+{0 'According to the create a school, Notre Dame will have 7 receivers in NCAA 10 at 84 or higher rating  *sweet*',1 'notre dame school',2 positive,3 positive}
+{0 '@siratomofbones we tried but Time Warner wasn\'t being nice so we recorded today. ',1 'time warner',3 positive}
+{0 'Safari 4 is fast  Even on my shitty AT&amp;T tethering.',1 at&t,3 positive}
+{0 '@ArunBasilLal I love Google Translator too !  Good day mate !',1 google,2 positive,3 positive}
+{0 'My Kindle2 came and I LOVE it! ',1 kindle2,2 positive,3 positive}
+{0 'Obama is quite a good comedian! check out his dinner speech on CNN  very funny jokes.',1 obama,2 positive,3 positive}
+{0 'Obama\'s got JOKES!! haha just got to watch a bit of his after dinner speech from last night... i\'m in love with mr. president ',1 obama,2 positive,3 positive}
+{0 '@ambcharlesfield lol. Ah my skin is itchy  damn lawnmowing.',1 itchy}
+{0 '@dannygokey I love you DANNY GOKEY!! ',1 'Danny Gokey',2 positive,3 positive}
+{0 '@Fraggle312 oh those are awesome! i so wish they weren\'t owned by nike ',1 nike}
+{0 '@mitzs hey bud  np I do so love my 50D, although I\'d love a 5D mkII more',1 50d,2 positive,3 positive}
+{0 '@jonduenas @robynlyn just got us a 50D for the office. ',1 50d,2 positive,3 positive}
+{0 'Learning about lambda calculus ',1 'lambda calculus',2 positive,3 positive}
+{0 'Just had McDonalds for dinner.  It was goooood. Big Mac Meal. ',1 mcdonalds,2 positive,3 positive}
+{0 'Stopped to have lunch at McDonalds. Chicken Nuggetssss!  yummmmmy.',1 mcdonalds,2 positive,3 positive}
+{0 'my exam went good. @HelloLeonie: your prayers worked ',1 exam,2 positive,3 positive}
+{0 'Only one exam left, and i am so happy for it ',1 exam,2 positive,3 positive}
+{0 '@mashable I never did thank you for including me in your Top 100 Twitter Authors! You Rock! (&amp; I New Wave ) http://bit.ly/EOrFV',1 mashable,2 positive,3 positive}
+{0 'HTML 5 Demos! Lots of great stuff to come! Yes, I\'m excited.  http://htmlfive.appspot.com #io2009 #googleio',1 googleio,2 positive,3 positive}
+{0 '#RantsAndRaves The worst thing about GM (concord / pleasant hill / martinez is the fucking UAW. ..   http://buzzup.com/4ueb',1 gm}
+{0 'Just got home from chick-fil-a with the boys. Damn my internets down  stupid time warner',1 'time warner'}
+{0 'confirmed: it\'s Time Warner\'s fault, not Facebook\'s, that fb is taking about 3 minutes to load. so tempted to switch to verizon ',1 'time warner'}
+{0 'this dentist\'s office is cold ',1 dentist}
+{0 'dropped her broccoli walking home from safeway!  so depressed',1 safeway,2 neutral}
+{0 'Nike rocks. I\'m super grateful for what I\'ve done with them  &amp; the European Division of NIKE is BEYOND! @whitSTYLES @muchasmuertes',1 nike,2 positive,3 positive}
+{0 '@sheridanmarfil - its not so much my obsession with cell phones, but the iphone!  i\'m a slave to at&amp;t forever because of it. ',1 at&t,3 positive}
+{0 'Ahhh... back in a *real* text editing environment. I &lt;3 LaTeX.',1 latex,2 positive,3 positive}
