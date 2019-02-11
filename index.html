@@ -7,24 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="AffectiveTweets Documentation">
   
-  <link rel="shortcut icon" href="./img/favicon.ico">
+  <link rel="shortcut icon" href="img/favicon.ico">
   <title>Home - AffectiveTweets</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="./css/highlight.css">
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Home";
     var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href="." class="icon icon-home"> AffectiveTweets</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -53,6 +54,9 @@
     <ul class="subnav">
             
     <li class="toctree-l2"><a href="#about">About</a></li>
+    
+
+    <li class="toctree-l2"><a href="#official-baseline-system">Official Baseline System</a></li>
     
 
     <li class="toctree-l2"><a href="#relevant-papers">Relevant Papers</a></li>
@@ -144,16 +148,22 @@
               
                 <p><img src="img/logo.png" alt="alt text" width="30%" height="30%"> </p>
 <h2 id="about">About</h2>
-<p><a href="http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html">AffectiveTweets</a> is a <a href="http://www.cs.waikato.ac.nz/~ml/weka/">WEKA</a> package for analyzing emotion and sentiment of English written tweets.  The source code is hosted on <a href="https://github.com/felipebravom/AffectiveTweets">Github</a>.</p>
+<p><a href="http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html">AffectiveTweets</a> is a <a href="http://www.cs.waikato.ac.nz/~ml/weka/">WEKA</a> package for analyzing emotion and sentiment of  tweets.  The source code is hosted on <a href="https://github.com/felipebravom/AffectiveTweets">Github</a>.</p>
 <p>The package implements WEKA filters for calculating state-of-the-art affective analysis features from tweets that can be fed into machine learning algorithms. Many of these features were drawn from the <a href="http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm">NRC-Canada System</a>. It also implements methods for building affective lexicons and distant supervision methods for training affective models from unlabelled tweets.</p>
-<p>The package was also made available as the official baseline system for the <a href="http://optima.jrc.it/wassa2017/">WASSA-2017</a> Shared Task on Emotion Intensity <a href="http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html">(EmoInt)</a>. (Instructions for using the system with the task data are available <a href="https://github.com/felipebravom/EmoInt#2-weka-baseline-system">here</a>.) Five participating teams used AffectiveTweets to generate feature vectors, including the teams that eventually ranked first, second, and third. </p>
 <p>Description about the filters, installation instructions, and examples are given below.</p>
+<h2 id="official-baseline-system">Official Baseline System</h2>
+<p>The package was made available as the official baseline system for the <a href="http://optima.jrc.it/wassa2017/">WASSA-2017</a> Shared Task on Emotion Intensity <a href="http://saifmohammad.com/WebPages/EmotionIntensity-SharedTask.html">(EmoInt)</a> and for <a href="http://alt.qcri.org/semeval2018/">SemEval-2018</a> Task 1: <a href="http://www.saifmohammad.com/WebPages/affectintweets.htm">Affect in Tweets</a>. </p>
+<p>Five participating teams used AffectiveTweets in WASSA-2017 to generate feature vectors, including the teams that eventually ranked first, second, and third. For SemEval-2018, the package was used by 15 teams.</p>
 <h2 id="relevant-papers">Relevant Papers</h2>
 <p>The most relevant papers on which this package is based are:</p>
 <ul>
 <li><a href="http://saifmohammad.com/WebDocs/NRC-Sentiment-JAIR-2014.pdf">Sentiment Analysis of Short Informal Texts</a>. Svetlana Kiritchenko, Xiaodan Zhu and Saif Mohammad. Journal of Artificial Intelligence Research, volume 50, pages 723-762, August 2014. <a href="http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt">BibTeX</a></li>
-<li><a href="http://www.sciencedirect.com/science/article/pii/S0950705114002068">Meta-Level Sentiment Models for Big Social Data Analysis</a>. F. Bravo-Marquez, M. Mendoza and B. Poblete. Knowledge-Based Systems Volume 69, October 2014, Pages 86–99. <a href="http://dblp.uni-trier.de/rec/bib2/journals/kbs/Bravo-MarquezMP14.bib">BibTex</a></li>
-<li><a href="http://saifmohammad.com/WebDocs/1605.01655v1.pdf">Stance and sentiment in tweets</a>. Saif M. Mohammad, Parinaz Sobhani, and Svetlana Kiritchenko. 2017. Special Section of the ACM Transactions on Internet Technology on Argumentation in Social Media 17(3). <a href="http://saifmohammad.com/WebPages/Abstracts/stance-toit.bib.txt">BibTeX</a></li>
+<li>
+<p><a href="http://www.sciencedirect.com/science/article/pii/S0950705114002068">Meta-Level Sentiment Models for Big Social Data Analysis</a>. F. Bravo-Marquez, M. Mendoza and B. Poblete. Knowledge-Based Systems Volume 69, October 2014, Pages 86–99. <a href="http://dblp.uni-trier.de/rec/bib2/journals/kbs/Bravo-MarquezMP14.bib">BibTex</a></p>
+</li>
+<li>
+<p><a href="http://saifmohammad.com/WebDocs/1605.01655v1.pdf">Stance and sentiment in tweets</a>. Saif M. Mohammad, Parinaz Sobhani, and Svetlana Kiritchenko. 2017. Special Section of the ACM Transactions on Internet Technology on Argumentation in Social Media 17(3). <a href="http://saifmohammad.com/WebPages/Abstracts/stance-toit.bib.txt">BibTeX</a></p>
+</li>
 <li><a href="http://dl.acm.org/citation.cfm?id=2336261">Sentiment strength detection for the social Web</a>. Thelwall, M., Buckley, K., &amp; Paltoglou, G. (2012). Journal of the American Society for Information Science and Technology, 63(1), 163-173. <a href="http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib">BibTex</a></li>
 </ul>
 <h2 id="citation">Citation</h2>
@@ -164,10 +174,10 @@
 <p>You should also cite the papers describing any of the lexicons or resources you are using with this package. </p>
 <ul>
 <li>
-<p>Here is the <a href="./fullBio.bib.txt">BibTex</a> entry for the package along with the entries for the resources listed below. </p>
+<p>Here is the <a href="fullBio.bib.txt">BibTex</a> entry for the package along with the entries for the resources listed below. </p>
 </li>
 <li>
-<p>Here is the <a href="./shortBio.bib.txt">BibTex</a> entry just for the package.</p>
+<p>Here is the <a href="shortBio.bib.txt">BibTex</a> entry just for the package.</p>
 </li>
 </ul>
 <p>The individual references for each resource can be found through the links provided below.</p>
@@ -177,8 +187,10 @@
 <li>
 <p><strong>TweetToSparseFeatureVector</strong>: calculates sparse features, such as word and character n-grams from tweets. There are parameters for filtering out infrequent features e.g., (n-grams occurring in less than <em>m</em> tweets) and for setting the weighting approach  (boolean or frequency based).</p>
 <ul>
-<li><strong>Word n-grams</strong>: extracts word n-grams from <em>n</em>=1 to a maximum value. </li>
+<li><strong>Word n-grams</strong>: extracts word n-grams from <em>n</em>=1 to a maximum value. <ul>
 <li><strong>Negations</strong>: add a prefix to words occurring in negated contexts, e.g., I don't like you =&gt; I don't NEG-like NEG-you. The prefixes only affect word n-gram features. The scope of negation finishes with the next punctuation expression <em>([\.|,|:|;|!|\?]+)</em> .</li>
+</ul>
+</li>
 <li><strong>Character n-grams</strong>: calculates character n-grams.</li>
 <li><strong>POS tags</strong>: tags tweets using the <a href="http://www.cs.cmu.edu/~ark/TweetNLP/">CMU Tweet NLP tool</a>, and creates a vector space model based on the sequence of POS tags. <a href="http://dblp.uni-trier.de/rec/bib2/conf/acl/GimpelSODMEHYFS11.bib">BibTex</a></li>
 <li><strong>Brown clusters</strong>: maps the words in a tweet to Brown word clusters and creates a low-dimensional vector space model. It can be used with n-grams of word clusters. The word clusters are also taken from the <a href="http://www.cs.cmu.edu/~ark/TweetNLP/">CMU Tweet NLP tool</a>.</li>
@@ -218,7 +230,7 @@
 <h4 id="word-level-filters">Word-level Filters</h4>
 <ol>
 <li>
-<p><strong>PMILexiconExpander</strong>: calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. The score is calculated by substracting the PMI of the  target  word  with  a negative  sentiment from the PMI of the target word with a positive sentiment. This is a supervised filter.  <a href="http://dblp.uni-trier.de/rec/bib2/conf/acl/Turney02.bib">BibTex</a> </p>
+<p><strong>PMILexiconExpander</strong>: calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. The score is calculated by subtracting the PMI of the  target  word  with  a negative  sentiment from the PMI of the target word with a positive sentiment. This is a supervised filter.  <a href="http://dblp.uni-trier.de/rec/bib2/conf/acl/Turney02.bib">BibTex</a> </p>
 </li>
 <li>
 <p><strong>TweetCentroid</strong>:  calculates word distributional vectors from a corpus of unlabelled tweets by treating them as the centroid of the tweet vectors in which they appear. The vectors can be labelled using an affective lexicon to train a word-level affective classifier. This classifier can be used to expand the original lexicon.  <a href="http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib">BibTex</a>, <a href="http://www.cs.waikato.ac.nz/~fbravoma/publications/sigir15.pdf">original paper</a></p>
@@ -233,12 +245,12 @@
 <p><strong>ASA</strong>:  Annotate-Sample-Average (ASA) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  <a href="http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib">BibTex</a>, <a href="http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf">original paper</a></p>
 </li>
 <li>
-<p><strong>PTCM</strong>:  The Partitioned Tweet Centroid Model (PTCM) is an adaption of the TweetCentroidModel for distant supervison.  As tweets and words are represented by the same feature vectors, a word-level classifier trained from a polarity lexicon and a corpus of unlabelled tweets can be used for classifying the sentiment of tweets represented by sparse feature vectors.  In other words, the labelled word vectors correspond to lexicon-annotated training data for message-level polarity classification.
+<p><strong>PTCM</strong>:  The Partitioned Tweet Centroid Model (PTCM) is an adaption of the TweetCentroidModel for distant supervision.  As tweets and words are represented by the same feature vectors, a word-level classifier trained from a polarity lexicon and a corpus of unlabelled tweets can be used for classifying the sentiment of tweets represented by sparse feature vectors.  In other words, the labelled word vectors correspond to lexicon-annotated training data for message-level polarity classification.
 The model includes a simple modification to the tweet centroid model for increasing the number of labelled instances, yielding <em>partitioned tweet centroids</em>.  This modification is based on partitioning the tweets associated with each word into smaller disjoint subsets of a fixed size. The method calculates one centroid per partition, which is labelled according to the lexicon.
 <a href="http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib">BibTex</a>, <a href="https://www.cs.waikato.ac.nz/~fbravoma/publications/wi2016t.pdf">original paper</a></p>
 </li>
 <li>
-<p><strong>LexiconDistantSupervision</strong>: This is the most popolar distant supervision approach for Twitter sentiment analysis. It takes a collection of unlabelled tweets and a polarity lexicon in arff format of positive and negative tokens. If a word from the lexicon is found, the tweet is labelled with the word's polarity. Tweets with both positive and negative words are dicarded. The word used for labelling the tweet can be removed from the content. Emoticons are used as the default lexicon. <a href="http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf">original paper</a></p>
+<p><strong>LexiconDistantSupervision</strong>: This is the most popular distant supervision approach for Twitter sentiment analysis. It takes a collection of unlabelled tweets and a polarity lexicon in arff format of positive and negative tokens. If a word from the lexicon is found, the tweet is labelled with the word's polarity. Tweets with both positive and negative words are discarded. The word used for labelling the tweet can be removed from the content. Emoticons are used as the default lexicon. <a href="http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf">original paper</a></p>
 </li>
 </ol>
 <h3 id="tokenizers">Tokenizers</h3>
@@ -260,7 +272,7 @@ The model includes a simple modification to the tweet centroid model for increas
 <h2 id="team">Team</h2>
 <h3 id="main-developer">Main Developer</h3>
 <ul>
-<li><a href="http://www.cs.waikato.ac.nz/~fbravoma/">Felipe Bravo-Marquez</a></li>
+<li><a href="https://felipebravom.com/">Felipe Bravo-Marquez</a></li>
 </ul>
 <h2 id="contributors">Contributors</h2>
 <ul>
@@ -297,18 +309,18 @@ The model includes a simple modification to the tweet centroid model for increas
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/felipebravom/AffectiveTweets/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
       
@@ -316,12 +328,14 @@ The model includes a simple modification to the tweet centroid model for increas
       
     </span>
 </div>
-    <script src="./js/theme.js"></script>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.16.3
-Build Date UTC : 2018-01-30 23:17:17
+MkDocs version : 1.0.4
+Build Date UTC : 2019-02-11 22:23:42
 -->

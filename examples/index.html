@@ -13,18 +13,19 @@
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Examples";
     var mkdocs_page_input_path = "examples.md";
-    var mkdocs_page_url = "/examples/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href=".." class="icon icon-home"> AffectiveTweets</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -68,9 +69,7 @@
         
             <li><a class="toctree-l3" href="#train-an-svm-using-sparse-features">Train an SVM using sparse features</a></li>
         
-            <li><a class="toctree-l3" href="#train-an-svm-using-multiple-opinion-lexicons-sentistrength-and-the-average-word-embedding-vector">Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector</a></li>
-        
-            <li><a class="toctree-l3" href="#train-a-convolution-neural-network-on-the-concatenation-of-word-embeddings">Train a Convolution Neural Network on the concatenation of word embeddings</a></li>
+            <li><a class="toctree-l3" href="#train-an-svm-using-multiple-affective-lexicons-sentistrength-and-the-average-word-embedding-vector">Train an SVM using multiple affective lexicons, SentiStrength, and the average word-embedding vector</a></li>
         
             <li><a class="toctree-l3" href="#create-a-lexicon-of-sentiment-words-using-the-tweetcentroid-method">Create a Lexicon of sentiment words using the TweetCentroid method</a></li>
         
@@ -92,6 +91,15 @@
             <li><a class="toctree-l3" href="#feature-extraction-from-the-cl">Feature Extraction from the CL</a></li>
         
         </ul>
+    
+
+    <li class="toctree-l2"><a href="#affectivetweets-and-deep-learning">AffectiveTweets and Deep Learning</a></li>
+    
+
+    <li class="toctree-l2"><a href="#create-a-lexicon-of-sentiment-words-using-word2vec-and-glove">Create a Lexicon of Sentiment words using Word2Vec and Glove.</a></li>
+    
+
+    <li class="toctree-l2"><a href="#train-a-convolution-neural-network-on-the-concatenation-of-word-embeddings">Train a Convolution Neural Network on the concatenation of word embeddings</a></li>
     
 
     </ul>
@@ -165,12 +173,12 @@
 <ul>
 <li>Select the Percentage split option and start training the classifier </li>
 </ul>
-<h3 id="train-an-svm-using-multiple-opinion-lexicons-sentistrength-and-the-average-word-embedding-vector">Train an SVM using multiple opinion lexicons, SentiStrength, and the average word-embedding vector</h3>
+<h3 id="train-an-svm-using-multiple-affective-lexicons-sentistrength-and-the-average-word-embedding-vector">Train an SVM using multiple affective lexicons, SentiStrength, and the average word-embedding vector</h3>
 <ul>
 <li>Go back to the preprocess panel and press the <em>Undo</em> button to go back to the original dataset (or load the <strong>sent140test.arff.gz</strong> dataset in case you skipped the first example).</li>
 <li>Go to the <em>Classify</em> panel and paste the following snippet in the classifier's configuration:</li>
 </ul>
-<pre><code class="bash">weka.classifiers.meta.FilteredClassifier -F  &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\&quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \\\\\\\&quot;\\\\\\\\t\\\\\\\&quot; -I last\\\&quot; -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 4-last,3\&quot;&quot; -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+<pre><code class="bash">weka.classifiers.meta.FilteredClassifier -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToInputLexiconFeatureVector -lexicon_evaluator \\\&quot;affective.core.ArffLexiconEvaluator -lexiconFile $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/NRC-AffectIntensity-Lexicon.arff -B NRC-Affect-Intensity -A 1 -lex-stemmer weka.core.stemmers.NullStemmer\\\&quot; -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\&quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep TAB -I last\\\&quot; -K 15 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 4-last,3\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 </code></pre>
 
 <p>Note: replace $HOME by your home directory (e.g., /home/felipe). </p>
@@ -182,33 +190,6 @@
 <p>Now you can train the classifier by pressing the <em>Start</em> button. </p>
 </li>
 </ul>
-<h3 id="train-a-convolution-neural-network-on-the-concatenation-of-word-embeddings">Train a Convolution Neural Network on the concatenation of word embeddings</h3>
-<p>In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this <a href="http://dl.acm.org/citation.cfm?doid=2766462.2767830">paper</a> using the <a href="https://deeplearning.cms.waikato.ac.nz/">WekaDeepLearning4j</a> package, which is a wrapper of the <a href="https://deeplearning4j.org/">DeepLearning4j</a> library. </p>
-<ul>
-<li>
-<p>First, install the package following the instructions from <a href="https://deeplearning.cms.waikato.ac.nz/install/">here</a>:</p>
-</li>
-<li>
-<p>Represent each tweet from the <strong>sent140test.arff.gz</strong>  dataset as a sequence of its first 15 word embeddings by pasting the following filter configuration:</p>
-</li>
-</ul>
-<pre><code class="bash">weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S CONCATENATE_ACTION -embeddingHandler &quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \&quot;\\t\&quot; -I last&quot; -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler &quot;weka.core.stopwords.Null &quot; -I 1 -U -tokenizer &quot;weka.core.tokenizers.TweetNLPTokenizer &quot;
-
-</code></pre>
-
-<ul>
-<li>Discard the string content and move the class label to the last position:</li>
-</ul>
-<pre><code class="bash">weka.filters.unsupervised.attribute.Reorder -R 4-last,3
-</code></pre>
-
-<ul>
-<li>Train a convolutional neural network using a <em>Dl4jMlpClassifier</em>. Paste the following snippet in the Classification panel: </li>
-</ul>
-<pre><code class="bash"> weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator &quot;weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500&quot; -layers &quot;weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \&quot;Convolution layer\&quot; -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER&quot; -layers &quot;weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \&quot;Output layer\&quot; -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER&quot; -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
-</code></pre>
-
-<p>This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.</p>
 <h3 id="create-a-lexicon-of-sentiment-words-using-the-tweetcentroid-method">Create a Lexicon of sentiment words using the TweetCentroid method</h3>
 <ul>
 <li>
@@ -307,8 +288,8 @@
 <h2 id="command-line">Command-line</h2>
 <p>The same classification schemes can be run from the command line. </p>
 <h3 id="tweet-classification-from-the-cl">Tweet Classification from the CL</h3>
-<p>An example using word embeddings is given below:</p>
-<pre><code class="bash">java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F  &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\&quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep \\\\\\\&quot;\\\\\\\\t\\\\\\\&quot; -I last\\\&quot; -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 4-last,3\&quot;&quot; -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
+<p>An example using various types of attributes is given below:</p>
+<pre><code class="bash">java -Xmx4G -cp weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/wekafiles/packages/AffectiveTweets/data/sent140test.arff.gz -split-percentage 66 -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToInputLexiconFeatureVector -lexicon_evaluator \\\&quot;affective.core.ArffLexiconEvaluator -lexiconFile $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/NRC-AffectIntensity-Lexicon.arff -B NRC-Affect-Intensity -A 1 -lex-stemmer weka.core.stemmers.NullStemmer\\\&quot; -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $HOME/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -T -L -N -P -J -H -Q -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S AVERAGE_ACTION -embeddingHandler \\\&quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep TAB -I last\\\&quot; -K 15 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 4-last,3\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 1 -C 1.0 -E 0.001 -B 1.0 -L 0.1 -I 1000
 </code></pre>
 
 <h3 id="feature-extraction-from-the-cl">Feature Extraction from the CL</h3>
@@ -325,7 +306,41 @@
 <pre><code class="bash">java -Xmx4G -cp weka.jar weka.core.converters.CSVSaver -i proc_data.arff -o proc_data.csv 
 </code></pre>
 
-<p>More information about how to run filters from the command line on the test data can be found <a href="https://weka.wikispaces.com/Batch+filtering">here</a>.</p>
+<p>More information about how to run filters from the command line on the test data can be found <a href="https://waikato.github.io/weka-wiki/batch_filtering/">here</a>.</p>
+<h2 id="affectivetweets-and-deep-learning">AffectiveTweets and Deep Learning</h2>
+<p>In order to train deep learning models with AffectiveTweets you first need to install the <a href="https://deeplearning.cms.waikato.ac.nz/">WekaDeepLearning4j</a> package, which is a wrapper of the <a href="https://deeplearning4j.org/">DeepLearning4j</a> library. </p>
+<p>The package can be installed by following the instructions from <a href="https://deeplearning.cms.waikato.ac.nz/install/">here</a>.</p>
+<p>Some examples instructions using the two packages together are given below.</p>
+<h2 id="create-a-lexicon-of-sentiment-words-using-word2vec-and-glove">Create a Lexicon of Sentiment words using Word2Vec and Glove.</h2>
+<p>The WekaDeepLearning4j package implements two filters for calculating word vectors (or word embeddings) using modern bi-linear neural networks models:</p>
+<ol>
+<li><strong>Dl4jStringToWord2Vec</strong>: calculates word embeddings on a string attribute using the <a href="https://code.google.com/archive/p/word2vec/">Word2Vec</a> method</li>
+<li><strong>Dl4jStringToGlove</strong>: calculates word embeddings on a string attribute using the <a href="https://nlp.stanford.edu/projects/glove/">Glove</a> method.</li>
+</ol>
+<p>Use these filters in an analogous way as the <em>TweetCentroid</em> filter and then following the same steps as the example from <a href="#create-a-lexicon-of-sentiment-words-using-the-tweetcentroid-method">here</a>.</p>
+<h2 id="train-a-convolution-neural-network-on-the-concatenation-of-word-embeddings">Train a Convolution Neural Network on the concatenation of word embeddings</h2>
+<p>In this example we will show how to train a convolution neural network with a similar arquitecture to the one used in this <a href="http://dl.acm.org/citation.cfm?doid=2766462.2767830">paper</a> from the Weka GUI. </p>
+<ul>
+<li>Represent each tweet from the <strong>sent140test.arff.gz</strong>  dataset as a sequence of its first 15 word embeddings by pasting the following filter configuration:</li>
+</ul>
+<pre><code class="bash">weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVector -S CONCATENATE_ACTION -embeddingHandler &quot;affective.core.CSVEmbeddingHandler -K $HOME/wekafiles/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz -sep TAB -I last&quot; -K 15 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler &quot;weka.core.stopwords.Null &quot; -I 1 -U -tokenizer &quot;weka.core.tokenizers.TweetNLPTokenizer &quot;
+
+</code></pre>
+
+<ul>
+<li>Discard the string content and move the class label to the last position:</li>
+</ul>
+<pre><code class="bash">weka.filters.unsupervised.attribute.Reorder -R 4-last,3
+</code></pre>
+
+<ul>
+<li>Train a convolutional neural network using a <em>Dl4jMlpClassifier</em>. Paste the following snippet in the Classification panel: </li>
+</ul>
+<pre><code class="bash"> weka.classifiers.functions.Dl4jMlpClassifier -S 1 -iterator &quot;weka.dl4j.iterators.ConvolutionalInstancesIterator -height 1 -numChannels 1 -bs 256 -width 1500&quot; -layers &quot;weka.dl4j.layers.ConvolutionLayer -nFilters 100 -activation identity -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -mode Truncate -cudnnAlgoMode PREFER_FASTEST -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -kernelSizeX 300 -kernelSizeY 1 -L1 0.0 -L2 0.0 -name \&quot;Convolution layer\&quot; -lr 0.01 -momentum 0.9 -paddingX 0 -paddingY 0 -rho 0.0 -rmsDecay 0.95 -strideX 100 -strideY 1 -updater NESTEROVS -weightInit XAVIER&quot; -layers &quot;weka.dl4j.layers.OutputLayer -activation softmax -adamMeanDecay 0.9 -adamVarDecay 0.999 -biasInit 1.0 -biasL1 0.0 -biasL2 0.0 -blr 0.01 -dist \&quot;weka.dl4j.distribution.NormalDistribution -mean 0.001 -std 1.0\&quot; -dropout 0.0 -epsilon 1.0E-6 -gradientNormalization None -gradNormThreshold 1.0 -L1 0.0 -L2 0.0 -name \&quot;Output layer\&quot; -lr 0.01 -lossFn LossMCXENT() -momentum 0.9 -rho 0.0 -rmsDecay 0.95 -updater NESTEROVS -weightInit XAVIER&quot; -logFile weka.log -numEpochs 200 -algorithm STOCHASTIC_GRADIENT_DESCENT
+</code></pre>
+
+<p>Note: This code is not compatible with the latest version of the WekaDeepLearning4j package.</p>
+<p>This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.</p>
               
             </div>
           </div>
@@ -348,18 +363,18 @@
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/felipebravom/AffectiveTweets/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href="../install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
@@ -367,7 +382,9 @@
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>

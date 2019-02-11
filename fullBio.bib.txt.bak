@@ -2,22 +2,6 @@
 % Encoding: MacRoman
 
 
-@InProceedings{Turney02,
-  Title                    = {Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised
- Classification of Reviews},
-  Author                   = {Peter D. Turney},
-  Booktitle                = {Proceedings of the 40th Annual Meeting of the Association for Computational
- Linguistics, July 6-12, 2002, Philadelphia, PA, {USA.}},
-  Year                     = {2002},
-  Pages                    = {417--424},
-
-  Bibsource                = {dblp computer science bibliography, http://dblp.org},
-  Biburl                   = {http://dblp.org/rec/bib/conf/acl/Turney02},
-  Crossref                 = {DBLP:conf/acl/2002},
-  Timestamp                = {Thu, 17 Aug 2017 17:55:42 +0200},
-  Url                      = {http://www.aclweb.org/anthology/P02-1053.pdf}
-}
-
 @InProceedings{Bravo-MarquezFM16,
   Title                    = {Determining Word-Emotion Associations from Tweets by Multi-label Classification},
   Author                   = {Felipe Bravo{-}Marquez and Eibe Frank and Saif M. Mohammad and Bernhard Pfahringer},
@@ -61,19 +45,8 @@
 
 @InProceedings{GimpelSODMEHYFS11,
   Title                    = {Part-of-Speech Tagging for Twitter: Annotation, Features, and Experiments},
-  Author                   = {Kevin Gimpel and
- Nathan Schneider and
- Brendan O'Connor and
- Dipanjan Das and
- Daniel Mills and
- Jacob Eisenstein and
- Michael Heilman and
- Dani Yogatama and
- Jeffrey Flanigan and
- Noah A. Smith},
-  Booktitle                = {The 49th Annual Meeting of the Association for Computational Linguistics:
- Human Language Technologies, Proceedings of the Conference, 19-24
- June, 2011, Portland, Oregon, {USA} - Short Papers},
+  Author                   = {Kevin Gimpel and Nathan Schneider and Brendan O'Connor and Dipanjan Das and Daniel Mills and Jacob Eisenstein and Michael Heilman and Dani Yogatama and Jeffrey Flanigan and Noah A. Smith},
+  Booktitle                = {The 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, Proceedings of the Conference, 19-24 June, 2011, Portland, Oregon, {USA} - Short Papers},
   Year                     = {2011},
   Pages                    = {42--47},
 
@@ -84,9 +57,7 @@
   Title                    = {Mining and summarizing customer reviews},
   Author                   = {Minqing Hu and
  Bing Liu},
-  Booktitle                = {Proceedings of the Tenth {ACM} {SIGKDD} International Conference on
- Knowledge Discovery and Data Mining, Seattle, Washington, USA, August
- 22-25, 2004},
+  Booktitle                = {Proceedings of the Tenth {ACM} {SIGKDD} International Conference on Knowledge Discovery and Data Mining, Seattle, Washington, USA, August 22-25, 2004},
   Year                     = {2004},
   Pages                    = {168--177}
 }
@@ -155,16 +126,16 @@
   Urnal                    = {Journal of Artificial Intelligence Research (JAIR)}
 }
 
-@Article{ThelwallBP12,
-  Title                    = {Sentiment strength detection for the social web},
-  Author                   = {Mike Thelwall and
- Kevan Buckley and
- Georgios Paltoglou},
-  Journal                  = {{JASIST}},
-  Year                     = {2012},
-  Number                   = {1},
-  Pages                    = {163--173},
-  Volume                   = {63}
+@InProceedings{Turney02,
+  Title                    = {Thumbs Up or Thumbs Down? Semantic Orientation Applied to Unsupervised
+ Classification of Reviews},
+  Author                   = {Peter D. Turney},
+  Booktitle                = {Proceedings of the 40th Annual Meeting of the Association for Computational
+ Linguistics, July 6-12, 2002, Philadelphia, PA, {USA.}},
+  Year                     = {2002},
+  Pages                    = {417--424},
+
+  Url                      = {http://www.aclweb.org/anthology/P02-1053.pdf}
 }
 
 @InProceedings{WilsonWH05,

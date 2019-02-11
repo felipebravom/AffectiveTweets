@@ -13,18 +13,19 @@
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Installation";
     var mkdocs_page_input_path = "install.md";
-    var mkdocs_page_url = "/install/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href=".." class="icon icon-home"> AffectiveTweets</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -64,6 +65,9 @@
     
 
     <li class="toctree-l2"><a href="#building-affectivetweets">Building AffectiveTweets</a></li>
+    
+
+    <li class="toctree-l2"><a href="#testing-affectivetweets">Testing AffectiveTweets</a></li>
     
 
     <li class="toctree-l2"><a href="#other-useful-packages">Other Useful Packages</a></li>
@@ -122,19 +126,17 @@ ant -f weka/build.xml exejar
 </code></pre>
 
 <h2 id="installing-affectivetweets">Installing AffectiveTweets</h2>
-<p>Install AffectiveTweets1.0.0 using the <a href="http://weka.wikispaces.com/How+do+I+use+the+package+manager%3F">WekaPackageManager</a>: </p>
+<p>Install AffectiveTweets1.0.1 using the <a href="https://waikato.github.io/weka-wiki/packages/manager/">WekaPackageManager</a>: </p>
 <pre><code class="bash">java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 </code></pre>
 
-<p>In order to properly run our <a href="../examples">examples</a>, we recommend installing the newest version of the package v.1.0.1 (not officially released yet) as follows: </p>
-<pre><code class="bash"># Uninstall the previous version of AffectiveTweets
-java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -uninstall-package AffectiveTweets
-# Install the newest development version:
-java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
+<p>Make sure you have installed version 1.0.1 to run the <a href="examples">examples</a>.</p>
+<p>In case of having problems with the Weka packages repository, install the package as follows:</p>
+<pre><code class="bash">java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
 </code></pre>
 
 <h2 id="building-affectivetweets">Building AffectiveTweets</h2>
-<p>You can also build the package from the repository's version to try the most recent features. This is very useful if you want to contribute.</p>
+<p>You can also build the package from the Github version to try the most recent features. This is very useful if you want to modify the code or contribute with a new feature.</p>
 <pre><code class="bash"># clone the repository
 git clone https://github.com/felipebravom/AffectiveTweets.git
 cd AffectiveTweets
@@ -152,10 +154,16 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package dist/
 
 </code></pre>
 
+<h2 id="testing-affectivetweets">Testing AffectiveTweets</h2>
+<p>The software can be tested using Junit test cases.  The package must either be installed or  JVM must be started in AffectiveTweets directory.</p>
+<pre><code class="bash"># clone the repository
+ant -f build_package.xml run_tests_all 
+</code></pre>
+
 <h2 id="other-useful-packages">Other Useful Packages</h2>
 <p>We recommend installing other useful packages for classification, regression and evaluation:</p>
 <ul>
-<li><a href="https://www.csie.ntu.edu.tw/~cjlin/liblinear/">LibLinear</a>: This package is required for running the <a href="../examples">examples</a>.</li>
+<li><a href="https://www.csie.ntu.edu.tw/~cjlin/liblinear/">LibLinear</a>: This package is required for running the <a href="examples">examples</a>.</li>
 </ul>
 <pre><code class="bash">java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package LibLINEAR
 </code></pre>
@@ -175,7 +183,7 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package dist/
 <ul>
 <li><a href="https://github.com/fracpete/snowball-stemmers-weka-package">Snowball-stemmers</a>: This package allows using the Porter stemmer as well as other Snowball stemmers.</li>
 </ul>
-<pre><code class="bash">java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/fracpete/snowball-stemmers-weka-package/releases/download/v1.0.1/snowball-stemmers-1.0.1.zip
+<pre><code class="bash">java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package snowball-stemmers
 </code></pre>
 
 <ul>
@@ -205,18 +213,18 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package dist/
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
     </section>
-    
+
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/felipebravom/AffectiveTweets/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
@@ -226,7 +234,9 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package dist/
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
