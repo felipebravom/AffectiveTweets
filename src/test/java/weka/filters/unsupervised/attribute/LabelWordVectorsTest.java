@@ -96,6 +96,16 @@ public class LabelWordVectorsTest extends AbstractFilterTest {
 
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
+    
+    
+    public void testBuffered() {
+    	
+    }
+    
+    public void testRegression(){
+    	
+    }
+    
 
     public static Test suite() {
         return new TestSuite(LabelWordVectorsTest.class);

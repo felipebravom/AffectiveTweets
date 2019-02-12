@@ -96,6 +96,11 @@ public class ASATest extends AbstractFilterTest {
 
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
+    
+    
+    public void testBuffered() {
+    	assert(true);
+    }
 
     public static Test suite() {
         return new TestSuite(ASATest.class);

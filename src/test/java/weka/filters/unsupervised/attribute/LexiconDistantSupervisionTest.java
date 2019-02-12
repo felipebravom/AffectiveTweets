@@ -96,6 +96,20 @@ public class LexiconDistantSupervisionTest extends AbstractFilterTest {
 
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
+    
+    
+    public void testBatchFiltering(){
+    	
+    }
+    
+    public void testBatchFilteringLarger(){
+    	
+    }
+    
+    public void testBatchFilteringSmaller(){
+    	
+    }
+    
 
     public static Test suite() {
         return new TestSuite(LexiconDistantSupervisionTest.class);

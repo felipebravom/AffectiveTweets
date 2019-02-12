@@ -16,6 +16,7 @@
 .classpath
 .project
 .settings/
+bin/
 
 # IntelliJ
 .idea/

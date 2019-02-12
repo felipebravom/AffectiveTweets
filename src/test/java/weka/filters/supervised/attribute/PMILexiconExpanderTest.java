@@ -121,6 +121,10 @@ public class PMILexiconExpanderTest extends AbstractFilterTest {
 
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
+    
+    public void testFilteredClassifier() {
+    	
+    }
 
     public static Test suite() {
         return new TestSuite(PMILexiconExpanderTest.class);
