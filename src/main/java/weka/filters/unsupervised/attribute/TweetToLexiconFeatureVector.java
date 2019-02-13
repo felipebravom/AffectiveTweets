@@ -373,7 +373,7 @@ public class TweetToLexiconFeatureVector extends TweetToFeatureVector {
 		}
 
 
-		// The dictionaries of the lexicons are intialized only in the first batch
+		// The dictionaries of the lexicons are initialized only in the first batch
 		if(!this.isFirstBatchDone())
 			this.initializeDicts();
 

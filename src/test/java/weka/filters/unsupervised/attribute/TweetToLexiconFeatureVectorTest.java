@@ -122,6 +122,17 @@ public class TweetToLexiconFeatureVectorTest extends AbstractFilterTest {
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
 
+    
+	/* (non-Javadoc)
+	 * @see weka.filters.AbstractFilterTest#testBuffered()
+	 */
+	public void testBuffered(){}
+	
+	/* (non-Javadoc)
+	 * @see weka.filters.AbstractFilterTest#testRegression()
+	 */
+	public void testRegression(){}    
+    
     public static Test suite() {
         return new TestSuite(TweetToLexiconFeatureVectorTest.class);
     }

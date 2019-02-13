@@ -20,6 +20,7 @@
 package weka.filters.unsupervised.attribute;
 
 import weka.classifiers.meta.FilteredClassifier;
+import weka.core.Instances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
@@ -29,8 +30,8 @@ import junit.framework.TestSuite;
 import java.io.File;
 
 /**
- * Tests LexiconDistantSupervision. Run from the command line with: <p/>
- * java weka.filters.unsupervised.attribute.LexiconDistantSupervisionTest
+ * Tests TweetNLPPOSTagger. Run from the command line with: <p/>
+ * java weka.filters.unsupervised.attribute.TweetNLPPOSTaggerTest
  * <p> 
  * AffectiveTweets package must either be installed or
  * JVM must be started in AffectiveTweets directory.
@@ -38,13 +39,13 @@ import java.io.File;
  * @author FracPete and eibe
  * @version $Revision: 9568 $
  */
-public class LexiconDistantSupervisionTest extends AbstractFilterTest {
+public class TweetNLPPOSTaggerTest extends AbstractFilterTest {
 
-    public LexiconDistantSupervisionTest(String name) {
+    public TweetNLPPOSTaggerTest(String name) {
         super(name);
     }
 
-    /** Creates a default LexiconDistantSupervision filter */
+    /** Creates a default TweetNLPPOSTagger filter */
     public Filter getFilter() {
 	Filter f = null;
 
@@ -52,17 +53,16 @@ public class LexiconDistantSupervisionTest extends AbstractFilterTest {
 	if ((new File(".." + File.separator + "AffectiveTweets" + File.separator + "build_package.xml")).exists()) {
 	    File backup = weka.core.WekaPackageManager.PACKAGES_DIR;
 	    weka.core.WekaPackageManager.PACKAGES_DIR = new java.io.File(".."); // So that default lexicon, etc., is found.
-	    f = new LexiconDistantSupervision();
+	    f = new TweetToSparseFeatureVector();
 	    weka.core.WekaPackageManager.PACKAGES_DIR = backup;
 	} else {
-	    f = new LexiconDistantSupervision(); // Hope that the package is installed.
+	    f = new TweetNLPPOSTagger(); // Hope that the package is installed.
 	}
 	return f;
     }
 
     /**
-     * LexiconDistantSupervision is not suitable for use in a FilteredClassifier, so this just creates a dummy
-     * FilteredClassifier so that the tests run through.
+     * Test for the FilteredClassifier used with this filter.
      *
      * @return the configured FilteredClassifier
      */
@@ -71,8 +71,34 @@ public class LexiconDistantSupervisionTest extends AbstractFilterTest {
 
         result = new FilteredClassifier();
 
-        result.setFilter(new weka.filters.AllFilter());
-        result.setClassifier(new weka.classifiers.rules.ZeroR());
+	weka.filters.MultiFilter mf = new weka.filters.MultiFilter();
+	Filter[] filters = new Filter[2];
+	filters[0] = getFilter();
+	weka.filters.unsupervised.attribute.RemoveType rt = new weka.filters.unsupervised.attribute.RemoveType(); // Need to remove string attributes because they are kept by this filter.
+	filters[1] = rt;
+	mf.setFilters(filters);
+	result.setFilter(mf);
+        result.setClassifier(new weka.classifiers.functions.SMO());
+
+        return result;
+    }
+
+    /**
+     * Data to be used for FilteredClassifier test.
+     *
+     * @return the configured FilteredClassifier
+     */
+    protected Instances getFilteredClassifierData() throws Exception {
+        Instances result;
+
+	// Check to see if the test is run from directory containing build_package.xml
+	if ((new File(".." + File.separator + "AffectiveTweets" + File.separator + "build_package.xml")).exists()) {
+	    result = (new weka.core.converters.ConverterUtils.DataSource("data" + File.separator + "sent140test.arff.gz")).getDataSet();
+	} else { // Hope that package is installed.
+	    result = (new weka.core.converters.ConverterUtils.DataSource(weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + "data" + File.separator + "sent140test.arff.gz")).getDataSet();
+	}
+
+	result.setClassIndex(result.numAttributes() - 1);
 
         return result;
     }
@@ -95,27 +121,9 @@ public class LexiconDistantSupervisionTest extends AbstractFilterTest {
 
 	m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
     }
-    
-    
-    /* (non-Javadoc)
-     * @see weka.filters.AbstractFilterTest#testBatchFiltering()
-     */
-    public void testBatchFiltering(){}
-    
-    /* (non-Javadoc)
-     * @see weka.filters.AbstractFilterTest#testBatchFilteringLarger()
-     */
-    public void testBatchFilteringLarger(){}
-    
-    
-    /* (non-Javadoc)
-     * @see weka.filters.AbstractFilterTest#testBatchFilteringSmaller()
-     */
-    public void testBatchFilteringSmaller(){}
-    
 
     public static Test suite() {
-        return new TestSuite(LexiconDistantSupervisionTest.class);
+        return new TestSuite(TweetNLPPOSTaggerTest.class);
     }
 
     public static void main(String[] args){

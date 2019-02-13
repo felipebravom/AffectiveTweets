@@ -30,6 +30,7 @@ import weka.filters.unsupervised.attribute.TweetToLexiconFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToInputLexiconFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVectorTest;
+import weka.filters.unsupervised.attribute.TweetNLPPOSTaggerTest;
 
 /**
  * Test class for all tests in this directory. Run from the command line with:
@@ -57,6 +58,7 @@ public class AllPackageTests extends TestSuite {
     suite.addTestSuite(TweetToInputLexiconFeatureVectorTest.class);
     suite.addTestSuite(TweetToSentiStrengthFeatureVectorTest.class);
     suite.addTestSuite(TweetToEmbeddingsFeatureVectorTest.class);
+    suite.addTestSuite(TweetNLPPOSTaggerTest.class);
 
     return suite;
   }

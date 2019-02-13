@@ -2,8 +2,9 @@ site_name: AffectiveTweets
 theme: readthedocs  
 repo_url: https://github.com/felipebravom/AffectiveTweets
 site_description: AffectiveTweets Documentation
-pages:
+nav:
     - Home: index.md
     - Installation: install.md
-
     - Examples: examples.md
+    - Contributing: contribute.md
+

@@ -20,7 +20,6 @@
 package weka.filters.unsupervised.attribute;
 
 import weka.classifiers.meta.FilteredClassifier;
-import weka.core.Instances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
@@ -38,6 +37,10 @@ import java.io.File;
  * <p>
  * @author FracPete and eibe
  * @version $Revision: 9568 $
+ */
+/**
+ * @author fbravoma
+ *
  */
 public class LabelWordVectorsTest extends AbstractFilterTest {
 
@@ -98,13 +101,15 @@ public class LabelWordVectorsTest extends AbstractFilterTest {
     }
     
     
-    public void testBuffered() {
-    	
-    }
+    /* (non-Javadoc)
+     * @see weka.filters.AbstractFilterTest#testBuffered()
+     */
+    public void testBuffered() {}
     
-    public void testRegression(){
-    	
-    }
+    /* (non-Javadoc)
+     * @see weka.filters.AbstractFilterTest#testRegression()
+     */
+    public void testRegression(){}
     
 
     public static Test suite() {

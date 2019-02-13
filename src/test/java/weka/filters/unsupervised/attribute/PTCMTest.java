@@ -20,7 +20,6 @@
 package weka.filters.unsupervised.attribute;
 
 import weka.classifiers.meta.FilteredClassifier;
-import weka.core.Instances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 

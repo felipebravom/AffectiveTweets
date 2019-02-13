@@ -139,11 +139,9 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 ## Contributors
  * [Saif Mohammad](http://saifmohammad.com/)
  * [Eibe Frank](http://www.cs.waikato.ac.nz/~eibe/)
- * [Bernhard Pfahringer](https://www.cs.auckland.ac.nz/people/b-pfahringer)
+ * [Bernhard Pfahringer](https://www.cs.waikato.ac.nz/~bernhard/)
 
-## How to Contribute
 
-New contributors are more than welcome. If you want to contribute just fork the project and send a [pull request](https://help.github.com/articles/about-pull-requests/) with your changes. 
 
 ## Contact
  * Email: fbravoma at waikato.ac.nz

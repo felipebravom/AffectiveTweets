@@ -51,7 +51,7 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package dist/
 The software can be tested using Junit test cases.  The package must either be installed or  JVM must be started in AffectiveTweets directory.
 
 ```bash
-# clone the repository
+# run all tests
 ant -f build_package.xml run_tests_all 
 ```
 

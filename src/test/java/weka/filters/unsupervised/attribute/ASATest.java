@@ -20,7 +20,6 @@
 package weka.filters.unsupervised.attribute;
 
 import weka.classifiers.meta.FilteredClassifier;
-import weka.core.Instances;
 import weka.filters.AbstractFilterTest;
 import weka.filters.Filter;
 
@@ -98,9 +97,10 @@ public class ASATest extends AbstractFilterTest {
     }
     
     
-    public void testBuffered() {
-    	assert(true);
-    }
+    /* (non-Javadoc)
+     * @see weka.filters.AbstractFilterTest#testBuffered()
+     */
+    public void testBuffered(){}
 
     public static Test suite() {
         return new TestSuite(ASATest.class);
