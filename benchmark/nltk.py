@@ -8,6 +8,30 @@ from nltk.sentiment import SentimentAnalyzer
 from nltk.sentiment.util import extract_unigram_feats, mark_negation
  
 
+# nltk.download('vader_lexicon')
+
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer 
+  
+hotel_rev = ["Great place to be when you are in Bangalore.","The place was being renovated when I visited so the seating was limited."]
+  
+sid = SentimentIntensityAnalyzer()
+for sentence in hotel_rev:
+     print(sentence)
+     ss = sid.polarity_scores(sentence)
+     print(ss)
+     for k in ss:
+         print(k)
+     print()
+
+
+sent = "I didn't like this movie . It was bad .".split()
+mark_negation(sent)
+
+
+
+
+
 data = pd.read_csv("../data/labeledTrainData.tsv", header=0, delimiter="\t", quoting=3)
  
 # 25000 movie reviews
@@ -33,13 +57,13 @@ test_X, test_y = zip(*sentiment_data[20000:])
 # mark_negation appends a "_NEG" to words after a negation untill a punctuation mark.
 # this means that the same after a negation will be handled differently 
 # than the word that's not after a negation by the classifier
-print(mark_negation("I like the movie .".split()))        # ['I', 'like', 'the', 'movie.']
+
 print(mark_negation("I don't like the movie .".split()))  # ['I', "don't", 'like_NEG', 'the_NEG', 'movie._NEG']
  
 # The nltk classifier won't be able to handle the whole training set
 TRAINING_COUNT = 5000
  
-analyzer = SentimentAnalyzer()
+
 vocabulary = analyzer.all_words([mark_negation(word_tokenize(unidecode(clean_text(instance)))) 
                                  for instance in train_X[:TRAINING_COUNT]])
 print("Vocabulary: ", len(vocabulary)) # 1356908
