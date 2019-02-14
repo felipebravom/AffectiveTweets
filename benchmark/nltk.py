@@ -2,13 +2,126 @@
 import pandas as pd       
 
 from unidecode import unidecode
-from nltk import word_tokenize
-from nltk.classify import NaiveBayesClassifier
-from nltk.sentiment import SentimentAnalyzer
-from nltk.sentiment.util import extract_unigram_feats, mark_negation
+
+from nltk.tokenize import TweetTokenizer
+from nltk.sentiment import SentimentIntensityAnalyzer
+from nltk.sentiment.util import  mark_negation
+
+from sklearn.feature_extraction.text import CountVectorizer  
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+
+from sklearn.metrics import f1_score, confusion_matrix, cohen_kappa_score
+
  
+# http://michelleful.github.io/code-blog/2015/06/20/pipelines/  Scikit learn Pipelines for multiple types of featr=yres
+
 
 # nltk.download('vader_lexicon')
+
+# loads training and testing datasets as a pandas dataframe
+train_data = pd.read_csv("dataset/twitter-train-B.txt", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
+test_data = pd.read_csv("dataset/twitter-test-gold-B.tsv", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
+
+# replaces objective-OR-neutral and objective to neutral
+train_data.sent = train_data.sent.replace(['objective-OR-neutral','objective'],['neutral','neutral'])
+
+tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
+
+vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
+log_mod = LogisticRegression()  
+text_clf = Pipeline([('vect', vectorizer), ('clf', log_mod)])
+
+
+text_clf.fit(train_data.tweet, train_data.sent)
+
+predicted = text_clf.predict(test_data.tweet)
+
+conf = confusion_matrix(test_data.sent, predicted)
+f1_macro=f1_score(test_data.sent, predicted, average='macro') 
+kappa = cohen_kappa_score(test_data.sent, predicted) 
+
+
+
+########################################
+
+
+from nltk.corpus import opinion_lexicon
+
+sentence = 'I love beer'
+
+sid = SentimentIntensityAnalyzer()
+sid.polarity_scores(sentence)
+
+
+def liu_score(sentence, tokenizer):    
+    tokenized_sent = tokenizer.tokenize(sentence)
+    pos_words = 0
+    neg_words = 0
+    for word in tokenized_sent:
+        if word in opinion_lexicon.positive():
+            pos_words += 1
+        elif word in opinion_lexicon.negative():
+            neg_words += 1
+    return {'pos_words':pos_words,'neg_words':neg_words}
+
+
+#http://michelleful.github.io/code-blog/2015/06/20/pipelines/
+# Implement a FeatureExtractor using scikitlearn
+
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class LiuPolarityExtractor(BaseEstimator, TransformerMixin):
+    """Takes in dataframe, extracts road name column, outputs average word length"""
+
+    def __init__(self):
+        pass
+
+    def liu_score(sentence, tokenizer):    
+        tokenized_sent = tokenizer.tokenize(sentence)
+        pos_words = 0
+        neg_words = 0
+        for word in tokenized_sent:
+            if word in opinion_lexicon.positive():
+                pos_words += 1
+            elif word in opinion_lexicon.negative():
+                neg_words += 1
+        return [pos_words,neg_words]
+
+    def transform(self, df, y=None):
+        """The workhorse of this feature extractor"""
+        return df.apply(self.liu_score)
+
+    def fit(self, df, y=None):
+        """Returns `self` unless something different happens in train and test"""
+        return self
+
+
+
+
+
+def convert_to_feature_dicts(tweets,remove_stop_words,n): 
+    feature_dicts = []
+    for tweet in tweets:
+        # build feature dictionary for tweet
+        feature_dict = {}
+        if remove_stop_words:
+            for segment in tweet:
+                for token in segment:
+                    if token not in stopwords and (n<=0 or total_train_bow[token]>=n):
+                        feature_dict[token] = feature_dict.get(token,0) + 1
+        else:
+            for segment in tweet:
+                for token in segment:
+                    if n<=0 or total_train_bow[token]>=n:
+                        feature_dict[token] = feature_dict.get(token,0) + 1
+        feature_dicts.append(feature_dict)
+    return feature_dicts
+
+
+#https://sajalsharma.com/portfolio/sentiment_analysis_tweets
+
+
 
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer 
