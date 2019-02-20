@@ -30,8 +30,8 @@ import junit.framework.TestSuite;
 import java.io.File;
 
 /**
- * Tests TweetToSentiStrengthFeatureVector. Run from the command line with: <p/>
- * java weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVectorTest
+ * Tests TweetToWordListCountFeatureVectorTest. Run from the command line with: <p/>
+ * java weka.filters.unsupervised.attribute.TweetToWordListCountFeatureVectorTest
  * <p> 
  * AffectiveTweets package must either be installed or
  * JVM must be started in AffectiveTweets directory.
