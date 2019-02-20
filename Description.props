@@ -30,6 +30,7 @@ Description= Text filters for analyzing emotion and sentiment of tweets. Sample 
 # Package URL for obtaining the package archive (required)
 PackageURL=https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.2/AffectiveTweets1.0.2.zip
 
+
 # URL for further information
 URL=https://affectivetweets.cms.waikato.ac.nz/
 
