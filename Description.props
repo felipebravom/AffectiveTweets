@@ -5,10 +5,10 @@
 PackageName=AffectiveTweets
 
 # Version (required)
-Version=1.0.1
+Version=1.0.2
 
 #Date
-Date=2018-05-14
+Date=2019-02-20
 
 # Title (required)
 Title=Text Filters for Analyzing Sentiment and Emotions of Tweets    
@@ -28,7 +28,7 @@ License=GPL 3.0
 Description= Text filters for analyzing emotion and sentiment of tweets. Sample tweets annotated by sentiment and emotions can be found in ${WEKA_HOME}/packages/AffectiveTweets/data. A file with some pre-trained word embeddings can be found in ${WEKA_HOME}/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, we recommend using the embeddings located in: https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz for better performance.
 
 # Package URL for obtaining the package archive (required)
-PackageURL=https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
+PackageURL=https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.3/AffectiveTweets1.0.3.zip
 
 # URL for further information
 URL=https://affectivetweets.cms.waikato.ac.nz/

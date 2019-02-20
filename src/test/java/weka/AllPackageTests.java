@@ -21,16 +21,17 @@ import junit.framework.TestSuite;
 import weka.filters.unsupervised.attribute.ASATest;
 import weka.filters.unsupervised.attribute.PTCMTest;
 import weka.filters.unsupervised.attribute.LexiconDistantSupervisionTest;
+import weka.filters.unsupervised.attribute.TweetNLPPOSTaggerTest;
 import weka.filters.supervised.attribute.PMILexiconExpanderTest;
 import weka.filters.unsupervised.attribute.TweetCentroidTest;
 import weka.filters.unsupervised.attribute.LabelWordVectorsTest;
 
+import weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToSparseFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToLexiconFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToInputLexiconFeatureVectorTest;
-import weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVectorTest;
 import weka.filters.unsupervised.attribute.TweetToEmbeddingsFeatureVectorTest;
-import weka.filters.unsupervised.attribute.TweetNLPPOSTaggerTest;
+import weka.filters.unsupervised.attribute.TweetToWordListCountFeatureVectorTest;
 
 /**
  * Test class for all tests in this directory. Run from the command line with:
@@ -59,6 +60,8 @@ public class AllPackageTests extends TestSuite {
     suite.addTestSuite(TweetToSentiStrengthFeatureVectorTest.class);
     suite.addTestSuite(TweetToEmbeddingsFeatureVectorTest.class);
     suite.addTestSuite(TweetNLPPOSTaggerTest.class);
+    suite.addTestSuite(TweetToWordListCountFeatureVectorTest.class);    
+
 
     return suite;
   }

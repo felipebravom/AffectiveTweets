@@ -31,7 +31,7 @@ import java.io.File;
 
 /**
  * Tests TweetToSentiStrengthFeatureVector. Run from the command line with: <p/>
- * java weka.filters.unsupervised.attribute.TweetToWordCountFeatureVectorTest
+ * java weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVectorTest
  * <p> 
  * AffectiveTweets package must either be installed or
  * JVM must be started in AffectiveTweets directory.
@@ -39,9 +39,9 @@ import java.io.File;
  * @author FracPete and eibe
  * @version $Revision: 9568 $
  */
-public class TweetToSentiStrengthFeatureVectorTest extends AbstractFilterTest {
+public class TweetToWordListCountFeatureVectorTest extends AbstractFilterTest {
 
-    public TweetToSentiStrengthFeatureVectorTest(String name) {
+    public TweetToWordListCountFeatureVectorTest(String name) {
         super(name);
     }
 
@@ -53,10 +53,10 @@ public class TweetToSentiStrengthFeatureVectorTest extends AbstractFilterTest {
 	if ((new File(".." + File.separator + "AffectiveTweets" + File.separator + "build_package.xml")).exists()) {
 	    File backup = weka.core.WekaPackageManager.PACKAGES_DIR;
 	    weka.core.WekaPackageManager.PACKAGES_DIR = new java.io.File(".."); // So that default lexicon, etc., is found.
-	    f = new TweetToSentiStrengthFeatureVector();
+	    f = new TweetToWordListCountFeatureVector();
 	    weka.core.WekaPackageManager.PACKAGES_DIR = backup;
 	} else {
-	    f = new TweetToSentiStrengthFeatureVector(); // Hope that the package is installed.
+	    f = new TweetToWordListCountFeatureVector(); // Hope that the package is installed.
 	}
 	return f;
     }
@@ -123,7 +123,7 @@ public class TweetToSentiStrengthFeatureVectorTest extends AbstractFilterTest {
     }
 
     public static Test suite() {
-        return new TestSuite(TweetToSentiStrengthFeatureVectorTest.class);
+        return new TestSuite(TweetToWordListCountFeatureVectorTest.class);
     }
 
     public static void main(String[] args){
