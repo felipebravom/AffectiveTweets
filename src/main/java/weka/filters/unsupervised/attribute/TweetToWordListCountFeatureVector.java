@@ -49,7 +49,7 @@ public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
 	/** For serialization.  */
 	private static final long serialVersionUID = -573366510055859430L;
 
-	/** Default path to where lexicons are stored. */
+	/** The given word list as a comma separated string. */ 
 	public  String wordList = "love,happy,great";
 
 

@@ -10,7 +10,15 @@ AffectiveTweets methos extend the Weka Filter class. Instructions for implementi
 
 
 
-##  Implementing an AffectiveTweets new Filter
+##  Implementing a new AffectiveTweets Filter
+
+
+
+We will show how to implement a simple filter that will create a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweets.
+
+New filters can extend [TweetToFeatureVector](https://github.com/felipebravom/AffectiveTweets/blob/master/src/main/java/weka/filters/unsupervised/attribute/TweetToFeatureVector.java) abstract class to inherit tokenization and many other preprocessing functionalities. 
+
+
 
 ```java
 /*
@@ -64,10 +72,8 @@ public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
 	/** For serialization.  */
 	private static final long serialVersionUID = -573366510055859430L;
 
-	/** Default path to where lexicons are stored. */
+	/** The given word list as a comma separated string. */
 	public  String wordList = "love,happy,great";
-
-
 
 
 
@@ -206,9 +212,15 @@ public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
 
 
 
+You will need to [rebuild](../install/#building-affectivetweets)  the package and install it to use your new filter from within Weka. 
+
+
+
 
 
 ### Implementing a JUnit Test
+
+To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java) provided by Weka. 
 
 
 
@@ -347,4 +359,6 @@ public class TweetToWordListCountFeatureVectorTest extends AbstractFilterTest {
 }
 
 ```
+
+
 
