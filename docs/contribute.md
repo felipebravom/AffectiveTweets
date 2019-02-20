@@ -16,9 +16,9 @@ Please read the instructions for implementing a Weka filter from [here](https://
 
 
 
-We will show how to implement a simple filter that will create a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweets. The list is given as comma separated string.
+We will show how to implement a simple filter that adds a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweet. The list is given as comma separated string.
 
-New filters can extend [TweetToFeatureVector](https://github.com/felipebravom/AffectiveTweets/blob/master/src/main/java/weka/filters/unsupervised/attribute/TweetToFeatureVector.java) abstract class to inherit tokenization and many other preprocessing functionalities. 
+New filters can extend the [TweetToFeatureVector](https://github.com/felipebravom/AffectiveTweets/blob/master/src/main/java/weka/filters/unsupervised/attribute/TweetToFeatureVector.java) abstract class to inherit tokenization and many other preprocessing functionalities useful for sentiment analysis of tweets (e.g., reduce repeated letters, standardize URLs) . 
 
 
 
