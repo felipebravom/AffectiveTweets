@@ -14,8 +14,8 @@
  */
 
 /*
- *    TweetToSentiStrengthFeatureVector.java
- *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
+ *    TweetToWordListCountFeatureVector.java
+ *    Copyright (C) 1999-2019 University of Waikato, Hamilton, New Zealand
  *
  */
 

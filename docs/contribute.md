@@ -6,7 +6,9 @@ New contributors are more than welcome. If you want to contribute just fork the 
 
 ## Weka Filter
 
-AffectiveTweets methos extend the Weka Filter class. Instructions for implementing a Weka filter are given [here](https://waikato.github.io/weka-wiki/writing_filter/). 
+AffectiveTweets methods extend the Weka [Filter](https://github.com/Waikato/weka-trunk/blob/master/weka/src/main/java/weka/filters/Filter.java) class, particularly the [SimpleBatchFilter](https://github.com/Waikato/weka-trunk/blob/master/weka/src/main/java/weka/filters/SimpleBatchFilter.java) class.   
+
+Please read the instructions for implementing a Weka filter from [here](https://waikato.github.io/weka-wiki/writing_filter/) before continuing. 
 
 
 
@@ -14,7 +16,7 @@ AffectiveTweets methos extend the Weka Filter class. Instructions for implementi
 
 
 
-We will show how to implement a simple filter that will create a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweets.
+We will show how to implement a simple filter that will create a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweets. The list is given as comma separated string.
 
 New filters can extend [TweetToFeatureVector](https://github.com/felipebravom/AffectiveTweets/blob/master/src/main/java/weka/filters/unsupervised/attribute/TweetToFeatureVector.java) abstract class to inherit tokenization and many other preprocessing functionalities. 
 
@@ -37,8 +39,8 @@ New filters can extend [TweetToFeatureVector](https://github.com/felipebravom/Af
  */
 
 /*
- *    TweetToSentiStrengthFeatureVector.java
- *    Copyright (C) 1999-2018 University of Waikato, Hamilton, New Zealand
+ *    TweetToWordListCountFeatureVector.java
+ *    Copyright (C) 1999-2019 University of Waikato, Hamilton, New Zealand
  *
  */
 
@@ -212,7 +214,7 @@ public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
 
 
 
-You will need to [rebuild](../install/#building-affectivetweets)  the package and install it to use your new filter from within Weka. 
+You will need to [rebuild](../install/#building-affectivetweets) and reinstall  the package to use your new filter from within Weka. 
 
 
 
@@ -220,7 +222,7 @@ You will need to [rebuild](../install/#building-affectivetweets)  the package an
 
 ### Implementing a JUnit Test
 
-To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java) provided by Weka. 
+To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java) provided by Weka as shown below: 
 
 
 

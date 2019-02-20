@@ -66,27 +66,26 @@ The individual references for each resource can be found through the links provi
 
 
 2. __TweetToLexiconFeatureVector__: calculates features from a tweet using several lexicons.
-  * [MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon): counts the number of positive and negative words from the MPQA subjectivity lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/naacl/WilsonWH05.bib)
-  * [Bing Liu](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon): counts the number of positive and negative words from the Bing Liu lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/kdd/HuL04.bib)
-  * [AFINN](https://github.com/fnielsen/afinn): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/msm/Nielsen11.bib)
-  * [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt)
-  * [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt) 
-  * [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon. [BibTex](http://saifmohammad.com/WebPages/Abstracts/crowdemo.bib.txt)
-  * [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFM16.bib)
-  * [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon. [BibTex](http://saifmohammad.com/WebPages/hashtagPersonality-bib.html)  
-  * [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/lrec/BaccianellaES10.bib) 
-  * [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
-  * Negations: counts the number of negating words in the tweet.
+	* [MPQA](http://mpqa.cs.pitt.edu/lexicons/subj_lexicon): counts the number of positive and negative words from the MPQA subjectivity lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/naacl/WilsonWH05.bib)
+	* [Bing Liu](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html#lexicon): counts the number of positive and negative words from the Bing Liu lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/kdd/HuL04.bib)
+	* [AFINN](https://github.com/fnielsen/afinn): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/msm/Nielsen11.bib)
+	* [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt)
+	* [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt) 
+	* [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon. [BibTex](http://saifmohammad.com/WebPages/Abstracts/crowdemo.bib.txt)
+	* [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFM16.bib)
+	* [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon. [BibTex](http://saifmohammad.com/WebPages/hashtagPersonality-bib.html)  
+	* [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/lrec/BaccianellaES10.bib) 
+	* [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
+	* Negations: counts the number of negating words in the tweet.
 
  3. __TweetToInputLexiconFeatureVector__: calculates features from a tweet using a given list of affective lexicons, where each lexicon is represented as an [ARFF](https://weka.wikispaces.com/ARFF) file.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault.   [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
 
 4. __TweetToSentiStrengthFeatureVector__: calculates positive and negative sentiment strengths for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
 
 5. __TweetToEmbeddingsFeatureVector__: calculates a tweet-level feature representation using pre-trained word embeddings. A dummy word-embedding formed by zeroes is used for word with no corresponding embedding. The tweet vectors can be calculated using the following schemes: 
-
-  * Average word embeddings.
-  * Add word embeddings. 
-  * Concatenation of first *k* embeddings. Dummy values are added if the tweet has less than *k* words. 
+	* Average word embeddings. 
+	* Add word embeddings. 
+	* Concatenation of first *k* embeddings. Dummy values are added if the tweet has less than *k* words. 
 6. __TweetNLPPOSTagger__:  runs the Twitter-specific POS tagger from the CMU TweetNLP library on the given tweets. POS tags are prepended to the tokens. 
 
 
