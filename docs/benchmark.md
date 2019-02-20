@@ -1,13 +1,13 @@
-In this site site we show how to benchmark models created using AffectiveTweets against similar models created using the [NLTK sentiment analysis module](http://www.nltk.org/api/nltk.sentiment.html) and [Scikit-learn](https://scikit-learn.org/stable/index.html). We represents tweets using  word n-grams and lexicon-based features and train logistic regression models on the Twitter Message Polarity Classification dataset from the  [SemEval 2013 Sentiment Analysis Task](https://www.cs.york.ac.uk/semeval-2013/task2/).  
+On this page we show how to benchmark models created using AffectiveTweets against similar models created using the [NLTK sentiment analysis module](http://www.nltk.org/api/nltk.sentiment.html) and [Scikit-learn](https://scikit-learn.org/stable/index.html). We represents tweets using  word n-grams and lexicon-based features and train logistic regression models on the Twitter Message Polarity Classification dataset from the  [SemEval 2013 Sentiment Analysis Task](https://www.cs.york.ac.uk/semeval-2013/task2/).  
 
 
-The code for reproducing these experiments can be downloaded from [here](https://github.com/felipebravom/AffectiveTweets/tree/master/benchmark)
+The code for reproducing these experiments can be downloaded from [here](https://github.com/felipebravom/AffectiveTweets/tree/master/benchmark).
 
 
 
 ## AffectiveTweets Scripts
 
-The following bash scripts assume that AffectiveTweets and Weka are already installed. Decalre the following variables according to your installation paths.
+The following bash scripts assume that AffectiveTweets and Weka are already installed. Declare the following variables according to your installation paths.
 ```
 export WEKA_HOME=/home/fbravoma/wekafiles/
 export WEKA_PATH=/home/fbravoma/weka-3-9-3/
@@ -298,8 +298,6 @@ Unfortunately, SentiStrength is not implemented in the NLTK sentiment module. Ho
 
 We implement a linear model using features derived from Bing Liu's lexicon and Vader.
 
-
-
 First, we need to make sure that the required NLTK resources are installed:
 
 ```python
@@ -310,7 +308,7 @@ nltk.download('vader_lexicon')
 
 
 
-We extend Scikit-learn classes __BaseEstimator__ and and __TransformerMixin__ to implement a feature extractor:
+We extend Scikit-learn classes [BaseEstimator](https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html) and and [TransformerMixin](https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html) to implement a feature extractor:
 
 
 
@@ -393,7 +391,7 @@ kappa:0.408231856331834
 
 ### Linear model using  n-grams + Bing Liu's Lexicon + SentiStrength
 
-We can combine the feature space of the two previous module using the class __FeatureUnion__ from Scikit-learn:
+We can combine the feature spaces of the two previous module using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
 
 ```python
 
