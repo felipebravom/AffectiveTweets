@@ -22,25 +22,23 @@ from nltk.corpus import opinion_lexicon
 
 from sklearn.feature_extraction.text import CountVectorizer  
 from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import confusion_matrix, cohen_kappa_score
-
-
 import numpy as np
 
 
 
 
-# nltk.download('vader_lexicon')
 
-# loads training and testing datasets as a pandas dataframe
+# load training and testing datasets as a pandas dataframe
 train_data = pd.read_csv("dataset/twitter-train-B.txt", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
 test_data = pd.read_csv("dataset/twitter-test-gold-B.tsv", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
 
-# replaces objective-OR-neutral and objective to neutral
+# replace objective-OR-neutral and objective to neutral
 train_data.sent = train_data.sent.replace(['objective-OR-neutral','objective'],['neutral','neutral'])
 
+# use a Twitter-specific tokenizer
 tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
 
 
@@ -61,7 +59,7 @@ predicted = text_clf.predict(test_data.tweet)
 conf = confusion_matrix(test_data.sent, predicted)
 kappa = cohen_kappa_score(test_data.sent, predicted) 
 
-print('Confusion Matrix for Logistic Regression + ngram features')
+print('Confusion Matrix for Logistic Regression + ngram features:')
 print(conf)
 print('kappa:'+str(kappa))
 
@@ -72,6 +70,9 @@ print('kappa:'+str(kappa))
 #
 ######################################################################################
 
+#import nltk
+#nltk.download('opinion_lexicon')
+#nltk.download('vader_lexicon')
 
 class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
     """Takes in a corpus of tweets and calculates features using Bing Liu's lexicon and the Vader method"""
@@ -83,7 +84,7 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
         self.sid = SentimentIntensityAnalyzer()
 
     def liu_score(self,sentence):
-        
+        """Calculates the number of positive and negative words in the sentence using Bing Liu's Lexicon""" 
         tokenized_sent = self.tokenizer.tokenize(sentence)
         pos_words = 0
         neg_words = 0
@@ -96,11 +97,12 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
     
     
     def vader_score(self,sentence):
+        """ Calculates sentiment scores for a sentence using the Vader method """
         pol_scores = self.sid.polarity_scores(sentence)
         return(list(pol_scores.values()))
 
     def transform(self, X, y=None):
-        """The workhorse of this feature extractor"""
+        """Applies liu_score and vader_score on a data.frame containing tweets """
         values = []
         for tweet in X:
             values.append(self.liu_score(tweet)+self.vader_score(tweet))
@@ -110,11 +112,6 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         """Returns `self` unless something different happens in train and test"""
         return self
-
-
-
-
-
 
 
 
@@ -144,15 +141,9 @@ print('kappa:'+str(kappa_lex))
 
 
 
-from sklearn.pipeline import Pipeline, FeatureUnion
-
-ngram_lex_clf = Pipeline([
-    ('feats', FeatureUnion([
-        ('ngram', vectorizer), # can pass in either a pipeline
-        ('lexicon',lex_feat) # or a transformer
-    ])),
-    ('clf', log_mod)  # classifier
-])
+ngram_lex_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('ngram', vectorizer), ('lexicon',lex_feat) ])),
+    ('clf', log_mod)])
 
 
 ngram_lex_clf.fit(train_data.tweet, train_data.sent)

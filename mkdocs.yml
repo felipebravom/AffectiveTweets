@@ -7,4 +7,4 @@ nav:
     - Installation: install.md
     - Examples: examples.md
     - Contributing: contribute.md
-
+    - Benchmark: benchmark.md
