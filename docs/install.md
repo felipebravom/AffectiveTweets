@@ -18,12 +18,12 @@ Install AffectiveTweets1.0.1 using the [WekaPackageManager](https://waikato.gith
 java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package AffectiveTweets
 ```
 
-Make sure you have installed version 1.0.1 to run the [examples](examples).
+Make sure you have installed version 1.0.2 to run the [examples](examples).
 
 In case of having problems with the Weka packages repository, install the package as follows:
 
 ```bash
-java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.1/AffectiveTweets1.0.1.zip
+java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.2/AffectiveTweets1.0.2.zip
 ```
 
 ## Building AffectiveTweets
