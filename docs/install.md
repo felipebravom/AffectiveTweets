@@ -27,7 +27,9 @@ java -cp $WEKA_PATH/weka.jar weka.core.WekaPackageManager -install-package https
 ```
 
 ## Building AffectiveTweets
-You can also build the package from the Github version to try the most recent features. This is very useful if you want to modify the code or contribute with a new feature.
+You can also build the package from the Github version using the project’s [build-package.xml](https://github.com/felipebravom/AffectiveTweets/blob/master/build_package.xml) file  with the [ant](http://ant.apache.org/) build tool. This is very useful if you want to modify the code or [contribute](../contribute) with a new feature. 
+
+
 
 ```bash
 # clone the repository

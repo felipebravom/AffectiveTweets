@@ -214,7 +214,9 @@ public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
 
 
 
-You will need to [rebuild](../install/#building-affectivetweets) and reinstall  the package to use your new filter from within Weka. 
+One way to use this new filter class from within Weka, assuming the  source code of the class is in the appropriate subfolder of the [src](https://github.com/felipebravom/AffectiveTweets/tree/master/src)  folder of the AffectiveTweets project, is to [rebuild](../install/#building-affectivetweets) and reinstall the  AffectiveTweets package by using the project’s [build-package.xml](https://github.com/felipebravom/AffectiveTweets/blob/master/build_package.xml) file  with the [ant](http://ant.apache.org/) build tool.
+
+
 
 
 
@@ -222,7 +224,9 @@ You will need to [rebuild](../install/#building-affectivetweets) and reinstall  
 
 ### Implementing a JUnit Test
 
-To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java) provided by Weka as shown below: 
+To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java), , which can be found in the Weka source code repository, as shown below: 
+
+
 
 
 
