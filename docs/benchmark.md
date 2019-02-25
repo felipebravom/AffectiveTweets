@@ -391,7 +391,7 @@ kappa:0.408231856331834
 
 ### Linear model using  n-grams + Bing Liu's Lexicon + Vader
 
-We can combine the feature spaces of the two previous module using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
+We can combine the feature spaces of the two previous examples using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
 
 ```python
 
