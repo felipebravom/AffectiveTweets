@@ -224,7 +224,7 @@ One way to use this new filter class from within Weka, assuming the  source code
 
 ### Implementing a JUnit Test
 
-To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java), , which can be found in the Weka source code repository, as shown below: 
+To test the new filter we need to implement a [JUnit](https://junit.org/) test.  A new filter test can extend  [AbstractFilterTest](https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java), which can be found in the Weka source code repository, as shown below: 
 
 
 
