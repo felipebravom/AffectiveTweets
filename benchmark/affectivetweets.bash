@@ -1,5 +1,5 @@
-export WEKA_HOME=/home/fbravoma/wekafiles/
-export WEKA_PATH=/home/fbravoma/weka-3-9-3/
+export WEKA_HOME=/home/felipe/wekafiles/
+export WEKA_PATH=/home/felipe/weka-3-9-3/
 
 
 java -cp $WEKA_HOME/packages/AffectiveTweets/AffectiveTweets.jar:$WEKA_PATH/weka.jar weka.core.converters.SemEvalToArff benchmark/dataset/twitter-train-B.txt benchmark/dataset/twitter-train-B.arff

@@ -24,7 +24,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.metrics import confusion_matrix, cohen_kappa_score
+from sklearn.metrics import confusion_matrix, cohen_kappa_score, classification_report
 import numpy as np
 
 
@@ -58,9 +58,15 @@ predicted = text_clf.predict(test_data.tweet)
 
 conf = confusion_matrix(test_data.sent, predicted)
 kappa = cohen_kappa_score(test_data.sent, predicted) 
+class_rep = classification_report(test_data.sent, predicted)
+
+
+
 
 print('Confusion Matrix for Logistic Regression + ngram features:')
 print(conf)
+print('Classification Report')
+print(class_rep)
 print('kappa:'+str(kappa))
 
 
@@ -127,10 +133,14 @@ pred_lex = lex_clf.predict(test_data.tweet)
 
 conf_lex = confusion_matrix(test_data.sent, pred_lex)
 kappa_lex = cohen_kappa_score(test_data.sent, pred_lex) 
+class_rep_lex = classification_report(test_data.sent, pred_lex)
 
 print('Confusion Matrix for Logistic Regression + features from Bing Liu\'s Lexicon and the Vader method')
 print(conf_lex)
+print('Classification Report')
+print(class_rep_lex)
 print('kappa:'+str(kappa_lex))
+
 
 
 ######################################################################################################
