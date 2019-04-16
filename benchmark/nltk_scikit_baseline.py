@@ -83,6 +83,17 @@ print('time elapsed:'+str(end-start))
 
 
 start = time.time()
+# load training and testing datasets as a pandas dataframe
+train_data = pd.read_csv("dataset/twitter-train-B.txt", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
+test_data = pd.read_csv("dataset/twitter-test-gold-B.tsv", header=None, delimiter="\t",usecols=(2,3), names=("sent","tweet"))
+
+# replace objective-OR-neutral and objective to neutral
+train_data.sent = train_data.sent.replace(['objective-OR-neutral','objective'],['neutral','neutral'])
+
+# use a Twitter-specific tokenizer
+tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
+
+
 
 
 class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
@@ -124,7 +135,7 @@ class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
 
 
 liu_feat = LiuFeatureExtractor(tokenizer)
-
+vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
 log_mod = LogisticRegression()  
 liu_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
