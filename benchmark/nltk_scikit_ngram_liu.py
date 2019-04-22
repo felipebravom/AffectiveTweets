@@ -103,22 +103,22 @@ class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
 liu_feat = LiuFeatureExtractor(tokenizer)
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
 log_mod = LogisticRegression()  
-liu_clf = Pipeline([ ('feats', 
+liu_ngram_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
     ('clf', log_mod)])
 
 
-liu_clf.fit(train_data.tweet, train_data.sent)
-pred_liu = liu_clf.predict(test_data.tweet)
+liu_ngram_clf.fit(train_data.tweet, train_data.sent)
+pred_liu_ngram = liu_ngram_clf.predict(test_data.tweet)
 
 
-conf_liu = confusion_matrix(test_data.sent, pred_liu)
-kappa_liu = cohen_kappa_score(test_data.sent, pred_liu) 
-class_rep_liu = classification_report(test_data.sent, pred_liu)
+conf_liu_ngram = confusion_matrix(test_data.sent, pred_liu_ngram)
+kappa_liu_ngram = cohen_kappa_score(test_data.sent, pred_liu_ngram) 
+class_rep_liu_ngram = classification_report(test_data.sent, pred_liu_ngram)
 
 print('Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu\'s Lexicon')
-print(conf_liu)
+print(conf_liu_ngram)
 print('Classification Report')
-print(class_rep_liu)
-print('kappa:'+str(kappa_liu))
+print(class_rep_liu_ngram)
+print('kappa:'+str(kappa_liu_ngram))
 

@@ -41,6 +41,14 @@ train_data.sent = train_data.sent.replace(['objective-OR-neutral','objective'],[
 tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
 
 
+######################################################################################################
+#
+#  Train a linear model using n-grams features + features from Bing Liu's lexicon + the Vader method
+#
+#####################################################################################################
+#import nltk
+#nltk.download('opinion_lexicon')
+#nltk.download('vader_lexicon')
 
 
 
@@ -108,21 +116,6 @@ class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         """Returns `self` unless something different happens in train and test"""
         return self
-
-
-
-
-
-
-
-
-
-
-######################################################################################################
-#
-#  Train a linear model using n-grams features + features from Bing Liu's lexicon + the Vader method
-#
-#####################################################################################################
 
 
 
