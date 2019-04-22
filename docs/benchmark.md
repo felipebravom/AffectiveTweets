@@ -433,13 +433,21 @@ A table summarising all the experiments from above is shown as follows:
 
 
 
-| Features                                   | Implementation     | Kappa Score |
-| ------------------------------------------ | ------------------ | ----------- |
-| Word n-grams                               | Scikitlearn + NLTK | 0.424       |
-| Word n-grams                               | AffectiveTweets    | 0.446       |
-| Liu Lexicon  + Vader                       | Scikitlearn + NLTK | 0.408       |
-| Liu Lexicon  + SentiStrength               | AffectiveTweets    | 0.402       |
-| Word n-grams + Liu Lexicon + Vader         | Scikitlearn + NLTK | 0.506       |
-| Word n-grams + Liu Lexicon + SentiStrength | AffectiveTweets    | 0.494       |
-| Word n-grams + All lexicons + SentiStrength               | AffectiveTweets    | 0.522       |
+| Features                                    | Implementation     | Kappa Score | F1 Score | Time (Seconds) |
+| ------------------------------------------- | ------------------ | ----------- | -------- | -------------- |
+| Word n-grams                                | Scikitlearn + NLTK | 0.42        | 0.64     | 30.7           |
+| Word n-grams                                | AffectiveTweets    | 0.45        | 0.66     | 13.0           |
+| Word n-grams + Liu Lexicon                  | Scikitlearn + NLTK | 0.48        | 0.68     | 13.4           |
+| Word n-grams + Liu Lexicon                  | AffectiveTweets    | 0.48        | 0.68     | 27.4           |
+| Liu Lexicon  + Vader                        | Scikitlearn + NLTK | 0.41        | 0.63     | 8.9            |
+| Liu Lexicon  + SentiStrength                | AffectiveTweets    | 0.40        | 0.63     | 31.9           |
+| Word n-grams + Liu Lexicon + Vader          | Scikitlearn + NLTK | 0.51        | 0.70     | 16             |
+| Word n-grams + Liu Lexicon + SentiStrength  | AffectiveTweets    | 0.49        | 0.69     | 68.5           |
+| Word n-grams + All lexicons + SentiStrength | AffectiveTweets    | 0.52        | 0.71     | 74.6           |
+
+
+
+The execution time is averaged over 10 repetitions of each model.  
+
+The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  Weka was run using Java 8 (Oracle version) and Python models were run using Python 3.6.4 (Anaconda version).
 

@@ -1,0 +1,234 @@
+Linear model using  n-grams  (n=1,2,3,4).
+Confusion Matrix for Logistic Regression + ngram features:
+[[ 172  335   94]
+ [  31 1433  176]
+ [  48  620  904]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.69      0.29      0.40       601
+    neutral       0.60      0.87      0.71      1640
+   positive       0.77      0.58      0.66      1572
+
+avg / total       0.68      0.66      0.64      3813
+
+kappa:0.4236034809946826
+time = 18
+Linear model using  n-grams + Bing Liu's Lexicon
+Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lexicon
+[[ 236  290   75]
+ [  44 1395  201]
+ [  59  529  984]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.70      0.39      0.50       601
+    neutral       0.63      0.85      0.72      1640
+   positive       0.78      0.63      0.69      1572
+
+avg / total       0.70      0.69      0.68      3813
+
+kappa:0.4763629485702495
+time = 12
+Linear model using Bing Liu's Lexicon + Vader
+Confusion Matrix for Logistic Regression + Vader + features from Bing Liu's Lexicon
+[[ 169  323  109]
+ [  51 1275  314]
+ [  58  491 1023]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.61      0.28      0.38       601
+    neutral       0.61      0.78      0.68      1640
+   positive       0.71      0.65      0.68      1572
+
+avg / total       0.65      0.65      0.63      3813
+
+kappa:0.408231856331834
+time = 5
+Linear model using n+grams + Bing Liu's Lexicon + Vader
+Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lexicon and the Vader method
+[[ 268  261   72]
+ [  45 1387  208]
+ [  56  493 1023]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.73      0.45      0.55       601
+    neutral       0.65      0.85      0.73      1640
+   positive       0.79      0.65      0.71      1572
+
+avg / total       0.72      0.70      0.70      3813
+
+kappa:0.5058311344923361
+time = 16
+Linear model using  n-grams  (n=1,2,3,4).
+Zero Weights processed. Default weights will be used
+
+Time taken to test model on test data: 2.46 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2545               66.7453 %
+Incorrectly Classified Instances      1268               33.2547 %
+Kappa statistic                          0.4457
+Mean absolute error                      0.2642
+Root mean squared error                  0.3945
+Relative absolute error                 59.454  %
+Root relative squared error             83.6944 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.616    0.136    0.760      0.616    0.680      0.501    0.816     0.789     positive
+                 0.829    0.388    0.617      0.829    0.708      0.442    0.799     0.724     neutral
+                 0.361    0.037    0.644      0.361    0.463      0.416    0.851     0.559     negative
+Weighted Avg.    0.667    0.229    0.681      0.667    0.658      0.462    0.814     0.725     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+  968  543   61 |    a = positive
+  221 1360   59 |    b = neutral
+   84  300  217 |    c = negative
+
+time = 14
+Linear model using  n-grams + Bing Liu's Lexicon
+Zero Weights processed. Default weights will be used
+
+Time taken to test model on test data: 11.46 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2612               68.5025 %
+Incorrectly Classified Instances      1201               31.4975 %
+Kappa statistic                          0.4779
+Mean absolute error                      0.2471
+Root mean squared error                  0.383 
+Relative absolute error                 55.596  %
+Root relative squared error             81.2491 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.641    0.143    0.758      0.641    0.695      0.514    0.837     0.807     positive
+                 0.820    0.349    0.640      0.820    0.719      0.469    0.818     0.751     neutral
+                 0.431    0.038    0.680      0.431    0.527      0.477    0.884     0.616     negative
+Weighted Avg.    0.685    0.215    0.695      0.685    0.679      0.489    0.836     0.753     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1008  502   62 |    a = positive
+  235 1345   60 |    b = neutral
+   86  256  259 |    c = negative
+
+time = 30
+Linear model using  Bing Liu's Lexicon + SentiStrength
+Zero Weights processed. Default weights will be used
+
+Time taken to test model on test data: 5.87 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2457               64.4375 %
+Incorrectly Classified Instances      1356               35.5625 %
+Kappa statistic                          0.4029
+Mean absolute error                      0.3198
+Root mean squared error                  0.4016
+Relative absolute error                 71.9598 %
+Root relative squared error             85.1839 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.622    0.171    0.718      0.622    0.666      0.463    0.794     0.714     positive
+                 0.802    0.399    0.603      0.802    0.688      0.403    0.764     0.667     neutral
+                 0.275    0.033    0.611      0.275    0.379      0.344    0.790     0.483     negative
+Weighted Avg.    0.644    0.247    0.651      0.644    0.630      0.418    0.781     0.657     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+  977  537   58 |    a = positive
+  278 1315   47 |    b = neutral
+  106  330  165 |    c = negative
+
+time = 15
+Linear model using  n-grams + Bing Liu's Lexicon + SentiStrength
+Zero Weights processed. Default weights will be used
+
+Time taken to test model on test data: 23.58 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2648               69.4466 %
+Incorrectly Classified Instances      1165               30.5534 %
+Kappa statistic                          0.4949
+Mean absolute error                      0.2401
+Root mean squared error                  0.3786
+Relative absolute error                 54.0243 %
+Root relative squared error             80.3157 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.649    0.139    0.766      0.649    0.703      0.527    0.845     0.812     positive
+                 0.823    0.335    0.649      0.823    0.726      0.485    0.826     0.766     neutral
+                 0.463    0.039    0.690      0.463    0.554      0.502    0.896     0.642     negative
+Weighted Avg.    0.694    0.208    0.704      0.694    0.689      0.505    0.845     0.766     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1021  485   66 |    a = positive
+  232 1349   59 |    b = neutral
+   80  243  278 |    c = negative
+
+time = 51
+Linear model using  n-grams + SentiStrength + all lexicons
+Zero Weights processed. Default weights will be used
+
+Time taken to test model on test data: 22.57 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2706               70.9677 %
+Incorrectly Classified Instances      1107               29.0323 %
+Kappa statistic                          0.5215
+Mean absolute error                      0.2289
+Root mean squared error                  0.372 
+Relative absolute error                 51.5039 %
+Root relative squared error             78.9079 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.658    0.131    0.779      0.658    0.713      0.544    0.854     0.823     positive
+                 0.831    0.319    0.663      0.831    0.738      0.509    0.835     0.772     neutral
+                 0.514    0.037    0.720      0.514    0.600      0.550    0.913     0.687     negative
+Weighted Avg.    0.710    0.197    0.720      0.710    0.706      0.530    0.855     0.779     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1034  471   67 |    a = positive
+  224 1363   53 |    b = neutral
+   70  222  309 |    c = negative
+
+time = 59

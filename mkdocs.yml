@@ -6,5 +6,6 @@ pages:
     - Home: index.md
     - Installation: install.md
     - Examples: examples.md
+    - Videos: videos.md
     - Contributing: contribute.md
     - Benchmark: benchmark.md

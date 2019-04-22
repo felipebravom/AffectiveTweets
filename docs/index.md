@@ -142,7 +142,7 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 
 
 ## Contact
- * Email: fbravoma at waikato.ac.nz
+ * Email: fbravo at dcc.uchile.cl
  * If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
 
 

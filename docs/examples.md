@@ -33,7 +33,9 @@ Note: The -Xmx parameter allows incrementing the memory available for the Java v
 
  Note: Weka allows copying and pasting the configuration of its objets. This is very convenient when training complex schemes with various parameters.  The FilteredClassfier allows directly  passing a filter to the classifier. In this example, we are removing the attributes of type string.
 
-* Select the Percentage split option and start training the classifier 
+* Select the Percentage split option and start training the classifier.
+
+Note: This example is also shown in [video 1](../videos/#video-1-training-sentiment-classification-models-for-tweets).
 
 ### Train an SVM using multiple affective lexicons, SentiStrength, and the average word-embedding vector
 * Go back to the preprocess panel and press the *Undo* button to go back to the original dataset (or load the __sent140test.arff.gz__ dataset in case you skipped the first example).
@@ -48,6 +50,7 @@ weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.
 
 * Now you can train the classifier by pressing the *Start* button. 
 
+Note: This example is also shown in [video 1](../videos/#video-1-training-sentiment-classification-models-for-tweets).
 
 
 
@@ -86,6 +89,8 @@ weka.filters.unsupervised.attribute.Remove -R first-4121
 * Use your new lexicon on a different tweet dataset using the __TweetToInputLexiconFeatureVector__ filter.
 
 
+Note: This example is also shown in [video 2](../videos/#video-2-creating-lexicons-for-twitter-sentiment-analysis).
+
 
 ### Create a Lexicon of sentiment words using PMI Semantic Orientation
 * Open in the preprocess panel the __sent140train.arff.gz__ dataset. This is a large corpus, so make sure to increase the heap size when running Weka.
@@ -94,6 +99,7 @@ weka.filters.unsupervised.attribute.Remove -R first-4121
 
 * Save the lexicon as an arff file and use it with the __TweetToInputLexiconFeatureVector__ filter.
 
+Note: This example is also shown in [video 2](../videos/#video-2-creating-lexicons-for-twitter-sentiment-analysis).
 
 ### Train a Tweet-level polarity classifier from unlabelled tweets using emoticon labels
 
@@ -117,6 +123,9 @@ weka.filters.unsupervised.attribute.RenameAttribute -find polarity -replace clas
 ```bash
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 0 -G 0 -taggerFile $HOME/wekafiles/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $HOME/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 1 -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
+
+Note: This example is also shown in [video 3](../videos/#video-3-twitter-sentiment-classification-with-distant-supervision).
+
 
 ### Train a Tweet-level polarity classifier from unlabelled tweets using the ASA and PTCM distant supervision methods
 
@@ -142,6 +151,10 @@ weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute
 ```bash
 weka.classifiers.meta.FilteredClassifier -F "weka.filters.unsupervised.attribute.PTCM -C -W -lex $HOME/wekafiles/packages/AffectiveTweets/lexicons/arff_lexicons/BingLiu.arff -M 4 -N 4 -A 10 -H /Users/admin/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \"weka.core.stopwords.Null \" -I 1 -U -tokenizer \"weka.core.tokenizers.TweetNLPTokenizer \"" -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
+
+Note: These examples are  also shown in [video 3](../videos/#video-3-twitter-sentiment-classification-with-distant-supervision).
+
+
 
 ## Command-line 
 
@@ -216,4 +229,6 @@ weka.filters.unsupervised.attribute.Reorder -R 4-last,3
 Note: This code is not compatible with the latest version of the WekaDeepLearning4j package.
 
 This network has 100 filters in a convolutional layer, followed by the output layer. The filter size is 300x1 (i.e, each filter maps a word trigram, since each word has 100 dimensions). The stride is 100x1 (the number of dimensions for a word). The number of epochs is 200. The input width is 1500 and the input height is 1. The number of input channels is 1 and the batch size is 256.
+
+
 
