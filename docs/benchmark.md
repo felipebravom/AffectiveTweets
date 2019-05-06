@@ -27,13 +27,21 @@ java -cp $WEKA_HOME/packages/AffectiveTweets/AffectiveTweets.jar:$WEKA_PATH/weka
 
 
 
-###  Linear model using  n-grams  (n=1,2,3,4). 
+###  Logistic regression model using word n-grams  (n=1,2,3,4). 
 
-We train a linear model using word n-grams as features with marked negation using the Weka command-line interface:
+We train a logistic regression model using word n-grams as features with marked negation using the Weka command-line interface:
 
 ```bash
 java -Xmx4G -cp  $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -v -o -t benchmark/dataset/twitter-train-B.arff -T benchmark/dataset/twitter-test-gold-B.arff -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 ```
+
+
+
+LibLinear allows implementing various linear models (e.g., SVMs, logistics regression) by changing the loss function. In this and the following benchmark experiments involving AffectiveTwets and LibLinear we use  L2-regularized logistic regression models. 
+
+
+
+
 
 Results:
 
@@ -72,11 +80,54 @@ Weighted Avg.    0.667    0.229    0.681      0.667    0.658      0.462    0.814
 
 
 
+### Logistic regression model using word n-grams +  Bing Liu's Lexicon 
+
+We train a logistic regression model word n-grams and features derived from Bing Liu's Lexicon:
+
+```bash
+java -Xmx4G -cp $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -v -o -t dataset/twitter-train-B.arff -T dataset/twitter-test-gold-B.arff -F "weka.filters.MultiFilter -F \"weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\"weka.core.stopwords.Null \\\" -I 1 -U -tokenizer \\\"weka.core.tokenizers.TweetNLPTokenizer \\\"\" -F \"weka.filters.unsupervised.attribute.Reorder -R 3-last,2\"" -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+```
+
+Results:
+
+```bash
+Time taken to test model on test data: 10.73 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2612               68.5025 %
+Incorrectly Classified Instances      1201               31.4975 %
+Kappa statistic                          0.4779
+Mean absolute error                      0.2471
+Root mean squared error                  0.383 
+Relative absolute error                 55.596  %
+Root relative squared error             81.2491 %
+Total Number of Instances             3813     
 
 
-### Linear model using  Bing Liu's Lexicon + SentiStrength
+=== Detailed Accuracy By Class ===
 
-We train a linear model using features derived from Bing Liu's Lexicon and the SentiStrength method:
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.641    0.143    0.758      0.641    0.695      0.514    0.837     0.807     positive
+                 0.820    0.349    0.640      0.820    0.719      0.469    0.818     0.751     neutral
+                 0.431    0.038    0.680      0.431    0.527      0.477    0.884     0.616     negative
+Weighted Avg.    0.685    0.215    0.695      0.685    0.679      0.489    0.836     0.753     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1008  502   62 |    a = positive
+  235 1345   60 |    b = neutral
+   86  256  259 |    c = negative
+```
+
+
+
+
+### Logistic regression model using  Bing Liu's Lexicon + SentiStrength
+
+We train a logistic regression using features derived from Bing Liu's Lexicon and the SentiStrength method:
 
 
 ```bash
@@ -119,7 +170,7 @@ Weighted Avg.    0.644    0.247    0.651      0.644    0.630      0.418    0.781
 
 
 
-###  Linear model using  n-grams + Bing Liu's Lexicon + SentiStrength
+###  Logistic regression model using  n-grams + Bing Liu's Lexicon + SentiStrength
 Now we combine the features from the two previous examples:
 
 ```bash
@@ -163,7 +214,7 @@ Weighted Avg.    0.694    0.208    0.704      0.694    0.689      0.505    0.845
 
 
 
-###   Linear model using  n-grams + SentiStrength + all lexicons
+###   Logistic regression model model using  n-grams + SentiStrength + all lexicons
 Now we include features from all the lexicons implemented by AffectiveTweets:
 
 ```bash
@@ -251,7 +302,7 @@ tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
 
 
 
-### Linear model using  n-grams  (n=1,2,3,4). 
+### Logistic regression model using word n-grams  (n=1,2,3,4). 
 
 We replicate the same model we created previously using AffectiveTweets. N-grams are extracted using [CountVectorizer](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html) from Scikit-learn. N-grams inside a negation word are marked.  
 
@@ -268,10 +319,16 @@ predicted = text_clf.predict(test_data.tweet)
 
 conf = confusion_matrix(test_data.sent, predicted)
 kappa = cohen_kappa_score(test_data.sent, predicted) 
+class_rep = classification_report(test_data.sent, predicted)
 
-print('Confusion Matrix for Logistic Regression + ngram features')
+
+
+print('Confusion Matrix for Logistic Regression + ngram features:')
 print(conf)
+print('Classification Report')
+print(class_rep)
 print('kappa:'+str(kappa))
+
 
 ```
 
@@ -280,47 +337,43 @@ print('kappa:'+str(kappa))
 Results:
 
 ```
-
 Confusion Matrix for Logistic Regression + ngram features:
 [[ 172  335   94]
  [  31 1433  176]
  [  48  620  904]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.69      0.29      0.40       601
+    neutral       0.60      0.87      0.71      1640
+   positive       0.77      0.58      0.66      1572
+
+avg / total       0.68      0.66      0.64      3813
+
 kappa:0.4236034809946826
 ```
 
-
-
-
-
-### Linear model using  Bing Liu's Lexicon + Vader
-
-Unfortunately, SentiStrength is not implemented in the NLTK sentiment module. However, NLTK implements [Vader](https://github.com/cjhutto/vaderSentiment), which is another popular lexicon-based sentiment analysis method.  
-
-We implement a linear model using features derived from Bing Liu's lexicon and Vader.
+### Logistic regression model using  word n-grams + Bing Liu's Lexicon 
+We replicate now the second model created using AffectiveTweets: a logistic regression trained on word n-grams and features calculated from Bing Liu's Lexicon.
 
 First, we need to make sure that the required NLTK resources are installed:
 
 ```python
 import nltk
 nltk.download('opinion_lexicon')
-nltk.download('vader_lexicon')
 ```
 
-
-
-We extend Scikit-learn classes [BaseEstimator](https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html) and and [TransformerMixin](https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html) to implement a feature extractor:
-
-
+We extend Scikit-learn classes [BaseEstimator](https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html) and [TransformerMixin](https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html) to implement a feature extractor that uses Bing Liu's lexicon:
 
 ```python
-class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
-    """Takes in a corpus of tweets and calculates features using Bing Liu's lexicon and the Vader method"""
+
+class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
+    """Takes in a corpus of tweets and calculates features using Bing Liu's lexicon"""
 
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
         self.pos_set = set(opinion_lexicon.positive())
         self.neg_set = set(opinion_lexicon.negative())
-        self.sid = SentimentIntensityAnalyzer()
 
     def liu_score(self,sentence):
         """Calculates the number of positive and negative words in the sentence using Bing Liu's Lexicon""" 
@@ -334,17 +387,110 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
                 neg_words += 1
         return [pos_words,neg_words]
     
-    
+    def transform(self, X, y=None):
+        """Applies liu_score and vader_score on a data.frame containing tweets """
+        values = []
+        for tweet in X:
+            values.append(self.liu_score(tweet))
+        
+        return(np.array(values))
+
+    def fit(self, X, y=None):
+        """This function must return `self` unless we expect the transform function to perform a 
+        different action on training and testing partitions (e.g., when we calculate unigram features, 
+        the dictionary is only extracted from the first batch)"""
+        return self
+
+
+```
+
+We can combine theword  n-gram and Bing Liu's  features using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
+
+```python
+liu_feat = LiuFeatureExtractor(tokenizer)
+vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
+log_mod = LogisticRegression()  
+liu_ngram_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
+    ('clf', log_mod)])
+
+
+liu_ngram_clf.fit(train_data.tweet, train_data.sent)
+pred_liu_ngram = liu_ngram_clf.predict(test_data.tweet)
+
+
+conf_liu_ngram = confusion_matrix(test_data.sent, pred_liu_ngram)
+kappa_liu_ngram = cohen_kappa_score(test_data.sent, pred_liu_ngram) 
+class_rep_liu_ngram = classification_report(test_data.sent, pred_liu_ngram)
+
+print('Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu\'s Lexicon')
+print(conf_liu_ngram)
+print('Classification Report')
+print(class_rep_liu_ngram)
+print('kappa:'+str(kappa_liu_ngram))
+```
+
+Results:
+
+```
+Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lexicon
+[[ 236  290   75]
+ [  44 1395  201]
+ [  59  529  984]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.70      0.39      0.50       601
+    neutral       0.63      0.85      0.72      1640
+   positive       0.78      0.63      0.69      1572
+
+avg / total       0.70      0.69      0.68      3813
+
+kappa:0.4763629485702495
+```
+
+
+
+
+### Logistic regression model using  Bing Liu's Lexicon + Vader
+
+Unfortunately, SentiStrength is not implemented in the NLTK sentiment module. However, NLTK implements [Vader](https://github.com/cjhutto/vaderSentiment), which is another popular lexicon-based sentiment analysis method.  
+
+We implement a logistic regression using features derived from Bing Liu's lexicon and Vader.
+
+First, we need to make sure that the required NLTK resources are installed:
+
+```python
+import nltk
+nltk.download('opinion_lexicon')
+nltk.download('vader_lexicon')
+```
+
+
+
+We implement another feature extractor that calculates features using Vader:
+
+
+
+```python
+class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
+    """Takes in a corpus of tweets and calculates features using the Vader method"""
+
+    def __init__(self, tokenizer):
+        self.tokenizer = tokenizer
+        self.sid = SentimentIntensityAnalyzer()
+
+  
     def vader_score(self,sentence):
         """ Calculates sentiment scores for a sentence using the Vader method """
         pol_scores = self.sid.polarity_scores(sentence)
         return(list(pol_scores.values()))
 
     def transform(self, X, y=None):
-        """Applies liu_score and vader_score on a data.frame containing tweets """
+        """Applies vader_score on a data.frame containing tweets """
         values = []
         for tweet in X:
-            values.append(self.liu_score(tweet)+self.vader_score(tweet))
+            values.append(self.vader_score(tweet))
         
         return(np.array(values))
 
@@ -354,32 +500,48 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
 
 
 
-lex_feat = LexiconFeatureExtractor(tokenizer)
+
+
+vader_feat = VaderFeatureExtractor(tokenizer)
+liu_feat = LiuFeatureExtractor(tokenizer)
 
 log_mod = LogisticRegression()  
-lex_clf = Pipeline([('lexicon', lex_feat), ('clf', log_mod)])
+vader_liu_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('vader', vader_feat), ('liu',liu_feat) ])),
+    ('clf', log_mod)])
 
 
-lex_clf.fit(train_data.tweet, train_data.sent)
-pred_lex = lex_clf.predict(test_data.tweet)
+vader_liu_clf.fit(train_data.tweet, train_data.sent)
+pred_vader_liu = vader_liu_clf.predict(test_data.tweet)
 
 
-conf_lex = confusion_matrix(test_data.sent, pred_lex)
-kappa_lex = cohen_kappa_score(test_data.sent, pred_lex) 
+conf_vader_liu = confusion_matrix(test_data.sent, pred_vader_liu)
+kappa_vader_liu = cohen_kappa_score(test_data.sent, pred_vader_liu) 
+class_rep_vader_liu = classification_report(test_data.sent, pred_vader_liu)
 
-print('Confusion Matrix for Logistic Regression + features from Bing Liu\'s Lexicon and the Vader method')
-print(conf_lex)
-print('kappa:'+str(kappa_lex))
-
+print('Confusion Matrix for Logistic Regression + Vader + features from Bing Liu\'s Lexicon')
+print(conf_vader_liu)
+print('Classification Report')
+print(class_rep_vader_liu)
+print('kappa:'+str(kappa_vader_liu))
 ```
 
 Results:
 
 ```
-Confusion Matrix for Logistic Regression + features from Bing Liu's Lexicon and the Vader method
+Confusion Matrix for Logistic Regression + Vader + features from Bing Liu's Lexicon
 [[ 169  323  109]
  [  51 1275  314]
  [  58  491 1023]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.61      0.28      0.38       601
+    neutral       0.61      0.78      0.68      1640
+   positive       0.71      0.65      0.68      1572
+
+avg / total       0.65      0.65      0.63      3813
+
 kappa:0.408231856331834
 ```
 
@@ -387,15 +549,15 @@ kappa:0.408231856331834
 
 
 
+### Logistic regression model using  n-grams + Bing Liu's Lexicon + Vader
 
-
-### Linear model using  n-grams + Bing Liu's Lexicon + Vader
-
-We can combine the feature spaces of the two previous examples using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
+We now combine the feature space of all the previous examples:
 
 ```python
 
-ngram_lex_clf = Pipeline([('feats', FeatureUnion([ ('ngram', vectorizer), ('lexicon',lex_feat) ])), ('clf', log_mod)])
+ngram_lex_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('ngram', vectorizer), ('vader',vader_feat),('liu',liu_feat)  ])),
+    ('clf', log_mod)])
 
 
 ngram_lex_clf.fit(train_data.tweet, train_data.sent)
@@ -404,9 +566,13 @@ pred_ngram_lex = ngram_lex_clf.predict(test_data.tweet)
 
 conf_ngram_lex = confusion_matrix(test_data.sent, pred_ngram_lex)
 kappa_ngram_lex = cohen_kappa_score(test_data.sent, pred_ngram_lex) 
+class_rep = classification_report(test_data.sent, pred_ngram_lex)
+
 
 print('Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu\'s Lexicon and the Vader method')
 print(conf_ngram_lex)
+print('Classification Report')
+print(class_rep)
 print('kappa:'+str(kappa_ngram_lex))
 
 ```
@@ -420,6 +586,15 @@ Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lex
 [[ 268  261   72]
  [  45 1387  208]
  [  56  493 1023]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.73      0.45      0.55       601
+    neutral       0.65      0.85      0.73      1640
+   positive       0.79      0.65      0.71      1572
+
+avg / total       0.72      0.70      0.70      3813
+
 kappa:0.5058311344923361
 ```
 
@@ -449,5 +624,5 @@ A table summarising all the experiments from above is shown as follows:
 
 The execution time is averaged over 10 repetitions of each model.  
 
-The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  Weka was run using Java 8 (Oracle version) and Python models were run using Python 3.6.4 (Anaconda version).
+The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  Weka was run using Java 8 (Oracle version) and Scikitlearn+NLTK  models were run using Python 3.6.4 (Anaconda version).
 
