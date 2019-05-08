@@ -123,7 +123,7 @@ class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
 vader_feat = VaderFeatureExtractor(tokenizer)
 liu_feat = LiuFeatureExtractor(tokenizer)
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')  
 
 
 

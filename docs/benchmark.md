@@ -310,7 +310,7 @@ We replicate the same model we created previously using AffectiveTweets. N-grams
 
 ```python
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
 text_clf = Pipeline([('vect', vectorizer), ('clf', log_mod)])
 
 text_clf.fit(train_data.tweet, train_data.sent)
@@ -404,12 +404,12 @@ class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
 
 ```
 
-We can combine theword  n-gram and Bing Liu's  features using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
+We can combine  word n-gram features and features derived from Bing Liu's lexicon using the class [FeatureUnion](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html) from Scikit-learn:
 
 ```python
 liu_feat = LiuFeatureExtractor(tokenizer)
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
 liu_ngram_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
     ('clf', log_mod)])
@@ -505,7 +505,7 @@ class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
 vader_feat = VaderFeatureExtractor(tokenizer)
 liu_feat = LiuFeatureExtractor(tokenizer)
 
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
 vader_liu_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('vader', vader_feat), ('liu',liu_feat) ])),
     ('clf', log_mod)])

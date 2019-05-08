@@ -102,7 +102,7 @@ class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
 
 liu_feat = LiuFeatureExtractor(tokenizer)
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')  
 liu_ngram_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
     ('clf', log_mod)])

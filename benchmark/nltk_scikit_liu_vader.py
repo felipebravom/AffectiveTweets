@@ -119,7 +119,7 @@ class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
 vader_feat = VaderFeatureExtractor(tokenizer)
 liu_feat = LiuFeatureExtractor(tokenizer)
 
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')  
 vader_liu_clf = Pipeline([ ('feats', 
                             FeatureUnion([ ('vader', vader_feat), ('liu',liu_feat) ])),
     ('clf', log_mod)])

@@ -43,7 +43,7 @@ tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
 #  
 ##################################################
 vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
-log_mod = LogisticRegression()  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')  
 text_clf = Pipeline([('vect', vectorizer), ('clf', log_mod)])
 
 text_clf.fit(train_data.tweet, train_data.sent)
