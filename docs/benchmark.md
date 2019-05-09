@@ -624,5 +624,9 @@ A table summarising all the experiments from above is shown as follows:
 
 The execution time is averaged over 10 repetitions of each model.  
 
-The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  Weka was run using Java 8 (Oracle version) and Scikitlearn+NLTK  models were run using Python 3.6.4 (Anaconda version).
+Bear in mind that there are only  two models (word n-grams and word n-grams+Liu Lexicon) that can be directly compared in both implementations (AffectiveTweets and Scikitlearn+NLTK) as they use the same features and the same learning schemes.  Other examples such as Liu Lexicon+Vader and Liu Lexicon+SentiStregnth  show how similar models can be implemented using two different tools.   
+
+
+
+The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  AfftectiveTweets models were run using Weka 3.9.3 and  Java 8 (Oracle version). Scikitlearn+NLTK  models were run using Python 3.6.4 (Anaconda version), Scikitlearn 0.20.3 and NLTK 3.4.1. 
 
