@@ -1,5 +1,20 @@
-% This file was created with JabRef 2.10.
-% Encoding: MacRoman
+@article{JMLR:v20:18-450,
+  author  = {Felipe Bravo-Marquez and Eibe Frank and Bernhard Pfahringer and Saif M. Mohammad},
+  title   = {AffectiveTweets:  a Weka Package for Analyzing Affectin Tweets},
+  journal = {Journal of Machine Learning Research},
+  year    = {2019},
+  volume  = {20},
+  pages   = {1-6},
+  url     = {http://jmlr.org/papers/v20/18-450.html}
+}
+
+@InProceedings{MohammadB17,
+  Title                    = {Emotion Intensities in Tweets},
+  Author                   = {Saif Mohammad and Felipe Bravo{-}Marquez},
+  Booktitle                = {Proceedings of the 6th Joint Conference on Lexical and Computational Semantics, *SEM @ACM 2017, Vancouver, Canada, August 3-4, 2017},
+  Year                     = {2017},
+  Pages                    = {65--77}
+}
 
 
 @InProceedings{Bravo-MarquezFM16,
@@ -62,13 +77,6 @@
   Pages                    = {168--177}
 }
 
-@InProceedings{MohammadB17,
-  Title                    = {Emotion Intensities in Tweets},
-  Author                   = {Saif Mohammad and Felipe Bravo{-}Marquez},
-  Booktitle                = {Proceedings of the 6th Joint Conference on Lexical and Computational Semantics, *SEM @ACM 2017, Vancouver, Canada, August 3-4, 2017},
-  Year                     = {2017},
-  Pages                    = {65--77}
-}
 
 @Article{COIN12024,
   Title                    = {Using Hashtags to Capture Fine Emotion Categories from Tweets},
