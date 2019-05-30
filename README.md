@@ -42,7 +42,7 @@ The most relevant papers on which this package is based are:
 
   You are also welcome to cite a previous publication describing the package:
 
-  - S. M. Mohammad and F. Bravo-Marquez [Emotion Intensities in Tweets](http://anthology.aclweb.org/S/S17/S17-1007.pdf), In **Sem '17: Proceedings of the sixth joint conference on lexical and computational semantics (\*Sem)*, August 2017, Vancouver, Canada. ([pdf](https://felipebravom.com/publications/starsem2017.pdf))
+  - S. M. Mohammad and F. Bravo-Marquez [Emotion Intensities in Tweets](http://anthology.aclweb.org/S/S17/S17-1007.pdf), In * \*Sem '17: Proceedings of the sixth joint conference on lexical and computational semantics (\*Sem)*, August 2017, Vancouver, Canada. ([pdf](https://felipebravom.com/publications/starsem2017.pdf)) 
 
 You should also cite the papers describing any of the lexicons or resources you are using with this package. 
 
