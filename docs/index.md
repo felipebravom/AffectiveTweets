@@ -39,7 +39,7 @@ The most relevant papers on which this package is based are:
 ## Citation
 Please cite the following paper if using this package in an academic publication:
 
-* F. Bravo-Marquez, E. Frank, B. Pfahringer, and S. M. Mohammad [AffectiveTweets: a WEKA Package for Analyzing Affect in Tweets](http://jmlr.org/papers/v20/18-450.html), In *Journal of Machine Learning Research* Volume 20, 2019. ([pdf](https://felipebravom.com/publications/jmlr2019.pdf))
+* F. Bravo-Marquez, E. Frank, B. Pfahringer, and S. M. Mohammad [AffectiveTweets: a WEKA Package for Analyzing Affect in Tweets](http://jmlr.org/papers/v20/18-450.html), In *Journal of Machine Learning Research* Volume 20(92), pages 1−6, 2019. ([pdf](https://felipebravom.com/publications/jmlr2019.pdf))
 
 You are also welcome to cite a previous publication describing the package:
 
