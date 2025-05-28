@@ -2,7 +2,7 @@
 
 ## About
 
-[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](http://www.cs.waikato.ac.nz/~ml/weka/) package for analyzing emotion and sentiment of  tweets.  The source code is hosted on [Github](https://github.com/felipebravom/AffectiveTweets).
+[AffectiveTweets](http://weka.sourceforge.net/packageMetaData/AffectiveTweets/index.html) is a [WEKA](https://ml.cms.waikato.ac.nz/weka/) package for analyzing emotion and sentiment of  tweets.  The source code is hosted on [Github](https://github.com/felipebravom/AffectiveTweets).
 
 The package implements WEKA filters for calculating state-of-the-art affective analysis features from tweets that can be fed into machine learning algorithms. Many of these features were drawn from the [NRC-Canada System](http://saifmohammad.com/WebPages/NRC-Canada-Sentiment.htm). It also implements methods for building affective lexicons and distant supervision methods for training affective models from unlabelled tweets.
 
@@ -76,13 +76,13 @@ The individual references for each resource can be found through the links provi
 	* [Sentiment140](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated by emoticons. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt)
 	* [NRC Hashtag Sentiment lexicon](http://saifmohammad.com/WebPages/lexicons.html#NRCTwitter): calculates positive and negative variables by aggregating the positive and negative word scores provided by this lexicon created with tweets annotated with emotional hashtags. [BibTex](http://saifmohammad.com/WebDocs/JAIR14-bibtex.txt) 
 	* [NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): counts the number of words matching each emotion from this lexicon. [BibTex](http://saifmohammad.com/WebPages/Abstracts/crowdemo.bib.txt)
-	* [NRC-10 Expanded](http://www.cs.waikato.ac.nz/ml/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFM16.bib)
+	* [NRC-10 Expanded](https://ml.cms.waikato.ac.nz/sa/lex.html#emolextwitter): adds the emotion associations of the words matching the Twitter Specific expansion of the NRC Word-Emotion Association Lexicon. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFM16.bib)
 	* [NRC Hashtag Emotion Association Lexicon](http://saifmohammad.com/WebPages/lexicons.html#HashEmo): adds the emotion associations of the words matching this lexicon. [BibTex](http://saifmohammad.com/WebPages/hashtagPersonality-bib.html)  
 	* [SentiWordNet](http://sentiwordnet.isti.cnr.it): calculates positive and negative scores using SentiWordnet. We calculate a weighted average of the sentiment distributions of the synsets for word occurring in multiple synsets. The weights correspond to the reciprocal ranks of the senses in order to give higher weights to most popular senses. [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/lrec/BaccianellaES10.bib) 
 	* [Emoticons](https://github.com/fnielsen/afinn): calculates a positive and a negative score by aggregating the word associations provided by a list of emoticons. The list is taken from the [AFINN](https://github.com/fnielsen/afinn) project.
 	* Negations: counts the number of negating words in the tweet.
 
- 3. __TweetToInputLexiconFeatureVector__: calculates features from a tweet using a given list of affective lexicons, where each lexicon is represented as an [ARFF](https://weka.wikispaces.com/ARFF) file.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault.   [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
+ 3. __TweetToInputLexiconFeatureVector__: calculates features from a tweet using a given list of affective lexicons, where each lexicon is represented as an [ARFF](https://waikato.github.io/weka-wiki/formats_and_processing/arff/) file.  The features are calculated by adding or counting the affective associations of the words matching the given lexicons. All numeric and nominal attributes from each lexicon are considered. Numeric scores are added and nominal are counted. The [NRC-Affect-Intensity](http://www.saifmohammad.com/WebPages/AffectIntensity.htm) lexicon is used by deault.   [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/corr/Mohammad17.bib)
 
 4. __TweetToSentiStrengthFeatureVector__: calculates positive and negative sentiment strengths for a tweet using [SentiStrength](http://sentistrength.wlv.ac.uk/). Disclaimer: __SentiStrength__ can only be used for academic purposes from within this package. [BibTex](http://dblp.uni-trier.de/rec/bib2/journals/jasis/ThelwallBP12.bib)
 
@@ -99,18 +99,18 @@ The individual references for each resource can be found through the links provi
 1. __PMILexiconExpander__: calculates the Pointwise Mutual Information (PMI) semantic orientation for each word in a corpus of tweets annotated by sentiment. The score is calculated by subtracting the PMI of the  target  word  with  a negative  sentiment from the PMI of the target word with a positive sentiment. This is a supervised filter.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/acl/Turney02.bib) 
 
 
-2. __TweetCentroid__:  calculates word distributional vectors from a corpus of unlabelled tweets by treating them as the centroid of the tweet vectors in which they appear. The vectors can be labelled using an affective lexicon to train a word-level affective classifier. This classifier can be used to expand the original lexicon.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/sigir15.pdf)
+2. __TweetCentroid__:  calculates word distributional vectors from a corpus of unlabelled tweets by treating them as the centroid of the tweet vectors in which they appear. The vectors can be labelled using an affective lexicon to train a word-level affective classifier. This classifier can be used to expand the original lexicon.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/sigir/Bravo-MarquezFP15.bib), [original paper](https://ml.cms.waikato.ac.nz/publications/2015/sigir.pdf)
 
 3. __LabelWordVectors__: labels word vectors with an input lexicon in arff format. This filter is useful for training word-level affective classifiers.
 
 ### Distant Supervision Filters
 
-1. __ASA__:  Annotate-Sample-Average (ASA) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](http://www.cs.waikato.ac.nz/~fbravoma/publications/ecai2016.pdf)
+1. __ASA__:  Annotate-Sample-Average (ASA) is a lexicon-based distant supervision method for training polarity classifiers in Twitter in the absence of labelled data. It takes a collection of unlabelled tweets and a polarity lexicon in arff format and creates synthetic labelled instances. Each labelled instance is created by sampling with replacement a number of tweets containing at least one word from the lexicon with the desired polarity, and averaging the feature vectors of the sampled tweets.  [BibTex](http://dblp.uni-trier.de/rec/bib2/conf/ecai/Bravo-MarquezFP16.bib), [original paper](https://ml.cms.waikato.ac.nz/publications/2016/asa.pdf)
 
 
 1. __PTCM__:  The Partitioned Tweet Centroid Model (PTCM) is an adaption of the TweetCentroidModel for distant supervision.  As tweets and words are represented by the same feature vectors, a word-level classifier trained from a polarity lexicon and a corpus of unlabelled tweets can be used for classifying the sentiment of tweets represented by sparse feature vectors.  In other words, the labelled word vectors correspond to lexicon-annotated training data for message-level polarity classification.
 The model includes a simple modification to the tweet centroid model for increasing the number of labelled instances, yielding *partitioned tweet centroids*.  This modification is based on partitioning the tweets associated with each word into smaller disjoint subsets of a fixed size. The method calculates one centroid per partition, which is labelled according to the lexicon.
-[BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib), [original paper](https://www.cs.waikato.ac.nz/~fbravoma/publications/wi2016t.pdf)
+[BibTex](http://dblp.uni-trier.de/rec/bib2/conf/webi/Bravo-MarquezFP16.bib), [original paper](https://ml.cms.waikato.ac.nz/publications/2016/transfer_wi.pdf)
 
 
 1. __LexiconDistantSupervision__: This is the most popular distant supervision approach for Twitter sentiment analysis. It takes a collection of unlabelled tweets and a polarity lexicon in arff format of positive and negative tokens. If a word from the lexicon is found, the tweet is labelled with the word's polarity. Tweets with both positive and negative words are discarded. The word used for labelling the tweet can be removed from the content. Emoticons are used as the default lexicon. [original paper](http://cs.stanford.edu/people/alecmgo/papers/TwitterDistantSupervision09.pdf)
@@ -121,10 +121,10 @@ The model includes a simple modification to the tweet centroid model for increas
 
 ### Other Resources
 
-1. __Datasets__: The package provides some tweets annotated by affective values in gzipped [ARFF](http://weka.wikispaces.com/ARFF) format in $WEKA_HOME/packages/AffectiveTweets/data/. The default location for $WEKA_HOME is $HOME/wekafiles. 
-2. __Affective Lexicons__: The package provides affective lexicons in [ARFF](http://weka.wikispaces.com/ARFF) format. These lexicons are located in $WEKA_HOME/packages/AffectiveTweets/lexicons/arff_lexicons/ and can be used with the  __TweetToInputLexiconFeatureVector__ filter.
+1. __Datasets__: The package provides some tweets annotated by affective values in gzipped [ARFF](https://waikato.github.io/weka-wiki/formats_and_processing/arff/) format in $WEKA_HOME/packages/AffectiveTweets/data/. The default location for $WEKA_HOME is $HOME/wekafiles. 
+2. __Affective Lexicons__: The package provides affective lexicons in [ARFF](https://waikato.github.io/weka-wiki/formats_and_processing/arff/) format. These lexicons are located in $WEKA_HOME/packages/AffectiveTweets/lexicons/arff_lexicons/ and can be used with the  __TweetToInputLexiconFeatureVector__ filter.
 
-3. __Pre-trained Word-Embeddings__: The package provides a file with pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. It is a tab separated file with the word in last column located in $WEKA_HOME/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading [w2v.twitter.edinburgh10M.400d.csv.gz](https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz), which provides  embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](http://www.cs.waikato.ac.nz/~fjb11/publications/wi2016a.pdf).
+3. __Pre-trained Word-Embeddings__: The package provides a file with pre-trained word vectors trained with the [Word2Vec](https://code.google.com/archive/p/word2vec/) tool in gzip compressed format. It is a tab separated file with the word in last column located in $WEKA_HOME/packages/AffectiveTweets/resources/w2v.twitter.edinburgh.100d.csv.gz. However, this is a toy example trained from a small collection of tweets. We recommend downloading [w2v.twitter.edinburgh10M.400d.csv.gz](https://github.com/felipebravom/AffectiveTweets/releases/download/1.0.0/w2v.twitter.edinburgh10M.400d.csv.gz), which provides  embeddings trained from 10 million tweets taken from the [Edinburgh corpus](http://www.aclweb.org/anthology/W/W10/W10-0513.pdf). The parameters were calibrated for classifying words into emotions. More info in this [paper](ttps://ml.cms.waikato.ac.nz/publications/2016/emo_lex_wi.pdf).
 
 
 ## Documentation
@@ -140,14 +140,14 @@ The Java documentation is available [here](https://felipebravom.github.io/Affect
 
 ## Contributors
  * [Saif Mohammad](http://saifmohammad.com/)
- * [Eibe Frank](http://www.cs.waikato.ac.nz/~eibe/)
- * [Bernhard Pfahringer](https://www.cs.waikato.ac.nz/~bernhard/)
+ * [Eibe Frank](https://profiles.waikato.ac.nz/eibe.frank)
+ * [Bernhard Pfahringer](https://profiles.waikato.ac.nz/bernhard.pfahringer)
 
 
 
 ## Contact
  * Email: fbravo at dcc.uchile.cl
- * If you have questions about Weka please refer to the Weka [mailing list](https://list.waikato.ac.nz/mailman/listinfo/wekalist). 
+ * If you have questions about Weka please refer to the Weka [mailing list](https://sourceforge.net/projects/weka/lists/weka-users). 
 
 
 
