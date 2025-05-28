@@ -1,14 +1,6 @@
 
 ## Installing  Weka
-Download the latest stable [version](http://www.cs.waikato.ac.nz/ml/weka/downloading.html) or the  developer [branch](http://www.cs.waikato.ac.nz/ml/weka/snapshots/weka_snapshots.html) of Weka.
-You can also build the developer branch from the SVN repository: 
-
-```bash
-# checkout weka 
-svn co https://svn.cms.waikato.ac.nz/svn/weka/trunk/weka/
-# build weka using apache ant
-ant -f weka/build.xml exejar
-```
+Download the latest stable [version](https://waikato.github.io/weka-wiki/downloading_weka/) of Weka.
 
 ## Installing AffectiveTweets
 
