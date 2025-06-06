@@ -1,154 +1,452 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Contributing - AffectiveTweets</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Contributing";
-    var mkdocs_page_input_path = "contribute.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Contributing - AffectiveTweets</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Contributing";
+        var mkdocs_page_input_path = "contribute.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> AffectiveTweets</a>
-        <div role="search">
+          <a href=".." class="icon icon-home"> AffectiveTweets
+        </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../install/">Installation</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../examples/">Examples</a>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Contributing</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#contributing-guidelines">Contributing Guidelines</a></li>
-    
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../install/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../videos/">Videos</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Contributing</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#weka-filter">Weka Filter</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implementing-a-new-affectivetweets-filter">Implementing a new AffectiveTweets Filter</a>
         <ul>
-        
-            <li><a class="toctree-l3" href="#example">Example</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#implementing-a-junit-test">Implementing a JUnit Test</a>
+    </li>
         </ul>
-    
-
+    </li>
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../benchmark/">Benchmark</a>
-	    </li>
-          
-        </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../benchmark/">Benchmark</a>
+                </li>
+              </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">AffectiveTweets</a>
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AffectiveTweets</a>
+        
       </nav>
-
-      
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Contributing</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Contributing</li>
     <li class="wy-breadcrumbs-aside">
-      
-        <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/contribute.md"
-          class="icon icon-github"> Edit on GitHub</a>
-      
+          <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/contribute.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
-            <div class="section">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
                 <h1 id="contributing-guidelines">Contributing Guidelines</h1>
 <p>New contributors are more than welcome. If you want to contribute just fork the project and send a pull request with your changes. </p>
-<h2 id="example">Example</h2>
-<p>For implementing a new filter you can follow the instructions from <a href="https://waikato.github.io/weka-wiki/writing_filter/">here</a></p>
+<h2 id="weka-filter">Weka Filter</h2>
+<p>AffectiveTweets methods extend the Weka <a href="https://github.com/Waikato/weka-trunk/blob/master/weka/src/main/java/weka/filters/Filter.java">Filter</a> class, particularly the <a href="https://github.com/Waikato/weka-trunk/blob/master/weka/src/main/java/weka/filters/SimpleBatchFilter.java">SimpleBatchFilter</a> class.   </p>
+<p>Please read the instructions for implementing a Weka filter from <a href="https://waikato.github.io/weka-wiki/writing_filter/">here</a> before continuing. </p>
+<h2 id="implementing-a-new-affectivetweets-filter">Implementing a new AffectiveTweets Filter</h2>
+<p>We will show how to implement a simple filter that adds a new numeric attribute to the given dataset. This attribute will count the number of times the words from a given list occur in a given tweet. The list is given as comma separated string.</p>
+<p>New filters can extend the <a href="https://github.com/felipebravom/AffectiveTweets/blob/master/src/main/java/weka/filters/unsupervised/attribute/TweetToFeatureVector.java">TweetToFeatureVector</a> abstract class to inherit tokenization and many other preprocessing functionalities useful for sentiment analysis of tweets (e.g., reduce repeated letters, standardize URLs) . </p>
+<pre><code class="language-java">/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+
+/*
+ *    TweetToWordListCountFeatureVector.java
+ *    Copyright (C) 1999-2019 University of Waikato, Hamilton, New Zealand
+ *
+ */
+
+package weka.filters.unsupervised.attribute;
+
+
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import java.util.Arrays;
+
+import weka.core.Attribute;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.OptionMetadata;
+import weka.core.SparseInstance;
+
+
+
+/**
+ * 
+ * @author Felipe Bravo-Marquez (fbravoma@waikato.ac.nz)
+ */
+
+
+public class TweetToWordListCountFeatureVector extends TweetToFeatureVector {
+
+    /** For serialization.  */
+    private static final long serialVersionUID = -573366510055859430L;
+
+    /** The given word list as a comma separated string. */
+    public  String wordList = &quot;love,happy,great&quot;;
+
+
+
+    /**
+     * Returns a string describing this filter.
+     * 
+     * @return a description of the filter suitable for displaying in the
+     *         explorer/experimenter gui
+     */ 
+    @Override
+    public String globalInfo() {
+        return &quot;A simple filter that counts occurrences of words from a given list.&quot;;
+    }
+
+
+
+
+    /* (non-Javadoc)
+     * @see weka.filters.SimpleFilter#determineOutputFormat(weka.core.Instances)
+     */
+    @Override
+    protected Instances determineOutputFormat(Instances inputFormat)
+            throws Exception {
+
+        ArrayList&lt;Attribute&gt; att = new ArrayList&lt;Attribute&gt;();
+
+        // Adds all attributes of the inputformat
+        for (int i = 0; i &lt; inputFormat.numAttributes(); i++) {
+            att.add(inputFormat.attribute(i));
+        }
+
+        // adds the new attribute
+        att.add(new Attribute(&quot;wordListCount&quot;));
+
+        Instances result = new Instances(inputFormat.relationName(), att, 0);
+
+        // set the class index
+        result.setClassIndex(inputFormat.classIndex());
+
+        return result;
+    }
+
+
+
+    /* (non-Javadoc)
+     * @see weka.filters.SimpleFilter#process(weka.core.Instances)
+     */
+    @Override
+    protected Instances process(Instances instances) throws Exception {
+
+
+        // set upper value for text index
+        m_textIndex.setUpper(instances.numAttributes() - 1);
+
+        Instances result = getOutputFormat();
+
+
+        // reference to the content of the message, users index start from zero
+        Attribute attrCont = instances.attribute(this.m_textIndex.getIndex());
+
+
+
+        for (int i = 0; i &lt; instances.numInstances(); i++) {    
+
+            // copy all attribute values from the original dataset
+            double[] values = new double[result.numAttributes()];
+            for (int n = 0; n &lt; instances.numAttributes(); n++)
+                values[n] = instances.instance(i).value(n);
+
+
+            String content = instances.instance(i).stringValue(attrCont);
+            // tokenize the content
+            List&lt;String&gt; words = affective.core.Utils.tokenize(content, this.toLowerCase, this.standarizeUrlsUsers, this.reduceRepeatedLetters, this.m_tokenizer,this.m_stemmer,this.m_stopwordsHandler);
+
+            // convert the list of words into a HashSet
+            Set&lt;String&gt; wordSet = new HashSet&lt;String&gt;(Arrays.asList(wordList.split(&quot;,&quot;)));
+
+            // count all the occurrences of words from the list
+            int wordCounter = 0;            
+            for(String word:words){
+                if(wordSet.contains(word))
+                    wordCounter++;
+            }
+
+
+            // add the value to the last attribute
+            values[values.length - 1] = wordCounter;
+
+
+            Instance inst = new SparseInstance(1, values);
+
+            inst.setDataset(result);
+
+            // copy possible strings, relational values...
+            copyValues(inst, false, instances, result);
+
+            result.add(inst);
+
+        }
+
+        return result;
+    }
+
+
+
+
+    /**
+     * Main method for testing this class.
+     *
+     * @param args should contain arguments to the filter: use -h for help
+     */     
+    public static void main(String[] args) {
+        runFilter(new TweetToWordListCountFeatureVector(), args);
+    }
+
+
+    // OptionMetada allows setting parameters from within the command-line interface
+    @OptionMetadata(displayName = &quot;wordlist&quot;,
+            description = &quot;The list with the words to count separated by a comma symbol.&quot;,
+            commandLineParamName = &quot;wordlist&quot;, commandLineParamSynopsis = &quot;-wordlist &lt;string&gt;&quot;,
+            displayOrder = 6)
+    public String getWordList() {
+        return wordList;
+    }
+    public void setWordList(String wordList) {
+        this.wordList = wordList;
+    }
+
+
+
+}
+
+
+
+</code></pre>
+<p>One way to use this new filter class from within Weka, assuming the  source code of the class is in the appropriate subfolder of the <a href="https://github.com/felipebravom/AffectiveTweets/tree/master/src">src</a>  folder of the AffectiveTweets project, is to <a href="../install/#building-affectivetweets">rebuild</a> and reinstall the  AffectiveTweets package by using the project’s <a href="https://github.com/felipebravom/AffectiveTweets/blob/master/build_package.xml">build-package.xml</a> file  with the <a href="http://ant.apache.org/">ant</a> build tool.</p>
+<h3 id="implementing-a-junit-test">Implementing a JUnit Test</h3>
+<p>To test the new filter we need to implement a <a href="https://junit.org/">JUnit</a> test.  A new filter test can extend  <a href="https://github.com/Waikato/weka-trunk/blob/master/weka/src/test/java/weka/filters/AbstractFilterTest.java">AbstractFilterTest</a>, which can be found in the Weka source code repository, as shown below: </p>
+<pre><code class="language-java">/*
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+ */
+
+/*
+ * Copyright (C) 2019 University of Waikato, Hamilton, New Zealand
+ */
+
+package weka.filters.unsupervised.attribute;
+
+import weka.classifiers.meta.FilteredClassifier;
+import weka.core.Instances;
+import weka.filters.AbstractFilterTest;
+import weka.filters.Filter;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import java.io.File;
+
+/**
+ * Tests TweetToWordListCountFeatureVectorTest. Run from the command line with: &lt;p/&gt;
+ * java weka.filters.unsupervised.attribute.TweetToWordListCountFeatureVectorTest
+ * &lt;p&gt; 
+ * AffectiveTweets package must either be installed or
+ * JVM must be started in AffectiveTweets directory.
+ * &lt;p&gt;
+ * @author FracPete and eibe
+ * @version $Revision: 9568 $
+ */
+public class TweetToWordListCountFeatureVectorTest extends AbstractFilterTest {
+
+    public TweetToWordListCountFeatureVectorTest(String name) {
+        super(name);
+    }
+
+    /** Creates a default TweetToSentiStrengthFeatureVector filter */
+    public Filter getFilter() {
+    Filter f = null;
+
+    // Check to see if the test is run from directory containing build_package.xml
+    if ((new File(&quot;..&quot; + File.separator + &quot;AffectiveTweets&quot; + File.separator + &quot;build_package.xml&quot;)).exists()) {
+        File backup = weka.core.WekaPackageManager.PACKAGES_DIR;
+        weka.core.WekaPackageManager.PACKAGES_DIR = new java.io.File(&quot;..&quot;); // So that default lexicon, etc., is found.
+        f = new TweetToWordListCountFeatureVector();
+        weka.core.WekaPackageManager.PACKAGES_DIR = backup;
+    } else {
+        f = new TweetToWordListCountFeatureVector(); // Hope that the package is installed.
+    }
+    return f;
+    }
+
+    /**
+     * Test for the FilteredClassifier used with this filter.
+     *
+     * @return the configured FilteredClassifier
+     */
+    protected FilteredClassifier getFilteredClassifier() {
+        FilteredClassifier  result;
+
+        result = new FilteredClassifier();
+
+    weka.filters.MultiFilter mf = new weka.filters.MultiFilter();
+    Filter[] filters = new Filter[2];
+    filters[0] = getFilter();
+    weka.filters.unsupervised.attribute.RemoveType rt = new weka.filters.unsupervised.attribute.RemoveType(); // Need to remove string attributes because they are kept by this filter.
+    filters[1] = rt;
+    mf.setFilters(filters);
+    result.setFilter(mf);
+        result.setClassifier(new weka.classifiers.functions.SMO());
+
+        return result;
+    }
+
+    /**
+     * Data to be used for FilteredClassifier test.
+     *
+     * @return the configured FilteredClassifier
+     */
+    protected Instances getFilteredClassifierData() throws Exception {
+        Instances result;
+
+    // Check to see if the test is run from directory containing build_package.xml
+    if ((new File(&quot;..&quot; + File.separator + &quot;AffectiveTweets&quot; + File.separator + &quot;build_package.xml&quot;)).exists()) {
+        result = (new weka.core.converters.ConverterUtils.DataSource(&quot;data&quot; + File.separator + &quot;sent140test.arff.gz&quot;)).getDataSet();
+    } else { // Hope that package is installed.
+        result = (new weka.core.converters.ConverterUtils.DataSource(weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + &quot;data&quot; + File.separator + &quot;sent140test.arff.gz&quot;)).getDataSet();
+    }
+
+    result.setClassIndex(result.numAttributes() - 1);
+
+        return result;
+    }
+
+    /**
+     * Called by JUnit before each test method. Sets up the Instances object to use based on 
+     * one of the datasets that comes with the package.
+     *
+     * @throws Exception if an error occurs reading the example instances.
+     */
+    protected void setUp() throws Exception {
+        super.setUp();
+
+    // Check to see if the test is run from directory containing build_package.xml
+    if ((new File(&quot;..&quot; + File.separator + &quot;AffectiveTweets&quot; + File.separator + &quot;build_package.xml&quot;)).exists()) {
+        m_Instances = (new weka.core.converters.ConverterUtils.DataSource(&quot;data&quot; + File.separator + &quot;sent140test.arff.gz&quot;)).getDataSet();
+    } else { // Hope that package is installed.
+        m_Instances = (new weka.core.converters.ConverterUtils.DataSource(weka.core.WekaPackageManager.PACKAGES_DIR.toString() + File.separator + &quot;data&quot; + File.separator + &quot;sent140test.arff.gz&quot;)).getDataSet();
+    }
+
+    m_Instances.setClassIndex(m_Instances.numAttributes() - 1);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TweetToWordListCountFeatureVectorTest.class);
+    }
+
+    public static void main(String[] args){
+        junit.textui.TestRunner.run(suite());
+    }
+}
+
+</code></pre>
               
             </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../videos/" class="btn btn-neutral float-left" title="Videos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../benchmark/" class="btn btn-neutral float-right" title="Benchmark">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../examples/" class="btn btn-neutral" title="Examples"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-    
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+          
         </div>
       </div>
 
@@ -156,22 +454,31 @@
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/felipebravom/AffectiveTweets/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../examples/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../benchmark/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../videos/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../benchmark/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
 
 </body>
 </html>

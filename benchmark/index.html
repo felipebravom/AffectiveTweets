@@ -1,158 +1,302 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Benchmark - AffectiveTweets</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Benchmark";
-    var mkdocs_page_input_path = "benchmark.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Benchmark - AffectiveTweets</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Benchmark";
+        var mkdocs_page_input_path = "benchmark.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> AffectiveTweets</a>
-        <div role="search">
+          <a href=".." class="icon icon-home"> AffectiveTweets
+        </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../install/">Installation</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../examples/">Examples</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../contribute/">Contributing</a>
-	    </li>
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Benchmark</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#benchmark">Benchmark</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#affectivetweets-scripts">AffectiveTweets Scripts</a></li>
-        
-            <li><a class="toctree-l3" href="#nltk-scikit-learn-scripts">NLTK + SciKit-learn Scripts</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#results">Results</a></li>
-    
-
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../install/">Installation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../examples/">Examples</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../videos/">Videos</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../contribute/">Contributing</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Benchmark</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#logistic-regression-model-using-word-n-grams-n1234">Logistic regression model using word n-grams (n=1,2,3,4).</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#logistic-regression-model-using-word-n-grams-bing-lius-lexicon">Logistic regression model using word n-grams + Bing Liu's Lexicon</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#logistic-regression-model-using-bing-lius-lexicon-sentistrength">Logistic regression model using Bing Liu's Lexicon + SentiStrength</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#logistic-regression-model-using-n-grams-bing-lius-lexicon-sentistrength">Logistic regression model using n-grams + Bing Liu's Lexicon + SentiStrength</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#logistic-regression-model-model-using-n-grams-sentistrength-all-lexicons">Logistic regression model model using n-grams + SentiStrength + all lexicons</a>
+    </li>
     </ul>
-	    </li>
-          
-        </ul>
+                </li>
+              </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">AffectiveTweets</a>
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AffectiveTweets</a>
+        
       </nav>
-
-      
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Benchmark</li>
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Benchmark</li>
     <li class="wy-breadcrumbs-aside">
-      
-        <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/benchmark.md"
-          class="icon icon-github"> Edit on GitHub</a>
-      
+          <a href="https://github.com/felipebravom/AffectiveTweets/edit/master/docs/benchmark.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
-            <div class="section">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
-                <h1 id="benchmark">Benchmark</h1>
-<p>In this site we show how to benchmark AffectiveTweets against similar models created using the <a href="http://www.nltk.org/api/nltk.sentiment.html">NLTK sentiment analysis module</a> and <a href="https://scikit-learn.org/stable/index.html">Scikit-learn</a> on the dataset from the  <a href="https://www.cs.york.ac.uk/semeval-2013/task2/">SemEval 2013 Sentiment Analysis in Twitter Message Polarity Classification task</a>.  </p>
+                <p>On this page we show how to benchmark models created using AffectiveTweets against similar models created using the <a href="http://www.nltk.org/api/nltk.sentiment.html">NLTK sentiment analysis module</a> and <a href="https://scikit-learn.org/stable/index.html">Scikit-learn</a>. We represents tweets using  word n-grams and lexicon-based features and train logistic regression models on the Twitter Message Polarity Classification dataset from the  <a href="https://www.cs.york.ac.uk/semeval-2013/task2/">SemEval 2013 Sentiment Analysis Task</a>.  </p>
+<p>The code for reproducing these experiments can be downloaded from <a href="https://github.com/felipebravom/AffectiveTweets/tree/master/benchmark">here</a>.</p>
 <h2 id="affectivetweets-scripts">AffectiveTweets Scripts</h2>
-<p>First, we need to transform the training and testing datasets into Arff format:</p>
-<pre><code class="bash">java -cp dist/AffectiveTweets/AffectiveTweets.jar:&quot;lib/&quot; weka.core.converters.SemEvalToArff benchmark/dataset/twitter-train-B.txt benchmark/dataset/twitter-train-B.arff
-java -cp dist/AffectiveTweets/AffectiveTweets.jar:&quot;lib/&quot; weka.core.converters.SemEvalToArff benchmark/dataset/twitter-test-gold-B.tsv benchmark/dataset/twitter-test-gold-B.arff
+<p>The following bash scripts assume that AffectiveTweets and Weka are already installed. Declare the following variables according to your installation paths.</p>
+<pre><code>export WEKA_HOME=/home/fbravoma/wekafiles/
+export WEKA_PATH=/home/fbravoma/weka-3-9-3/
+</code></pre>
+<p>We need to transform the training and testing datasets into Arff format:</p>
+<pre><code class="language-bash">java -cp $WEKA_HOME/packages/AffectiveTweets/AffectiveTweets.jar:$WEKA_PATH/weka.jar weka.core.converters.SemEvalToArff benchmark/dataset/twitter-train-B.txt benchmark/dataset/twitter-train-B.arff
+
+
+java -cp $WEKA_HOME/packages/AffectiveTweets/AffectiveTweets.jar:$WEKA_PATH/weka.jar weka.core.converters.SemEvalToArff benchmark/dataset/twitter-test-gold-B.tsv benchmark/dataset/twitter-test-gold-B.arff
 
 </code></pre>
-
-<h3 id="linear-model-using-a-ngram-features-with-marked-negation-n1234">Linear Model using a ngram features, with marked negation, n=1,2,3,4</h3>
-<pre><code class="bash">java -Xmx4G -cp  /home/fbravoma/weka-3-9-3/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -v -o -t $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-train-B.arff -T  $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/model.20120919 -wordClustFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+<h3 id="logistic-regression-model-using-word-n-grams-n1234">Logistic regression model using word n-grams  (n=1,2,3,4).</h3>
+<p>We train a logistic regression model using word n-grams as features with marked negation using the Weka command-line interface:</p>
+<pre><code class="language-bash">java -Xmx4G -cp  $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -v -o -t benchmark/dataset/twitter-train-B.arff -T benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 </code></pre>
+<p>LibLinear allows implementing various linear models (e.g., SVMs, logistics regression) by changing the loss function. In this and the following benchmark experiments involving AffectiveTwets and LibLinear we use  L2-regularized logistic regression models. </p>
+<p>Results:</p>
+<pre><code>Time taken to test model on test data: 1.56 seconds
 
-<h3 id="linear-model-using-a-representation-made-by-bing-lius-lexicon-sentistrength">Linear Model using a representation made by Bing Liu's Lexicon + SentiStrength</h3>
-<pre><code class="bash">java -Xmx4G -cp /home/fbravoma/weka-3-9-3/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-train-B.arff -T  $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L /home/fbravoma/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+=== Error on test data ===
+
+Correctly Classified Instances        2545               66.7453 %
+Incorrectly Classified Instances      1268               33.2547 %
+Kappa statistic                          0.4457
+Mean absolute error                      0.2642
+Root mean squared error                  0.3945
+Relative absolute error                 59.454  %
+Root relative squared error             83.6944 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.616    0.136    0.760      0.616    0.680      0.501    0.816     0.789     positive
+                 0.829    0.388    0.617      0.829    0.708      0.442    0.799     0.724     neutral
+                 0.361    0.037    0.644      0.361    0.463      0.416    0.851     0.559     negative
+Weighted Avg.    0.667    0.229    0.681      0.667    0.658      0.462    0.814     0.725     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   &lt;-- classified as
+  968  543   61 |    a = positive
+  221 1360   59 |    b = neutral
+   84  300  217 |    c = negative
+
 </code></pre>
-
-<h3 id="linear-model-using-a-representation-made-by-ngrams-bing-lius-lexicon-sentistrength">Linear Model using a representation made by ngrams +Bing Liu's Lexicon + SentiStrength</h3>
-<pre><code class="bash">java -Xmx4G -cp /home/fbravoma/weka-3-9-3/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-train-B.arff -T  $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/model.20120919 -wordClustFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L /home/fbravoma/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+<h3 id="logistic-regression-model-using-word-n-grams-bing-lius-lexicon">Logistic regression model using word n-grams +  Bing Liu's Lexicon</h3>
+<p>We train a logistic regression model word n-grams and features derived from Bing Liu's Lexicon:</p>
+<pre><code class="language-bash">java -Xmx4G -cp $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -v -o -t dataset/twitter-train-B.arff -T dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
 </code></pre>
+<p>Results:</p>
+<pre><code class="language-bash">Time taken to test model on test data: 10.73 seconds
 
-<h3 id="linear-model-using-a-representation-made-by-ngrams-all-lexicons">Linear Model using a representation made by ngrams + All Lexicons</h3>
-<pre><code class="bash">java -Xmx4G -cp /home/fbravoma/weka-3-9-3/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -t $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-train-B.arff -T  $HOME/workspace/AffectiveTweets/benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/model.20120919 -wordClustFile /home/fbravoma/wekafiles/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L /home/fbravoma/wekafiles/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -N -P -J -H -Q -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+=== Error on test data ===
+
+Correctly Classified Instances        2612               68.5025 %
+Incorrectly Classified Instances      1201               31.4975 %
+Kappa statistic                          0.4779
+Mean absolute error                      0.2471
+Root mean squared error                  0.383 
+Relative absolute error                 55.596  %
+Root relative squared error             81.2491 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.641    0.143    0.758      0.641    0.695      0.514    0.837     0.807     positive
+                 0.820    0.349    0.640      0.820    0.719      0.469    0.818     0.751     neutral
+                 0.431    0.038    0.680      0.431    0.527      0.477    0.884     0.616     negative
+Weighted Avg.    0.685    0.215    0.695      0.685    0.679      0.489    0.836     0.753     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   &lt;-- classified as
+ 1008  502   62 |    a = positive
+  235 1345   60 |    b = neutral
+   86  256  259 |    c = negative
 </code></pre>
+<h3 id="logistic-regression-model-using-bing-lius-lexicon-sentistrength">Logistic regression model using  Bing Liu's Lexicon + SentiStrength</h3>
+<p>We train a logistic regression using features derived from Bing Liu's Lexicon and the SentiStrength method:</p>
+<pre><code class="language-bash">java -Xmx4G -cp $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -v -o -t benchmark/dataset/twitter-train-B.arff -T benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $WEKA_HOME/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+</code></pre>
+<p>Results:</p>
+<pre><code>Time taken to test model on test data: 3.32 seconds
 
+=== Error on test data ===
+
+Correctly Classified Instances        2457               64.4375 %
+Incorrectly Classified Instances      1356               35.5625 %
+Kappa statistic                          0.4029
+Mean absolute error                      0.3198
+Root mean squared error                  0.4016
+Relative absolute error                 71.9598 %
+Root relative squared error             85.1839 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.622    0.171    0.718      0.622    0.666      0.463    0.794     0.714     positive
+                 0.802    0.399    0.603      0.802    0.688      0.403    0.764     0.667     neutral
+                 0.275    0.033    0.611      0.275    0.379      0.344    0.790     0.483     negative
+Weighted Avg.    0.644    0.247    0.651      0.644    0.630      0.418    0.781     0.657     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   &lt;-- classified as
+  977  537   58 |    a = positive
+  278 1315   47 |    b = neutral
+  106  330  165 |    c = negative
+
+</code></pre>
+<h3 id="logistic-regression-model-using-n-grams-bing-lius-lexicon-sentistrength">Logistic regression model using  n-grams + Bing Liu's Lexicon + SentiStrength</h3>
+<p>Now we combine the features from the two previous examples:</p>
+<pre><code class="language-bash">java -Xmx4G -cp $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier  -v -o -t benchmark/dataset/twitter-train-B.arff -T benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $WEKA_HOME/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -D -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+</code></pre>
+<p>Results:</p>
+<pre><code>Time taken to test model on test data: 13.04 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2648               69.4466 %
+Incorrectly Classified Instances      1165               30.5534 %
+Kappa statistic                          0.4949
+Mean absolute error                      0.2401
+Root mean squared error                  0.3786
+Relative absolute error                 54.0243 %
+Root relative squared error             80.3157 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.649    0.139    0.766      0.649    0.703      0.527    0.845     0.812     positive
+                 0.823    0.335    0.649      0.823    0.726      0.485    0.826     0.766     neutral
+                 0.463    0.039    0.690      0.463    0.554      0.502    0.896     0.642     negative
+Weighted Avg.    0.694    0.208    0.704      0.694    0.689      0.505    0.845     0.766     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   &lt;-- classified as
+ 1021  485   66 |    a = positive
+  232 1349   59 |    b = neutral
+   80  243  278 |    c = negative
+
+</code></pre>
+<h3 id="logistic-regression-model-model-using-n-grams-sentistrength-all-lexicons">Logistic regression model model using  n-grams + SentiStrength + all lexicons</h3>
+<p>Now we include features from all the lexicons implemented by AffectiveTweets:</p>
+<pre><code class="language-bash">java -Xmx4G -cp $WEKA_PATH/weka.jar weka.Run weka.classifiers.meta.FilteredClassifier -v -o -t benchmark/dataset/twitter-train-B.arff -T  benchmark/dataset/twitter-test-gold-B.arff -F &quot;weka.filters.MultiFilter -F \&quot;weka.filters.unsupervised.attribute.TweetToSparseFeatureVector -E 5 -D 3 -I 0 -F -M 3 -R -G 0 -taggerFile $WEKA_HOME/packages/AffectiveTweets/resources/model.20120919 -wordClustFile $WEKA_HOME/packages/AffectiveTweets/resources/50mpaths2.txt.gz -Q 4 -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToSentiStrengthFeatureVector -L $WEKA_HOME/packages/AffectiveTweets/lexicons/SentiStrength/english -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.TweetToLexiconFeatureVector -F -D -R -A -N -P -J -H -Q -red -stan -stemmer weka.core.stemmers.NullStemmer -stopwords-handler \\\&quot;weka.core.stopwords.Null \\\&quot; -I 1 -U -tokenizer \\\&quot;weka.core.tokenizers.TweetNLPTokenizer \\\&quot;\&quot; -F \&quot;weka.filters.unsupervised.attribute.Reorder -R 3-last,2\&quot;&quot; -S 1 -W weka.classifiers.functions.LibLINEAR -- -S 7 -C 1.0 -E 0.001 -B 1.0 -P -L 0.1 -I 1000
+</code></pre>
+<p>Results:</p>
+<pre><code>Time taken to test model on test data: 13.29 seconds
+
+=== Error on test data ===
+
+Correctly Classified Instances        2706               70.9677 %
+Incorrectly Classified Instances      1107               29.0323 %
+Kappa statistic                          0.5215
+Mean absolute error                      0.2289
+Root mean squared error                  0.372 
+Relative absolute error                 51.5039 %
+Root relative squared error             78.9079 %
+Total Number of Instances             3813     
+
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.658    0.131    0.779      0.658    0.713      0.544    0.854     0.823     positive
+                 0.831    0.319    0.663      0.831    0.738      0.509    0.835     0.772     neutral
+                 0.514    0.037    0.720      0.514    0.600      0.550    0.913     0.687     negative
+Weighted Avg.    0.710    0.197    0.720      0.710    0.706      0.530    0.855     0.779     
+
+
+=== Confusion Matrix ===
+
+    a    b    c   &lt;-- classified as
+ 1034  471   67 |    a = positive
+  224 1363   53 |    b = neutral
+   70  222  309 |    c = negative
+
+</code></pre>
 <h2 id="nltk-scikit-learn-scripts">NLTK + SciKit-learn Scripts</h2>
-<p>Import the following libraries.</p>
-<pre><code class="python">import pandas as pd       
+<p>Now we will build similar models using <strong>python 3.6</strong>.</p>
+<p>First we need to import the following libraries. </p>
+<pre><code class="language-python">import pandas as pd       
 from nltk.tokenize import TweetTokenizer
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.sentiment.util import  mark_negation
@@ -160,28 +304,30 @@ from nltk.corpus import opinion_lexicon
 
 from sklearn.feature_extraction.text import CountVectorizer  
 from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import confusion_matrix, cohen_kappa_score
-
-
 import numpy as np
 </code></pre>
-
-<p>Load training and testing datasets as a pandas dataframe</p>
-<pre><code class="python">train_data = pd.read_csv(&quot;dataset/twitter-train-B.txt&quot;, header=None, delimiter=&quot;\t&quot;,usecols=(2,3), names=(&quot;sent&quot;,&quot;tweet&quot;))
+<p>Make sure to install all of them using <strong>pip</strong> or <strong>conda</strong>. </p>
+<p>Next, load training and testing datasets as pandas dataframes:</p>
+<pre><code class="language-python">
+# load training and testing datasets as a pandas dataframe
+train_data = pd.read_csv(&quot;dataset/twitter-train-B.txt&quot;, header=None, delimiter=&quot;\t&quot;,usecols=(2,3), names=(&quot;sent&quot;,&quot;tweet&quot;))
 test_data = pd.read_csv(&quot;dataset/twitter-test-gold-B.tsv&quot;, header=None, delimiter=&quot;\t&quot;,usecols=(2,3), names=(&quot;sent&quot;,&quot;tweet&quot;))
 
-# replaces objective-OR-neutral and objective to neutral
+# replace objective-OR-neutral and objective to neutral
 train_data.sent = train_data.sent.replace(['objective-OR-neutral','objective'],['neutral','neutral'])
 
+# use a Twitter-specific tokenizer
 tokenizer = TweetTokenizer(preserve_case=False, reduce_len=True)
 
-</code></pre>
 
-<h3 id="train-a-linear-model-using-n-gram-features">Train a linear model using n-gram features</h3>
-<pre><code class="python">vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
-log_mod = LogisticRegression()  
+</code></pre>
+<h3 id="logistic-regression-model-using-word-n-grams-n1234_1">Logistic regression model using word n-grams  (n=1,2,3,4).</h3>
+<p>We replicate the same model we created previously using AffectiveTweets. N-grams are extracted using <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html">CountVectorizer</a> from Scikit-learn. N-grams inside a negation word are marked.  </p>
+<pre><code class="language-python">vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
 text_clf = Pipeline([('vect', vectorizer), ('clf', log_mod)])
 
 text_clf.fit(train_data.tweet, train_data.sent)
@@ -190,31 +336,52 @@ predicted = text_clf.predict(test_data.tweet)
 
 conf = confusion_matrix(test_data.sent, predicted)
 kappa = cohen_kappa_score(test_data.sent, predicted) 
+class_rep = classification_report(test_data.sent, predicted)
 
-print('Confusion Matrix for Logistic Regression + ngram features')
+
+
+print('Confusion Matrix for Logistic Regression + ngram features:')
 print(conf)
+print('Classification Report')
+print(class_rep)
 print('kappa:'+str(kappa))
 
- ```
 
+</code></pre>
+<p>Results:</p>
+<pre><code>Confusion Matrix for Logistic Regression + ngram features:
+[[ 172  335   94]
+ [  31 1433  176]
+ [  48  620  904]]
+Classification Report
+             precision    recall  f1-score   support
 
+   negative       0.69      0.29      0.40       601
+    neutral       0.60      0.87      0.71      1640
+   positive       0.77      0.58      0.66      1572
 
-### Train a linear model using features from Bing Liu's lexicon + the Vader method
+avg / total       0.68      0.66      0.64      3813
 
-
-
-```python
-class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
-    &quot;&quot;&quot;Takes in a corpus of tweets and calculates features using Bing Liu's lexicon and the Vader method&quot;&quot;&quot;
+kappa:0.4236034809946826
+</code></pre>
+<h3 id="logistic-regression-model-using-word-n-grams-bing-lius-lexicon_1">Logistic regression model using  word n-grams + Bing Liu's Lexicon</h3>
+<p>We replicate now the second model created using AffectiveTweets: a logistic regression trained on word n-grams and features calculated from Bing Liu's Lexicon.</p>
+<p>First, we need to make sure that the required NLTK resources are installed:</p>
+<pre><code class="language-python">import nltk
+nltk.download('opinion_lexicon')
+</code></pre>
+<p>We extend Scikit-learn classes <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html">BaseEstimator</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html">TransformerMixin</a> to implement a feature extractor that uses Bing Liu's lexicon:</p>
+<pre><code class="language-python">
+class LiuFeatureExtractor(BaseEstimator, TransformerMixin):
+    &quot;&quot;&quot;Takes in a corpus of tweets and calculates features using Bing Liu's lexicon&quot;&quot;&quot;
 
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
         self.pos_set = set(opinion_lexicon.positive())
         self.neg_set = set(opinion_lexicon.negative())
-        self.sid = SentimentIntensityAnalyzer()
 
     def liu_score(self,sentence):
-
+        &quot;&quot;&quot;Calculates the number of positive and negative words in the sentence using Bing Liu's Lexicon&quot;&quot;&quot; 
         tokenized_sent = self.tokenizer.tokenize(sentence)
         pos_words = 0
         neg_words = 0
@@ -225,16 +392,88 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
                 neg_words += 1
         return [pos_words,neg_words]
 
+    def transform(self, X, y=None):
+        &quot;&quot;&quot;Applies liu_score and vader_score on a data.frame containing tweets &quot;&quot;&quot;
+        values = []
+        for tweet in X:
+            values.append(self.liu_score(tweet))
+
+        return(np.array(values))
+
+    def fit(self, X, y=None):
+        &quot;&quot;&quot;This function must return `self` unless we expect the transform function to perform a 
+        different action on training and testing partitions (e.g., when we calculate unigram features, 
+        the dictionary is only extracted from the first batch)&quot;&quot;&quot;
+        return self
+
+
+</code></pre>
+<p>We can combine  word n-gram features and features derived from Bing Liu's lexicon using the class <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html">FeatureUnion</a> from Scikit-learn:</p>
+<pre><code class="language-python">liu_feat = LiuFeatureExtractor(tokenizer)
+vectorizer = CountVectorizer(tokenizer = tokenizer.tokenize, preprocessor = mark_negation, ngram_range=(1,4))  
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
+liu_ngram_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('ngram', vectorizer), ('liu',liu_feat) ])),
+    ('clf', log_mod)])
+
+
+liu_ngram_clf.fit(train_data.tweet, train_data.sent)
+pred_liu_ngram = liu_ngram_clf.predict(test_data.tweet)
+
+
+conf_liu_ngram = confusion_matrix(test_data.sent, pred_liu_ngram)
+kappa_liu_ngram = cohen_kappa_score(test_data.sent, pred_liu_ngram) 
+class_rep_liu_ngram = classification_report(test_data.sent, pred_liu_ngram)
+
+print('Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu\'s Lexicon')
+print(conf_liu_ngram)
+print('Classification Report')
+print(class_rep_liu_ngram)
+print('kappa:'+str(kappa_liu_ngram))
+</code></pre>
+<p>Results:</p>
+<pre><code>Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lexicon
+[[ 236  290   75]
+ [  44 1395  201]
+ [  59  529  984]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.70      0.39      0.50       601
+    neutral       0.63      0.85      0.72      1640
+   positive       0.78      0.63      0.69      1572
+
+avg / total       0.70      0.69      0.68      3813
+
+kappa:0.4763629485702495
+</code></pre>
+<h3 id="logistic-regression-model-using-bing-lius-lexicon-vader">Logistic regression model using  Bing Liu's Lexicon + Vader</h3>
+<p>Unfortunately, SentiStrength is not implemented in the NLTK sentiment module. However, NLTK implements <a href="https://github.com/cjhutto/vaderSentiment">Vader</a>, which is another popular lexicon-based sentiment analysis method.  </p>
+<p>We implement a logistic regression using features derived from Bing Liu's lexicon and Vader.</p>
+<p>First, we need to make sure that the required NLTK resources are installed:</p>
+<pre><code class="language-python">import nltk
+nltk.download('opinion_lexicon')
+nltk.download('vader_lexicon')
+</code></pre>
+<p>We implement another feature extractor that calculates features using Vader:</p>
+<pre><code class="language-python">class VaderFeatureExtractor(BaseEstimator, TransformerMixin):
+    &quot;&quot;&quot;Takes in a corpus of tweets and calculates features using the Vader method&quot;&quot;&quot;
+
+    def __init__(self, tokenizer):
+        self.tokenizer = tokenizer
+        self.sid = SentimentIntensityAnalyzer()
+
 
     def vader_score(self,sentence):
+        &quot;&quot;&quot; Calculates sentiment scores for a sentence using the Vader method &quot;&quot;&quot;
         pol_scores = self.sid.polarity_scores(sentence)
         return(list(pol_scores.values()))
 
     def transform(self, X, y=None):
-        &quot;&quot;&quot;The workhorse of this feature extractor&quot;&quot;&quot;
+        &quot;&quot;&quot;Applies vader_score on a data.frame containing tweets &quot;&quot;&quot;
         values = []
         for tweet in X:
-            values.append(self.liu_score(tweet)+self.vader_score(tweet))
+            values.append(self.vader_score(tweet))
 
         return(np.array(values))
 
@@ -242,36 +481,55 @@ class LexiconFeatureExtractor(BaseEstimator, TransformerMixin):
         &quot;&quot;&quot;Returns `self` unless something different happens in train and test&quot;&quot;&quot;
         return self
 
-lex_feat = LexiconFeatureExtractor(tokenizer)
-
-log_mod = LogisticRegression()  
-lex_clf = Pipeline([('lexicon', lex_feat), ('clf', log_mod)])
 
 
-lex_clf.fit(train_data.tweet, train_data.sent)
-pred_lex = lex_clf.predict(test_data.tweet)
 
 
-conf_lex = confusion_matrix(test_data.sent, pred_lex)
-kappa_lex = cohen_kappa_score(test_data.sent, pred_lex) 
+vader_feat = VaderFeatureExtractor(tokenizer)
+liu_feat = LiuFeatureExtractor(tokenizer)
 
-print('Confusion Matrix for Logistic Regression + features from Bing Liu\'s Lexicon and the Vader method')
-print(conf_lex)
-print('kappa:'+str(kappa_lex))
+log_mod = LogisticRegression(solver='liblinear',multi_class='ovr')   
+vader_liu_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('vader', vader_feat), ('liu',liu_feat) ])),
+    ('clf', log_mod)])
 
 
+vader_liu_clf.fit(train_data.tweet, train_data.sent)
+pred_vader_liu = vader_liu_clf.predict(test_data.tweet)
+
+
+conf_vader_liu = confusion_matrix(test_data.sent, pred_vader_liu)
+kappa_vader_liu = cohen_kappa_score(test_data.sent, pred_vader_liu) 
+class_rep_vader_liu = classification_report(test_data.sent, pred_vader_liu)
+
+print('Confusion Matrix for Logistic Regression + Vader + features from Bing Liu\'s Lexicon')
+print(conf_vader_liu)
+print('Classification Report')
+print(class_rep_vader_liu)
+print('kappa:'+str(kappa_vader_liu))
 </code></pre>
+<p>Results:</p>
+<pre><code>Confusion Matrix for Logistic Regression + Vader + features from Bing Liu's Lexicon
+[[ 169  323  109]
+ [  51 1275  314]
+ [  58  491 1023]]
+Classification Report
+             precision    recall  f1-score   support
 
-<h3 id="train-a-linear-model-using-n-grams-features-features-from-bing-lius-lexicon-the-vader-method">Train a linear model using n-grams features + features from Bing Liu's lexicon + the Vader method</h3>
-<pre><code class="python">from sklearn.pipeline import Pipeline, FeatureUnion
+   negative       0.61      0.28      0.38       601
+    neutral       0.61      0.78      0.68      1640
+   positive       0.71      0.65      0.68      1572
 
-ngram_lex_clf = Pipeline([
-    ('feats', FeatureUnion([
-        ('ngram', vectorizer), # can pass in either a pipeline
-        ('lexicon',lex_feat) # or a transformer
-    ])),
-    ('clf', log_mod)  # classifier
-])
+avg / total       0.65      0.65      0.63      3813
+
+kappa:0.408231856331834
+</code></pre>
+<h3 id="logistic-regression-model-using-n-grams-bing-lius-lexicon-vader">Logistic regression model using  n-grams + Bing Liu's Lexicon + Vader</h3>
+<p>We now combine the feature space of all the previous examples:</p>
+<pre><code class="language-python">
+ngram_lex_clf = Pipeline([ ('feats', 
+                            FeatureUnion([ ('ngram', vectorizer), ('vader',vader_feat),('liu',liu_feat)  ])),
+    ('clf', log_mod)])
 
 
 ngram_lex_clf.fit(train_data.tweet, train_data.sent)
@@ -280,83 +538,129 @@ pred_ngram_lex = ngram_lex_clf.predict(test_data.tweet)
 
 conf_ngram_lex = confusion_matrix(test_data.sent, pred_ngram_lex)
 kappa_ngram_lex = cohen_kappa_score(test_data.sent, pred_ngram_lex) 
+class_rep = classification_report(test_data.sent, pred_ngram_lex)
+
 
 print('Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu\'s Lexicon and the Vader method')
 print(conf_ngram_lex)
+print('Classification Report')
+print(class_rep)
 print('kappa:'+str(kappa_ngram_lex))
-</code></pre>
 
-<h1 id="results">Results</h1>
-<p>Classification results on the testing partition using the Kappa statistics as performance metric are shown in the following table.</p>
+</code></pre>
+<p>Results:</p>
+<pre><code>Confusion Matrix for Logistic Regression + ngrams + features from Bing Liu's Lexicon and the Vader method
+[[ 268  261   72]
+ [  45 1387  208]
+ [  56  493 1023]]
+Classification Report
+             precision    recall  f1-score   support
+
+   negative       0.73      0.45      0.55       601
+    neutral       0.65      0.85      0.73      1640
+   positive       0.79      0.65      0.71      1572
+
+avg / total       0.72      0.70      0.70      3813
+
+kappa:0.5058311344923361
+</code></pre>
+<h1 id="summary-of-results">Summary of Results</h1>
+<p>A table summarising all the experiments from above is shown as follows:</p>
 <table>
 <thead>
 <tr>
 <th>Features</th>
 <th>Implementation</th>
 <th>Kappa Score</th>
+<th>F1 Score</th>
+<th>Time (Seconds)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Word n-grams</td>
 <td>Scikitlearn + NLTK</td>
-<td>0.424</td>
+<td>0.42</td>
+<td>0.64</td>
+<td>30.7</td>
 </tr>
 <tr>
 <td>Word n-grams</td>
 <td>AffectiveTweets</td>
-<td>0.446</td>
+<td>0.45</td>
+<td>0.66</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>Word n-grams + Liu Lexicon</td>
+<td>Scikitlearn + NLTK</td>
+<td>0.48</td>
+<td>0.68</td>
+<td>13.4</td>
+</tr>
+<tr>
+<td>Word n-grams + Liu Lexicon</td>
+<td>AffectiveTweets</td>
+<td>0.48</td>
+<td>0.68</td>
+<td>27.4</td>
 </tr>
 <tr>
 <td>Liu Lexicon  + Vader</td>
 <td>Scikitlearn + NLTK</td>
-<td>0.408</td>
+<td>0.41</td>
+<td>0.63</td>
+<td>8.9</td>
 </tr>
 <tr>
 <td>Liu Lexicon  + SentiStrength</td>
 <td>AffectiveTweets</td>
-<td>0.402</td>
+<td>0.40</td>
+<td>0.63</td>
+<td>31.9</td>
 </tr>
 <tr>
 <td>Word n-grams + Liu Lexicon + Vader</td>
 <td>Scikitlearn + NLTK</td>
-<td>0.506</td>
+<td>0.51</td>
+<td>0.70</td>
+<td>16</td>
 </tr>
 <tr>
 <td>Word n-grams + Liu Lexicon + SentiStrength</td>
 <td>AffectiveTweets</td>
-<td>0.494</td>
+<td>0.49</td>
+<td>0.69</td>
+<td>68.5</td>
 </tr>
 <tr>
-<td>Word n-grams + All lexicons</td>
+<td>Word n-grams + All lexicons + SentiStrength</td>
 <td>AffectiveTweets</td>
-<td>0.522</td>
+<td>0.52</td>
+<td>0.71</td>
+<td>74.6</td>
 </tr>
 </tbody>
 </table>
+<p>The execution time is averaged over 10 repetitions of each model.  </p>
+<p>Bear in mind that there are only  two models (word n-grams and word n-grams+Liu Lexicon) that can be directly compared in both implementations (AffectiveTweets and Scikitlearn+NLTK) as they use the same features and the same learning schemes.  Other examples such as Liu Lexicon+Vader and Liu Lexicon+SentiStregnth  show how similar models can be implemented using two different tools.   </p>
+<p>The experiments were performed on an Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz with 16 GB of RAM using  Ubuntu 16.04.4 LTS.  AfftectiveTweets models were run using Weka 3.9.3 and  Java 8 (Oracle version). Scikitlearn+NLTK  models were run using Python 3.6.4 (Anaconda version), Scikitlearn 0.20.3 and NLTK 3.4.1. </p>
               
             </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
-        <a href="../contribute/" class="btn btn-neutral" title="Contributing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../contribute/" class="btn btn-neutral float-left" title="Contributing"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-    
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+          
         </div>
       </div>
 
@@ -364,20 +668,29 @@ print('kappa:'+str(kappa_ngram_lex))
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/felipebravom/AffectiveTweets/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../contribute/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/felipebravom/AffectiveTweets" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../contribute/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
 
 </body>
 </html>
